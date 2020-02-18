@@ -7,6 +7,7 @@ Smash TV was created in 1990 by Eugene Jarvis and Mark Turmell. It's an arcade g
 We're students from UPC coursing VG Dev:
 
 |       Name      | Role |   Photo  |
+|:---------------:|:----:|:-------------:|
 |**Guillem Álava**|Coding|![The Furry]()|
 |**Sergi Colomer**|Coding|![The God]()|
 |**Abraham Díaz** |Coding|![The Reference]()  |
