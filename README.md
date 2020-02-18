@@ -1,3 +1,4 @@
+# Smash TV
 ## Who are we?
 
 We're students from UPC coursing VG Dev:
