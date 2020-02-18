@@ -8,6 +8,7 @@ Smash TV was created in 1990 by Eugene Jarvis and Mark Turmell. It's an arcade g
 
 ## Who are we?
 ![Logo]()
+
 We're students from UPC coursing VG Dev by the name of
 ### Bruhmentium INC.
 
