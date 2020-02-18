@@ -10,3 +10,6 @@ We're students from UPC coursing VG Dev:
 - Abraham Díaz
 
 Which together form **Bruhmentium INC.**
+
+## Changelog
+### Current version: 0.0.0.0
