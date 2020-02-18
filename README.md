@@ -1,8 +1,6 @@
 # Smash-TV
 We'll be recreating the classic SNES game called "Smash TV"
 
-**By: Bruhmentium INC.**
-
 ## Who are we?
 
 We're students from UPC coursing VG Dev:
@@ -10,3 +8,4 @@ We're students from UPC coursing VG Dev:
 - Sergi Colomer
 - Arnau Lucena
 - Abraham Díaz
+Which together form **Bruhmentium INC.**
