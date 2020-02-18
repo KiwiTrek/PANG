@@ -4,7 +4,8 @@ Smash TV was created in 1990 by Eugene Jarvis and Mark Turmell. It's an arcade g
 
 ## Who are we?
 
-We're students from UPC coursing VG Dev:
+We're students from UPC coursing VG Dev by the name of
+### Bruhmentium INC.
 
 |       Name      | Role |   Photo  |
 |:---------------:|:----:|:-------------:|
@@ -12,9 +13,6 @@ We're students from UPC coursing VG Dev:
 |**Sergi Colomer**|Coding|![The God]()|
 |**Abraham Díaz** |Coding|![The Reference]()  |
 |**Arnau Lucena** |Coding|![The Weeb]()|
-
-> Which together form 
-### Bruhmentium INC.
 
 ## Changelog
 ### Current version: 0.0.0.0
