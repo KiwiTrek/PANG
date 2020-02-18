@@ -18,6 +18,7 @@ We're students from UPC coursing VG Dev by the name of
 |**Sergi Colomer**|Coding|![The God]()|
 |**Abraham Díaz** |Coding|![The Reference]()  |
 |**Arnau Lucena** |Coding|![The Weeb]()|
+
 ![The Squad]()
 ## Changelog
 ### Current version: 0.0.0.0
