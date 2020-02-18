@@ -8,4 +8,5 @@ We're students from UPC coursing VG Dev:
 - Sergi Colomer
 - Arnau Lucena
 - Abraham Díaz
+
 Which together form **Bruhmentium INC.**
