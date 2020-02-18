@@ -12,7 +12,7 @@ We're students from UPC coursing VG Dev:
 |**Abraham Díaz** |Coding|![The Reference]()  |
 |**Arnau Lucena** |Coding|![The Weeb]()|
 
-> Which together form **Bruhmentium INC.**
+####### Which together form **Bruhmentium INC.**
 
 ## Changelog
 ### Current version: 0.0.0.0
