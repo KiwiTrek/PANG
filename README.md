@@ -1,11 +1,11 @@
-# Smash TV
+# Pang
 
-Recreation of the 1990 classic from arcades by Bruhmentium INC.
+Recreation of the 1989 classic from arcades by Bruhmentium INC.
 
-<iframe width="560" height="315" src="https://www.youtube.com/watch?v=ffhCBPxXaJs">
+<iframe width="560" height="315" src="https://www.youtube.com/watch?v=UyhP6uLk9Fg">
   </iframe>
 
-#### Check for more info at the [wiki](https://github.com/WillyTrek19/Smash-TV/wiki)
+#### Check for more info at the [wiki](https://github.com/WillyTrek19/PANG/wiki)
 
 ## Changelog
 ### Current version: 0.0.0.0
