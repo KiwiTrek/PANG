@@ -1,0 +1,32 @@
+Stage 1: The layout seems quite simple, there is one platform made out of little blocks evenly spaced
+out, some staris to get to the platform, and a second platform jus above the floor with again, evenly
+spaced out blocks just wide enough that the player doesn't get stuck in the holes but the small balls do.
+Two big balloons are placed one on each side of the level. Animal spawn is greatly reduced if not 0 but the
+most anoying thing of this level is when the items fall through the "floor platform" and the player walks
+over all the power-ups on the floor. The only solution is getting them before they fall down.
+
+Stage 2: In this level the layout is quite curious because it has three blocks around the half of the
+screen height and nine crystal blocks; one right on top of where the player spawns and 4 on each side of
+the center of the screen making a cage-like shape. Two balloons are spawned on this level, one big balloon
+is one the right of the cage and the other (a size lower balloon) inside the cage. Here, the animal spam
+is quite noticeable since once the crystal blocks have been destroyed there is a lot more space in the room.
+
+Stage 3: The layout here is the most intimidating thing of this level since it's quite complex for how much
+the player has to move around. There are 6 stairs placed in very specific positions to allow you to get to
+the top right corner of the screen where there is a small balloon caged (same concept as the level before)
+by a crystal block and a normal one. On the bottom right there are some stairs and two blocks (one on top of
+the stairs and one on the right) to block you off there since it's the place where you will have to shoot to
+get the small balloon on the top. On the right side of the screen there are, from bottom to top, one large
+block just above the floor to block the player off, some big stairs to get almost to the top of the screen.
+On the left of the stairs there is a little "pocket" to make the balloons bounce to the right (thus making
+more dificult to get to the top). Once the player is on the top of the stairs, there is a block making a
+platform for the player to get to other stairs (placed almost out of reach) that once the player is on top,
+finds another platform. On the other side of the platform (to the left), there are some tiny stairs placed,
+again, almost out of reach of the player from the platform. If the player gets on top of these stairs, the
+player will be able to get to a platform part block part snowy-block which from here the player will be able
+to shoot the crystal block and destroy the small balloon. The animals are carefully placed in order to annoy
+the player the most since it has a lot of things to take into account in order to pass this level.
+
+Athens big difficulty is on the 3rd stage since there is a lot of skill needed to succeed in this level though
+the 1st stage does require some skill for the loss of power-ups if they get to the floor. The 2nd one is
+obviously the easiest of the three since the major difficulty are the animals.
