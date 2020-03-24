@@ -1,7 +1,167 @@
+** CODE STYLE **
+Identation (Tabs): Use 4 spaces
+In VisualStudio, go to Tools->Options->Text Editor->All Languages->Tabs and set Tab/Indent Size to 4 and "Insert spaces"
+					   Edit->Advanced->Set Leading Whitespace->Spaces IN EVERY FILE
+	
+Coding Writing Style:
+	· Variables: camelCase
+	· Functions/Class: PascalCase
+		· Set Functions variables: _var (i.e. int setX(int _x) { x = _x; })
+	· Flags/enum/#defines: SCREAMING_SNAKE_CASE
+	
+	· Use complete words (i.e. length instead of len)
+		EXCEPTIONS:
+		· var : Variable
+		· num : Number
+		· tab : Tabulation
+		· bgm : BackGround Music
+		· sfx : Sound Effects
+		· g : Gravity
+		· t : Time
+		· Sqrt() : Square Root (Not in Math.h)
+		(Elements may be added in the future)
+	· Data Members for classes: Always private if possible
+		· Create get and set functions (With the same name as the function)
+		· Get functions always const and without suffix
+	· Boolean comparissons: Precede with "is" or "did" (bool isValid;)
+	· Use descriptive verbs for functions (i.e. void convertToTexture())
+
+Spacing:
+	· Semicolons: No space
+	· Colons (:): Put a space between (class ModuleWindow : public Module)
+	· Unary operators: NONE (++i)
+	· Binary & Ternary: Use (y = m * x + b;) (By default)
+	· if: Put space between condition (if (condition) {}) (By default)
+	· Multiple arguments: No spaces (f(a, b)) (By default)
+	· Brackets in functions (One line): Between spaces (int GetX() { return x; }) (By default)
+	
+Line breaking (Enter):
+	· Variables: Each gets its line
+	· One lined functions (i.e. GetValue): Same line ((int GetX() { return x; })
+	· Separate with a line functions/conditionals(ifs) from variables and other functions/conditionals(ifs);
+		· EXCEPTIONS: (Put in the same block)
+			· Multiple calls of the same function
+			· Set & Get
+			· Functions/Conditionals(ifs) that have a close relation (i.e. IMG_Load & SDL_CreateTexture)
+
+
+Braces usage: Always included, even if not necessary ({} <- By default)
+for (condition) {
+
+}
+
+	· if:
+	
+	if (condition) {
+
+	}
+	else if (condition) {
+
+	}
+	else {
+
+	}
+
+	· Switch:
+	
+	switch () {
+	case 1:
+		break;
+	default:
+		break;
+	}
+
+	· bool const:			(For return cases in which we need more than 1 logic operation)
+	
+	return a == true ||
+		   b == true ||
+		   c == true;
+	   
+	· Class constructors:
+	Pokemon(const char* _name) {
+		name = _name;
+		type = "Null";
+	}
+	
+	· Child Class constructors
+	
+	class ElectricPokemon :public Pokemon {
+	public:
+		ElectricPokemon(const char* name_) :Pokemon(name_) { type = "Electric"; };
+		(...)
+	}
+
+
+Null, false and Zero:
+	· nullptr: Pointers
+	· false: Bools
+	· 0 : Numerical Variables (i.e. int)
+	· NULL: Others (i.e. Logical operations, Referred to SDL)
+	
+Float: For complex maths (i.e. Physics, collisions -> Stuff that can't be done without ints)
+
+Pointers & References:
+	· Declaration/Arguments in declaration: On the left (adjacent to the type) (i.e. SDL_Rect* surface;)
+	· Change/Arguments when called: On the right (adjacent to the varName) (i.e. *surface = nullptr;)
+	· If the choice between them is presented, use pointers.
+	
+Comments: (Well written)
+	· For line codes: One tab
+	· Give small explanation of a block of code on the line before
+	· For Quick Find
+		· BUG: Bug
+		· SPAGHETTI: Optimizable
+		· TODO: To do
+
+Others:
+	· When creating SDL_Surface* & SDL_Texture*, add s or t to the beginning of the variable
+	(i.e. SDL_Surface* sBall; SDL_Texture* tBall;)
+	· Use override when using virtual classes.
+	
+	(Other exceptions may be added in the future)
+	
+	
+** FILE LAYOUT **
+.cpp : 	Function definition
+.h:		Function & Variable declaration
+
+In File explorer: (name: -> Folder)
+	Game:
+		(libraries)
+		Resources:
+			SFX:
+			BGM:
+			Sprites:
+			Text:
+				(Numbers:)
+	Licenses:
+	SDL:
+		include:
+		libx86:
+		COPYING.txt
+		README.txt
+	SDL_Image:
+		include:
+		libx86:
+		CHANGES.txt
+		COPYING.txt
+		README.txt
+	SDL_Mixer:
+		include:
+		libx86:
+		CHANGES.txt
+		COPYING.txt
+		README.txt
+	(Solution and Project files)
+	README.md
+
+In solution:
 App:
-	·app.cpp
-	·app.h
-	(...)
+	·Game.cpp
+	·Game.h
+	·Globals.cpp	(Definitions of external variables)
+	·Main.cpp
+	·
 Modules:
 	·Module.cpp
 	·Module.h
