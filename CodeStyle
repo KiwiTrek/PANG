@@ -1,0 +1,16 @@
+App:
+	·app.cpp
+	·app.h
+	(...)
+Modules:
+	·Module.cpp
+	·Module.h
+	General:
+		·ModuleInput
+		·ModuleWindow
+	  (...)
+	Entities:
+		·ModuleEntity.cpp (ModuleEntity : public Module)
+		·ModuleEntity.h
+		·ModulePlayer : public ModuleEntity
+		·ModuleBall : public ModuleEntity
