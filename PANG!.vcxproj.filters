@@ -36,6 +36,9 @@
     <ClCompile Include="Globals.cpp">
       <Filter>Archivos de origen\App</Filter>
     </ClCompile>
+    <ClCompile Include="ModuleTextures.cpp">
+      <Filter>Archivos de origen\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ModuleRender.h">
@@ -49,6 +52,9 @@
     </ClInclude>
     <ClInclude Include="Globals.h">
       <Filter>Archivos de origen\App</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleTextures.h">
+      <Filter>Archivos de origen\Modules</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

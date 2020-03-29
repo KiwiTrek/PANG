@@ -15,28 +15,26 @@ public:
     bool Init() override;
 
     // Resets the render
-    UPDATE_STATUS PreUpdate() override;
+    update_status PreUpdate() override;
 
     // Updates the screen with the rendered content
-    UPDATE_STATUS PostUpdate() override;
+    update_status PostUpdate() override;
 
-    // Called on application exit.
-    // Destroys the rendering context
+    // Destroys the renderer
     bool CleanUp() override;
 
-    // Prints a texture to the rendering context.
-    // Param texture	- A valid SDL Texture, validation checks are not performed
-    // Param x,y		- Position x,y in the screen (upper left axis)
-    // Param section	- The portion of the texture we want to copy. nullptr for the entire texture
+    // Blit prints a texture
+    // Param texture    - A valid SDL Texture
+    // Param x,y        - Position x,y in the screen
+    // Param section    - The part of the texture we want to copy (nullptr = the entire texture)
     bool Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section = nullptr);
 
 public:
-    // Rendering context used for any rendering action
+    //Used for any rendering action
     SDL_Renderer* renderer = nullptr;
 
 private:
     SDL_Texture* testTexture = nullptr;
-
 };
 
 #endif //__MODULE_RENDER_H__
