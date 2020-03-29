@@ -1,5 +1,6 @@
 #ifndef __MODULE_RENDER_H__
 #define __MODULE_RENDER_H__
+
 #include "Module.h"
 
 struct SDL_Rect;
