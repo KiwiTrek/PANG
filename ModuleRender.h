@@ -15,10 +15,10 @@ public:
     bool Init() override;
 
     // Resets the render
-    update_status PreUpdate() override;
+    UPDATE_STATUS PreUpdate() override;
 
     // Updates the screen with the rendered content
-    update_status PostUpdate() override;
+    UPDATE_STATUS PostUpdate() override;
 
     // Called on application exit.
     // Destroys the rendering context

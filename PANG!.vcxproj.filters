@@ -13,7 +13,10 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Modules">
+    <Filter Include="Archivos de origen\App">
+      <UniqueIdentifier>{cae14a2e-bace-4c45-9466-157f78f89d4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\Modules">
       <UniqueIdentifier>{4769e7be-2e7d-4fef-82bb-c28d61e56686}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -22,12 +25,30 @@
       <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="ModuleRender.cpp">
-      <Filter>Modules</Filter>
+      <Filter>Archivos de origen\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Archivos de origen\App</Filter>
+    </ClCompile>
+    <ClCompile Include="Module.cpp">
+      <Filter>Archivos de origen\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Globals.cpp">
+      <Filter>Archivos de origen\App</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ModuleRender.h">
-      <Filter>Modules</Filter>
+      <Filter>Archivos de origen\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Module.h">
+      <Filter>Archivos de origen\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Archivos de origen\App</Filter>
+    </ClInclude>
+    <ClInclude Include="Globals.h">
+      <Filter>Archivos de origen\App</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,6 +1,6 @@
 #include "ModuleRender.h"
 
-#include "Application.h"
+#include "Game.h"
 #include "ModuleWindow.h"
 #include "ModuleTextures.h"
 
@@ -31,24 +31,24 @@ bool ModuleRender::Init() {
 }
 
 // Called every draw update
-update_status ModuleRender::PreUpdate() {
+UPDATE_STATUS ModuleRender::PreUpdate() {
     //Set the color used for drawing operations
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 
     //Clear rendering target
     SDL_RenderClear(renderer);
 
-    return update_status::UPDATE_CONTINUE;
+    return UPDATE_STATUS::UPDATE_CONTINUE;
 }
 
-update_status ModuleRender::PostUpdate() {
+UPDATE_STATUS ModuleRender::PostUpdate() {
     //Blit test texture
     Blit(testTexture, 243, 193, nullptr);
 
     //Update the screen
     SDL_RenderPresent(renderer);
 
-    return update_status::UPDATE_CONTINUE;
+    return UPDATE_STATUS::UPDATE_CONTINUE;
 }
 
 bool ModuleRender::CleanUp() {
