@@ -159,10 +159,21 @@ In File explorer: (name: -> Folder)
 		·Game.h
 		·Globals.cpp	(Definitions of external variables)
 		·Main.cpp
+	Entities:
+		·Particle.cpp
+		·Particle.h
 	Modules:
 		·Module.cpp
 		·Module.h
-		·ModuleInput
-		·ModuleWindow
-		·ModulePlayer
-		·ModuleBall
+		Core:
+			·ModuleInput
+			·ModuleWindow
+			(...)
+		Gameplay:
+			·ModulePlayer
+			·ModuleBall
+	Utils:
+		·Animation.h
+		·Collider.cpp
+		·Collider.h
+		·p2Point.h
