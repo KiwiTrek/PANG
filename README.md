@@ -8,4 +8,4 @@ Recreation of the 1989 classic from arcades by Bruhmentium INC.
 #### Check for more info at the [wiki](https://github.com/WillyTrek19/PANG/wiki)
 
 ## Changelog
-### Current version: 0.0.0.0
+### Current version: 0.0
