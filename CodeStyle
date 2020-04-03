@@ -65,10 +65,12 @@ for (condition) {
 	· Switch:
 	
 	switch () {
-	case 1:
-		break;
-	default:
-		break;
+	case 1: {
+	}
+	break;
+	default: {
+	}
+	break;
 	}
 
 	· bool const:			(For return cases in which we need more than 1 logic operation)
