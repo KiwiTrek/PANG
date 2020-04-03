@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <iostream>
+#include "Game.h"
+#include "Globals.h"
 
 #include "SDL/include/SDL.h"
 #include "SDL_Image/include/SDL_image.h"
@@ -21,7 +23,7 @@ enum class MAIN_STATES
 };
 
 int main() {
-	ReportMemoryLeaks();
+	//ReportMemoryLeaks();
 
 	int main_return = EXIT_FAILURE;
 	MAIN_STATES state = MAIN_STATES::MAIN_CREATION;
@@ -30,16 +32,16 @@ int main() {
 	while (state != MAIN_STATES::MAIN_EXIT) {
 		switch (state) {
 		case MAIN_STATES::MAIN_CREATION: {
-			Log("Game Creation --------------\n");
+			//LOG("Game Creation --------------\n");
 			game = new Game();
 			state = MAIN_STATES::MAIN_START;
 		}	
 		break;
 
 		case MAIN_STATES::MAIN_START: {
-			Log("Game Start --------------\n");
+			//LOG("Game Start --------------\n");
 			if (game->Init() == false) {
-				Log("Game Init exits with error -----\n");
+				//LOG("Game Init exits with error -----\n");
 				state = MAIN_STATES::MAIN_EXIT;
 			}
 			else { state = MAIN_STATES::MAIN_UPDATE; }
@@ -50,7 +52,7 @@ int main() {
 			UPDATE_STATUS status = game->Update();
 
 			if (status == UPDATE_STATUS::UPDATE_ERROR) {
-				Log("Game Update exits with error -----\n");
+				//LOG("Game Update exits with error -----\n");
 				state = MAIN_STATES::MAIN_EXIT;
 			}
 			else if (status == UPDATE_STATUS::UPDATE_STOP) { state = MAIN_STATES::MAIN_FINISH; }
@@ -62,7 +64,7 @@ int main() {
 		}
 	}
 
-	Log("\nBye :)\n");
+	//LOG("\nBye :)\n");
 
 	// TODO 6: Remove ALL memory leaks
 
