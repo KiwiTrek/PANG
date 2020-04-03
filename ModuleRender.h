@@ -23,10 +23,6 @@ public:
     // Clears the rendering context to the background color
     UPDATE_STATUS PreUpdate() override;
 
-    // Called at the middle of the application loop
-    // Handles camera movement
-    UPDATE_STATUS Update() override;
-
     // Called at the end of the application loop
     // Displays a rectangle in the rendering context
     // Updates the screen with the rendered content

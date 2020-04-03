@@ -1,6 +1,5 @@
-#include "Game.h"
-#include "ModuleInput.h"
 #include "ModuleRender.h"
+#include "Game.h"
 #include "ModuleWindow.h"
 #include "ModuleTextures.h"
 
@@ -18,7 +17,7 @@ bool ModuleRender::Init() {
     Uint32 flags = 0;
     if (VSYNC == true) { flags |= SDL_RENDERER_PRESENTVSYNC; }
 
-    renderer = SDL_CreateRenderer(App->window->window, -1, flags);
+    renderer = SDL_CreateRenderer(game->window->window, -1, flags);
     if (renderer == nullptr) {
     LOG("Renderer could not be created! SDL_Error: %s\n", SDL_GetError());
     ret = false;
@@ -34,22 +33,6 @@ UPDATE_STATUS ModuleRender::PreUpdate() {
 
     //Clear rendering target
     SDL_RenderClear(renderer);
-
-    return UPDATE_STATUS::UPDATE_CONTINUE;
-}
-
-UPDATE_STATUS ModuleRender::Update() {
-    //Handle positive y
-    if (App->input->keys[SDL_SCANCODE_UP] == KEY_REPEAT) { camera.y -= cameraSpeed; }
-
-    //Handle negative y
-    if (App->input->keys[SDL_SCANCODE_DOWN] == KEY_REPEAT) { camera.y += cameraSpeed; }
-
-    //Handle positive x
-    if (App->input->keys[SDL_SCANCODE_LEFT] == KEY_REPEAT) { camera.x -= cameraSpeed; }
-
-    //Handle negative x
-    if (App->input->keys[SDL_SCANCODE_RIGHT] == KEY_REPEAT) { camera.x += cameraSpeed; }
 
     return UPDATE_STATUS::UPDATE_CONTINUE;
 }

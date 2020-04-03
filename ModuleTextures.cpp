@@ -6,7 +6,11 @@
 #include "SDL_image/include/SDL_image.h"
 #pragma comment( lib, "SDL_image/libx86/SDL2_image.lib" )
 
-ModuleTextures::ModuleTextures() : Module() { for (uint i = 0; i < MAX_TEXTURES; ++i) { textures[i] = nullptr; }}
+ModuleTextures::ModuleTextures() : Module() {
+    for (uint i = 0; i < MAX_TEXTURES; ++i) {
+        textures[i] = nullptr;
+    }
+}
 
 ModuleTextures::~ModuleTextures() {}
 
@@ -47,7 +51,7 @@ SDL_Texture* const ModuleTextures::Load(const char* path) {
 
     if (surface == NULL) { LOG("Could not load surface with path: %s. IMG_Load: %s", path, IMG_GetError()); }
     else {
-        texture = SDL_CreateTextureFromSurface(App->render->renderer, surface);
+        texture = SDL_CreateTextureFromSurface(game->render->renderer, surface);
 
         if (texture == NULL) { LOG("Unable to create texture from surface! SDL Error: %s\n", SDL_GetError()); }
         else {

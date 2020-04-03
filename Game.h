@@ -49,6 +49,6 @@ public:
 };
 
 // Global var made extern for Application ---
-extern Game* App;
+extern Game* game;
 
 #endif // __GAME_H__
