@@ -30,34 +30,30 @@ int main() {
 	while (state != MAIN_STATES::MAIN_EXIT) {
 		switch (state) {
 		case MAIN_STATES::MAIN_CREATION: {
-			LOG("Game Creation --------------\n");
+			Log("Game Creation --------------\n");
 			game = new Game();
 			state = MAIN_STATES::MAIN_START;
 		}	
 		break;
 
 		case MAIN_STATES::MAIN_START: {
-			LOG("Game Start --------------\n");
+			Log("Game Start --------------\n");
 			if (game->Init() == false) {
-				LOG("Game Init exits with error -----\n");
+				Log("Game Init exits with error -----\n");
 				state = MAIN_STATES::MAIN_EXIT;
 			}
-			else {
-				state = MAIN_STATES::MAIN_UPDATE;
-			}
+			else { state = MAIN_STATES::MAIN_UPDATE; }
 		}	
 		break;
 
 		case MAIN_STATES::MAIN_UPDATE: {
-			update_status status = game->Update();
+			UPDATE_STATUS status = game->Update();
 
-			if (status == update_status::UPDATE_ERROR) {
-				LOG("Game Update exits with error -----\n");
+			if (status == UPDATE_STATUS::UPDATE_ERROR) {
+				Log("Game Update exits with error -----\n");
 				state = MAIN_STATES::MAIN_EXIT;
 			}
-			else if (status == update_status::UPDATE_STOP) {
-				state = MAIN_STATES::MAIN_FINISH;
-			}
+			else if (status == UPDATE_STATUS::UPDATE_STOP) { state = MAIN_STATES::MAIN_FINISH; }
 		}
 		break;
 
@@ -66,7 +62,7 @@ int main() {
 		}
 	}
 
-	LOG("\nBye :)\n");
+	Log("\nBye :)\n");
 
 	// TODO 6: Remove ALL memory leaks
 
