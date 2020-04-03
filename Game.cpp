@@ -2,7 +2,7 @@
 
 #include "Module.h"
 #include "ModuleWindow.h"
-//#include "ModuleInput.h"
+#include "ModuleInput.h"
 #include "ModuleTextures.h"
 //#include "ModuleAudio.h"
 //#include "ModulePlayer.h"
@@ -17,8 +17,8 @@ Game::Game() {
     // It will define the order in which Pre/Update/Post will be called
     // Render should always be last, as our last action should be updating the screen
     modules[0] = window = new ModuleWindow();
-    //modules[1] = input = new ModuleInput();
-    modules[1] = textures = new ModuleTextures(); //should be 2
+    modules[1] = input = new ModuleInput();
+    modules[2] = textures = new ModuleTextures();
     //modules[3] = audio = new ModuleAudio();
 
     //modules[4] = scene = new ModuleScene();
@@ -28,7 +28,7 @@ Game::Game() {
 
     //modules[8] = collisions = new ModuleCollisions();
 
-    modules[2] = render = new ModuleRender(); //should be 9
+    modules[3] = render = new ModuleRender(); //should be 9
 }
 
 Game::~Game() {

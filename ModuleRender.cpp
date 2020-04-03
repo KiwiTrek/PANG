@@ -1,8 +1,8 @@
-#include "ModuleRender.h"
 #include "Game.h"
+#include "ModuleInput.h"
+#include "ModuleRender.h"
 #include "ModuleWindow.h"
 #include "ModuleTextures.h"
-#include "ModuleInput.h"
 
 #include "SDL/include/SDL_render.h"
 #include "SDL/include/SDL_scancode.h"
@@ -74,7 +74,7 @@ bool ModuleRender::CleanUp() {
 bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section, float speed) {
     bool ret = true;
 
-    SDL_Rect rect{ (int)(-camera.x * speed) + x * SCREEN_SIZE, (int)(-camera.y * speed) + y * SCREEN_SIZE, 0, 0 };
+    SDL_Rect rect{ (int)(x * SCREEN_SIZE), (int)(y * SCREEN_SIZE), 0, 0 };
 
     if (section != nullptr) {
         rect.w = section->w;

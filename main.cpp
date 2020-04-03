@@ -62,12 +62,10 @@ int main(int argc, char* argv[]) {
 
         case MAIN_STATES::MAIN_FINISH: {
             LOG("Application Finish --------------\n");
-            if (game->CleanUp() == true) {
-                main_return = EXIT_SUCCESS;
-            }
-            else {
-                LOG("Application CleanUp exits with error -----\n");
-            }
+
+            if (game->CleanUp() == true) { main_return = EXIT_SUCCESS; }
+            else { LOG("Application CleanUp exits with error -----\n"); }
+
             state = MAIN_STATES::MAIN_EXIT;
         }
         }

@@ -46,6 +46,9 @@
     <ClCompile Include="ModuleTextures.cpp">
       <Filter>Archivos de origen\Modules\Core</Filter>
     </ClCompile>
+    <ClCompile Include="ModuleInput.cpp">
+      <Filter>Archivos de origen\Modules\Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -64,6 +67,9 @@
       <Filter>Archivos de origen\Modules\Core</Filter>
     </ClInclude>
     <ClInclude Include="ModuleTextures.h">
+      <Filter>Archivos de origen\Modules\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleInput.h">
       <Filter>Archivos de origen\Modules\Core</Filter>
     </ClInclude>
   </ItemGroup>
