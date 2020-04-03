@@ -1,4 +1,3 @@
-#pragma once
 #include <stdio.h>
 #include <iostream>
 
@@ -10,8 +9,6 @@
 #pragma comment(lib,"SDL/libx86/SDL2main.lib")
 #pragma comment(lib,"SDL_Image/libx86/SDL2_image.lib")
 #pragma comment(lib,"SDL_Mixer/libx86/SDL2_mixer.lib")
-
-//en mi ordenador me da un bug raro al intentar darle play, intentadlo vosotros para ver si es mi tortadora o es que algo hice mal
 
 
 
