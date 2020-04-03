@@ -40,6 +40,12 @@
     <ClCompile Include="main.cpp">
       <Filter>Archivos de origen\App</Filter>
     </ClCompile>
+    <ClCompile Include="ModuleRender.cpp">
+      <Filter>Archivos de origen\Modules\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleTextures.cpp">
+      <Filter>Archivos de origen\Modules\Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -52,6 +58,12 @@
       <Filter>Archivos de origen\Modules</Filter>
     </ClInclude>
     <ClInclude Include="ModuleWindow.h">
+      <Filter>Archivos de origen\Modules\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleRender.h">
+      <Filter>Archivos de origen\Modules\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleTextures.h">
       <Filter>Archivos de origen\Modules\Core</Filter>
     </ClInclude>
   </ItemGroup>
