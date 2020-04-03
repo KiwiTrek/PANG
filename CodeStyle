@@ -178,6 +178,8 @@ In solution:
 		Gameplay:
 			·ModulePlayer
 			·ModuleBall
+			·ModuleLevel1
+			(...)
 	Utils:
 		·Animation.h
 		·Collider.cpp
