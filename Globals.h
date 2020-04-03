@@ -1,9 +1,9 @@
-#ifndef GLOBALS_H
-#define GLOBALS_H
+#ifndef __GLOBALS_H__
+#define __GLOBALS_H__
 
 #include <windows.h>
 
-#define LOG(format, ...) log(FILE, LINE, format, VA_ARGS);
+#define LOG(format, ...) log(__FILE__, __LINE__, format, __VA_ARGS__);
 void log(const char file[], int line, const char* format, ...);
 
 #define EXIT_FAILURE 1
@@ -28,4 +28,4 @@ typedef unsigned int uint;
 #define WIN_RESIZABLE 0
 #define VSYNC 1
 
-#endif // GLOBALS_H
+#endif // __GLOBALS_H__

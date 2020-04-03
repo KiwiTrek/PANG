@@ -11,10 +11,10 @@ ModuleWindow::ModuleWindow() : Module() {}
 ModuleWindow::~ModuleWindow() {}
 
 bool ModuleWindow::Init() {
-	//LOG("Init SDL window & surface");
+	LOG("Init SDL window & surface---------------");
 
 	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-		//LOG("SDL_VIDEO could not initialize! SDL_Error: %s\n", SDL_GetError());
+		LOG("SDL_VIDEO could not initialize! SDL_Error: %s\n", SDL_GetError());
 		return false;
 	}
 	else {
@@ -28,7 +28,7 @@ bool ModuleWindow::Init() {
 
 		window = SDL_CreateWindow("Project 7 - Enemies", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH * SCREEN_SIZE, SCREEN_HEIGHT * SCREEN_SIZE, flags);
 		if (window == nullptr) {
-			//LOG("Window could not be created! SDL_Error: %s\n", SDL_GetError());
+			LOG("Window could not be created! SDL_Error: %s\n", SDL_GetError());
 			return false;
 		}
 		else {screenSurface = SDL_GetWindowSurface(window); }
@@ -37,7 +37,7 @@ bool ModuleWindow::Init() {
 }
 
 bool ModuleWindow::CleanUp() {
-	LOG("Destroying SDL window and quitting all SDL systems");
+	LOG("Destroying SDL window and quitting all SDL systems------");
 
 	//Destroy window
 	if (window != nullptr) { SDL_DestroyWindow(window); }

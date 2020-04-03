@@ -11,36 +11,48 @@
     <Filter Include="Archivos de origen\Entities">
       <UniqueIdentifier>{a8ee1aea-5a45-41ea-af6e-ca43961dcb72}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Archivos de origen\Modules">
+      <UniqueIdentifier>{21696953-6182-4910-92b3-b81b7a8e4caa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\Modules\Core">
+      <UniqueIdentifier>{201e7b03-9483-4627-ac13-5a45e3144f0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\Modules\Gameplay">
+      <UniqueIdentifier>{aa1dfa9f-62f3-4213-adc2-0f49c7cfbff6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\Utils">
+      <UniqueIdentifier>{e9a1f738-5a9d-419b-9c10-e825ea3fb74e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
     <ClCompile Include="Game.cpp">
-      <Filter>Archivos de origen</Filter>
+      <Filter>Archivos de origen\App</Filter>
     </ClCompile>
     <ClCompile Include="Globals.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="ModuleWindow.cpp">
-      <Filter>Archivos de origen</Filter>
+      <Filter>Archivos de origen\App</Filter>
     </ClCompile>
     <ClCompile Include="Module.cpp">
-      <Filter>Archivos de origen</Filter>
+      <Filter>Archivos de origen\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleWindow.cpp">
+      <Filter>Archivos de origen\Modules\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Archivos de origen\App</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
-      <Filter>Archivos de origen</Filter>
+      <Filter>Archivos de origen\App</Filter>
     </ClInclude>
     <ClInclude Include="Globals.h">
-      <Filter>Archivos de origen</Filter>
-    </ClInclude>
-    <ClInclude Include="ModuleWindow.h">
-      <Filter>Archivos de origen</Filter>
+      <Filter>Archivos de origen\App</Filter>
     </ClInclude>
     <ClInclude Include="Module.h">
-      <Filter>Archivos de origen</Filter>
+      <Filter>Archivos de origen\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleWindow.h">
+      <Filter>Archivos de origen\Modules\Core</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

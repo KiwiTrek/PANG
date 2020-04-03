@@ -1,5 +1,5 @@
-#ifndef __APPLICATION_H__
-#define __APPLICATION_H__
+#ifndef __GAME_H__
+#define __GAME_H__
 
 #include "Globals.h"
 
@@ -51,4 +51,4 @@ public:
 // Global var made extern for Application ---
 extern Game* App;
 
-#endif // __APPLICATION_H__
+#endif // __GAME_H__
