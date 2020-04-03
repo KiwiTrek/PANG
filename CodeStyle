@@ -37,7 +37,7 @@ Spacing:
 	
 Line breaking (Enter):
 	· Variables: Each gets its line
-	· One lined functions/conditionals(if) (i.e. GetValue): Same line ((int GetX() { return x; })
+	· One lined functions/conditionals(if)/loop(for) (i.e. GetValue): Same line ((int GetX() { return x; })
 	· Separate with a line functions/conditionals(ifs) from variables and other functions/conditionals(ifs);
 		· EXCEPTIONS: (Put in the same block)
 			· Multiple calls of the same function
