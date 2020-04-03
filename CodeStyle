@@ -154,6 +154,9 @@ In File explorer: (name: -> Folder)
 		README.txt
 	(Solution and Project files)
 	README.md
+	
+	
+In solution:
 	App:
 		·Game.cpp
 		·Game.h
