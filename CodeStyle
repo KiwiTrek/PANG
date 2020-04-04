@@ -120,6 +120,7 @@ Others:
 	(i.e. SDL_Surface* sBall; SDL_Texture* tBall;)
 	· Use override when using virtual classes.
 	· Function LOG is directly done as class' handouts/solutions
+	· p2Point functions are made in a .h
 	
 	(Other exceptions may be added in the future)
 	
