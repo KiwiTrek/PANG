@@ -5,8 +5,8 @@
 
 ModuleLevelOne::ModuleLevelOne() {
 	// Background
-	background = { 8, 8, 383, 207 };
-	backgroundAdapter = { 0, 0, 383, 185 }; //Picosituación if you feel like it
+	background = { 8, 8, 384, 207 };
+	backgroundAdapter = { 0, 0, 384, 193 }; //Picosituación if you feel like it
 }
 
 ModuleLevelOne::~ModuleLevelOne() {}
