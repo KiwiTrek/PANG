@@ -47,3 +47,19 @@ bool ModuleWindow::CleanUp() {
 
     return true;
 }
+
+void ModuleWindow::SetWindow(SDL_Window* _window) {
+    window = _window;
+}
+
+SDL_Window* ModuleWindow::GetWindow() const {
+    return window;
+}
+
+void ModuleWindow::SetScreenSurface(SDL_Surface* _screenSurface) {
+    screenSurface = _screenSurface;
+}
+
+SDL_Surface* ModuleWindow::GetScreenSurface() const {
+    return screenSurface;
+}

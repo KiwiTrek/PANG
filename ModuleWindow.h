@@ -19,7 +19,12 @@ public:
     // Destroys the window and uninitializes the SDL library
     bool CleanUp() override;
 
-public:
+    void SetWindow(SDL_Window* _window);
+    SDL_Window* GetWindow() const;
+    void SetScreenSurface(SDL_Surface* _screenSurface);
+    SDL_Surface* GetScreenSurface() const;
+
+private:
     //The window we'll be rendering to
     SDL_Window* window = nullptr;
     //The window's surface

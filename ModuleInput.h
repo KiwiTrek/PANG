@@ -22,7 +22,10 @@ public:
     UPDATE_STATUS PreUpdate() override;
     bool CleanUp() override;
 
-public:
+    void SetKey(const KEY_STATE _key, int i);
+    KEY_STATE GetKey(int i) const;
+
+private:
     KEY_STATE keys[MAX_KEYS] = { KEY_IDLE };
 };
 

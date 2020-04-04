@@ -39,7 +39,10 @@ public:
     // Param speed  - How much the camera movement affects the sprite
     bool Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section = nullptr, float speed = 1.0f);
 
-public:
+    void SetRenderer(SDL_Renderer* _renderer);
+    SDL_Renderer* GetRenderer() const;
+
+private:
     // Rendering context used for any rendering action
     SDL_Renderer* renderer = nullptr;
 

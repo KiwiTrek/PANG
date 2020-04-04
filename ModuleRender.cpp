@@ -17,7 +17,7 @@ bool ModuleRender::Init() {
     Uint32 flags = 0;
     if (VSYNC == true) { flags |= SDL_RENDERER_PRESENTVSYNC; }
 
-    renderer = SDL_CreateRenderer(game->window->window, -1, flags);
+    renderer = SDL_CreateRenderer(game->window->GetWindow(), -1, flags);
     if (renderer == nullptr) {
     LOG("Renderer could not be created! SDL_Error: %s\n", SDL_GetError());
     ret = false;
@@ -74,4 +74,12 @@ bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section, f
     }
 
     return ret;
+}
+
+void ModuleRender::SetRenderer(SDL_Renderer* _renderer) {
+    renderer = _renderer;
+}
+
+SDL_Renderer* ModuleRender::GetRenderer() const {
+    return renderer;
 }

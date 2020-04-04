@@ -52,7 +52,7 @@ SDL_Texture* const ModuleTextures::Load(const char* path) {
     if (surface == NULL) { LOG("Could not load surface with path: %s. IMG_Load: %s", path, IMG_GetError()); }
     else {
 
-        texture = SDL_CreateTextureFromSurface(game->render->renderer, surface);
+        texture = SDL_CreateTextureFromSurface(game->render->GetRenderer(), surface);
         if (texture == NULL) { LOG("Unable to create texture from surface! SDL Error: %s\n", SDL_GetError()); }
         else {
             for (uint i = 0; i < MAX_TEXTURES; ++i) {
@@ -67,4 +67,12 @@ SDL_Texture* const ModuleTextures::Load(const char* path) {
     }
 
     return texture;
+}
+
+void ModuleTextures::SetTexture(SDL_Texture* _texture, int i) {
+    textures[i] = _texture;
+}
+
+SDL_Texture* ModuleTextures::GetTexture(int i) const {
+    return textures[i];
 }

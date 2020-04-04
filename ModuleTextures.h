@@ -29,7 +29,10 @@ public:
     // Returns nullptr if the texture could not be created
     SDL_Texture* const Load(const char* path);
 
-public:
+    void SetTexture(SDL_Texture* _texture, int i);
+    SDL_Texture* GetTexture(int i) const;
+
+private:
     // An array of all the loaded textures
     // Allows us to keep track of all textures and free them on exit
     SDL_Texture* textures[MAX_TEXTURES] = { nullptr };
