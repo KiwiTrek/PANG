@@ -6,7 +6,7 @@
 #include "ModuleTextures.h"
 //#include "ModuleAudio.h"
 //#include "ModulePlayer.h"
-//#include "ModuleScene.h"
+#include "ModuleLevelOne.h"
 //#include "ModuleParticles.h"
 //#include "ModuleEnemies.h"
 //#include "ModuleCollisions.h"
@@ -21,14 +21,14 @@ Game::Game() {
     modules[2] = textures = new ModuleTextures();
     //modules[3] = audio = new ModuleAudio();
     
-    //modules[4] = scene = new ModuleScene();
+    modules[3] = levelOne = new ModuleLevelOne(); //should be 4
     //modules[5] = player = new ModulePlayer();
     //modules[6] = particles = new ModuleParticles();
     //modules[7] = enemies = new ModuleEnemies();
 
     //modules[8] = collisions = new ModuleCollisions();
 
-    modules[3] = render = new ModuleRender(); //should be 9
+    modules[4] = render = new ModuleRender(); //should be 9
 }
 
 Game::~Game() {

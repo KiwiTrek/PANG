@@ -37,7 +37,7 @@ public:
     // Param x,y    - Position x,y on the screen
     // Param section    - The portion of the texture we want to copy (nullptr for the entire texture)
     // Param speed  - How much the camera movement affects the sprite
-    bool Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section = nullptr, float speed = 1.0f);
+	bool Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section = nullptr, SDL_Rect* adapter = nullptr, float speed = 1.0f);
 
     void SetRenderer(SDL_Renderer* _renderer);
     SDL_Renderer* GetRenderer() const;

@@ -6,6 +6,7 @@
 ModuleLevelOne::ModuleLevelOne() {
 	// Background
 	background = { 8, 8, 383, 207 };
+	backgroundAdapter = { 0, 0, 383, 185 }; //Picosituación if you feel like it
 }
 
 ModuleLevelOne::~ModuleLevelOne() {}
@@ -23,6 +24,6 @@ bool ModuleLevelOne::Start() {
 // Update: draw background
 UPDATE_STATUS ModuleLevelOne::PostUpdate() {
 	// Draw everything --------------------------------------
-	game->render->Blit(backgroundTexture, 0, 0, &background);
+	game->render->Blit(backgroundTexture, 0, 0, &background, &backgroundAdapter);
 	return UPDATE_STATUS::UPDATE_CONTINUE;
 }
