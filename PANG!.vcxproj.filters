@@ -72,5 +72,8 @@
     <ClInclude Include="ModuleInput.h">
       <Filter>Archivos de origen\Modules\Core</Filter>
     </ClInclude>
+    <ClInclude Include="p2Point.h">
+      <Filter>Archivos de origen\Utils</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
