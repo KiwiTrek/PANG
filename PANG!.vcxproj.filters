@@ -49,6 +49,9 @@
     <ClCompile Include="ModuleInput.cpp">
       <Filter>Archivos de origen\Modules\Core</Filter>
     </ClCompile>
+    <ClCompile Include="ModuleLevelOne.cpp">
+      <Filter>Archivos de origen\Modules\Gameplay</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -74,6 +77,9 @@
     </ClInclude>
     <ClInclude Include="p2Point.h">
       <Filter>Archivos de origen\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleLevelOne.h">
+      <Filter>Archivos de origen\Modules\Gameplay</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
