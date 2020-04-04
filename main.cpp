@@ -23,12 +23,13 @@ enum class MAIN_STATES
     MAIN_EXIT
 };
 
+Game* game = nullptr;
+
 int main(int argc, char* argv[]) {
     //ReportMemoryLeaks();
 
     int main_return = EXIT_FAILURE;
     MAIN_STATES state = MAIN_STATES::MAIN_CREATION;
-    Game* game = nullptr;
 
     while (state != MAIN_STATES::MAIN_EXIT) {
         switch (state) {
