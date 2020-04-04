@@ -31,13 +31,13 @@ bool ModuleWindow::Init() {
             LOG("Window could not be created! SDL_Error: %s\n", SDL_GetError());
             return false;
         }
-        else {screenSurface = SDL_GetWindowSurface(window); }
+        else { screenSurface = SDL_GetWindowSurface(window); }
     }
     return true;
 }
 
 bool ModuleWindow::CleanUp() {
-    LOG("Destroying SDL window and quitting all SDL systems------");
+    LOG("Destroying SDL window and quitting all SDL systems");
 
     //Destroy window
     if (window != nullptr) { SDL_DestroyWindow(window); }

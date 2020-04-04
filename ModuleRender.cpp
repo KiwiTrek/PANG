@@ -17,7 +17,7 @@ bool ModuleRender::Init() {
     Uint32 flags = 0;
     if (VSYNC == true) { flags |= SDL_RENDERER_PRESENTVSYNC; }
 
-    renderer = SDL_CreateRenderer(game->window->window, -1, flags);
+    //renderer = SDL_CreateRenderer(game->window->window, -1, flags);                                       //<- This one
     if (renderer == nullptr) {
     LOG("Renderer could not be created! SDL_Error: %s\n", SDL_GetError());
     ret = false;

@@ -48,7 +48,7 @@ public:
     ModuleRender* render = nullptr;
 };
 
-// Global var made extern for Application ---
+// Global var made extern for Game ---
 extern Game* game;
 
 #endif // __GAME_H__
