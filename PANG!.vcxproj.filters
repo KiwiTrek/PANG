@@ -52,6 +52,9 @@
     <ClCompile Include="ModuleLevelOne.cpp">
       <Filter>Archivos de origen\Modules\Gameplay</Filter>
     </ClCompile>
+    <ClCompile Include="ModuleAudio.cpp">
+      <Filter>Archivos de origen\Modules\Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -80,6 +83,9 @@
     </ClInclude>
     <ClInclude Include="ModuleLevelOne.h">
       <Filter>Archivos de origen\Modules\Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleAudio.h">
+      <Filter>Archivos de origen\Modules\Core</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

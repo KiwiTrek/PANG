@@ -1,12 +1,13 @@
 #include "ModuleLevelOne.h"
 #include "Game.h"
+#include "ModuleAudio.h"
 #include "ModuleTextures.h"
 #include "ModuleRender.h"
 
 ModuleLevelOne::ModuleLevelOne() {
 	// Background
 	background = { 8, 8, 384, 207 };
-	backgroundAdapter = { 0, 0, 384, 193 }; //Picosituación if you feel like it
+	backgroundAdapter = { 0, 0, 384, 193 };
 }
 
 ModuleLevelOne::~ModuleLevelOne() {}
@@ -15,9 +16,14 @@ ModuleLevelOne::~ModuleLevelOne() {}
 bool ModuleLevelOne::Start() {
 	LOG("Loading background assets");
 
-	backgroundTexture = game->textures->Load("Resources/Backgrounds.png");
-
+	backgroundTexture = game->textures->Load("Resources/Sprites/Backgrounds.png");
+	game->audio->PlayMusic("Resources/BGM/introFuji.ogg");
 	return true;
+}
+
+UPDATE_STATUS ModuleLevelOne::Update() {
+	game->audio->DetectIntroEnd("Resources/BGM/fuji.ogg", 473);
+	return UPDATE_STATUS::UPDATE_CONTINUE;
 }
 
 
