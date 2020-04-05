@@ -9,7 +9,7 @@ Recreation of the 1989 classic from arcades by Bruhmentium INC.
 
 ## Changelog
 ### Current version: 0.1
-0.1:
+#### 0.1:
 - Added Game folder:
   - Main loop
   - Game/Module loop
