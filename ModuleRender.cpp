@@ -2,6 +2,7 @@
 #include "Game.h"
 #include "ModuleWindow.h"
 #include "ModuleTextures.h"
+#include "ModuleInput.h"
 
 #include "SDL/include/SDL_render.h"
 #include "SDL/include/SDL_scancode.h"
@@ -36,6 +37,12 @@ UPDATE_STATUS ModuleRender::PreUpdate() {
 
     return UPDATE_STATUS::UPDATE_CONTINUE;
 }
+
+UPDATE_STATUS ModuleRender::Update() {
+    if (game->input->GetKey(SDL_SCANCODE_ESCAPE)) { return UPDATE_STATUS::UPDATE_STOP; }
+    return UPDATE_STATUS::UPDATE_CONTINUE;
+}
+
 
 UPDATE_STATUS ModuleRender::PostUpdate() {
     //Update the screen
