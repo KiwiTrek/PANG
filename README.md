@@ -1,9 +1,18 @@
 # Pang
 
-Recreation of the 1989 classic from arcades by Bruhmentium INC.
+Recreation of the 1989 classic from arcades by Bruhmentium INC:
+ - Guillem Álava (@WillyTrek19)
+ - Sergi Colomer (@Lladruc37)
+ - Arnau Lucena (@Theran1)
+ - Abraham Díaz (@TitoLuce)
 
 <iframe width="560" height="315" src="https://www.youtube.com/watch?v=UyhP6uLk9Fg">
   </iframe>
+
+## How to install
+ - Download the files
+ - Execute .exe
+ - Done!
 
 #### Check for more info at the [wiki](https://github.com/WillyTrek19/PANG/wiki)
 
