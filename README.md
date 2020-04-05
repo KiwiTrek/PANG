@@ -11,7 +11,7 @@ Recreation of the 1989 classic from arcades by Bruhmentium INC:
 
 ## How to install
  - Download the files
- - Execute .exe
+ - Execute .exe (Inside Game Folder)
  - Done!
 
 #### Check for more info at the [wiki](https://github.com/WillyTrek19/PANG/wiki)
