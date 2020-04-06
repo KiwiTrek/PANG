@@ -35,10 +35,11 @@ public:
 
     // Prints a texture to the rendering context
     // Param texture    - A valid SDL Texture, validation checks are not performed
-    // Param x,y    - Position x,y on the screen
+    // Param x,y        - Position x,y on the screen
     // Param section    - The portion of the texture we want to copy (nullptr for the entire texture)
-    // Param speed  - How much the camera movement affects the sprite
-	bool Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section = nullptr, SDL_Rect* adapter = nullptr, float speed = 1.0f);
+    // Param speed      - How much the camera movement affects the sprite
+    // Param invert     - If the texture has to be flipped horizontally
+	bool Blit(SDL_Texture* texture, int x, int y, bool invert, SDL_Rect* section = nullptr, SDL_Rect* adapter = nullptr, float speed = 1.0f);
 
     void SetRenderer(SDL_Renderer* _renderer);
     SDL_Renderer* GetRenderer() const;

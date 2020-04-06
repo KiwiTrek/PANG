@@ -14,6 +14,9 @@ ModuleTextures::ModuleTextures() : Module() {
 
 ModuleTextures::~ModuleTextures() {}
 
+SDL_Texture* ModuleTextures::GetTexture(int i) const { return textures[i]; }
+void ModuleTextures::SetTexture(SDL_Texture* _texture, int i) { textures[i] = _texture; }
+
 bool ModuleTextures::Init() {
     LOG("Init Image library");
     bool ret = true;
@@ -67,12 +70,4 @@ SDL_Texture* const ModuleTextures::Load(const char* path) {
     }
 
     return texture;
-}
-
-void ModuleTextures::SetTexture(SDL_Texture* _texture, int i) {
-    textures[i] = _texture;
-}
-
-SDL_Texture* ModuleTextures::GetTexture(int i) const {
-    return textures[i];
 }

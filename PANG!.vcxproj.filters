@@ -93,5 +93,8 @@
     <ClInclude Include="ModulePlayer.h">
       <Filter>Archivos de origen\Modules\Gameplay</Filter>
     </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>Archivos de origen\Utils</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

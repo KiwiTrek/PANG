@@ -23,6 +23,12 @@ public:
     //Called when two colliders are intersecting
     //and the module is registered as the listener
     virtual void OnCollision(Collider* c1, Collider* c2);
+
+    virtual bool GetInvertValue() const;
+    virtual void ChangeInvert();
+
+private:
+    bool invert = false;
 };
 
 #endif // __MODULE_H__

@@ -22,7 +22,7 @@ bool ModuleLevelOne::Start() {
 }
 
 UPDATE_STATUS ModuleLevelOne::Update() {
-    game->audio->DetectIntroEnd("Resources/BGM/fuji.ogg", 473);
+    game->audio->DetectIntroEnd("Resources/BGM/fuji.ogg", 472);
     return UPDATE_STATUS::UPDATE_CONTINUE;
 }
 
@@ -30,6 +30,6 @@ UPDATE_STATUS ModuleLevelOne::Update() {
 // Update: draw background
 UPDATE_STATUS ModuleLevelOne::PostUpdate() {
     // Draw everything --------------------------------------
-    game->render->Blit(backgroundTexture, 0, 0, &background, &backgroundAdapter);
+    game->render->Blit(backgroundTexture, 0, 0, GetInvertValue(), &background, &backgroundAdapter);
     return UPDATE_STATUS::UPDATE_CONTINUE;
 }

@@ -11,6 +11,18 @@ ModulePlayer::ModulePlayer() {
     position.y = 186;
 
     //Animation setter
+    idle.PushBack({ 12,112,25,31 });
+    idle.SetSpeed(0.0f);
+
+    shoot.PushBack({ 44,115,27,28 });
+    shoot.SetSpeed(0.0f);
+
+    moving.PushBack({ 12,2,29,31 });
+    moving.PushBack({ 46,3,30,30 });
+    moving.PushBack({ 80,2,29,31 });
+    moving.PushBack({ 114,3,27,30 });
+    moving.PushBack({ 148,3,29,30 });
+    moving.SetSpeed(0.2f);
 }
 ModulePlayer::~ModulePlayer() {}
 
@@ -19,6 +31,11 @@ void ModulePlayer::SetSpeed(int _speed) { speed = _speed; }
 iPoint ModulePlayer::GetPosition() const { return position; }
 void ModulePlayer::SetPosition(iPoint _position) { position = _position; }
 SDL_Texture* ModulePlayer::GetTexture() const { return texture; }
+bool ModulePlayer::GetInvertValue() const { return playerInvert; };
+void ModulePlayer::ChangeInvert() {
+    if (playerInvert == true) { playerInvert = false; }
+    else if (playerInvert == false) { playerInvert = true; }
+};
 
 bool ModulePlayer::Start()
 {
@@ -32,29 +49,30 @@ bool ModulePlayer::Start()
 UPDATE_STATUS ModulePlayer::Update()
 {
     //Reset the currentAnimation back to idle before updating the logic
-    //currentAnimation = &idleAnim;
+    currentAnimation = &idle;
 
-    if (game->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
-    {
-        //currentAnimation = &forwardAnim;
+    if (game->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+        currentAnimation = &moving;
+        if (GetInvertValue() == true) { ChangeInvert(); }
         position.x += speed;
     }
-    if (game->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
-    {
-        //currentAnimation = &backwardAnim;
+    if (game->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+        currentAnimation = &moving;
+        if (GetInvertValue() == false) { ChangeInvert(); }
         position.x -= speed;
-
+    }
+    if (game->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN) {
+        currentAnimation = &shoot; //Needs fix & Add sounds
     }
 
-    //currentAnimation->Update();
+    currentAnimation->Update();
 
     return UPDATE_STATUS::UPDATE_CONTINUE;
 }
 
 UPDATE_STATUS ModulePlayer::PostUpdate() {
-    //    SDL_Rect rect = currentAnimation->GetCurrentFrame();
-    SDL_Rect rect = { 12,2,29,31 };
-    game->render->Blit(texture, position.x, position.y - rect.h, &rect);
+    SDL_Rect rect = currentAnimation->GetCurrentFrame();
+    game->render->Blit(texture, position.x, position.y - rect.h, GetInvertValue(), &rect);
 
     return UPDATE_STATUS::UPDATE_CONTINUE;
 }
