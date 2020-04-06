@@ -96,5 +96,11 @@
     <ClInclude Include="Animation.h">
       <Filter>Archivos de origen\Utils</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleParticles.h">
+      <Filter>Archivos de origen\Modules\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Particle.h">
+      <Filter>Archivos de origen\Entities</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
