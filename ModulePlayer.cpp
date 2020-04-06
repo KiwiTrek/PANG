@@ -49,7 +49,8 @@ bool ModulePlayer::Start()
 UPDATE_STATUS ModulePlayer::Update()
 {
     //Reset the currentAnimation back to idle before updating the logic
-    currentAnimation = &idle;
+    if (returnToIdle == 0) { currentAnimation = &idle; }
+    else { --returnToIdle; }
 
     if (game->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
         currentAnimation = &moving;
@@ -63,6 +64,7 @@ UPDATE_STATUS ModulePlayer::Update()
     }
     if (game->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN) {
         currentAnimation = &shoot; //Needs fix & Add sounds
+        returnToIdle = 5;
     }
 
     currentAnimation->Update();
