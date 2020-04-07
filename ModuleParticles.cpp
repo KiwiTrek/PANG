@@ -18,10 +18,12 @@ bool ModuleParticles::Start() {
 	//Normal wire shot animation
 	NormalWire.anim.PushBack({ 0,55,8,33 });
 	NormalWire.anim.PushBack({ 17,53,8,35 });
-
 	NormalWire.anim.loop = true;
 	NormalWire.anim.speed = 0.3f;
 
+
+
+	
 	return true;
 }
 
@@ -55,7 +57,7 @@ UPDATE_STATUS ModuleParticles::PostUpdate() {
 	//Iterating all particle array and drawing any active particles
 	for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i) {
 		Particle* particle = particles[i];
-		if (particle != nullptr && particle->isAlive) { game->render->Blit(NormalWireTexture, particle->position.x, particle->position.y, &(particle->anim.GetCurrentFrame())); }
+		if (particle != nullptr && particle->isAlive) { game->render->Blit(NormalWireTexture, particle->position.x, particle->position.y-particle->frameCount, false, &(particle->anim.GetCurrentFrame())); }
 	}
 	return UPDATE_STATUS::UPDATE_CONTINUE;
 }

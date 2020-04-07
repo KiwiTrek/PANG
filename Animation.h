@@ -6,10 +6,9 @@
 
 class Animation {
 public:
-	bool loop = false; 
+	bool loop = true; 
     float speed = 1.0f;
     SDL_Rect frames[MAX_FRAMES];
-	int last_frame = 0;
 
 private:
 	float current_frame = 0.0f;
@@ -17,18 +16,23 @@ private:
 	int loop_count = 0;
 
 public:
-
+	
     float GetSpeed() const { return speed; }
     void SetSpeed(float _speed) { speed = _speed; }
-    SDL_Rect& GetCurrentFrame() { return frames[(int)current_frame]; }
+	int GetHeight() { return frames[0].h; }
+	int GetWidth() { return frames[0].w; }
 
-    void PushBack(const SDL_Rect& rect) { frames[last_frame++] = rect; }
+    void PushBack(const SDL_Rect& rect) { frames[total_frames++] = rect; }
     void Reset() { current_frame = 0; }
 	bool HasFinished() { return !loop && loop_count > 0; }
-    void Update() {
-        current_frame += speed;
-        if (current_frame >= last_frame) { current_frame = 0; }
-    }
+	void Update() {
+		current_frame += speed;
+		if (current_frame >= total_frames) {
+			current_frame = (loop) ? 0.0f : total_frames - 1;
+			++loop_count;
+		}
+	}
+	SDL_Rect& GetCurrentFrame() { return frames[(int)current_frame]; }
 };
 
 #endif

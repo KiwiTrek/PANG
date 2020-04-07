@@ -57,15 +57,22 @@ UPDATE_STATUS ModulePlayer::Update()
         currentAnimation = &moving;
         if (GetInvertValue() == true) { ChangeInvert(); }
         position.x += speed;
+		playerInvert = false;
     }
     if (game->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
         currentAnimation = &moving;
         if (GetInvertValue() == false) { ChangeInvert(); }
         position.x -= speed;
+		playerInvert = true;
     }
     if (game->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN) {
         currentAnimation = &shoot; //Needs fix & Add sounds
-		game->particles->AddParticle(game->particles->NormalWire, position.x, position.y, 0);
+		if (playerInvert){
+			game->particles->AddParticle(game->particles->NormalWire, position.x + (shoot.GetWidth() / 3), position.y - shoot.GetHeight());
+		}
+		if (!playerInvert) {
+			game->particles->AddParticle(game->particles->NormalWire, position.x + (shoot.GetWidth() / 2), position.y - shoot.GetHeight());
+		}
         returnToIdle = 5;
     }
 

@@ -7,11 +7,9 @@ Particle::Particle() {
 	speed.SetToZero();
 }
 
-Particle::Particle(const Particle& p) : anim(p.anim), position(p.position), speed(p.speed),
-frameCount(p.frameCount), lifetime(p.lifetime) {}
+Particle::Particle(const Particle& p) : anim(p.anim), position(p.position), speed(p.speed), frameCount(p.frameCount), lifetime(p.lifetime) {}
 
 bool Particle::Update() {
-	return true;
 	frameCount++;
 
 	// The particle is set to 'alive' when the delay has been reached
@@ -27,8 +25,7 @@ bool Particle::Update() {
 				return false;
 		}
 		// Otherwise the particle is destroyed when the animation is finished
-		else if (anim.HasFinished())
-			return false;
+		else if (anim.HasFinished()) { return false; }
 
 		// Update the position in the screen
 		position.x += speed.x;
