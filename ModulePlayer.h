@@ -22,8 +22,7 @@ public:
     UPDATE_STATUS Update() override;
     UPDATE_STATUS PostUpdate() override;
 
-    bool GetInvertValue() const override;
-    void ChangeInvert() override;
+ 
 
 private:
     iPoint position;

@@ -32,11 +32,7 @@ void ModulePlayer::SetSpeed(int _speed) { speed = _speed; }
 iPoint ModulePlayer::GetPosition() const { return position; }
 void ModulePlayer::SetPosition(iPoint _position) { position = _position; }
 SDL_Texture* ModulePlayer::GetTexture() const { return texture; }
-bool ModulePlayer::GetInvertValue() const { return playerInvert; };
-void ModulePlayer::ChangeInvert() {
-    if (playerInvert == true) { playerInvert = false; }
-    else if (playerInvert == false) { playerInvert = true; }
-};
+
 
 bool ModulePlayer::Start()
 {
@@ -53,24 +49,24 @@ UPDATE_STATUS ModulePlayer::Update()
     if (returnToIdle == 0) { currentAnimation = &idle; }
     else { --returnToIdle; }
 
-    if (game->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+    if (game->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && (returnToIdle == 0)) {
         currentAnimation = &moving;
-        if (GetInvertValue() == true) { ChangeInvert(); }
+        if (GetInvertValue()) { ChangeInvert(); }
         position.x += speed;
-		playerInvert = false;
+		//playerInvert = false;
     }
-    if (game->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+    if (game->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && (returnToIdle == 0)) {
         currentAnimation = &moving;
-        if (GetInvertValue() == false) { ChangeInvert(); }
+        if (!(GetInvertValue())) { ChangeInvert(); }
         position.x -= speed;
-		playerInvert = true;
+		//playerInvert = true;
     }
     if (game->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN) {
         currentAnimation = &shoot; //Needs fix & Add sounds
-		if (playerInvert){
+		if (GetInvertValue()){
 			game->particles->AddParticle(game->particles->NormalWire, position.x + (shoot.GetWidth() / 3), position.y - shoot.GetHeight());
 		}
-		if (!playerInvert) {
+		if (!(GetInvertValue())) {
 			game->particles->AddParticle(game->particles->NormalWire, position.x + (shoot.GetWidth() / 2), position.y - shoot.GetHeight());
 		}
         returnToIdle = 5;
