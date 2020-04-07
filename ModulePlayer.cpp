@@ -4,6 +4,7 @@
 #include "ModuleRender.h"
 #include "ModulePlayer.h"
 #include "ModuleParticles.h"
+#include "Particle.h"
 
 #include "SDL/include/SDL_scancode.h"
 
@@ -63,13 +64,14 @@ UPDATE_STATUS ModulePlayer::Update()
     }
     if (game->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN) {
         currentAnimation = &shoot; //Needs fix & Add sounds
-		if (GetInvertValue()){
-			game->particles->AddParticle(game->particles->NormalWire, position.x + (shoot.GetWidth() / 3), position.y - shoot.GetHeight());
+		
+		if (GetInvertValue()) {
+			game->particles->AddParticle(game->particles->NormalWire, position.x + (shoot.GetWidth() / 3), position.y - shoot.GetHeight()-3);
 		}
-		if (!(GetInvertValue())) {
-			game->particles->AddParticle(game->particles->NormalWire, position.x + (shoot.GetWidth() / 2), position.y - shoot.GetHeight());
-		}
-        returnToIdle = 5;
+		if (!GetInvertValue()) {
+			game->particles->AddParticle(game->particles->NormalWire, position.x + (shoot.GetWidth() / 2), position.y - shoot.GetHeight()-3);
+			returnToIdle = 5;
+		}	
     }
 
     currentAnimation->Update();

@@ -23,7 +23,7 @@ public:
 	iPoint position;
 
 	// Defines the speed at which the particle will move (pixels per second)
-	iPoint speed;
+	fPoint speed;
 
 	// A set of rectangle sprites
 	Animation anim;
@@ -38,6 +38,8 @@ public:
 
 	// Defines the total amount of frames during which the particle will be active
 	uint lifetime = 0;
+
+	
 };
 
 #endif //__PARTICLE_H__

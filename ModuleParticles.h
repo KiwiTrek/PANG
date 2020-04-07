@@ -4,8 +4,9 @@
 #include "Module.h"
 #include "Globals.h"
 #include "Particle.h"
+#include "Game.h"
 
-#define MAX_ACTIVE_PARTICLES 200
+#define MAX_ACTIVE_PARTICLES 2500
 
 struct SDL_Texture;
 
@@ -55,7 +56,7 @@ private:
 public:
 	//Shots (and others) go here
 	Particle NormalWire;
-
+	SDL_Rect NormalWireRectStart = { 0,55,8,33 };
 };
 
 #endif // !__MODULEPARTICLES_H__
