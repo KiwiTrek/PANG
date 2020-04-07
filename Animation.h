@@ -5,11 +5,16 @@
 #define MAX_FRAMES 25
 
 class Animation {
-private:
-    float current_frame = 0.0f;
-    int last_frame = 0;
+public:
+	bool loop = false; 
     float speed = 1.0f;
     SDL_Rect frames[MAX_FRAMES];
+	int last_frame = 0;
+
+private:
+	float current_frame = 0.0f;
+	int total_frames = 0;
+	int loop_count = 0;
 
 public:
 
@@ -19,7 +24,7 @@ public:
 
     void PushBack(const SDL_Rect& rect) { frames[last_frame++] = rect; }
     void Reset() { current_frame = 0; }
-
+	bool HasFinished() { return !loop && loop_count > 0; }
     void Update() {
         current_frame += speed;
         if (current_frame >= last_frame) { current_frame = 0; }

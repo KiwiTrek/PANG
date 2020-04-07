@@ -7,7 +7,7 @@
 #include "ModuleAudio.h"
 #include "ModulePlayer.h"
 #include "ModuleLevelOne.h"
-//#include "ModuleParticles.h"
+#include "ModuleParticles.h"
 //#include "ModuleEnemies.h"
 //#include "ModuleCollisions.h"
 #include "ModuleRender.h"
@@ -23,12 +23,12 @@ Game::Game() {
     
     modules[4] = levelOne = new ModuleLevelOne();
     modules[5] = player = new ModulePlayer();
-    //modules[6] = particles = new ModuleParticles();
+    modules[6] = particles = new ModuleParticles();
     //modules[7] = enemies = new ModuleEnemies();
 
     //modules[8] = collisions = new ModuleCollisions();
 
-    modules[6] = render = new ModuleRender(); //should be 9
+    modules[7] = render = new ModuleRender(); //should be 9
 }
 
 Game::~Game() {

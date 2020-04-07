@@ -2,11 +2,10 @@
 #define __MODULE_PARTICLES_H__
 
 #include "Module.h"
-
 #include "Globals.h"
 #include "Particle.h"
 
-#define MAX_ACTIVE_PARTICLES 100
+#define MAX_ACTIVE_PARTICLES 200
 
 struct SDL_Texture;
 
@@ -27,11 +26,11 @@ public:
 	// Called at the middle of the application loop
 	// Iterates all the particles and calls its Update()
 	// Removes any "dead" particles
-	update_status Update() override;
+	UPDATE_STATUS Update() override;
 
 	// Called at the end of the application loop
 	// Iterates all the particles and draws them
-	update_status PostUpdate() override;
+	UPDATE_STATUS PostUpdate() override;
 
 	// Called on application exit
 	// Destroys all active particles left in the array
@@ -44,8 +43,8 @@ public:
 	void AddParticle(const Particle& particle, int x, int y, uint delay = 0);
 
 private:
-	// Particles spritesheet loaded into an SDL Texture
-	SDL_Texture* texture = nullptr;
+	// Shot (and other) textures go here
+	SDL_Texture* NormalWireTexture = nullptr;
 
 	// An array to store and handle all the particles
 	Particle* particles[MAX_ACTIVE_PARTICLES] = { nullptr };
@@ -54,11 +53,9 @@ private:
 	uint lastParticle = 0;
 
 public:
-	//Template particle for an explosion
-	Particle explosion;
+	//Shots (and others) go here
+	Particle NormalWire;
 
-	//Template particle for a laser
-	Particle laser;
 };
 
 #endif // !__MODULEPARTICLES_H__

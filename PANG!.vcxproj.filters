@@ -58,6 +58,12 @@
     <ClCompile Include="ModulePlayer.cpp">
       <Filter>Archivos de origen\Modules\Gameplay</Filter>
     </ClCompile>
+    <ClCompile Include="Particle.cpp">
+      <Filter>Archivos de origen\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleParticles.cpp">
+      <Filter>Archivos de origen\Modules\Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
