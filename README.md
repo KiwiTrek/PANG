@@ -28,7 +28,7 @@ Recreation of the 1989 classic from arcades by Bruhmentium INC:
  - Idle
  - Walking
  - Shoot
-- Particle can now shoot the basic claw shot
+- Player can now shoot the basic claw shot
 
 #### 0.1:
 - Added Game folder:
