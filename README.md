@@ -47,6 +47,6 @@ Recreation of the 1989 classic from arcades by Bruhmentium INC:
 ## Bugs detected
 #### 0.2:
 - Player:
- - Can shoot multiple projectiles at the same time
+  - Can shoot multiple projectiles at the same time
 - Particle:
- - Needs calibration and polishing
+  - Needs calibration and polishing
