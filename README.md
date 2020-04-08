@@ -17,7 +17,19 @@ Recreation of the 1989 classic from arcades by Bruhmentium INC:
 #### Check for more info at the [wiki](https://github.com/WillyTrek19/PANG/wiki)
 
 ## Changelog
-### Current version: 0.1
+### Current version: 0.2
+#### 0.2:
+- Removed unnecessary libraries and resources
+- Added Modules:
+  - Particles
+- Added animation support
+- Added particle handler
+- Player has new animations:
+ - Idle
+ - Walking
+ - Shoot
+- Particle can now shoot the basic claw shot
+
 #### 0.1:
 - Added Game folder:
   - Main loop
@@ -31,3 +43,10 @@ Recreation of the 1989 classic from arcades by Bruhmentium INC:
 - Added Math Utils
 - Created Level 1 display (with no collisions)
 - Created Player display (with no collisions nor animations)
+
+## Bugs detected
+#### 0.2:
+- Player:
+ - Can shoot multiple projectiles at the same time
+- Particle:
+ - Needs calibration and polishing
