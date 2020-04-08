@@ -4,6 +4,8 @@
 #include "Animation.h"
 #include "p2Point.h"
 
+struct Collider;
+
 struct Particle
 {
 public:
@@ -12,6 +14,9 @@ public:
 
     // Copy constructor
     Particle(const Particle& p);
+
+    // Destructor
+    ~Particle();
 
     // Called in ModuleParticles' Update
     // Handles the logic of the particle
@@ -39,7 +44,8 @@ public:
     // Defines the total amount of frames during which the particle will be active
     uint lifetime = 0;
 
-    
+    // The particle's collider
+    Collider* collider = nullptr;
 };
 
 #endif //__PARTICLE_H__

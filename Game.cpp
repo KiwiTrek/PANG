@@ -9,7 +9,7 @@
 #include "ModuleLevelOne.h"
 #include "ModuleParticles.h"
 //#include "ModuleEnemies.h"
-//#include "ModuleCollisions.h"
+#include "ModuleCollisions.h"
 #include "ModuleRender.h"
 
 Game::Game() {
@@ -26,9 +26,9 @@ Game::Game() {
     modules[6] = particles = new ModuleParticles();
     //modules[7] = enemies = new ModuleEnemies();
 
-    //modules[8] = collisions = new ModuleCollisions();
+    modules[7] = collisions = new ModuleCollisions(); //should be 8
 
-    modules[7] = render = new ModuleRender(); //should be 9
+    modules[8] = render = new ModuleRender(); //should be 9
 }
 
 Game::~Game() {

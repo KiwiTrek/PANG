@@ -3,6 +3,7 @@
 #include "ModuleAudio.h"
 #include "ModuleTextures.h"
 #include "ModuleRender.h"
+#include "ModuleCollisions.h"
 
 ModuleLevelOne::ModuleLevelOne() {
     // Background
@@ -18,6 +19,12 @@ bool ModuleLevelOne::Start() {
 
     backgroundTexture = game->textures->Load("Resources/Sprites/Backgrounds.png");
     game->audio->PlayMusic("Resources/BGM/introFuji.ogg");
+
+    // Colliders ---
+    game->collisions->AddCollider({ 0, 186, 384, 7 }, Collider::Type::WALL);
+    game->collisions->AddCollider({ 0, 0, 8, 193 }, Collider::Type::WALL);
+    game->collisions->AddCollider({ 0, 0, 384, 7 }, Collider::Type::WALL);
+    game->collisions->AddCollider({ 376, 0, 8, 193 }, Collider::Type::WALL);
     return true;
 }
 

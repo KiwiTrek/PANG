@@ -41,6 +41,8 @@ public:
     // Param invert     - If the texture has to be flipped horizontally
 	bool Blit(SDL_Texture* texture, int x, int y, bool invert, SDL_Rect* section = nullptr, SDL_Rect* adapter = nullptr, float speed = 1.0f);
 
+    bool DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a, float speed = 1.0f);
+
     void SetRenderer(SDL_Renderer* _renderer);
     SDL_Renderer* GetRenderer() const;
 
