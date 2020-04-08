@@ -44,9 +44,9 @@ bool ModulePlayer::Start()
     shotSoundIndex = game->audio->LoadFx("Resources/SFX/shotClaw.wav");
 
     position.x = 177;
-    position.y = 186;
+    position.y = 186 - idle.GetHeight();
 
-    collider = game->collisions->AddCollider({ position.x, position.y, idle.GetWidth(), -idle.GetHeight() }, Collider::Type::PLAYER, this); // adds a collider to the player
+    collider = game->collisions->AddCollider({ position.x, position.y, idle.GetWidth(), idle.GetHeight() }, Collider::Type::PLAYER, this); // adds a collider to the player
 
     return true;
 }
@@ -95,7 +95,7 @@ UPDATE_STATUS ModulePlayer::Update()
 UPDATE_STATUS ModulePlayer::PostUpdate() {
     if (!destroyed) {
         SDL_Rect rect = currentAnimation->GetCurrentFrame();
-        game->render->Blit(texture, position.x, position.y - rect.h, GetInvertValue(), &rect);
+        game->render->Blit(texture, position.x, position.y, GetInvertValue(), &rect);
     }
 
     return UPDATE_STATUS::UPDATE_CONTINUE;
