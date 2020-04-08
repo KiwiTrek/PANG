@@ -1,5 +1,6 @@
 #include "Game.h"
 #include "ModuleTextures.h"
+#include "ModuleAudio.h"
 #include "ModuleInput.h"
 #include "ModuleRender.h"
 #include "ModulePlayer.h"
@@ -33,13 +34,16 @@ void ModulePlayer::SetSpeed(int _speed) { speed = _speed; }
 iPoint ModulePlayer::GetPosition() const { return position; }
 void ModulePlayer::SetPosition(iPoint _position) { position = _position; }
 SDL_Texture* ModulePlayer::GetTexture() const { return texture; }
+uint ModulePlayer::GetShotSoundIndex() const { return shotSoundIndex; }
+void ModulePlayer::SetShotSoundIndex(uint _shotSoundIndex) { shotSoundIndex = _shotSoundIndex; }
 
 
 bool ModulePlayer::Start()
 {
     LOG("Loading player textures");
 
-    texture = game->textures->Load("Resources/Sprites/player.png"); // arcade version
+    texture = game->textures->Load("Resources/Sprites/Player.png"); // arcade version
+    shotSoundIndex = game->audio->LoadFx("Resources/SFX/shotClaw.wav");
 
     return true;
 }
@@ -54,24 +58,24 @@ UPDATE_STATUS ModulePlayer::Update()
         currentAnimation = &moving;
         if (GetInvertValue()) { ChangeInvert(); }
         position.x += speed;
-		//playerInvert = false;
     }
     if (game->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && (returnToIdle == 0)) {
         currentAnimation = &moving;
         if (!(GetInvertValue())) { ChangeInvert(); }
         position.x -= speed;
-		//playerInvert = true;
     }
     if (game->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN) {
-        currentAnimation = &shoot; //Needs fix & Add sounds
-		
-		if (GetInvertValue()) {
-			game->particles->AddParticle(game->particles->NormalWire, position.x + (shoot.GetWidth() / 3), position.y - shoot.GetHeight()-3);
-		}
-		if (!GetInvertValue()) {
-			game->particles->AddParticle(game->particles->NormalWire, position.x + (shoot.GetWidth() / 2), position.y - shoot.GetHeight()-3);
-			returnToIdle = 5;
-		}	
+        game->audio->PlayFx(shotSoundIndex);
+        currentAnimation = &shoot;
+        
+        if (GetInvertValue()) {
+            game->particles->AddParticle(game->particles->NormalWire, position.x + (shoot.GetWidth() / 3), position.y - shoot.GetHeight()-3);
+        }
+        if (!GetInvertValue()) {
+            game->particles->AddParticle(game->particles->NormalWire, position.x + (shoot.GetWidth() / 2), position.y - shoot.GetHeight()-3);
+        }
+
+        returnToIdle = 5;
     }
 
     currentAnimation->Update();

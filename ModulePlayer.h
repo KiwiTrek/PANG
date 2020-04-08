@@ -17,6 +17,8 @@ public:
     iPoint GetPosition() const;
     void SetPosition(iPoint _position);
     SDL_Texture* GetTexture() const;
+    uint GetShotSoundIndex() const;
+    void SetShotSoundIndex(uint _shotSoundIndex);
 
     bool Start() override;
     UPDATE_STATUS Update() override;
@@ -40,6 +42,9 @@ private:
     // The pointer to the current player animation
     // It will be switched depending on the player's movement direction
     Animation* currentAnimation = nullptr;
+
+    //Player Sound
+    uint shotSoundIndex;
 };
 
 #endif //__MODULE_PLAYER_H__
