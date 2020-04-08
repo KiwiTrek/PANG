@@ -46,7 +46,7 @@ bool ModulePlayer::Start()
     position.x = 177;
     position.y = 186 - idle.GetHeight();
 
-    collider = game->collisions->AddCollider({ position.x, position.y, idle.GetWidth(), idle.GetHeight() }, Collider::Type::PLAYER, this); // adds a collider to the player
+    collider = game->collisions->AddCollider({ position.x, position.y, idle.GetWidth(), idle.GetHeight() }, Collider::TYPE::PLAYER, this); // adds a collider to the player
 
     return true;
 }
@@ -72,16 +72,27 @@ UPDATE_STATUS ModulePlayer::Update()
         currentAnimation = &shoot;
         
         if (GetInvertValue()) {
-            game->particles->AddParticle(game->particles->NormalWire, position.x + (shoot.GetWidth() / 3), position.y - shoot.GetHeight()-3);
+            game->particles->AddParticle(game->particles->NormalWire, position.x + (shoot.GetWidth() / 3), position.y -3, Collider::TYPE::PLAYER_SHOT);
         }
         if (!GetInvertValue()) {
-            game->particles->AddParticle(game->particles->NormalWire, position.x + (shoot.GetWidth() / 2), position.y - shoot.GetHeight()-3);
+            game->particles->AddParticle(game->particles->NormalWire, position.x + (shoot.GetWidth() / 2), position.y -3, Collider::TYPE::PLAYER_SHOT);
         }
 
         returnToIdle = 5;
     }
 
-    collider->SetPos(position.x, position.y);
+
+    if (currentAnimation == &idle) {
+        collider->SetPos(position.x, position.y, idle.GetWidth(),  idle.GetHeight());
+    }
+    else if (currentAnimation == &moving) {
+        collider->SetPos(position.x, position.y, moving.GetWidth(), moving.GetHeight());
+    }
+    else if (currentAnimation == &shoot) {
+        collider->SetPos(position.x, position.y, shoot.GetWidth(), shoot.GetHeight());
+    }
+
+
     currentAnimation->Update();
 
     if (destroyed) {

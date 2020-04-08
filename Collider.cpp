@@ -1,10 +1,12 @@
 #include "Collider.h"
 
-Collider::Collider(SDL_Rect rectangle, Type type, Module* listener) : rect(rectangle), type(type), listener(listener) {}
+Collider::Collider(SDL_Rect _rect, TYPE _type, Module* _listener) : rect(_rect), type(_type), listener(_listener) {}
 
-void Collider::SetPos(int x, int y) {
-    rect.x = x;
-    rect.y = y;
+void Collider::SetPos(int _x, int _y, int _w, int _h) {
+    rect.x = _x;
+    rect.y = _y;
+    rect.w = _w;
+    rect.h = _h;
 }
 
 bool Collider::Intersects(const SDL_Rect& r) const {

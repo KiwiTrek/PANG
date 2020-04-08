@@ -10,6 +10,7 @@
 #define MAX_ACTIVE_PARTICLES 2500
 
 struct SDL_Texture;
+struct Collider;
 
 class ModuleParticles : public Module
 {
@@ -42,8 +43,10 @@ public:
     // Param particle	- A template particle from which the new particle will be created
     // Param x, y		- Position x,y in the screen (upper left axis)
     // Param delay		- Delay time from the moment the function is called until the particle is displayed in screen
-    void AddParticle(const Particle& particle, int x, int y, Collider::Type colliderType = Collider::Type::NONE, uint delay = 0);
+    void AddParticle(const Particle& particle, int x, int y, Collider::TYPE colliderType = Collider::TYPE::NONE, uint delay = 0);
 
+    // Collision callback, called when the player intersects with another collider
+    void OnCollision(Collider* c1, Collider* c2) override;
 private:
     // Shot (and other) textures go here
     SDL_Texture* NormalWireTexture = nullptr;
@@ -53,6 +56,12 @@ private:
 
     // An index to the last added particle
     uint lastParticle = 0;
+
+    // The particle's collider
+    Collider* collider = nullptr;
+
+    // A flag to detect when the particle has been destroyed
+    bool destroyed = false;
 
 public:
     //Shots (and others) go here

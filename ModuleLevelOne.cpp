@@ -21,10 +21,10 @@ bool ModuleLevelOne::Start() {
     game->audio->PlayMusic("Resources/BGM/introFuji.ogg");
 
     // Colliders ---
-    game->collisions->AddCollider({ 0, 186, 384, 7 }, Collider::Type::WALL);
-    game->collisions->AddCollider({ 0, 0, 8, 193 }, Collider::Type::WALL);
-    game->collisions->AddCollider({ 0, 0, 384, 7 }, Collider::Type::WALL);
-    game->collisions->AddCollider({ 376, 0, 8, 193 }, Collider::Type::WALL);
+    game->collisions->AddCollider({ 0, 186, 384, 7 }, Collider::TYPE::WALL);
+    game->collisions->AddCollider({ 0, 0, 8, 193 }, Collider::TYPE::WALL);
+    game->collisions->AddCollider({ 0, 0, 384, 7 }, Collider::TYPE::WALL);
+    game->collisions->AddCollider({ 376, 0, 8, 193 }, Collider::TYPE::WALL);
     return true;
 }
 

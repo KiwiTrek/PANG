@@ -6,7 +6,7 @@
 class Module;
 
 struct Collider {
-    enum Type {
+    enum TYPE {
         NONE = -1,
         WALL,
         PLAYER,
@@ -17,16 +17,16 @@ struct Collider {
     };
 
     //Methods
-    Collider(SDL_Rect rectangle, Type type, Module* listener = nullptr);
+    Collider(SDL_Rect _rect, TYPE _type, Module* _listener = nullptr);
 
-    void SetPos(int x, int y);
+    void SetPos(int _x, int _y, int _w, int _h);
 
     bool Intersects(const SDL_Rect& r) const;
 
     //Variables
     SDL_Rect rect;
     bool pendingToDelete = false;
-    Type type;
+    TYPE type;
     Module* listener = nullptr;
 };
 

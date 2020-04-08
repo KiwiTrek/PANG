@@ -8,35 +8,35 @@
 ModuleCollisions::ModuleCollisions() {
     for (uint i = 0; i < MAX_COLLIDERS; ++i) { colliders[i] = nullptr; }
 
-    matrix[Collider::Type::WALL][Collider::Type::WALL] = false;
-    matrix[Collider::Type::WALL][Collider::Type::PLAYER] = true;
-    matrix[Collider::Type::WALL][Collider::Type::BALLOON] = true;
-    matrix[Collider::Type::WALL][Collider::Type::ANIMAL] = false;
-    matrix[Collider::Type::WALL][Collider::Type::PLAYER_SHOT] = true;
+    matrix[Collider::TYPE::WALL][Collider::TYPE::WALL] = false;
+    matrix[Collider::TYPE::WALL][Collider::TYPE::PLAYER] = true;
+    matrix[Collider::TYPE::WALL][Collider::TYPE::BALLOON] = true;
+    matrix[Collider::TYPE::WALL][Collider::TYPE::ANIMAL] = false;
+    matrix[Collider::TYPE::WALL][Collider::TYPE::PLAYER_SHOT] = true;
 
-    matrix[Collider::Type::PLAYER][Collider::Type::WALL] = true;
-    matrix[Collider::Type::PLAYER][Collider::Type::PLAYER] = false;
-    matrix[Collider::Type::PLAYER][Collider::Type::BALLOON] = true;
-    matrix[Collider::Type::PLAYER][Collider::Type::ANIMAL] = true;
-    matrix[Collider::Type::PLAYER][Collider::Type::PLAYER_SHOT] = false;
+    matrix[Collider::TYPE::PLAYER][Collider::TYPE::WALL] = true;
+    matrix[Collider::TYPE::PLAYER][Collider::TYPE::PLAYER] = false;
+    matrix[Collider::TYPE::PLAYER][Collider::TYPE::BALLOON] = true;
+    matrix[Collider::TYPE::PLAYER][Collider::TYPE::ANIMAL] = true;
+    matrix[Collider::TYPE::PLAYER][Collider::TYPE::PLAYER_SHOT] = false;
 
-    matrix[Collider::Type::BALLOON][Collider::Type::WALL] = true;
-    matrix[Collider::Type::BALLOON][Collider::Type::PLAYER] = true;
-    matrix[Collider::Type::BALLOON][Collider::Type::BALLOON] = true;
-    matrix[Collider::Type::BALLOON][Collider::Type::ANIMAL] = false;
-    matrix[Collider::Type::BALLOON][Collider::Type::PLAYER_SHOT] = true;
+    matrix[Collider::TYPE::BALLOON][Collider::TYPE::WALL] = true;
+    matrix[Collider::TYPE::BALLOON][Collider::TYPE::PLAYER] = true;
+    matrix[Collider::TYPE::BALLOON][Collider::TYPE::BALLOON] = true;
+    matrix[Collider::TYPE::BALLOON][Collider::TYPE::ANIMAL] = false;
+    matrix[Collider::TYPE::BALLOON][Collider::TYPE::PLAYER_SHOT] = true;
 
-    matrix[Collider::Type::ANIMAL][Collider::Type::WALL] = false;
-    matrix[Collider::Type::ANIMAL][Collider::Type::PLAYER] = true;
-    matrix[Collider::Type::ANIMAL][Collider::Type::BALLOON] = false;
-    matrix[Collider::Type::ANIMAL][Collider::Type::ANIMAL] = false;
-    matrix[Collider::Type::ANIMAL][Collider::Type::PLAYER_SHOT] = true;
+    matrix[Collider::TYPE::ANIMAL][Collider::TYPE::WALL] = false;
+    matrix[Collider::TYPE::ANIMAL][Collider::TYPE::PLAYER] = true;
+    matrix[Collider::TYPE::ANIMAL][Collider::TYPE::BALLOON] = false;
+    matrix[Collider::TYPE::ANIMAL][Collider::TYPE::ANIMAL] = false;
+    matrix[Collider::TYPE::ANIMAL][Collider::TYPE::PLAYER_SHOT] = true;
 
-    matrix[Collider::Type::PLAYER_SHOT][Collider::Type::WALL] = true;
-    matrix[Collider::Type::PLAYER_SHOT][Collider::Type::PLAYER] = false;
-    matrix[Collider::Type::PLAYER_SHOT][Collider::Type::BALLOON] = true;
-    matrix[Collider::Type::PLAYER_SHOT][Collider::Type::ANIMAL] = true;
-    matrix[Collider::Type::PLAYER_SHOT][Collider::Type::PLAYER_SHOT] = false;
+    matrix[Collider::TYPE::PLAYER_SHOT][Collider::TYPE::WALL] = true;
+    matrix[Collider::TYPE::PLAYER_SHOT][Collider::TYPE::PLAYER] = false;
+    matrix[Collider::TYPE::PLAYER_SHOT][Collider::TYPE::BALLOON] = true;
+    matrix[Collider::TYPE::PLAYER_SHOT][Collider::TYPE::ANIMAL] = true;
+    matrix[Collider::TYPE::PLAYER_SHOT][Collider::TYPE::PLAYER_SHOT] = false;
 }
 
 // Destructor
@@ -93,23 +93,23 @@ void ModuleCollisions::DebugDraw() {
         if (colliders[i] == nullptr) { continue; }
 
         switch (colliders[i]->type) {
-        case Collider::Type::NONE: // white
+        case Collider::TYPE::NONE: // white
             game->render->DrawQuad(colliders[i]->rect, 255, 255, 255, alpha);
             break;
-        case Collider::Type::WALL: // blue
-            game->render->DrawQuad(colliders[i]->rect, 0, 0, 255, alpha);
+        case Collider::TYPE::WALL: // magenta
+            game->render->DrawQuad(colliders[i]->rect, 255, 255, 0, alpha);
             break;
-        case Collider::Type::PLAYER: // green
+        case Collider::TYPE::PLAYER: // green
             game->render->DrawQuad(colliders[i]->rect, 0, 255, 0, alpha);
             break;
-        case Collider::Type::BALLOON: // red
+        case Collider::TYPE::BALLOON: // red
             game->render->DrawQuad(colliders[i]->rect, 255, 0, 0, alpha);
             break;
-        case Collider::Type::ANIMAL: // yellow
+        case Collider::TYPE::ANIMAL: // yellow
             game->render->DrawQuad(colliders[i]->rect, 0, 255, 255, alpha);
             break;
-        case Collider::Type::PLAYER_SHOT: // magenta
-            game->render->DrawQuad(colliders[i]->rect, 255, 255, 0, alpha);
+        case Collider::TYPE::PLAYER_SHOT: // blue
+            game->render->DrawQuad(colliders[i]->rect, 0, 0, 255 , alpha);
             break;
         }
     }
@@ -129,7 +129,7 @@ bool ModuleCollisions::CleanUp() {
     return true;
 }
 
-Collider* ModuleCollisions::AddCollider(SDL_Rect rect, Collider::Type type, Module* listener) {
+Collider* ModuleCollisions::AddCollider(SDL_Rect rect, Collider::TYPE type, Module* listener) {
     Collider* ret = nullptr;
 
     for (uint i = 0; i < MAX_COLLIDERS; ++i) {
