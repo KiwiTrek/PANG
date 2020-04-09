@@ -10,7 +10,7 @@ Particle::Particle() {
 
 Particle::Particle(const Particle& p) : anim(p.anim), position(p.position), speed(p.speed), frameCount(p.frameCount), lifetime(p.lifetime) {}
 
-Particle::~Particle() { if (collider != nullptr) { collider->pendingToDelete = true; } }
+Particle::~Particle() { if (collider != nullptr) { collider->SetPendingToDelete(true); } }
 
 bool Particle::Update() {
     frameCount++;
@@ -37,3 +37,19 @@ bool Particle::Update() {
     }
     return true;
 }
+
+void Particle::SetPositionX(const int _positionX) { position.x = _positionX; }
+void Particle::SetPositionY(const int _positionY) { position.y = _positionY; }
+int Particle::GetPositionX() const { return position.x; }
+int Particle::GetPositionY() const { return position.y; }
+void Particle::SetFSpeedY(const float _speedY) { speed.y = _speedY; };
+void Particle::SetAnimPushBack(const SDL_Rect _rect) { anim.PushBack(_rect); }
+SDL_Rect Particle::GetCurrentAnim() { return anim.GetCurrentFrame(); }
+void Particle::SetAnimLoop(bool _loop) { anim.SetLoop(_loop); }
+void Particle::SetAnimSpeed(float _speed) { anim.SetSpeed(_speed); }
+bool Particle::CheckIsAlive() const { return isAlive; };
+void Particle::SetFrameCount(const int _frameCount) { frameCount = _frameCount; }
+void Particle::SetLifetime(const uint _lifetime) { lifetime = _lifetime; }
+uint Particle::GetLifetime() const { return lifetime; }
+void Particle::SetCollider(Collider* _collider) { collider = _collider; }
+Collider* Particle::GetCollider() const { return collider; }

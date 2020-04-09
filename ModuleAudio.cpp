@@ -84,7 +84,7 @@ void ModuleAudio::DetectIntroEnd(const char* path, int s) {
     if (introCounter >= 0) { ++introCounter; }
     
     if (introCounter == s) {
-        game->audio->PlayMusic(path);
+        game->GetModuleAudio()->PlayMusic(path);
         introCounter = -1;
     }
 }

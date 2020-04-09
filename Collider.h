@@ -17,12 +17,29 @@ struct Collider {
     };
 
     //Methods
-    Collider(SDL_Rect _rect, TYPE _type, Module* _listener = nullptr);
+    Collider(SDL_Rect _rect, TYPE _type, Module* _listener = nullptr) : rect(_rect), type(_type), listener(_listener) {}
 
-    void SetPos(int _x, int _y, int _w, int _h);
+    void SetPos(int _x, int _y, int _w, int _h) {
+        rect.x = _x;
+        rect.y = _y;
+        rect.w = _w;
+        rect.h = _h;
+    }
 
-    bool Intersects(const SDL_Rect& r) const;
+    bool Intersects(const SDL_Rect& r) const {
+        return (rect.x < r.x + r.w &&
+            rect.x + rect.w > r.x &&
+            rect.y < r.y + r.h &&
+            rect.h + rect.y > r.y);
+    }
 
+    bool CheckPendingToDelete() const { return pendingToDelete; }
+    void SetPendingToDelete(bool _pendingToDelete) { pendingToDelete = _pendingToDelete; }
+    SDL_Rect GetRect() { return rect; }
+    TYPE GetType() { return type; }
+    Module* GetListener() { return listener; }
+
+private:
     //Variables
     SDL_Rect rect;
     bool pendingToDelete = false;

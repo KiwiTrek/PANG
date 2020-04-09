@@ -67,3 +67,14 @@ bool Game::CleanUp() {
 
     return ret;
 }
+
+ModuleWindow* Game::GetModuleWindow() const { return window; }
+ModuleInput* Game::GetModuleInput() const { return input; }
+ModuleTextures* Game::GetModuleTextures() const { return textures; }
+ModuleAudio* Game::GetModuleAudio() const { return audio; }
+ModulePlayer* Game::GetModulePlayer() const { return player; }
+ModuleLevelOne* Game::GetModuleLevelOne() const { return levelOne; }
+//ModuleEnemies* Game::GetModuleEnemies() const { return enemies; }
+ModuleParticles* Game::GetModuleParticles() const { return particles; }
+ModuleCollisions* Game::GetModuleCollisions() const { return collisions; }
+ModuleRender* Game::GetModuleRender() const { return render; }

@@ -20,7 +20,7 @@ ModuleParticles::ModuleParticles() {
             j++;
             counter = 0;
         }
-        NormalWire.anim.PushBack({ 0 + (i * 17),155 - (i * 2) - j,9,33 + (i * 2) + j });
+        NormalWire.SetAnimPushBack({ 0 + (i * 17),155 - (i * 2) - j,9,33 + (i * 2) + j });
     }
 
     counter = 0;
@@ -32,7 +32,7 @@ ModuleParticles::ModuleParticles() {
             j++;
             counter = 0;
         }
-        NormalWire.anim.PushBack({ 407 + (i * 17),103 - (i * 2) - j,9,85 + (i * 2) + j });
+        NormalWire.SetAnimPushBack({ 407 + (i * 17),103 - (i * 2) - j,9,85 + (i * 2) + j });
 
     }
     counter = 2;
@@ -44,20 +44,20 @@ ModuleParticles::ModuleParticles() {
             j++;
             counter = 0;
         }
-        NormalWire.anim.PushBack({ 797 + (i * 17),52 - (i * 2) - j,9,136 + (i * 2) + j });
+        NormalWire.SetAnimPushBack({ 797 + (i * 17),52 - (i * 2) - j,9,136 + (i * 2) + j });
     }
 
-    NormalWire.anim.loop = false;
-    NormalWire.anim.speed = 0.44f; //0.44f
-    NormalWire.speed.y = -0.66f; //-0.66f
-    NormalWire.lifetime = 250;
+    NormalWire.SetAnimLoop(false);
+    NormalWire.SetAnimSpeed(0.44f); //0.44f
+    NormalWire.SetFSpeedY(-0.66f); //-0.66f
+    NormalWire.SetLifetime(250);
 }
 
 ModuleParticles::~ModuleParticles() {}
 
 bool ModuleParticles::Start() {
     LOG("Loading particles");
-    NormalWireTexture = game->textures->Load("Resources/Sprites/NormalWire.png");
+    NormalWireTexture = game->GetModuleTextures()->Load("Resources/Sprites/NormalWire.png");
 
 
 
@@ -89,7 +89,7 @@ UPDATE_STATUS ModuleParticles::Update() {
             delete particle;
             particles[i] = nullptr;
         }
-        if (!(particle->isAlive)) {
+        if (!(particle->CheckIsAlive())) {
             return UPDATE_STATUS::UPDATE_STOP;
         }
     }
@@ -100,7 +100,7 @@ UPDATE_STATUS ModuleParticles::PostUpdate() {
     //Iterating all particle array and drawing any active particles
     for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i) {
         Particle* particle = particles[i];
-        if (particle != nullptr && particle->isAlive && particle->lifetime != 0) { game->render->Blit(NormalWireTexture, particle->position.x, particle->position.y, false, &(particle->anim.GetCurrentFrame())); }
+        if (particle != nullptr && particle->CheckIsAlive() && particle->GetLifetime() != 0) { game->GetModuleRender()->Blit(NormalWireTexture, particle->GetPositionX(), particle->GetPositionY(), false, &(particle->GetCurrentAnim())); }
     }
     return UPDATE_STATUS::UPDATE_CONTINUE;
 }
@@ -111,12 +111,12 @@ void ModuleParticles::AddParticle(const Particle& particle, int x, int y, Collid
         if (particles[i] == nullptr) {
             Particle* p = new Particle(particle);
 
-            p->frameCount = -(int)delay;            // We start the frameCount as the negative delay
-            p->position.x = x;                        // so when frameCount reaches 0 the particle will be activated
-            p->position.y = y;
+            p->SetFrameCount(-(int)delay);            // We start the frameCount as the negative delay
+            p->SetPositionX(x);                        // so when frameCount reaches 0 the particle will be activated
+            p->SetPositionY(y);
 
             //Adding the particle's collider
-            p->collider = game->collisions->AddCollider(p->anim.GetCurrentFrame(), colliderType, this);
+            p->SetCollider(game->GetModuleCollisions()->AddCollider(p->GetCurrentAnim(), colliderType, this));
 
             particles[i] = p;
             break;
@@ -127,7 +127,7 @@ void ModuleParticles::AddParticle(const Particle& particle, int x, int y, Collid
 void ModuleParticles::OnCollision(Collider* c1, Collider* c2) {
     for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i) {
         // Always destroy particles that collide
-        if (particles[i] != nullptr && particles[i]->collider == c1 && particles[i]->collider->type == Collider::TYPE::PLAYER_SHOT) {
+        if (particles[i] != nullptr && particles[i]->GetCollider() == c1 && particles[i]->GetCollider()->GetType() == Collider::TYPE::PLAYER_SHOT) {
             delete particles[i];
             particles[i] = nullptr;
             break;

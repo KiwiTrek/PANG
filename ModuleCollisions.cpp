@@ -45,7 +45,7 @@ ModuleCollisions::~ModuleCollisions() {}
 UPDATE_STATUS ModuleCollisions::PreUpdate() {
     // Remove all colliders scheduled for deletion
     for (uint i = 0; i < MAX_COLLIDERS; ++i) {
-        if (colliders[i] != nullptr && colliders[i]->pendingToDelete == true) {
+        if (colliders[i] != nullptr && colliders[i]->CheckPendingToDelete() == true) {
             delete colliders[i];
             colliders[i] = nullptr;
         }
@@ -67,9 +67,9 @@ UPDATE_STATUS ModuleCollisions::PreUpdate() {
 
             c2 = colliders[k];
 
-            if (c1->Intersects(c2->rect) && matrix[c1->type][c2->type]) {
-                if (c1->listener) { c1->listener->OnCollision(c1, c2); }
-                if (c2->listener) { c2->listener->OnCollision(c2, c1); }
+            if (c1->Intersects(c2->GetRect()) && matrix[c1->GetType()][c2->GetType()]) {
+                if (c1->GetListener()) { c1->GetListener()->OnCollision(c1, c2); }
+                if (c2->GetListener()) { c2->GetListener()->OnCollision(c2, c1); }
             }
         }
     }
@@ -78,7 +78,7 @@ UPDATE_STATUS ModuleCollisions::PreUpdate() {
 }
 
 UPDATE_STATUS ModuleCollisions::Update() {
-    if (game->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) { debug = !debug; }
+    if (game->GetModuleInput()->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) { debug = !debug; }
     return UPDATE_STATUS::UPDATE_CONTINUE;
 }
 
@@ -92,24 +92,24 @@ void ModuleCollisions::DebugDraw() {
     for (uint i = 0; i < MAX_COLLIDERS; ++i) {
         if (colliders[i] == nullptr) { continue; }
 
-        switch (colliders[i]->type) {
+        switch (colliders[i]->GetType()) {
         case Collider::TYPE::NONE: // white
-            game->render->DrawQuad(colliders[i]->rect, 255, 255, 255, alpha);
+            game->GetModuleRender()->DrawQuad(colliders[i]->GetRect(), 255, 255, 255, alpha);
             break;
         case Collider::TYPE::WALL: // magenta
-            game->render->DrawQuad(colliders[i]->rect, 255, 255, 0, alpha);
+            game->GetModuleRender()->DrawQuad(colliders[i]->GetRect(), 255, 255, 0, alpha);
             break;
         case Collider::TYPE::PLAYER: // green
-            game->render->DrawQuad(colliders[i]->rect, 0, 255, 0, alpha);
+            game->GetModuleRender()->DrawQuad(colliders[i]->GetRect(), 0, 255, 0, alpha);
             break;
         case Collider::TYPE::BALLOON: // red
-            game->render->DrawQuad(colliders[i]->rect, 255, 0, 0, alpha);
+            game->GetModuleRender()->DrawQuad(colliders[i]->GetRect(), 255, 0, 0, alpha);
             break;
         case Collider::TYPE::ANIMAL: // yellow
-            game->render->DrawQuad(colliders[i]->rect, 0, 255, 255, alpha);
+            game->GetModuleRender()->DrawQuad(colliders[i]->GetRect(), 0, 255, 255, alpha);
             break;
         case Collider::TYPE::PLAYER_SHOT: // blue
-            game->render->DrawQuad(colliders[i]->rect, 0, 0, 255 , alpha);
+            game->GetModuleRender()->DrawQuad(colliders[i]->GetRect(), 0, 0, 255 , alpha);
             break;
         }
     }

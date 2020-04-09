@@ -6,17 +6,7 @@
 
 class Animation {
 public:
-    bool loop = true; 
-    float speed = 1.0f;
-    SDL_Rect frames[MAX_FRAMES];
-
-private:
-    float currentFrame = 0.0f;
-    int totalFrames = 0;
-    int loopCount = 0;
-
-public:
-    
+    void SetLoop(bool _loop) { loop = _loop; }
     float GetSpeed() const { return speed; }
     void SetSpeed(float _speed) { speed = _speed; }
     int GetHeight() { return frames[(int)currentFrame].h; }
@@ -34,6 +24,14 @@ public:
         }
     }
     SDL_Rect& GetCurrentFrame() { return frames[(int)currentFrame]; }
+
+private:
+    float currentFrame = 0.0f;
+    int totalFrames = 0;
+    int loopCount = 0;
+    bool loop = true;
+    float speed = 1.0f;
+    SDL_Rect frames[MAX_FRAMES];
 };
 
 #endif

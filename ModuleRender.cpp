@@ -21,7 +21,7 @@ bool ModuleRender::Init() {
     Uint32 flags = 0;
     if (VSYNC == true) { flags |= SDL_RENDERER_PRESENTVSYNC; }
 
-    renderer = SDL_CreateRenderer(game->window->GetWindow(), -1, flags);
+    renderer = SDL_CreateRenderer(game->GetModuleWindow()->GetWindow(), -1, flags);
     if (renderer == nullptr) {
     LOG("Renderer could not be created! SDL_Error: %s\n", SDL_GetError());
     ret = false;
@@ -42,7 +42,7 @@ UPDATE_STATUS ModuleRender::PreUpdate() {
 }
 
 UPDATE_STATUS ModuleRender::Update() {
-    if (game->input->GetKey(SDL_SCANCODE_ESCAPE)) { return UPDATE_STATUS::UPDATE_STOP; }
+    if (game->GetModuleInput()->GetKey(SDL_SCANCODE_ESCAPE)) { return UPDATE_STATUS::UPDATE_STOP; }
     return UPDATE_STATUS::UPDATE_CONTINUE;
 }
 

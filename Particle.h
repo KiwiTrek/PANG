@@ -23,7 +23,23 @@ public:
     // Returns false when the particle reaches its lifetime
     bool Update();
 
-public:
+    void SetPositionX(const int _positionX);
+    int GetPositionX() const;
+    void SetPositionY(const int _positionY);
+    int GetPositionY() const;
+    void SetFSpeedY(const float _speedY);
+    void SetAnimPushBack(const SDL_Rect _rect);
+    SDL_Rect GetCurrentAnim();
+    void SetAnimLoop(bool _loop);
+    void SetAnimSpeed(float _speed);
+    bool CheckIsAlive() const;
+    void SetFrameCount(const int _frameCount);
+    void SetLifetime(const uint _lifetime);
+    uint GetLifetime() const;
+    void SetCollider(Collider* _collider);
+    Collider* GetCollider() const;
+
+private:
     // Defines the position in the screen
     iPoint position;
 

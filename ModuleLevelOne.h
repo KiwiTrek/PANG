@@ -22,8 +22,8 @@ public:
     // Called at the end of the application loop.
     // Performs the render call of all the parts of the scene's background
     UPDATE_STATUS PostUpdate();
-    
-public:
+
+private:
     // The sprite section for the background
     SDL_Rect background;
     SDL_Rect backgroundAdapter;

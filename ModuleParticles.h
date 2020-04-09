@@ -66,7 +66,6 @@ private:
 public:
     //Shots (and others) go here
     Particle NormalWire;
-    SDL_Rect NormalWireRectStart = { 0,55,8,33 };
 };
 
 #endif // !__MODULEPARTICLES_H__

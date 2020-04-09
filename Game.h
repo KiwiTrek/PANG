@@ -18,9 +18,7 @@ class ModuleCollisions;
 class ModuleRender;
 
 class Game {
-
 public:
-
     //Constructor. Creates all necessary modules for the application
     Game();
     //Destructor. Removes all module objects
@@ -32,7 +30,18 @@ public:
     //Releases all the application data
     bool CleanUp();
 
-public:
+    ModuleWindow* GetModuleWindow() const;
+    ModuleInput* GetModuleInput() const;
+    ModuleTextures* GetModuleTextures() const;
+    ModuleAudio* GetModuleAudio() const;
+    ModulePlayer* GetModulePlayer() const;
+    ModuleLevelOne* GetModuleLevelOne() const;
+    //ModuleEnemies* GetModuleEnemies() const;
+    ModuleParticles* GetModuleParticles() const;
+    ModuleCollisions* GetModuleCollisions() const;
+    ModuleRender* GetModuleRender() const;
+
+private:
     // An array to store all modules
     Module* modules[NUM_MODULES];
     // All the modules stored individually

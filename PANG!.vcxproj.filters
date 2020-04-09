@@ -67,9 +67,6 @@
     <ClCompile Include="ModuleCollisions.cpp">
       <Filter>Archivos de origen\Modules\Core</Filter>
     </ClCompile>
-    <ClCompile Include="Collider.cpp">
-      <Filter>Archivos de origen\Utils</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -111,14 +108,14 @@
     <ClInclude Include="ModuleParticles.h">
       <Filter>Archivos de origen\Modules\Core</Filter>
     </ClInclude>
-    <ClInclude Include="Particle.h">
-      <Filter>Archivos de origen\Entities</Filter>
-    </ClInclude>
     <ClInclude Include="ModuleCollisions.h">
       <Filter>Archivos de origen\Modules\Core</Filter>
     </ClInclude>
     <ClInclude Include="Collider.h">
       <Filter>Archivos de origen\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Particle.h">
+      <Filter>Archivos de origen\Entities</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

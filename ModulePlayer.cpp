@@ -40,13 +40,13 @@ bool ModulePlayer::Start()
 {
     LOG("Loading player textures");
 
-    texture = game->textures->Load("Resources/Sprites/Player.png"); // arcade version
-    shotSoundIndex = game->audio->LoadFx("Resources/SFX/shotClaw.wav");
+    texture = game->GetModuleTextures()->Load("Resources/Sprites/Player.png"); // arcade version
+    shotSoundIndex = game->GetModuleAudio()->LoadFx("Resources/SFX/shotClaw.wav");
 
     position.x = 177;
     position.y = 186 - idle.GetHeight();
 
-    collider = game->collisions->AddCollider({ position.x, position.y, idle.GetWidth(), idle.GetHeight() }, Collider::TYPE::PLAYER, this); // adds a collider to the player
+    collider = game->GetModuleCollisions()->AddCollider({ position.x, position.y, idle.GetWidth(), idle.GetHeight() }, Collider::TYPE::PLAYER, this); // adds a collider to the player
 
     return true;
 }
@@ -57,25 +57,25 @@ UPDATE_STATUS ModulePlayer::Update()
     if (returnToIdle == 0) { currentAnimation = &idle; }
     else { --returnToIdle; }
 
-    if (game->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && (returnToIdle == 0)) {
+    if (game->GetModuleInput()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && (returnToIdle == 0)) {
         currentAnimation = &moving;
         if (GetInvertValue()) { ChangeInvert(); }
         position.x += speed;
     }
-    if (game->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && (returnToIdle == 0)) {
+    if (game->GetModuleInput()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && (returnToIdle == 0)) {
         currentAnimation = &moving;
         if (!(GetInvertValue())) { ChangeInvert(); }
         position.x -= speed;
     }
-    if (game->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN) {
-        game->audio->PlayFx(shotSoundIndex);
+    if (game->GetModuleInput()->GetKey(SDL_SCANCODE_Q) == KEY_DOWN) {
+        game->GetModuleAudio()->PlayFx(shotSoundIndex);
         currentAnimation = &shoot;
         
         if (GetInvertValue()) {
-            game->particles->AddParticle(game->particles->NormalWire, position.x + (shoot.GetWidth() / 3), position.y -3, Collider::TYPE::PLAYER_SHOT);
+            game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->NormalWire, position.x + (shoot.GetWidth() / 3), position.y -3, Collider::TYPE::PLAYER_SHOT);
         }
         if (!GetInvertValue()) {
-            game->particles->AddParticle(game->particles->NormalWire, position.x + (shoot.GetWidth() / 2), position.y -3, Collider::TYPE::PLAYER_SHOT);
+            game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->NormalWire, position.x + (shoot.GetWidth() / 2), position.y -3, Collider::TYPE::PLAYER_SHOT);
         }
 
         returnToIdle = 5;
@@ -106,7 +106,7 @@ UPDATE_STATUS ModulePlayer::Update()
 UPDATE_STATUS ModulePlayer::PostUpdate() {
     if (!destroyed) {
         SDL_Rect rect = currentAnimation->GetCurrentFrame();
-        game->render->Blit(texture, position.x, position.y, GetInvertValue(), &rect);
+        game->GetModuleRender()->Blit(texture, position.x, position.y, GetInvertValue(), &rect);
     }
 
     return UPDATE_STATUS::UPDATE_CONTINUE;
