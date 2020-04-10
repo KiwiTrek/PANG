@@ -20,7 +20,7 @@ Recreation of the 1989 classic from arcades by Bruhmentium INC:
 ### Current version: 0.3
 
 #### 0.3: 
-- Added module collision
+- Added module Collisions
 - Added collider support
 - Fixed the multiprojectile bug
 - Player can now Collide with walls
