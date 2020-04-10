@@ -25,6 +25,11 @@ bool ModuleLevelOne::Start() {
     game->GetModuleCollisions()->AddCollider({ 0, 0, 8, 193 }, Collider::TYPE::WALL);
     game->GetModuleCollisions()->AddCollider({ 0, 0, 384, 7 }, Collider::TYPE::WALL);
     game->GetModuleCollisions()->AddCollider({ 376, 0, 8, 193 }, Collider::TYPE::WALL);
+    //For testing
+    game->GetModuleCollisions()->AddCollider({ 8, 70, 100, 10 }, Collider::TYPE::WALL);
+    game->GetModuleCollisions()->AddCollider({ 200, 106, 30, 80 }, Collider::TYPE::STAIRS);
+    game->GetModuleCollisions()->AddCollider({ 100, 136, 30, 30 }, Collider::TYPE::ANIMAL);
+    game->GetModuleCollisions()->AddCollider({ 300, 126, 40, 40 }, Collider::TYPE::BALLOON);
     return true;
 }
 

@@ -67,6 +67,17 @@ UPDATE_STATUS ModulePlayer::Update()
         if (!(GetInvertValue())) { ChangeInvert(); }
         position.x -= speed;
     }
+    // we need to activate it only when the player is on the stairs (OnCollision)
+    //if (game->GetModuleInput()->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && (returnToIdle == 0)) {
+    //    currentAnimation = &idle;
+    //    if (!(GetInvertValue())) { ChangeInvert(); }
+    //    position.y -= speed;
+    //}
+    //if (game->GetModuleInput()->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && (returnToIdle == 0)) {
+    //    currentAnimation = &idle;
+    //    if (!(GetInvertValue())) { ChangeInvert(); }
+    //    position.y += speed;
+    //}
     if (game->GetModuleInput()->GetKey(SDL_SCANCODE_Q) == KEY_DOWN) {
         game->GetModuleAudio()->PlayFx(shotSoundIndex);
         currentAnimation = &shoot;
@@ -113,7 +124,35 @@ UPDATE_STATUS ModulePlayer::PostUpdate() {
 }
 
 void ModulePlayer::OnCollision(Collider* c1, Collider* c2) {
-    if (c1 == collider && destroyed == false) {
+    if (c1 == collider && destroyed == false && c2->GetType() == Collider::TYPE::WALL) {
+        if (position.x < (c2->GetRect().x + c2->GetRect().w) && position.x > c2->GetRect().x) {
+            position.x = (c2->GetRect().x + c2->GetRect().w);
+        }
+        else if ((position.x + currentAnimation->GetWidth()) > c2->GetRect().x && position.x < c2->GetRect().x) {
+            position.x = (c2->GetRect().x - currentAnimation->GetWidth());
+        }
+        //if (position.y < (c2->GetRect().y + c2->GetRect().h) && position.y > c2->GetRect().y) {
+        //    position.y = (c2->GetRect().y + c2->GetRect().h);
+        //}
+        //else if ((position.y + currentAnimation->GetHeight()) > c2->GetRect().y&& position.y < c2->GetRect().y) {
+        //    position.y = (c2->GetRect().y - currentAnimation->GetHeight());
+        //}
+    }
+    else if (c1 == collider && destroyed == false && c2->GetType() == Collider::TYPE::STAIRS) {
+        if ((c2->GetRect().y + c2->GetRect().h) >= (position.y + currentAnimation->GetHeight())) { // (bottom of stairs) should be able to move both x and y
+
+        }
+        else if (c2->GetRect().y <= position.y) { // (top of stairs) should be able to move both x and y
+
+        }
+        else { // (middle of stairs) should only be able to move y
+
+        }
+    }
+    else if (c1 == collider && destroyed == false && c2->GetType() == Collider::TYPE::BALLOON) {
+        destroyed = true;
+    }
+    else if (c1 == collider && destroyed == false && c2->GetType() == Collider::TYPE::ANIMAL) {
         destroyed = true;
     }
 }
