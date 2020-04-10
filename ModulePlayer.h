@@ -20,6 +20,8 @@ public:
     SDL_Texture* GetTexture() const;
     uint GetShotSoundIndex() const;
     void SetShotSoundIndex(uint _shotSoundIndex);
+    void SetIfShot(bool _shot);
+    bool CheckIfGodMode() const;
 
     bool Start() override;
     UPDATE_STATUS Update() override;
@@ -53,6 +55,12 @@ private:
 
     // A flag to detect when the player has been destroyed
     bool destroyed = false;
+
+    // A flag to detect when the player has shot
+    bool shot = false;
+
+    // Cheat Code Enabler: God Mode
+    bool godMode = false;
 
     // A countdown to when the player gets destroyed. After a while, the game exits
     uint destroyedCountdown = 120;

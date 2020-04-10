@@ -34,6 +34,8 @@ void ModulePlayer::SetPosition(iPoint _position) { position = _position; }
 SDL_Texture* ModulePlayer::GetTexture() const { return texture; }
 uint ModulePlayer::GetShotSoundIndex() const { return shotSoundIndex; }
 void ModulePlayer::SetShotSoundIndex(uint _shotSoundIndex) { shotSoundIndex = _shotSoundIndex; }
+void ModulePlayer::SetIfShot(bool _shot) { shot = _shot; }
+bool ModulePlayer::CheckIfGodMode() const { return godMode; };
 
 
 bool ModulePlayer::Start()
@@ -57,12 +59,12 @@ UPDATE_STATUS ModulePlayer::Update()
     if (returnToIdle == 0) { currentAnimation = &idle; }
     else { --returnToIdle; }
 
-    if (game->GetModuleInput()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && (returnToIdle == 0)) {
+    if (game->GetModuleInput()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && game->GetModuleInput()->GetKey(SDL_SCANCODE_A) != KEY_REPEAT && (returnToIdle == 0)) {
         currentAnimation = &moving;
         if (GetInvertValue()) { ChangeInvert(); }
         position.x += speed;
     }
-    if (game->GetModuleInput()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && (returnToIdle == 0)) {
+    if (game->GetModuleInput()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && game->GetModuleInput()->GetKey(SDL_SCANCODE_D) != KEY_REPEAT && (returnToIdle == 0)) {
         currentAnimation = &moving;
         if (!(GetInvertValue())) { ChangeInvert(); }
         position.x -= speed;
@@ -78,7 +80,8 @@ UPDATE_STATUS ModulePlayer::Update()
     //    if (!(GetInvertValue())) { ChangeInvert(); }
     //    position.y += speed;
     //}
-    if (game->GetModuleInput()->GetKey(SDL_SCANCODE_Q) == KEY_DOWN) {
+    if (game->GetModuleInput()->GetKey(SDL_SCANCODE_Q) == KEY_DOWN && shot == false) {
+        shot = true;
         game->GetModuleAudio()->PlayFx(shotSoundIndex);
         currentAnimation = &shoot;
         
@@ -92,6 +95,11 @@ UPDATE_STATUS ModulePlayer::Update()
         returnToIdle = 5;
     }
 
+    if (game->GetModuleInput()->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) {
+        if (godMode == false) { godMode = true; }
+        else { godMode = false; }
+    }
+
 
     if (currentAnimation == &idle) {
         collider->SetPos(position.x, position.y, idle.GetWidth(),  idle.GetHeight());
@@ -102,7 +110,6 @@ UPDATE_STATUS ModulePlayer::Update()
     else if (currentAnimation == &shoot) {
         collider->SetPos(position.x, position.y, shoot.GetWidth(), shoot.GetHeight());
     }
-
 
     currentAnimation->Update();
 
@@ -124,35 +131,37 @@ UPDATE_STATUS ModulePlayer::PostUpdate() {
 }
 
 void ModulePlayer::OnCollision(Collider* c1, Collider* c2) {
-    if (c1 == collider && destroyed == false && c2->GetType() == Collider::TYPE::WALL) {
-        if (position.x < (c2->GetRect().x + c2->GetRect().w) && position.x > c2->GetRect().x) {
-            position.x = (c2->GetRect().x + c2->GetRect().w);
+    if (godMode == false) {
+        if (c1 == collider && destroyed == false && c2->GetType() == Collider::TYPE::WALL) {
+            if (position.x < (c2->GetRect().x + c2->GetRect().w) && position.x > c2->GetRect().x) {
+                position.x = (c2->GetRect().x + c2->GetRect().w);
+            }
+            else if ((position.x + currentAnimation->GetWidth()) > c2->GetRect().x&& position.x < c2->GetRect().x) {
+                position.x = (c2->GetRect().x - currentAnimation->GetWidth());
+            }
+            //if (position.y < (c2->GetRect().y + c2->GetRect().h) && position.y > c2->GetRect().y) {
+            //    position.y = (c2->GetRect().y + c2->GetRect().h);
+            //}
+            //else if ((position.y + currentAnimation->GetHeight()) > c2->GetRect().y&& position.y < c2->GetRect().y) {
+            //    position.y = (c2->GetRect().y - currentAnimation->GetHeight());
+            //}
         }
-        else if ((position.x + currentAnimation->GetWidth()) > c2->GetRect().x && position.x < c2->GetRect().x) {
-            position.x = (c2->GetRect().x - currentAnimation->GetWidth());
+        //else if (c1 == collider && destroyed == false && c2->GetType() == Collider::TYPE::STAIRS) {
+        //    if ((c2->GetRect().y + c2->GetRect().h) >= (position.y + currentAnimation->GetHeight())) { // (bottom of stairs) should be able to move both x and y
+
+        //    }
+        //    else if (c2->GetRect().y <= position.y) { // (top of stairs) should be able to move both x and y
+
+        //    }
+        //    else { // (middle of stairs) should only be able to move y
+
+        //    }
+        //}
+        else if (c1 == collider && destroyed == false && c2->GetType() == Collider::TYPE::BALLOON) {
+            destroyed = true;
         }
-        //if (position.y < (c2->GetRect().y + c2->GetRect().h) && position.y > c2->GetRect().y) {
-        //    position.y = (c2->GetRect().y + c2->GetRect().h);
-        //}
-        //else if ((position.y + currentAnimation->GetHeight()) > c2->GetRect().y&& position.y < c2->GetRect().y) {
-        //    position.y = (c2->GetRect().y - currentAnimation->GetHeight());
-        //}
+        else if (c1 == collider && destroyed == false && c2->GetType() == Collider::TYPE::ANIMAL) {
+            destroyed = true;
+        }
     }
-    //else if (c1 == collider && destroyed == false && c2->GetType() == Collider::TYPE::STAIRS) {
-    //    if ((c2->GetRect().y + c2->GetRect().h) >= (position.y + currentAnimation->GetHeight())) { // (bottom of stairs) should be able to move both x and y
-
-    //    }
-    //    else if (c2->GetRect().y <= position.y) { // (top of stairs) should be able to move both x and y
-
-    //    }
-    //    else { // (middle of stairs) should only be able to move y
-
-    //    }
-    //}
-    //else if (c1 == collider && destroyed == false && c2->GetType() == Collider::TYPE::BALLOON) {
-    //    destroyed = true;
-    //}
-    //else if (c1 == collider && destroyed == false && c2->GetType() == Collider::TYPE::ANIMAL) {
-    //    destroyed = true;
-    //}
 }

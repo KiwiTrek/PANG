@@ -2,6 +2,7 @@
 #include "Game.h"
 #include "ModuleTextures.h"
 #include "ModuleRender.h"
+#include "ModulePlayer.h"
 #include "ModuleCollisions.h"
 #include "SDL/include/SDL_timer.h"
 
@@ -128,6 +129,7 @@ void ModuleParticles::OnCollision(Collider* c1, Collider* c2) {
     for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i) {
         // Always destroy particles that collide
         if (particles[i] != nullptr && particles[i]->GetCollider() == c1 && particles[i]->GetCollider()->GetType() == Collider::TYPE::PLAYER_SHOT) {
+            game->GetModulePlayer()->SetIfShot(false);
             delete particles[i];
             particles[i] = nullptr;
             break;
