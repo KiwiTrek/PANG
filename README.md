@@ -20,9 +20,9 @@ Recreation of the 1989 classic from arcades by Bruhmentium INC:
 ### Current version: 0.3
 
 #### 0.3: 
-- Added module Collisions
+- Added Module:
+  - Collisions
 - Added collider support
-- Fixed the multiprojectile bug
 - Player can now Collide with walls
 - Added Godmode (toggle on key F5)
 
@@ -52,7 +52,11 @@ Recreation of the 1989 classic from arcades by Bruhmentium INC:
 - Created Level 1 display (with no collisions)
 - Created Player display (with no collisions nor animations)
 
-## Bugs detected
+## Bugs
+#### 0.3:
+- Player:
+  - Fixed the multiprojectile bug
+  
 #### 0.2:
 - Player:
   - Can shoot multiple projectiles at the same time
