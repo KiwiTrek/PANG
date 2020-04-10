@@ -138,21 +138,21 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2) {
         //    position.y = (c2->GetRect().y - currentAnimation->GetHeight());
         //}
     }
-    else if (c1 == collider && destroyed == false && c2->GetType() == Collider::TYPE::STAIRS) {
-        if ((c2->GetRect().y + c2->GetRect().h) >= (position.y + currentAnimation->GetHeight())) { // (bottom of stairs) should be able to move both x and y
+    //else if (c1 == collider && destroyed == false && c2->GetType() == Collider::TYPE::STAIRS) {
+    //    if ((c2->GetRect().y + c2->GetRect().h) >= (position.y + currentAnimation->GetHeight())) { // (bottom of stairs) should be able to move both x and y
 
-        }
-        else if (c2->GetRect().y <= position.y) { // (top of stairs) should be able to move both x and y
+    //    }
+    //    else if (c2->GetRect().y <= position.y) { // (top of stairs) should be able to move both x and y
 
-        }
-        else { // (middle of stairs) should only be able to move y
+    //    }
+    //    else { // (middle of stairs) should only be able to move y
 
-        }
-    }
-    else if (c1 == collider && destroyed == false && c2->GetType() == Collider::TYPE::BALLOON) {
-        destroyed = true;
-    }
-    else if (c1 == collider && destroyed == false && c2->GetType() == Collider::TYPE::ANIMAL) {
-        destroyed = true;
-    }
+    //    }
+    //}
+    //else if (c1 == collider && destroyed == false && c2->GetType() == Collider::TYPE::BALLOON) {
+    //    destroyed = true;
+    //}
+    //else if (c1 == collider && destroyed == false && c2->GetType() == Collider::TYPE::ANIMAL) {
+    //    destroyed = true;
+    //}
 }
