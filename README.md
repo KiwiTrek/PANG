@@ -17,7 +17,15 @@ Recreation of the 1989 classic from arcades by Bruhmentium INC:
 #### Check for more info at the [wiki](https://github.com/WillyTrek19/PANG/wiki)
 
 ## Changelog
-### Current version: 0.2
+### Current version: 0.3
+
+#### 0.3: 
+-Added module collision
+-Added collider support
+-Fixed the multiprojectile bug
+-Player can now Collide with walls
+-Added Godmode (toggle on key F5)
+
 #### 0.2:
 - Removed unnecessary libraries and resources
 - Added Modules:
@@ -25,9 +33,9 @@ Recreation of the 1989 classic from arcades by Bruhmentium INC:
 - Added animation support
 - Added particle handler
 - Player has new animations:
- - Idle
- - Walking
- - Shoot
+  - Idle
+  - Walking
+  - Shoot
 - Player can now shoot the basic claw shot
 
 #### 0.1:
