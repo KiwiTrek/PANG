@@ -104,6 +104,9 @@ void ModuleEnemies::SpawnEnemy(const EnemySpawnpoint& info) {
             case ENEMY_TYPE::CHUNGUS_BALLOON:
                 enemies[i] = new Enemy_Balloon(info.x, info.y);
                 break;
+            case ENEMY_TYPE::NOT_THAT_MEH_BALLOON:
+                enemies[i] = new Enemy_Balloon(info.x, info.y);
+                break;
             case ENEMY_TYPE::MEH_BALLOON:
                 enemies[i] = new Enemy_Balloon(info.x, info.y);
                 break;
@@ -120,11 +123,12 @@ void ModuleEnemies::SpawnEnemy(const EnemySpawnpoint& info) {
 
 void ModuleEnemies::OnCollision(Collider* c1, Collider* c2) {
     for (uint i = 0; i < MAX_ENEMIES; ++i) {
-        if (enemies[i] != nullptr && enemies[i]->GetCollider() == c1) {
+        if (enemies[i]->GetCollider() == c1 && enemies[i] != nullptr) {
             enemies[i]->OnCollision(c2); //Notify the enemy of a collision
-
-            delete enemies[i];
-            enemies[i] = nullptr;
+            if (enemies[i]->GetLethality()) {
+                delete enemies[i];
+                enemies[i] = nullptr;
+            }
             break;
         }
     }

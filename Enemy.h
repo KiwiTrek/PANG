@@ -17,7 +17,7 @@ public:
     virtual ~Enemy();
 
     // Returns the enemy's collider
-    const Collider* GetCollider() const;
+    Collider* GetCollider() const;
 
     // Called from inhering enemies' Udpate
     // Updates animation and collider position
@@ -28,7 +28,10 @@ public:
 
     // Collision response
     // Triggers an animation and a sound fx
-    virtual void OnCollision(Collider* collider);
+    virtual void OnCollision(Collider* c2) = 0;
+
+    void SetLethality(bool _lethality);
+    bool GetLethality();
 
 public:
     // The current position in the world
@@ -46,6 +49,9 @@ protected:
 
     // The enemy's collider
     Collider* collider = nullptr;
+
+    // A bool to know if the collision is lethal for the enemy
+    bool lethal = false;
 
     // Original spawn position. Stored for movement calculations
     iPoint spawnPos;

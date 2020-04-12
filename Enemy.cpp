@@ -10,7 +10,7 @@ Enemy::Enemy(int x, int y) : position(x, y) { spawnPos = position; }
 
 Enemy::~Enemy() { if (collider != nullptr) { collider->SetPendingToDelete(true); } }
 
-const Collider* Enemy::GetCollider() const { return collider; }
+Collider* Enemy::GetCollider() const { return collider; }
 
 void Enemy::Update() {
     if (currentAnim != nullptr) { currentAnim->Update(); }
@@ -19,7 +19,6 @@ void Enemy::Update() {
 
 void Enemy::Draw() { if (currentAnim != nullptr) { game->GetModuleRender()->Blit(texture, position.x, position.y, false, &(currentAnim->GetCurrentFrame())); } }
 
-void Enemy::OnCollision(Collider* collider) {
-    //game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->explosion, position.x, position.y);
-    //game->GetModuleAudio()->PlayFx(destroyedFx);
-}
+void Enemy::SetLethality(bool _lethality) { lethal = _lethality; }
+
+bool Enemy::GetLethality() { return lethal; }

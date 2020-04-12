@@ -22,9 +22,9 @@ bool ModuleLevelOne::Start() {
     game->GetModuleAudio()->PlayMusic("Resources/BGM/introFuji.ogg");
 
     // Colliders ---
-    game->GetModuleCollisions()->AddCollider({ 0, 186, 384, 7 }, Collider::TYPE::WALL);
+    game->GetModuleCollisions()->AddCollider({ 0, 186, 384, 7 }, Collider::TYPE::FLOOR);
     game->GetModuleCollisions()->AddCollider({ 0, 0, 8, 193 }, Collider::TYPE::WALL);
-    game->GetModuleCollisions()->AddCollider({ 0, 0, 384, 7 }, Collider::TYPE::WALL);
+    game->GetModuleCollisions()->AddCollider({ 0, 0, 384, 7 }, Collider::TYPE::FLOOR);
     game->GetModuleCollisions()->AddCollider({ 376, 0, 8, 193 }, Collider::TYPE::WALL);
 
     game->GetModuleEnemies()->AddEnemy(ENEMY_TYPE::CHUNGUS_BALLOON, 177, 36);

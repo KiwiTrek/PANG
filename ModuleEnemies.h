@@ -8,8 +8,10 @@
 enum class ENEMY_TYPE {
     NO_TYPE = -1,
     CHUNGUS_BALLOON,
+    NOT_THAT_MEH_BALLOON,
     MEH_BALLOON,
     SMOL_BALLOON,
+    ANIMALS,
     MAX_ENEMY
 };
 
@@ -20,6 +22,7 @@ struct EnemySpawnpoint {
 
 class Enemy;
 struct SDL_Texture;
+struct Collider;
 
 class ModuleEnemies : public Module {
 public:
