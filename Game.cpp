@@ -8,7 +8,7 @@
 #include "ModulePlayer.h"
 #include "ModuleLevelOne.h"
 #include "ModuleParticles.h"
-//#include "ModuleEnemies.h"
+#include "ModuleEnemies.h"
 #include "ModuleCollisions.h"
 #include "ModuleRender.h"
 
@@ -24,11 +24,11 @@ Game::Game() {
     modules[4] = levelOne = new ModuleLevelOne();
     modules[5] = player = new ModulePlayer();
     modules[6] = particles = new ModuleParticles();
-    //modules[7] = enemies = new ModuleEnemies();
+    modules[7] = enemies = new ModuleEnemies();
 
-    modules[7] = collisions = new ModuleCollisions(); //should be 8
+    modules[8] = collisions = new ModuleCollisions(); //should be 8
 
-    modules[8] = render = new ModuleRender(); //should be 9
+    modules[9] = render = new ModuleRender(); //should be 9
 }
 
 Game::~Game() {
@@ -74,7 +74,7 @@ ModuleTextures* Game::GetModuleTextures() const { return textures; }
 ModuleAudio* Game::GetModuleAudio() const { return audio; }
 ModulePlayer* Game::GetModulePlayer() const { return player; }
 ModuleLevelOne* Game::GetModuleLevelOne() const { return levelOne; }
-//ModuleEnemies* Game::GetModuleEnemies() const { return enemies; }
+ModuleEnemies* Game::GetModuleEnemies() const { return enemies; }
 ModuleParticles* Game::GetModuleParticles() const { return particles; }
 ModuleCollisions* Game::GetModuleCollisions() const { return collisions; }
 ModuleRender* Game::GetModuleRender() const { return render; }

@@ -23,6 +23,9 @@
     <Filter Include="Archivos de origen\Utils">
       <UniqueIdentifier>{e9a1f738-5a9d-419b-9c10-e825ea3fb74e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Archivos de origen\Entities\Enemies">
+      <UniqueIdentifier>{bf6b05ca-8e1d-43f5-91e0-503e9188ef65}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -66,6 +69,15 @@
     </ClCompile>
     <ClCompile Include="ModuleCollisions.cpp">
       <Filter>Archivos de origen\Modules\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Archivos de origen\Entities\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleEnemies.cpp">
+      <Filter>Archivos de origen\Modules\Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy_Balloon.cpp">
+      <Filter>Archivos de origen\Entities\Enemies</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -116,6 +128,15 @@
     </ClInclude>
     <ClInclude Include="Particle.h">
       <Filter>Archivos de origen\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Archivos de origen\Entities\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleEnemies.h">
+      <Filter>Archivos de origen\Modules\Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy_Balloon.h">
+      <Filter>Archivos de origen\Entities\Enemies</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
