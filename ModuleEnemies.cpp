@@ -127,7 +127,7 @@ void ModuleEnemies::OnCollision(Collider* c1, Collider* c2) {
         if (enemies[i]->GetCollider() == c1 && enemies[i] != nullptr) {
             enemies[i]->OnCollision(c2); //Notify the enemy of a collision
             if (enemies[i]->GetLethality()) {
-                if (true) { game->GetModuleParticles()->AddParticle(//Particle,enemies[i].x,enemies[i].y) }
+                if (enemies[i]->GetEnemyType() == ENEMY_TYPE::CHUNGUS_BALLOON) { game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->bigBalloonExplosion, enemies[i]->position.x, enemies[i]->position.y); }
                 delete enemies[i];
                 enemies[i] = nullptr;
             }

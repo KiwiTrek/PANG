@@ -22,3 +22,5 @@ void Enemy::Draw() { if (currentAnim != nullptr) { game->GetModuleRender()->Blit
 void Enemy::SetLethality(bool _lethality) { lethal = _lethality; }
 
 bool Enemy::GetLethality() { return lethal; }
+
+ENEMY_TYPE Enemy::GetEnemyType() { return type; }

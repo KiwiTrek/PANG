@@ -2,18 +2,9 @@
 #define __MODULE_ENEMIES_H__
 
 #include "Module.h"
+#include "Enemy.h"
 
 #define MAX_ENEMIES 100
-
-enum class ENEMY_TYPE {
-    NO_TYPE = -1,
-    CHUNGUS_BALLOON,
-    NOT_THAT_MEH_BALLOON,
-    MEH_BALLOON,
-    SMOL_BALLOON,
-    ANIMALS,
-    MAX_ENEMY
-};
 
 struct EnemySpawnpoint {
     ENEMY_TYPE type = ENEMY_TYPE::NO_TYPE;
@@ -23,6 +14,7 @@ struct EnemySpawnpoint {
 class Enemy;
 struct SDL_Texture;
 struct Collider;
+enum ENEMY_TYPE;
 
 class ModuleEnemies : public Module {
 public:

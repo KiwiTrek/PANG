@@ -7,8 +7,19 @@
 struct SDL_Texture;
 struct Collider;
 
+enum ENEMY_TYPE {
+    NO_TYPE = -1,
+    CHUNGUS_BALLOON,
+    NOT_THAT_MEH_BALLOON,
+    MEH_BALLOON,
+    SMOL_BALLOON,
+    ANIMALS,
+    MAX_ENEMY
+};
+
 class Enemy {
 public:
+
     // Constructor
     // Saves the spawn position for later movement calculations
     Enemy(int x, int y);
@@ -32,6 +43,7 @@ public:
 
     void SetLethality(bool _lethality);
     bool GetLethality();
+    ENEMY_TYPE GetEnemyType();
 
 public:
     // The current position in the world
@@ -52,6 +64,8 @@ protected:
 
     // A bool to know if the collision is lethal for the enemy
     bool lethal = false;
+
+    ENEMY_TYPE type;
 
     // Original spawn position. Stored for movement calculations
     iPoint spawnPos;
