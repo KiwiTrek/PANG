@@ -21,7 +21,7 @@ ModuleParticles::ModuleParticles() {
             j++;
             counter = 0;
         }
-        NormalWire.SetAnimPushBack({ 0 + (i * 17),155 - (i * 2) - j,9,33 + (i * 2) + j });
+        normalWire.SetAnimPushBack({ 0 + (i * 17),155 - (i * 2) - j,9,33 + (i * 2) + j });
     }
 
     counter = 0;
@@ -33,7 +33,7 @@ ModuleParticles::ModuleParticles() {
             j++;
             counter = 0;
         }
-        NormalWire.SetAnimPushBack({ 407 + (i * 17),103 - (i * 2) - j,9,85 + (i * 2) + j });
+        normalWire.SetAnimPushBack({ 407 + (i * 17),103 - (i * 2) - j,9,85 + (i * 2) + j });
 
     }
     counter = 2;
@@ -45,23 +45,28 @@ ModuleParticles::ModuleParticles() {
             j++;
             counter = 0;
         }
-        NormalWire.SetAnimPushBack({ 797 + (i * 17),52 - (i * 2) - j,9,136 + (i * 2) + j });
+        normalWire.SetAnimPushBack({ 797 + (i * 17),52 - (i * 2) - j,9,136 + (i * 2) + j });
     }
+    normalWire.SetAnimLoop(false);
+    normalWire.SetAnimSpeed(0.44f); //0.44f
+    normalWire.SetFSpeedY(-0.66f); //-0.66f
+    normalWire.SetLifetime(250);
 
-    NormalWire.SetAnimLoop(false);
-    NormalWire.SetAnimSpeed(0.44f); //0.44f
-    NormalWire.SetFSpeedY(-0.66f); //-0.66f
-    NormalWire.SetLifetime(250);
+    bigBalloonExplosion.SetAnimPushBack({ 8,511,48,46 });
+    bigBalloonExplosion.SetAnimPushBack({ 56,511,48,46 });
+    bigBalloonExplosion.SetAnimPushBack({ 104,511,48,46 });
+    bigBalloonExplosion.SetAnimPushBack({ 152,511,48,46 });
+    bigBalloonExplosion.SetAnimLoop(false);
+    bigBalloonExplosion.SetAnimSpeed(0.8f);
 }
 
 ModuleParticles::~ModuleParticles() {}
 
 bool ModuleParticles::Start() {
     LOG("Loading particles");
-    NormalWireTexture = game->GetModuleTextures()->Load("Resources/Sprites/NormalWire.png");
 
-
-
+    normalWireTexture = game->GetModuleTextures()->Load("Resources/Sprites/normalWire.png");
+    balloonExplosion = game->GetModuleTextures()->Load("Resources/Sprites/boom.png");
 
     return true;
 }
@@ -98,7 +103,7 @@ UPDATE_STATUS ModuleParticles::PostUpdate() {
     //Iterating all particle array and drawing any active particles
     for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i) {
         Particle* particle = particles[i];
-        if (particle != nullptr && particle->CheckIsAlive() && particle->GetLifetime() != 0) { game->GetModuleRender()->Blit(NormalWireTexture, particle->GetPositionX(), particle->GetPositionY(), false, &(particle->GetCurrentAnim())); }
+        if (particle != nullptr && particle->CheckIsAlive() && particle->GetLifetime() != 0) { game->GetModuleRender()->Blit(normalWireTexture, particle->GetPositionX(), particle->GetPositionY(), false, &(particle->GetCurrentAnim())); }
     }
     return UPDATE_STATUS::UPDATE_CONTINUE;
 }

@@ -45,11 +45,12 @@ public:
     // Param delay		- Delay time from the moment the function is called until the particle is displayed in screen
     void AddParticle(const Particle& particle, int x, int y, Collider::TYPE colliderType = Collider::TYPE::NONE, uint delay = 0);
 
-    // Collision callback, called when the player intersects with another collider
+    // Collision callback, called when the player intersects with another collidernormalWire
     void OnCollision(Collider* c1, Collider* c2) override;
 private:
     // Shot (and other) textures go here
-    SDL_Texture* NormalWireTexture = nullptr;
+    SDL_Texture* normalWireTexture = nullptr;
+    SDL_Texture* balloonExplosion = nullptr;
 
     // An array to store and handle all the particles
     Particle* particles[MAX_ACTIVE_PARTICLES] = { nullptr };
@@ -65,7 +66,8 @@ private:
 
 public:
     //Shots (and others) go here
-    Particle NormalWire;
+    Particle normalWire;
+    Particle bigBalloonExplosion;
 };
 
 #endif // !__MODULEPARTICLES_H__

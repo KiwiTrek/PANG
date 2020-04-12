@@ -49,8 +49,5 @@ void Enemy_Balloon::OnCollision(Collider* c2) {
             speed.y = (-speed.y / 1.35f);
         }
     }
-    else if (c2->GetType() == Collider::TYPE::PLAYER_SHOT) {
-        SetLethality(true);
-        // Here there should be an animation and slpit the balloon in two
-    }
+    else if (c2->GetType() == Collider::TYPE::PLAYER_SHOT) { SetLethality(true); }
 }

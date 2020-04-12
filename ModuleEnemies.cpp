@@ -4,6 +4,7 @@
 
 #include "ModuleRender.h"
 #include "ModuleTextures.h"
+#include "ModuleParticles.h"
 #include "ModuleAudio.h"
 
 #include "Enemy.h"
@@ -126,6 +127,7 @@ void ModuleEnemies::OnCollision(Collider* c1, Collider* c2) {
         if (enemies[i]->GetCollider() == c1 && enemies[i] != nullptr) {
             enemies[i]->OnCollision(c2); //Notify the enemy of a collision
             if (enemies[i]->GetLethality()) {
+                if (true) { game->GetModuleParticles()->AddParticle(//Particle,enemies[i].x,enemies[i].y) }
                 delete enemies[i];
                 enemies[i] = nullptr;
             }

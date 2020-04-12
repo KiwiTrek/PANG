@@ -86,10 +86,10 @@ UPDATE_STATUS ModulePlayer::Update()
         currentAnimation = &shoot;
         
         if (GetInvertValue()) {
-			game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->NormalWire, position.x + (shoot.GetWidth() / 3), position.y - 1 , Collider::TYPE::PLAYER_SHOT);
+			game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->normalWire, position.x + (shoot.GetWidth() / 3), position.y - 1 , Collider::TYPE::PLAYER_SHOT);
         }
         if (!GetInvertValue()) {
-			game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->NormalWire, position.x + (shoot.GetWidth() / 2), position.y - 1 , Collider::TYPE::PLAYER_SHOT);
+			game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->normalWire, position.x + (shoot.GetWidth() / 2), position.y - 1 , Collider::TYPE::PLAYER_SHOT);
         }
 
         returnToIdle = 5;
