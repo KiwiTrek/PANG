@@ -90,9 +90,6 @@ UPDATE_STATUS ModuleParticles::Update() {
             delete particle;
             particles[i] = nullptr;
         }
-        if (!(particle->CheckIsAlive())) {
-            return UPDATE_STATUS::UPDATE_STOP;
-        }
     }
     return UPDATE_STATUS::UPDATE_CONTINUE;
 }

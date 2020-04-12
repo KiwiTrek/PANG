@@ -5,79 +5,74 @@
 
 #define MAX_ENEMIES 100
 
-
-enum class ENEMY_TYPE
-{
-	NO_TYPE = -1,
-	CHUNGUS_BALLOON,
-	MEH_BALLOON,
-	SMOL_BALLOON,
-	MAX_ENEMY
+enum class ENEMY_TYPE {
+    NO_TYPE = -1,
+    CHUNGUS_BALLOON,
+    MEH_BALLOON,
+    SMOL_BALLOON,
+    MAX_ENEMY
 };
 
-struct EnemySpawnpoint
-{
-	ENEMY_TYPE type = ENEMY_TYPE::CHUNGUS_BALLOON;
-	int x, y;
+struct EnemySpawnpoint {
+    ENEMY_TYPE type = ENEMY_TYPE::NO_TYPE;
+    int x, y;
 };
 
 class Enemy;
 struct SDL_Texture;
 
-class ModuleEnemies : public Module
-{
+class ModuleEnemies : public Module {
 public:
-	// Constructor
-	ModuleEnemies();
+    // Constructor
+    ModuleEnemies();
 
-	// Destructor
-	~ModuleEnemies();
+    // Destructor
+    ~ModuleEnemies();
 
-	// Called when the module is activated
-	// Loads the necessary textures for the enemies
-	bool Start() override;
+    // Called when the module is activated
+    // Loads the necessary textures for the enemies
+    bool Start() override;
 
-	// Called at the middle of the application loop
-	// Handles all enemies logic and spawning/despawning
-	UPDATE_STATUS Update() override;
+    // Called at the middle of the application loop
+    // Handles all enemies logic and spawning/despawning
+    UPDATE_STATUS Update() override;
 
-	// Called at the end of the application loop
-	// Iterates all the enemies and draws them
-	UPDATE_STATUS PostUpdate() override;
+    // Called at the end of the application loop
+    // Iterates all the enemies and draws them
+    UPDATE_STATUS PostUpdate() override;
 
-	// Called on application exit
-	// Destroys all active enemies left in the array
-	bool CleanUp() override;
+    // Called on application exit
+    // Destroys all active enemies left in the array
+    bool CleanUp() override;
 
-	// Called when an enemi collider hits another collider
-	// The enemy is destroyed and an explosion particle is fired
-	void OnCollision(Collider* c1, Collider* c2) override;
+    // Called when an enemi collider hits another collider
+    // The enemy is destroyed and an explosion particle is fired
+    void OnCollision(Collider* c1, Collider* c2) override;
 
-	// Add an enemy into the queue to be spawned later
-	bool AddEnemy(ENEMY_TYPE type, int x, int y);
+    // Add an enemy into the queue to be spawned later
+    bool AddEnemy(ENEMY_TYPE type, int x, int y);
 
-	// Iterates the queue and checks for camera position
-	void HandleEnemiesSpawn();
+    // Iterates the queue and checks for camera position
+    void HandleEnemiesSpawn();
 
-	// Destroys any enemies that have moved outside the camera limits
-	void HandleEnemiesDespawn();
-
-private:
-	// Spawns a new enemy using the data from the queue
-	void SpawnEnemy(const EnemySpawnpoint& info);
+    // Destroys any enemies that have moved outside the camera limits
+    void HandleEnemiesDespawn();
 
 private:
-	// A queue with all spawn points information
-	EnemySpawnpoint spawnQueue[MAX_ENEMIES];
+    // Spawns a new enemy using the data from the queue
+    void SpawnEnemy(const EnemySpawnpoint& info);
 
-	// All spawned enemies in the scene
-	Enemy* enemies[MAX_ENEMIES] = { nullptr };
+    // A queue with all spawn points information
+    EnemySpawnpoint spawnQueue[MAX_ENEMIES];
 
-	// The enemies sprite sheet
-	SDL_Texture* texture = nullptr;
+    // All spawned enemies in the scene
+    Enemy* enemies[MAX_ENEMIES] = { nullptr };
 
-	// The audio fx for destroying an enemy
-	int enemyDestroyedFx = 0;
+    // The enemies sprite sheet
+    SDL_Texture* texture = nullptr;
+
+    // The audio fx for destroying an enemy
+    int enemyDestroyedFx = 0;
 };
 
 #endif // __MODULE_ENEMIES_H__

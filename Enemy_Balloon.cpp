@@ -2,18 +2,17 @@
 #include "Game.h"
 #include "ModuleCollisions.h"
 
-Enemy_Balloon::Enemy_Balloon(int x, int y) : Enemy(x, y)
-{
-	fly.PushBack({ 5,72,21,22 });
-	currentAnim = &fly;
+Enemy_Balloon::Enemy_Balloon(int x, int y) : Enemy(x, y) {
+    idle.PushBack({ 1,6,48,40 });
+    currentAnim = &idle;
 
-
-	collider = game->GetModuleCollisions()->AddCollider({ 0, 0, 24, 24 }, Collider::TYPE::BALLOON, (Module*)game->GetModuleEnemies());
+    collider = game->GetModuleCollisions()->AddCollider({ 1,6,48,40 }, Collider::TYPE::BALLOON, (Module*)game->GetModuleEnemies());
 }
 
-void Enemy_Balloon::Update()
-{
-	// Call to the base class. It must be called at the end
-	// It will update the collider depending on the position
-	Enemy::Update();
+void Enemy_Balloon::Update() {
+    //This is where the physics go
+
+    // Call to the base class. It must be called at the end
+    // It will update the collider depending on the position
+    Enemy::Update();
 }
