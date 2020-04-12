@@ -103,7 +103,10 @@ UPDATE_STATUS ModuleParticles::PostUpdate() {
     //Iterating all particle array and drawing any active particles
     for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i) {
         Particle* particle = particles[i];
-        if (particle != nullptr && particle->CheckIsAlive() && particle->GetLifetime() != 0) { game->GetModuleRender()->Blit(normalWireTexture, particle->GetPositionX(), particle->GetPositionY(), false, &(particle->GetCurrentAnim())); }
+        if (particle != nullptr && particle->CheckIsAlive() && particle->GetLifetime() != 0) {
+            /*if (particle == &normalWire)*/ { game->GetModuleRender()->Blit(normalWireTexture, particle->GetPositionX(), particle->GetPositionY(), false, &(particle->GetCurrentAnim())); }
+            /*if (particle == &bigBalloonExplosion)*/ { game->GetModuleRender()->Blit(balloonExplosion, particle->GetPositionX(), particle->GetPositionY(), false, &(particle->GetCurrentAnim())); }
+        }
     }
     return UPDATE_STATUS::UPDATE_CONTINUE;
 }

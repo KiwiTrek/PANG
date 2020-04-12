@@ -46,7 +46,7 @@ private:
     bool matrix[Collider::TYPE::MAX][Collider::TYPE::MAX];
 
     // Simple debugging flag to draw all colliders
-    bool debug = true;
+    bool debug = false;
 };
 
 #endif // __MODULE_COLLISIONS_H__

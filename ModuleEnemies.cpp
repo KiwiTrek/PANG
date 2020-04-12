@@ -14,15 +14,14 @@
 
 
 ModuleEnemies::ModuleEnemies() {
-    for (uint i = 0; i < MAX_ENEMIES; ++i)
-        enemies[i] = nullptr;
+    for (uint i = 0; i < MAX_ENEMIES; ++i) { enemies[i] = nullptr; }
 }
 
 ModuleEnemies::~ModuleEnemies() {}
 
 bool ModuleEnemies::Start() {
     texture = game->GetModuleTextures()->Load("Resources/Sprites/enemies.png");
-    //enemyDestroyedFx = game->GetModuleAudio()->LoadFx("Resources/explosion.wav");
+    balloogiExplosioni = game->GetModuleAudio()->LoadFx("Resources/SFX/balloonPopped.wav");
 
     return true;
 }
@@ -116,7 +115,7 @@ void ModuleEnemies::SpawnEnemy(const EnemySpawnpoint& info) {
                 break;
             }
             enemies[i]->texture = texture;
-            //enemies[i]->destroyedFx = enemyDestroyedFx;
+            enemies[i]->destroyedFx = balloogiExplosioni;
             break;
         }
     }
@@ -127,7 +126,8 @@ void ModuleEnemies::OnCollision(Collider* c1, Collider* c2) {
         if (enemies[i]->GetCollider() == c1 && enemies[i] != nullptr) {
             enemies[i]->OnCollision(c2); //Notify the enemy of a collision
             if (enemies[i]->GetLethality()) {
-                if (enemies[i]->GetEnemyType() == ENEMY_TYPE::CHUNGUS_BALLOON) { game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->bigBalloonExplosion, enemies[i]->position.x, enemies[i]->position.y); }
+                if (c1->GetType() == Collider::TYPE::BALLOON) { game->GetModuleAudio()->PlayFx(enemies[i]->destroyedFx); }
+                if (enemies[i]->GetEnemyType() == ENEMY_TYPE::CHUNGUS_BALLOON) {game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->bigBalloonExplosion, enemies[i]->position.x, enemies[i]->position.y); }
                 delete enemies[i];
                 enemies[i] = nullptr;
             }

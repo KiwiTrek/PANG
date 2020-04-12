@@ -1,5 +1,6 @@
 #include "Enemy_Balloon.h"
 #include "Game.h"
+#include "ModuleAudio.h"
 #include "ModuleCollisions.h"
 
 Enemy_Balloon::Enemy_Balloon(int x, int y) : Enemy(x, y) {

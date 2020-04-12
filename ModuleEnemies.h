@@ -67,7 +67,7 @@ private:
     SDL_Texture* texture = nullptr;
 
     // The audio fx for destroying an enemy
-    int enemyDestroyedFx = 0;
+    uint balloogiExplosioni;
 };
 
 #endif // __MODULE_ENEMIES_H__
