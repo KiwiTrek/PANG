@@ -64,6 +64,7 @@ public:
     //Shots (and others) go here
     Particle normalWire;
     Particle bigBalloonExplosion;
+	Particle muzzleFlash;
 };
 
 #endif // !__MODULEPARTICLES_H__

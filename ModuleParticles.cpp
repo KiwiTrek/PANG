@@ -51,12 +51,14 @@ ModuleParticles::ModuleParticles() {
     normalWire.SetAnimSpeed(0.44f); //0.44f
     normalWire.SetFSpeedY(-0.66f); //-0.66f
 
-    bigBalloonExplosion.SetAnimPushBack({ 8,511,48,46 });
-    bigBalloonExplosion.SetAnimPushBack({ 56,511,48,46 });
-    bigBalloonExplosion.SetAnimPushBack({ 104,511,48,46 });
-    bigBalloonExplosion.SetAnimPushBack({ 152,511,48,46 });
+	for (int i = 0; i < 4; i++) { bigBalloonExplosion.SetAnimPushBack({ 8 + i * 48,511,48,46 }); }
     bigBalloonExplosion.SetAnimLoop(false);
     bigBalloonExplosion.SetAnimSpeed(0.5f);
+
+	for (int i = 0; i < 4; i++) { muzzleFlash.SetAnimPushBack({ 23 + i * 16,7,16,13 }); }
+	muzzleFlash.SetAnimLoop(false);
+	muzzleFlash.SetAnimSpeed(0.2f);
+
 }
 
 ModuleParticles::~ModuleParticles() {}
@@ -66,6 +68,7 @@ bool ModuleParticles::Start() {
 
     normalWire.SetParticleTexture(game->GetModuleTextures()->Load("Resources/Sprites/normalWire.png"));
     bigBalloonExplosion.SetParticleTexture(game->GetModuleTextures()->Load("Resources/Sprites/boom.png"));
+	muzzleFlash.SetParticleTexture(game->GetModuleTextures()->Load("Resources/Sprites/powerUps.png"));
 
     return true;
 }

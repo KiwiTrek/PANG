@@ -12,17 +12,17 @@
 
 ModulePlayer::ModulePlayer() {
     //Animation setter
-    idle.PushBack({ 12,112,25,31 });
+    idle.PushBack({ 12,112,25,32 });
     idle.SetSpeed(0.0f);
 
-    shoot.PushBack({ 44,115,27,28 });
+    shoot.PushBack({ 44,112,27,32 });
     shoot.SetSpeed(0.0f);
 
-    moving.PushBack({ 12,2,29,31 });
-    moving.PushBack({ 46,3,30,30 });
-    moving.PushBack({ 80,2,29,31 });
-    moving.PushBack({ 114,3,27,30 });
-    moving.PushBack({ 148,3,29,30 });
+    moving.PushBack({ 12,2,29,32 });
+    moving.PushBack({ 46,2,30,32 });
+    moving.PushBack({ 80,2,29,32 });
+    moving.PushBack({ 114,2,27,32 });
+    moving.PushBack({ 148,2,29,32 });
     moving.SetSpeed(0.2f);
 }
 ModulePlayer::~ModulePlayer() {}
@@ -88,12 +88,14 @@ UPDATE_STATUS ModulePlayer::Update()
         
         if (GetInvertValue()) {
 			game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->normalWire, position.x + (shoot.GetWidth() / 3), position.y - 1 , Collider::TYPE::PLAYER_SHOT);
+			game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->muzzleFlash, position.x+3, position.y-10, Collider::TYPE::PLAYER_SHOT);
         }
         if (!GetInvertValue()) {
 			game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->normalWire, position.x + (shoot.GetWidth() / 2), position.y - 1 , Collider::TYPE::PLAYER_SHOT);
+			game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->muzzleFlash, position.x+currentAnimation->GetWidth()/2-6, position.y-10, Collider::TYPE::PLAYER_SHOT); //It works, it just works ~Todd Howard,from Skyrim
         }
 
-        returnToIdle = 5;
+        returnToIdle = 20;
     }
 
     if (game->GetModuleInput()->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) { godMode = !godMode; }
