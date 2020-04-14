@@ -24,3 +24,13 @@ void Enemy::SetLethality(bool _lethality) { lethal = _lethality; }
 bool Enemy::GetLethality() { return lethal; }
 
 ENEMY_TYPE Enemy::GetEnemyType() { return type; }
+
+void Enemy::SetEnemyTexture(SDL_Texture* _texture) { texture = _texture; }
+
+uint Enemy::GetDestroyedFx() { return destroyedFx; }
+
+void Enemy::SetDestroyedFx(uint _destroyedFx) { destroyedFx = _destroyedFx; }
+
+int Enemy::GetPositionX() { return position.x; }
+
+int Enemy::GetPositionY() { return position.y; }

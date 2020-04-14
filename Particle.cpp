@@ -53,3 +53,5 @@ void Particle::SetLifetime(const uint _lifetime) { lifetime = _lifetime; }
 uint Particle::GetLifetime() const { return lifetime; }
 void Particle::SetCollider(Collider* _collider) { collider = _collider; }
 Collider* Particle::GetCollider() const { return collider; }
+void Particle::SetParticleTexture(SDL_Texture* _particleTexture) { particleTexture = _particleTexture; }
+SDL_Texture* Particle::GetParticleTexture() { return particleTexture; }

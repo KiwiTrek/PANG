@@ -37,11 +37,10 @@ public:
     // Param texture    - A valid SDL Texture, validation checks are not performed
     // Param x,y        - Position x,y on the screen
     // Param section    - The portion of the texture we want to copy (nullptr for the entire texture)
-    // Param speed      - How much the camera movement affects the sprite
     // Param invert     - If the texture has to be flipped horizontally
-	bool Blit(SDL_Texture* texture, int x, int y, bool invert, SDL_Rect* section = nullptr, SDL_Rect* adapter = nullptr, float speed = 1.0f);
+	bool Blit(SDL_Texture* texture, int x, int y, bool invert, SDL_Rect* section = nullptr, SDL_Rect* adapter = nullptr);
 
-    bool DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a, float speed = 1.0f);
+    bool DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a);
 
     void SetRenderer(SDL_Renderer* _renderer);
     SDL_Renderer* GetRenderer() const;
@@ -49,14 +48,6 @@ public:
 private:
     // Rendering context used for any rendering action
     SDL_Renderer* renderer = nullptr;
-
-    // A rectangle that represents the camera section
-    // Sprites will be rendered to the screen depending on the camera position
-    SDL_Rect camera = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
-
-    // The speed at which the camera will be moving
-    int cameraSpeed = 3;
-
 };
 
 #endif //__MODULE_RENDER_H__

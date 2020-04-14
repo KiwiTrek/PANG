@@ -44,8 +44,13 @@ public:
     void SetLethality(bool _lethality);
     bool GetLethality();
     ENEMY_TYPE GetEnemyType();
+    void SetEnemyTexture(SDL_Texture* _texture);
+    uint GetDestroyedFx();
+    void SetDestroyedFx(uint _destroyedFx);
+    int GetPositionX();
+    int GetPositionY();
 
-public:
+protected:
     // The current position in the world
     iPoint position;
 
@@ -55,7 +60,6 @@ public:
     // Sound fx when destroyed
     uint destroyedFx = 0;
 
-protected:
     // A ptr to the current animation
     Animation* currentAnim = nullptr;
 

@@ -114,8 +114,8 @@ void ModuleEnemies::SpawnEnemy(const EnemySpawnpoint& info) {
                 enemies[i] = new Enemy_Balloon(info.x, info.y);
                 break;
             }
-            enemies[i]->texture = texture;
-            enemies[i]->destroyedFx = balloogiExplosioni;
+            enemies[i]->SetEnemyTexture(texture);
+            enemies[i]->SetDestroyedFx(balloogiExplosioni);
             break;
         }
     }
@@ -126,8 +126,8 @@ void ModuleEnemies::OnCollision(Collider* c1, Collider* c2) {
         if (enemies[i]->GetCollider() == c1 && enemies[i] != nullptr) {
             enemies[i]->OnCollision(c2); //Notify the enemy of a collision
             if (enemies[i]->GetLethality()) {
-                if (c1->GetType() == Collider::TYPE::BALLOON) { game->GetModuleAudio()->PlayFx(enemies[i]->destroyedFx); }
-                if (enemies[i]->GetEnemyType() == ENEMY_TYPE::CHUNGUS_BALLOON) {game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->bigBalloonExplosion, enemies[i]->position.x, enemies[i]->position.y); }
+                if (c1->GetType() == Collider::TYPE::BALLOON) { game->GetModuleAudio()->PlayFx(enemies[i]->GetDestroyedFx()); }
+                if (enemies[i]->GetEnemyType() == ENEMY_TYPE::CHUNGUS_BALLOON) {game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->bigBalloonExplosion, enemies[i]->GetPositionX(), enemies[i]->GetPositionY()); }
                 delete enemies[i];
                 enemies[i] = nullptr;
             }

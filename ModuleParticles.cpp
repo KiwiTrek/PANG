@@ -64,8 +64,8 @@ ModuleParticles::~ModuleParticles() {}
 bool ModuleParticles::Start() {
     LOG("Loading particles");
 
-    normalWire.particleTexture = game->GetModuleTextures()->Load("Resources/Sprites/normalWire.png");
-    bigBalloonExplosion.particleTexture = game->GetModuleTextures()->Load("Resources/Sprites/boom.png");
+    normalWire.SetParticleTexture(game->GetModuleTextures()->Load("Resources/Sprites/normalWire.png"));
+    bigBalloonExplosion.SetParticleTexture(game->GetModuleTextures()->Load("Resources/Sprites/boom.png"));
 
     return true;
 }
@@ -103,8 +103,8 @@ UPDATE_STATUS ModuleParticles::PostUpdate() {
     for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i) {
         Particle* particle = particles[i];
         if (particle != nullptr && particle->CheckIsAlive()) {
-            game->GetModuleRender()->Blit(particle->particleTexture, particle->GetPositionX(), particle->GetPositionY(), false, &(particle->GetCurrentAnim()));
-            if (particle->particleTexture == normalWire.particleTexture) { game->GetModuleRender()->Blit(game->GetModulePlayer()->GetTexture(), game->GetModulePlayer()->GetPosition().x, game->GetModulePlayer()->GetPosition().y, game->GetModulePlayer()->GetInvertValue(), &(game->GetModulePlayer()->GetCurrentAnimation())->GetCurrentFrame()); }
+            game->GetModuleRender()->Blit(particle->GetParticleTexture(), particle->GetPositionX(), particle->GetPositionY(), false, &(particle->GetCurrentAnim()));
+            if (particle->GetParticleTexture() == normalWire.GetParticleTexture()) { game->GetModuleRender()->Blit(game->GetModulePlayer()->GetTexture(), game->GetModulePlayer()->GetPosition().x, game->GetModulePlayer()->GetPosition().y, game->GetModulePlayer()->GetInvertValue(), &(game->GetModulePlayer()->GetCurrentAnimation())->GetCurrentFrame()); }
         }
     }
     return UPDATE_STATUS::UPDATE_CONTINUE;

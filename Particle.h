@@ -39,9 +39,9 @@ public:
     uint GetLifetime() const;
     void SetCollider(Collider* _collider);
     Collider* GetCollider() const;
+    void SetParticleTexture(SDL_Texture* _particleTexture);
+    SDL_Texture* GetParticleTexture();
 
-    // A pointer to the particle's texture (SHOULD BE PRIVATE)
-    SDL_Texture* particleTexture = nullptr;
 
 private:
     // Defines the position in the screen
@@ -66,6 +66,9 @@ private:
 
     // The particle's collider
     Collider* collider = nullptr;
+
+    // A pointer to the particle's texture
+    SDL_Texture* particleTexture = nullptr;
 };
 
 #endif //__PARTICLE_H__

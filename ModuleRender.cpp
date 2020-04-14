@@ -64,7 +64,7 @@ bool ModuleRender::CleanUp() {
 }
 
 // Blit to screen
-bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, bool invert, SDL_Rect* section, SDL_Rect* adapter, float speed) {
+bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, bool invert, SDL_Rect* section, SDL_Rect* adapter) {
     bool ret = true;
 
     SDL_Rect rect{ (int)(x * SCREEN_SIZE), (int)(y * SCREEN_SIZE), 0, 0 };
@@ -101,7 +101,7 @@ bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, bool invert, SDL_Rec
     return ret;
 }
 
-bool ModuleRender::DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a, float speed) {
+bool ModuleRender::DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a) {
     bool ret = true;
 
     SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
