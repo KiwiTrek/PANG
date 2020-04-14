@@ -6,15 +6,15 @@
 Enemy_Balloon::Enemy_Balloon(int x, int y) : Enemy(x, y) {
     idle.PushBack({ 1,6,48,40 });
     currentAnim = &idle;
-    speed.x = -100;
-    speed.y = -50;
+    speed.x = -150.0f;
+    speed.y = -50.0f;
 
     collider = game->GetModuleCollisions()->AddCollider({ 1,6,48,40 }, Collider::TYPE::BALLOON, (Module*)game->GetModuleEnemies());
 }
 
 void Enemy_Balloon::Update() {
     //This is where the physics go
-    const float gravity = 150.0f;				// pixels / second^2
+    const float gravity = 600.0f;				// pixels / second^2
     const float deltaTime = 1.0f / 60.0f;		// More or less 60 frames per second
 
     position.x = position.x + speed.x * deltaTime;
@@ -43,11 +43,11 @@ void Enemy_Balloon::OnCollision(Collider* c2) {
     else if (c2->GetType() == Collider::TYPE::FLOOR) {
         if (position.y < (c2->GetRect().y + c2->GetRect().h) && position.y > c2->GetRect().y) {
             position.y = (c2->GetRect().y + c2->GetRect().h);
-            speed.y = (-speed.y / 1.35f);
+            speed.y = (-speed.y + 50.0f);
         }
         else if ((position.y + currentAnim->GetHeight()) > c2->GetRect().y&& position.y < c2->GetRect().y) {
             position.y = (c2->GetRect().y - currentAnim->GetHeight());
-            speed.y = (-speed.y / 1.35f);
+            speed.y = (-speed.y + 50.0f);
         }
     }
     else if (c2->GetType() == Collider::TYPE::PLAYER_SHOT) { SetLethality(true); }
