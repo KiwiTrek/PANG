@@ -32,6 +32,7 @@ void ModulePlayer::SetSpeed(int _speed) { speed = _speed; }
 iPoint ModulePlayer::GetPosition() const { return position; }
 void ModulePlayer::SetPosition(iPoint _position) { position = _position; }
 SDL_Texture* ModulePlayer::GetTexture() const { return texture; }
+Animation* ModulePlayer::GetCurrentAnimation() const { return currentAnimation; }
 uint ModulePlayer::GetShotSoundIndex() const { return shotSoundIndex; }
 void ModulePlayer::SetShotSoundIndex(uint _shotSoundIndex) { shotSoundIndex = _shotSoundIndex; }
 void ModulePlayer::SetIfShot(bool _shot) { shot = _shot; }
@@ -82,7 +83,7 @@ UPDATE_STATUS ModulePlayer::Update()
     //}
     if (game->GetModuleInput()->GetKey(SDL_SCANCODE_Q) == KEY_DOWN && shot == false) {
         shot = true;
-        game->GetModuleAudio()->PlayFx(shotSoundIndex);
+ //       game->GetModuleAudio()->PlayFx(shotSoundIndex);
         currentAnimation = &shoot;
         
         if (GetInvertValue()) {

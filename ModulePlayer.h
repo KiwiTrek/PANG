@@ -18,6 +18,7 @@ public:
     iPoint GetPosition() const;
     void SetPosition(iPoint _position);
     SDL_Texture* GetTexture() const;
+    Animation* GetCurrentAnimation() const;
     uint GetShotSoundIndex() const;
     void SetShotSoundIndex(uint _shotSoundIndex);
     void SetIfShot(bool _shot);

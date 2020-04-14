@@ -50,14 +50,13 @@ ModuleParticles::ModuleParticles() {
     normalWire.SetAnimLoop(false);
     normalWire.SetAnimSpeed(0.44f); //0.44f
     normalWire.SetFSpeedY(-0.66f); //-0.66f
-    normalWire.SetLifetime(250);
 
     bigBalloonExplosion.SetAnimPushBack({ 8,511,48,46 });
     bigBalloonExplosion.SetAnimPushBack({ 56,511,48,46 });
     bigBalloonExplosion.SetAnimPushBack({ 104,511,48,46 });
     bigBalloonExplosion.SetAnimPushBack({ 152,511,48,46 });
     bigBalloonExplosion.SetAnimLoop(false);
-    bigBalloonExplosion.SetAnimSpeed(0.8f);
+    bigBalloonExplosion.SetAnimSpeed(0.5f);
 }
 
 ModuleParticles::~ModuleParticles() {}
@@ -65,8 +64,8 @@ ModuleParticles::~ModuleParticles() {}
 bool ModuleParticles::Start() {
     LOG("Loading particles");
 
-    normalWireTexture = game->GetModuleTextures()->Load("Resources/Sprites/normalWire.png");
-    balloonExplosion = game->GetModuleTextures()->Load("Resources/Sprites/boom.png");
+    normalWire.particleTexture = game->GetModuleTextures()->Load("Resources/Sprites/normalWire.png");
+    bigBalloonExplosion.particleTexture = game->GetModuleTextures()->Load("Resources/Sprites/boom.png");
 
     return true;
 }
@@ -103,9 +102,9 @@ UPDATE_STATUS ModuleParticles::PostUpdate() {
     //Iterating all particle array and drawing any active particles
     for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i) {
         Particle* particle = particles[i];
-        if (particle != nullptr && particle->CheckIsAlive() && particle->GetLifetime() != 0) {
-            /*if (particle == &normalWire)*/ { game->GetModuleRender()->Blit(normalWireTexture, particle->GetPositionX(), particle->GetPositionY(), false, &(particle->GetCurrentAnim())); }
-            /*if (particle == &bigBalloonExplosion)*/ { game->GetModuleRender()->Blit(balloonExplosion, particle->GetPositionX(), particle->GetPositionY(), false, &(particle->GetCurrentAnim())); }
+        if (particle != nullptr && particle->CheckIsAlive()) {
+            game->GetModuleRender()->Blit(particle->particleTexture, particle->GetPositionX(), particle->GetPositionY(), false, &(particle->GetCurrentAnim()));
+            if (particle->particleTexture == normalWire.particleTexture) { game->GetModuleRender()->Blit(game->GetModulePlayer()->GetTexture(), game->GetModulePlayer()->GetPosition().x, game->GetModulePlayer()->GetPosition().y, game->GetModulePlayer()->GetInvertValue(), &(game->GetModulePlayer()->GetCurrentAnimation())->GetCurrentFrame()); }
         }
     }
     return UPDATE_STATUS::UPDATE_CONTINUE;

@@ -5,6 +5,7 @@
 #include "p2Point.h"
 
 struct Collider;
+struct SDL_Texture;
 
 struct Particle
 {
@@ -38,6 +39,9 @@ public:
     uint GetLifetime() const;
     void SetCollider(Collider* _collider);
     Collider* GetCollider() const;
+
+    // A pointer to the particle's texture (SHOULD BE PRIVATE)
+    SDL_Texture* particleTexture = nullptr;
 
 private:
     // Defines the position in the screen

@@ -34,7 +34,7 @@ UPDATE_STATUS ModuleEnemies::Update() {
             enemies[i]->Update();
     }
 
-    HandleEnemiesDespawn();
+   //HandleEnemiesDespawn();
 
     return UPDATE_STATUS::UPDATE_CONTINUE;
 }

@@ -48,10 +48,6 @@ public:
     // Collision callback, called when the player intersects with another collidernormalWire
     void OnCollision(Collider* c1, Collider* c2) override;
 private:
-    // Shot (and other) textures go here
-    SDL_Texture* normalWireTexture = nullptr;
-    SDL_Texture* balloonExplosion = nullptr;
-
     // An array to store and handle all the particles
     Particle* particles[MAX_ACTIVE_PARTICLES] = { nullptr };
 

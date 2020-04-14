@@ -23,12 +23,12 @@ Game::Game() {
     
     modules[4] = levelOne = new ModuleLevelOne();
     modules[5] = player = new ModulePlayer();
-    modules[6] = particles = new ModuleParticles();
-    modules[7] = enemies = new ModuleEnemies();
+    modules[6] = enemies = new ModuleEnemies();
+    modules[7] = particles = new ModuleParticles();
 
-    modules[8] = collisions = new ModuleCollisions(); //should be 8
+    modules[8] = collisions = new ModuleCollisions();
 
-    modules[9] = render = new ModuleRender(); //should be 9
+    modules[9] = render = new ModuleRender();
 }
 
 Game::~Game() {
