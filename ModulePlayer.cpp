@@ -43,7 +43,7 @@ bool ModulePlayer::Start()
 {
     LOG("Loading player textures");
 
-    texture = game->GetModuleTextures()->Load("Resources/Sprites/Player.png"); // arcade version
+    texture = game->GetModuleTextures()->Load("Resources/Sprites/player.png"); // arcade version
     shotSoundIndex = game->GetModuleAudio()->LoadFx("Resources/SFX/shotClaw.wav");
 
     position.x = 177;
@@ -83,7 +83,7 @@ UPDATE_STATUS ModulePlayer::Update()
     //}
     if (game->GetModuleInput()->GetKey(SDL_SCANCODE_Q) == KEY_DOWN && shot == false) {
         shot = true;
- //       game->GetModuleAudio()->PlayFx(shotSoundIndex);
+        if (!godMode) { game->GetModuleAudio()->PlayFx(shotSoundIndex); }
         currentAnimation = &shoot;
         
         if (GetInvertValue()) {
@@ -96,10 +96,7 @@ UPDATE_STATUS ModulePlayer::Update()
         returnToIdle = 5;
     }
 
-    if (game->GetModuleInput()->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) {
-        if (godMode == false) { godMode = true; }
-        else { godMode = false; }
-    }
+    if (game->GetModuleInput()->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) { godMode = !godMode; }
 
 
     if (currentAnimation == &idle) {
@@ -129,7 +126,7 @@ UPDATE_STATUS ModulePlayer::PostUpdate() {
 }
 
 void ModulePlayer::OnCollision(Collider* c1, Collider* c2) {
-    if (godMode == false) {
+    if (!godMode) {
         if (c1 == collider && destroyed == false && c2->GetType() == Collider::TYPE::WALL) {
             if (position.x < (c2->GetRect().x + c2->GetRect().w) && position.x > c2->GetRect().x) {
                 position.x = (c2->GetRect().x + c2->GetRect().w);

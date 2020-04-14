@@ -18,7 +18,7 @@ ModuleLevelOne::~ModuleLevelOne() {}
 bool ModuleLevelOne::Start() {
     LOG("Loading background assets");
 
-    backgroundTexture = game->GetModuleTextures()->Load("Resources/Sprites/Backgrounds.png");
+    backgroundTexture = game->GetModuleTextures()->Load("Resources/Sprites/backgrounds.png");
     game->GetModuleAudio()->PlayMusic("Resources/BGM/introFuji.ogg");
 
     // Colliders ---

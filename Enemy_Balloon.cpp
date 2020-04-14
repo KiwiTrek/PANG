@@ -23,7 +23,7 @@ void Enemy_Balloon::Update() {
 
     // Call to the base class. It must be called at the end
     // It will update the collider depending on the position
-    LOG("Speed: X = %f, Y = %f\n",speed.x, speed.y);
+    // LOG("Speed: X = %f, Y = %f\n",speed.x, speed.y);
     Enemy::Update();
 }
 
@@ -31,12 +31,11 @@ void Enemy_Balloon::OnCollision(Collider* c2) {
     if (c2->GetType() == Collider::TYPE::WALL) {
         if (position.x < (c2->GetRect().x + c2->GetRect().w) && position.x > c2->GetRect().x) {
             position.x = (c2->GetRect().x + c2->GetRect().w);
-            speed.x = 150.0f;
+            if (speed.x <= 75.0f) { speed.x = -(speed.x * 2); } //We're as clueless as you on the reason why this works.
         }
         else if ((position.x + currentAnim->GetWidth()) > c2->GetRect().x&& position.x < c2->GetRect().x) {
             position.x = (c2->GetRect().x - currentAnim->GetWidth());
-            //if (speed.x >= 75.0f) { speed.x = -(speed.x / 2); }
-            speed.x = -75.0f;
+            if (speed.x >= 75.0f) { speed.x = -(speed.x / 2); } //Please do not question it.
         }
         //if (position.y >= 186 - currentAnim->GetHeight()) {
         //    position.y = 186 - currentAnim->GetHeight();
