@@ -17,7 +17,15 @@ Recreation of the 1989 classic from arcades by Bruhmentium INC:
 #### Check for more info at the [wiki](https://github.com/WillyTrek19/PANG/wiki)
 
 ## Changelog
-### Current version: 0.3
+### Current version: 0.4
+
+#### 0.4:
+- Added Module:
+  - Enemies
+- Added enemy support
+- Added Balloon enemy (Doesn't divide when popped)
+- Fixed minor graphical bugs and improved overall code (We made everything cooler :3)
+- Added ~~a fuckton of~~ setters and getters
 
 #### 0.3: 
 - Added Module:
@@ -53,6 +61,16 @@ Recreation of the 1989 classic from arcades by Bruhmentium INC:
 - Created Player display (with no collisions nor animations)
 
 ## Bugs
+
+#### 0.4:
+- Player:
+  - Fixed animation bugs
+  - Added missing particles
+- Balloon:
+  - Speed.x works with the current code when it shouldn't, no idea how. 
+                                              
+                                   -It works, it just works ~ Bethesda
+
 #### 0.3:
 - Player:
   - Fixed the multiprojectile bug
