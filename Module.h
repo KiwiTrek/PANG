@@ -28,7 +28,6 @@ public:
     void Enable();
     void Disable();
 
-
     virtual bool GetInvertValue() const;
     virtual void ChangeInvert();
     inline bool IsEnabled() const;

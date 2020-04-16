@@ -1,6 +1,9 @@
+#include "Game.h"
+
 #include "Particle.h"
 #include "Collider.h"
 
+#include "ModulePlayer.h"
 #include "SDL/include/SDL_timer.h"
 
 Particle::Particle() {
@@ -13,28 +16,31 @@ Particle::Particle(const Particle& p) : anim(p.anim), position(p.position), spee
 Particle::~Particle() { if (collider != nullptr) { collider->SetPendingToDelete(true); } }
 
 bool Particle::Update() {
-    frameCount++;
+    if (!game->GetModulePlayer()->CheckIfDestroyed()) {
+        frameCount++;
 
-    // The particle is set to 'alive' when the delay has been reached
-    if (!isAlive && frameCount >= 0) { isAlive = true; }
+        // The particle is set to 'alive' when the delay has been reached
+        if (!isAlive && frameCount >= 0) { isAlive = true; }
 
-    if (isAlive) {
-        anim.Update();
+        if (isAlive) {
+            anim.Update();
 
-        // If the particle has a specific lifetime, check when it has to be destroyed
-        if (lifetime > 0) {
-            if (frameCount >= lifetime)
-                return false;
+            // If the particle has a specific lifetime, check when it has to be destroyed
+            if (lifetime > 0) {
+                if (frameCount >= lifetime)
+                    return false;
+            }
+            // Otherwise the particle is destroyed when the animation is finished
+            else if (anim.HasFinished()) { return false; }
+
+            // Update the position in the screen
+            position.x += speed.x;
+            position.y += speed.y;
+
+            if (collider != nullptr) { collider->SetPos(position.x, position.y, anim.GetWidth(), anim.GetHeight()); }
         }
-        // Otherwise the particle is destroyed when the animation is finished
-        else if (anim.HasFinished()) { return false; }
-
-        // Update the position in the screen
-        position.x += speed.x;
-        position.y += speed.y;
-
-        if (collider != nullptr) { collider->SetPos(position.x, position.y, anim.GetWidth(), anim.GetHeight()); }
     }
+    
     return true;
 }
 

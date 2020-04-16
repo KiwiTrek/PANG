@@ -8,6 +8,7 @@
 #include "Particle.h"
 #include "ModuleCollisions.h"
 
+#include "SDL/include/SDL_timer.h"
 #include "SDL/include/SDL_scancode.h"
 
 ModulePlayer::ModulePlayer(bool startEnabled) : Module(startEnabled) {
@@ -24,14 +25,20 @@ ModulePlayer::ModulePlayer(bool startEnabled) : Module(startEnabled) {
     moving.PushBack({ 114,2,27,32 });
     moving.PushBack({ 148,2,29,32 });
     moving.SetSpeed(0.2f);
+
+    ded.PushBack({ 81,112,40,29 });
+    ded.SetSpeed(0.0f);
 }
 ModulePlayer::~ModulePlayer() {}
 
 bool ModulePlayer::Start() {
     LOG("Loading player textures");
+    destroyed = false;
+    once = true;
 
     texture = game->GetModuleTextures()->Load("Resources/Sprites/player.png"); // arcade version
     shotSoundIndex = game->GetModuleAudio()->LoadFx("Resources/SFX/shotClaw.wav");
+    dedSoundIndex = game->GetModuleAudio()->LoadFx("Resources/SFX/dead.wav");
 
     position.x = 177;
     position.y = 186 - idle.GetHeight();
@@ -46,64 +53,68 @@ UPDATE_STATUS ModulePlayer::Update()
     //Reset the currentAnimation back to idle before updating the logic
     if (returnToIdle == 0) { currentAnimation = &idle; }
     else { --returnToIdle; }
-
-    if (game->GetModuleInput()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && game->GetModuleInput()->GetKey(SDL_SCANCODE_A) != KEY_REPEAT && (returnToIdle == 0)) {
-        currentAnimation = &moving;
-        if (GetInvertValue()) { ChangeInvert(); }
-        position.x += speed;
-    }
-    if (game->GetModuleInput()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && game->GetModuleInput()->GetKey(SDL_SCANCODE_D) != KEY_REPEAT && (returnToIdle == 0)) {
-        currentAnimation = &moving;
-        if (!(GetInvertValue())) { ChangeInvert(); }
-        position.x -= speed;
-    }
-    // we need to activate it only when the player is on the stairs (OnCollision)
-    //if (game->GetModuleInput()->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && (returnToIdle == 0)) {
-    //    currentAnimation = &idle;
-    //    if (!(GetInvertValue())) { ChangeInvert(); }
-    //    position.y -= speed;
-    //}
-    //if (game->GetModuleInput()->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && (returnToIdle == 0)) {
-    //    currentAnimation = &idle;
-    //    if (!(GetInvertValue())) { ChangeInvert(); }
-    //    position.y += speed;
-    //}
-    if (game->GetModuleInput()->GetKey(SDL_SCANCODE_Q) == KEY_DOWN && shot == false) {
-        shot = true;
-        if (!godMode) { game->GetModuleAudio()->PlayFx(shotSoundIndex); }
-        currentAnimation = &shoot;
-        
-        if (GetInvertValue()) {
-            game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->normalWire, position.x + (shoot.GetWidth() / 3), position.y - 1 , Collider::TYPE::PLAYER_SHOT);
-            game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->muzzleFlash, position.x+3, position.y-10, Collider::TYPE::PLAYER_SHOT);
+    if (!destroyed) {
+        if (game->GetModuleInput()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && game->GetModuleInput()->GetKey(SDL_SCANCODE_A) != KEY_REPEAT && (returnToIdle == 0)) {
+            currentAnimation = &moving;
+            if (GetInvertValue()) { ChangeInvert(); }
+            position.x += speed;
         }
-        if (!GetInvertValue()) {
-            game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->normalWire, position.x + (shoot.GetWidth() / 2), position.y - 1 , Collider::TYPE::PLAYER_SHOT);
-            game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->muzzleFlash, position.x+currentAnimation->GetWidth()/2-6, position.y-10, Collider::TYPE::PLAYER_SHOT); //It works, it just works ~Todd Howard,from Skyrim
+        if (game->GetModuleInput()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && game->GetModuleInput()->GetKey(SDL_SCANCODE_D) != KEY_REPEAT && (returnToIdle == 0)) {
+            currentAnimation = &moving;
+            if (!(GetInvertValue())) { ChangeInvert(); }
+            position.x -= speed;
         }
+        // we need to activate it only when the player is on the stairs (OnCollision)
+        //if (game->GetModuleInput()->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && (returnToIdle == 0)) {
+        //    currentAnimation = &idle;
+        //    if (!(GetInvertValue())) { ChangeInvert(); }
+        //    position.y -= speed;
+        //}
+        //if (game->GetModuleInput()->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && (returnToIdle == 0)) {
+        //    currentAnimation = &idle;
+        //    if (!(GetInvertValue())) { ChangeInvert(); }
+        //    position.y += speed;
+        //}
+        if (game->GetModuleInput()->GetKey(SDL_SCANCODE_Q) == KEY_DOWN && shot == false) {
+            shot = true;
+            if (!godMode) { game->GetModuleAudio()->PlayFx(shotSoundIndex); }
+            currentAnimation = &shoot;
 
-        returnToIdle = 20;
+            if (GetInvertValue()) {
+                game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->normalWire, position.x + (shoot.GetWidth() / 3), position.y - 1, Collider::TYPE::PLAYER_SHOT);
+                game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->muzzleFlash, position.x + 3, position.y - 10, Collider::TYPE::PLAYER_SHOT);
+            }
+            if (!GetInvertValue()) {
+                game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->normalWire, position.x + (shoot.GetWidth() / 2), position.y - 1, Collider::TYPE::PLAYER_SHOT);
+                game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->muzzleFlash, position.x + currentAnimation->GetWidth() / 2 - 6, position.y - 10, Collider::TYPE::PLAYER_SHOT); //It works, it just works ~Todd Howard,from Skyrim
+            }
+
+            returnToIdle = 20;
+        }
+        if (currentAnimation == &idle) { collider->SetPos(position.x, position.y, idle.GetWidth(), idle.GetHeight()); }
+        else if (currentAnimation == &moving) { collider->SetPos(position.x, position.y, moving.GetWidth(), moving.GetHeight()); }
+        else if (currentAnimation == &shoot) { collider->SetPos(position.x, position.y, shoot.GetWidth(), shoot.GetHeight()); }
     }
 
     if (game->GetModuleInput()->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) { godMode = !godMode; }
 
-
-    if (currentAnimation == &idle) { collider->SetPos(position.x, position.y, idle.GetWidth(), idle.GetHeight()); }
-    else if (currentAnimation == &moving) { collider->SetPos(position.x, position.y, moving.GetWidth(), moving.GetHeight()); }
-    else if (currentAnimation == &shoot) { collider->SetPos(position.x, position.y, shoot.GetWidth(), shoot.GetHeight()); }
+    if (destroyed) {
+        if (once) {
+            SDL_Delay(1000);
+            game->GetModuleAudio()->PlayFx(dedSoundIndex);
+            once = false;
+        }
+        currentAnimation = &ded;
+    }
 
     currentAnimation->Update();
-
-    if (destroyed) { return UPDATE_STATUS::UPDATE_STOP; }
 
     return UPDATE_STATUS::UPDATE_CONTINUE;
 }
 
 UPDATE_STATUS ModulePlayer::PostUpdate() {
-    if (!destroyed) {
-        SDL_Rect rect = currentAnimation->GetCurrentFrame();
-        game->GetModuleRender()->Blit(texture, position.x, position.y, GetInvertValue(), &rect);
-    }
+    SDL_Rect rect = currentAnimation->GetCurrentFrame();
+    game->GetModuleRender()->Blit(texture, position.x, position.y, GetInvertValue(), &rect);
 
     return UPDATE_STATUS::UPDATE_CONTINUE;
 }
@@ -146,3 +157,4 @@ uint ModulePlayer::GetShotSoundIndex() const { return shotSoundIndex; }
 void ModulePlayer::SetShotSoundIndex(uint _shotSoundIndex) { shotSoundIndex = _shotSoundIndex; }
 void ModulePlayer::SetIfShot(bool _shot) { shot = _shot; }
 bool ModulePlayer::CheckIfGodMode() const { return godMode; };
+bool ModulePlayer::CheckIfDestroyed() const { return destroyed; };

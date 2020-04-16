@@ -33,6 +33,12 @@ bool ModuleWindow::Init() {
         }
         else { screenSurface = SDL_GetWindowSurface(window); }
     }
+
+    if (SDL_Init(SDL_INIT_TIMER) < 0) {
+        LOG("SDL_TIMER could not initialize! SDL_Error: %s\n", SDL_GetError());
+        return false;
+    }
+
     return true;
 }
 

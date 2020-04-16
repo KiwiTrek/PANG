@@ -5,13 +5,13 @@
 #include "ModuleRender.h"
 #include "ModuleTextures.h"
 #include "ModuleParticles.h"
+#include "ModulePlayer.h"
 #include "ModuleAudio.h"
 
 #include "Enemy.h"
 #include "Enemy_Balloon.h"
 
 #define SPAWN_MARGIN 50
-
 
 ModuleEnemies::ModuleEnemies(bool startEnabled) : Module(startEnabled) { for (uint i = 0; i < MAX_ENEMIES; ++i) { enemies[i] = nullptr; } }
 
@@ -25,14 +25,16 @@ bool ModuleEnemies::Start() {
 }
 
 UPDATE_STATUS ModuleEnemies::Update() {
-    HandleEnemiesSpawn();
+    if (game->GetModulePlayer()->CheckIfDestroyed() == false) {
+        HandleEnemiesSpawn();
 
-    for (uint i = 0; i < MAX_ENEMIES; ++i) {
-        if (enemies[i] != nullptr)
-            enemies[i]->Update();
+        for (uint i = 0; i < MAX_ENEMIES; ++i) {
+            if (enemies[i] != nullptr)
+                enemies[i]->Update();
+        }
+
+        //HandleEnemiesDespawn();
     }
-
-   //HandleEnemiesDespawn();
 
     return UPDATE_STATUS::UPDATE_CONTINUE;
 }

@@ -23,6 +23,7 @@ public:
     void SetShotSoundIndex(uint _shotSoundIndex);
     void SetIfShot(bool _shot);
     bool CheckIfGodMode() const;
+    bool CheckIfDestroyed() const;
 
     bool Start() override;
     UPDATE_STATUS Update() override;
@@ -41,6 +42,7 @@ private:
     Animation idle;
     Animation shoot;
     Animation moving;
+    Animation ded;
     bool playerInvert = false;
     int returnToIdle = 0;
 
@@ -50,12 +52,14 @@ private:
 
     //Player Sound
     uint shotSoundIndex;
+    uint dedSoundIndex;
 
     // The player's collider
     Collider* collider = nullptr;
 
     // A flag to detect when the player has been destroyed
     bool destroyed = false;
+    bool once = true;
 
     // A flag to detect when the player has shot
     bool shot = false;
