@@ -6,7 +6,10 @@
 #include "ModuleAudio.h"
 #include "ModuleRender.h"
 
-Enemy::Enemy(int x, int y) : position(x, y) { spawnPos = position; }
+Enemy::Enemy(int x, int y) : position(x, y) {
+    spawnPos = position;
+    type = ENEMY_TYPE::NO_TYPE;
+}
 
 Enemy::~Enemy() { if (collider != nullptr) { collider->SetPendingToDelete(true); } }
 

@@ -127,7 +127,20 @@ void ModuleEnemies::OnCollision(Collider* c1, Collider* c2) {
             enemies[i]->OnCollision(c2); //Notify the enemy of a collision
             if (enemies[i]->GetLethality()) {
                 if (c1->GetType() == Collider::TYPE::BALLOON) { game->GetModuleAudio()->PlayFx(enemies[i]->GetDestroyedFx()); }
-                if (enemies[i]->GetEnemyType() == ENEMY_TYPE::CHUNGUS_BALLOON) {game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->bigBalloonExplosion, enemies[i]->GetPositionX(), enemies[i]->GetPositionY()); }
+                if (enemies[i]->GetEnemyType() == ENEMY_TYPE::CHUNGUS_BALLOON) {
+                    game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->bigBalloonExplosion, enemies[i]->GetPositionX(), enemies[i]->GetPositionY());
+                    game->GetModuleEnemies()->AddEnemy(ENEMY_TYPE::NOT_THAT_MEH_BALLOON, 147, 36);
+                    game->GetModuleEnemies()->AddEnemy(ENEMY_TYPE::NOT_THAT_MEH_BALLOON, 207, 36);
+                }
+                else if(enemies[i]->GetEnemyType() == ENEMY_TYPE::NOT_THAT_MEH_BALLOON){ // Needs explosion effect
+                    game->GetModuleEnemies()->AddEnemy(ENEMY_TYPE::MEH_BALLOON, 147, 36);
+                    game->GetModuleEnemies()->AddEnemy(ENEMY_TYPE::MEH_BALLOON, 207, 36);
+                }
+                else if (enemies[i]->GetEnemyType() == ENEMY_TYPE::MEH_BALLOON) { // Needs explosion effect
+                    game->GetModuleEnemies()->AddEnemy(ENEMY_TYPE::SMOL_BALLOON, 147, 36);
+                    game->GetModuleEnemies()->AddEnemy(ENEMY_TYPE::SMOL_BALLOON, 207, 36);
+                }
+                else if (enemies[i]->GetEnemyType() == ENEMY_TYPE::SMOL_BALLOON) {} // Needs explosion effect
                 delete enemies[i];
                 enemies[i] = nullptr;
             }

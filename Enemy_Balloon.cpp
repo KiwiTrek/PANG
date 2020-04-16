@@ -2,13 +2,13 @@
 #include "Game.h"
 #include "ModuleAudio.h"
 #include "ModuleCollisions.h"
+#include "ModuleEnemies.h"
 
 Enemy_Balloon::Enemy_Balloon(int x, int y) : Enemy(x, y) {
     idle.PushBack({ 1,6,48,40 });
     currentAnim = &idle;
     speed.x = 150.0f;
     speed.y = -50.0f;
-
     collider = game->GetModuleCollisions()->AddCollider({ 1,6,48,40 }, Collider::TYPE::BALLOON, (Module*)game->GetModuleEnemies());
 }
 

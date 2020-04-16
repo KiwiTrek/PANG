@@ -8,7 +8,8 @@
 
 struct EnemySpawnpoint {
     ENEMY_TYPE type = ENEMY_TYPE::NO_TYPE;
-    int x, y;
+    int x = 0;
+    int y = 0;
 };
 
 class Enemy;
