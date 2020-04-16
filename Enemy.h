@@ -22,7 +22,7 @@ public:
 
     // Constructor
     // Saves the spawn position for later movement calculations
-    Enemy(int x, int y, ENEMY_TYPE _type);
+    Enemy(int x, int y, ENEMY_TYPE _type, bool _isMovingRight);
 
     // Destructor
     virtual ~Enemy();
@@ -43,14 +43,14 @@ public:
 
     void SetLethality(bool _lethality);
     bool GetLethality();
+    void SetEnemyType(ENEMY_TYPE _type);
     ENEMY_TYPE GetEnemyType();
     void SetEnemyTexture(SDL_Texture* _texture);
     uint GetDestroyedFx();
     void SetDestroyedFx(uint _destroyedFx);
     int GetPositionX();
     int GetPositionY();
-
-	void SetEnemyType(ENEMY_TYPE _type);
+    Animation* GetCurrentAnimation() const;
 
 protected:
     // The current position in the world
@@ -70,6 +70,8 @@ protected:
 
     // A bool to know if the collision is lethal for the enemy
     bool lethal = false;
+
+    bool isMovingRight;
 
     ENEMY_TYPE type;
 

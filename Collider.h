@@ -42,12 +42,10 @@ struct Collider {
     Module* GetListener() { return listener; }
 
 private:
-    //Variables
     SDL_Rect rect;
     bool pendingToDelete = false;
     TYPE type;
     Module* listener = nullptr;
 };
-
 
 #endif // !__COLLIDER_H__

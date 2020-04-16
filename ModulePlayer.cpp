@@ -11,36 +11,23 @@
 #include "SDL/include/SDL_scancode.h"
 
 ModulePlayer::ModulePlayer(bool startEnabled) : Module(startEnabled) {
-	//Animation setter
-	idle.PushBack({ 12,112,25,32 });
-	idle.SetSpeed(0.0f);
+    //Animation setter
+    idle.PushBack({ 12,112,25,32 });
+    idle.SetSpeed(0.0f);
 
-	shoot.PushBack({ 44,112,27,32 });
-	shoot.SetSpeed(0.0f);
+    shoot.PushBack({ 44,112,27,32 });
+    shoot.SetSpeed(0.0f);
 
-	moving.PushBack({ 12,2,29,32 });
-	moving.PushBack({ 46,2,30,32 });
-	moving.PushBack({ 80,2,29,32 });
-	moving.PushBack({ 114,2,27,32 });
-	moving.PushBack({ 148,2,29,32 });
-	moving.SetSpeed(0.2f);
+    moving.PushBack({ 12,2,29,32 });
+    moving.PushBack({ 46,2,30,32 });
+    moving.PushBack({ 80,2,29,32 });
+    moving.PushBack({ 114,2,27,32 });
+    moving.PushBack({ 148,2,29,32 });
+    moving.SetSpeed(0.2f);
 }
 ModulePlayer::~ModulePlayer() {}
 
-int ModulePlayer::GetSpeed() const { return speed; }
-void ModulePlayer::SetSpeed(int _speed) { speed = _speed; }
-iPoint ModulePlayer::GetPosition() const { return position; }
-void ModulePlayer::SetPosition(iPoint _position) { position = _position; }
-SDL_Texture* ModulePlayer::GetTexture() const { return texture; }
-Animation* ModulePlayer::GetCurrentAnimation() const { return currentAnimation; }
-uint ModulePlayer::GetShotSoundIndex() const { return shotSoundIndex; }
-void ModulePlayer::SetShotSoundIndex(uint _shotSoundIndex) { shotSoundIndex = _shotSoundIndex; }
-void ModulePlayer::SetIfShot(bool _shot) { shot = _shot; }
-bool ModulePlayer::CheckIfGodMode() const { return godMode; };
-
-
-bool ModulePlayer::Start()
-{
+bool ModulePlayer::Start() {
     LOG("Loading player textures");
 
     texture = game->GetModuleTextures()->Load("Resources/Sprites/player.png"); // arcade version
@@ -87,12 +74,12 @@ UPDATE_STATUS ModulePlayer::Update()
         currentAnimation = &shoot;
         
         if (GetInvertValue()) {
-			game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->normalWire, position.x + (shoot.GetWidth() / 3), position.y - 1 , Collider::TYPE::PLAYER_SHOT);
-			game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->muzzleFlash, position.x+3, position.y-10, Collider::TYPE::PLAYER_SHOT);
+            game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->normalWire, position.x + (shoot.GetWidth() / 3), position.y - 1 , Collider::TYPE::PLAYER_SHOT);
+            game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->muzzleFlash, position.x+3, position.y-10, Collider::TYPE::PLAYER_SHOT);
         }
         if (!GetInvertValue()) {
-			game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->normalWire, position.x + (shoot.GetWidth() / 2), position.y - 1 , Collider::TYPE::PLAYER_SHOT);
-			game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->muzzleFlash, position.x+currentAnimation->GetWidth()/2-6, position.y-10, Collider::TYPE::PLAYER_SHOT); //It works, it just works ~Todd Howard,from Skyrim
+            game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->normalWire, position.x + (shoot.GetWidth() / 2), position.y - 1 , Collider::TYPE::PLAYER_SHOT);
+            game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->muzzleFlash, position.x+currentAnimation->GetWidth()/2-6, position.y-10, Collider::TYPE::PLAYER_SHOT); //It works, it just works ~Todd Howard,from Skyrim
         }
 
         returnToIdle = 20;
@@ -101,15 +88,9 @@ UPDATE_STATUS ModulePlayer::Update()
     if (game->GetModuleInput()->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) { godMode = !godMode; }
 
 
-    if (currentAnimation == &idle) {
-        collider->SetPos(position.x, position.y, idle.GetWidth(),  idle.GetHeight());
-    }
-    else if (currentAnimation == &moving) {
-        collider->SetPos(position.x, position.y, moving.GetWidth(), moving.GetHeight());
-    }
-    else if (currentAnimation == &shoot) {
-        collider->SetPos(position.x, position.y, shoot.GetWidth(), shoot.GetHeight());
-    }
+    if (currentAnimation == &idle) { collider->SetPos(position.x, position.y, idle.GetWidth(), idle.GetHeight()); }
+    else if (currentAnimation == &moving) { collider->SetPos(position.x, position.y, moving.GetWidth(), moving.GetHeight()); }
+    else if (currentAnimation == &shoot) { collider->SetPos(position.x, position.y, shoot.GetWidth(), shoot.GetHeight()); }
 
     currentAnimation->Update();
 
@@ -130,12 +111,8 @@ UPDATE_STATUS ModulePlayer::PostUpdate() {
 void ModulePlayer::OnCollision(Collider* c1, Collider* c2) {
     if (!godMode) {
         if (c1 == collider && destroyed == false && c2->GetType() == Collider::TYPE::WALL) {
-            if (position.x < (c2->GetRect().x + c2->GetRect().w) && position.x > c2->GetRect().x) {
-                position.x = (c2->GetRect().x + c2->GetRect().w);
-            }
-            else if ((position.x + currentAnimation->GetWidth()) > c2->GetRect().x&& position.x < c2->GetRect().x) {
-                position.x = (c2->GetRect().x - currentAnimation->GetWidth());
-            }
+            if (position.x < (c2->GetRect().x + c2->GetRect().w) && position.x > c2->GetRect().x) { position.x = (c2->GetRect().x + c2->GetRect().w); }
+            else if ((position.x + currentAnimation->GetWidth()) > c2->GetRect().x&& position.x < c2->GetRect().x) { position.x = (c2->GetRect().x - currentAnimation->GetWidth()); }
             //if (position.y < (c2->GetRect().y + c2->GetRect().h) && position.y > c2->GetRect().y) {
             //    position.y = (c2->GetRect().y + c2->GetRect().h);
             //}
@@ -154,11 +131,18 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2) {
 
             //}
         }
-        else if (c1 == collider && destroyed == false && c2->GetType() == Collider::TYPE::BALLOON) {
-            destroyed = true;
-        }
-        else if (c1 == collider && destroyed == false && c2->GetType() == Collider::TYPE::ANIMAL) {
-            destroyed = true;
-        }
+        else if (c1 == collider && destroyed == false && c2->GetType() == Collider::TYPE::BALLOON) { destroyed = true; }
+        else if (c1 == collider && destroyed == false && c2->GetType() == Collider::TYPE::ANIMAL) { destroyed = true; }
     }
 }
+
+int ModulePlayer::GetSpeed() const { return speed; }
+void ModulePlayer::SetSpeed(int _speed) { speed = _speed; }
+iPoint ModulePlayer::GetPosition() const { return position; }
+void ModulePlayer::SetPosition(iPoint _position) { position = _position; }
+SDL_Texture* ModulePlayer::GetTexture() const { return texture; }
+Animation* ModulePlayer::GetCurrentAnimation() const { return currentAnimation; }
+uint ModulePlayer::GetShotSoundIndex() const { return shotSoundIndex; }
+void ModulePlayer::SetShotSoundIndex(uint _shotSoundIndex) { shotSoundIndex = _shotSoundIndex; }
+void ModulePlayer::SetIfShot(bool _shot) { shot = _shot; }
+bool ModulePlayer::CheckIfGodMode() const { return godMode; };

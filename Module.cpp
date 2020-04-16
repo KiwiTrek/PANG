@@ -25,21 +25,16 @@ void Module::ChangeInvert() {
 
 inline bool Module::IsEnabled() const { return isEnabled; }
 
-void Module::Enable()
-{
-	if (!isEnabled)
-	{
-		isEnabled = true;
-		Start();
-	}
+void Module::Enable() {
+    if (!isEnabled) {
+        isEnabled = true;
+        Start();
+    }
 }
 
-void Module::Disable()
-{
-	if (isEnabled)
-	{
-		isEnabled = false;
-		CleanUp();
-	}
+void Module::Disable() {
+    if (isEnabled) {
+        isEnabled = false;
+        CleanUp();
+    }
 }
-
