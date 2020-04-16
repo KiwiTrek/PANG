@@ -32,7 +32,7 @@ bool ModuleLevelOne::Start() {
 }
 
 UPDATE_STATUS ModuleLevelOne::Update() {
-    game->GetModuleAudio()->DetectIntroEnd("Resources/BGM/fuji.ogg", 472);
+    game->GetModuleAudio()->DetectIntroEnd("Resources/BGM/fuji.ogg", 467);
     return UPDATE_STATUS::UPDATE_CONTINUE;
 }
 

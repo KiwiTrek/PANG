@@ -61,11 +61,17 @@ void Enemy_Balloon::OnCollision(Collider* c2) {
     else if (c2->GetType() == Collider::TYPE::FLOOR) {
         if (position.y < (c2->GetRect().y + c2->GetRect().h) && position.y > c2->GetRect().y) {
             position.y = (c2->GetRect().y + c2->GetRect().h);
-            speed.y = (-speed.y + 50.0f);
+            if (GetEnemyType() == CHUNGUS_BALLOON) { speed.y = (-375); }
+            if (GetEnemyType() == NOT_THAT_MEH_BALLOON) { speed.y = (-280); }
+            if (GetEnemyType() == MEH_BALLOON) { speed.y = (-272); }
+            if (GetEnemyType() == SMOL_BALLOON) { speed.y = (-197); }
         }
-        else if ((position.y + currentAnim->GetHeight()) > c2->GetRect().y&& position.y < c2->GetRect().y) {
+        else if ((position.y + currentAnim->GetHeight()) > c2->GetRect().y && position.y < c2->GetRect().y) {
             position.y = (c2->GetRect().y - currentAnim->GetHeight());
-            speed.y = (-speed.y + 50.0f);
+            if (GetEnemyType() == CHUNGUS_BALLOON) { speed.y = (-375); }
+            if (GetEnemyType() == NOT_THAT_MEH_BALLOON) { speed.y = (-280); }
+            if (GetEnemyType() == MEH_BALLOON) { speed.y = (-272); }
+            if (GetEnemyType() == SMOL_BALLOON) { speed.y = (-197); }
         }
     }
     else if (c2->GetType() == Collider::TYPE::PLAYER_SHOT) { SetLethality(true); }

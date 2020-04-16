@@ -46,6 +46,7 @@ UPDATE_STATUS ModuleRender::Update() {
 
 UPDATE_STATUS ModuleRender::PostUpdate() {
     //Update the screen
+    //If put a debugging point here and press "SHIFT + F11", it is possible to move frame by frame
     SDL_RenderPresent(renderer);
 
     return UPDATE_STATUS::UPDATE_CONTINUE;

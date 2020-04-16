@@ -126,15 +126,17 @@ void ModuleEnemies::OnCollision(Collider* c1, Collider* c2) {
                     game->GetModuleEnemies()->AddEnemy(ENEMY_TYPE::NOT_THAT_MEH_BALLOON, enemies[i]->GetPositionX(), enemies[i]->GetPositionY() - (enemies[i]->GetCurrentAnimation()->GetHeight() / 2));
                     game->GetModuleEnemies()->AddEnemy(ENEMY_TYPE::NOT_THAT_MEH_BALLOON, enemies[i]->GetPositionX() + (enemies[i]->GetCurrentAnimation()->GetWidth() / 2), enemies[i]->GetPositionY() - (enemies[i]->GetCurrentAnimation()->GetHeight() / 2), true);
                 }
-                else if(enemies[i]->GetEnemyType() == ENEMY_TYPE::NOT_THAT_MEH_BALLOON){ // Needs explosion effect
+                else if(enemies[i]->GetEnemyType() == ENEMY_TYPE::NOT_THAT_MEH_BALLOON){
+                    game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->notThatMehBalloonExplosion, enemies[i]->GetPositionX(), enemies[i]->GetPositionY());
                     game->GetModuleEnemies()->AddEnemy(ENEMY_TYPE::MEH_BALLOON, enemies[i]->GetPositionX(), enemies[i]->GetPositionY() -(enemies[i]->GetCurrentAnimation()->GetHeight() / 2));
                     game->GetModuleEnemies()->AddEnemy(ENEMY_TYPE::MEH_BALLOON, enemies[i]->GetPositionX() + (enemies[i]->GetCurrentAnimation()->GetWidth() / 2), enemies[i]->GetPositionY() - (enemies[i]->GetCurrentAnimation()->GetHeight() / 2), true);
                 }
-                else if (enemies[i]->GetEnemyType() == ENEMY_TYPE::MEH_BALLOON) { // Needs explosion effect
+                else if (enemies[i]->GetEnemyType() == ENEMY_TYPE::MEH_BALLOON) {
+                    game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->mehBalloonExplosion, enemies[i]->GetPositionX(), enemies[i]->GetPositionY());
                     game->GetModuleEnemies()->AddEnemy(ENEMY_TYPE::SMOL_BALLOON, enemies[i]->GetPositionX(), enemies[i]->GetPositionY() - (enemies[i]->GetCurrentAnimation()->GetHeight() / 2));
                     game->GetModuleEnemies()->AddEnemy(ENEMY_TYPE::SMOL_BALLOON, enemies[i]->GetPositionX() + (enemies[i]->GetCurrentAnimation()->GetWidth() / 2), enemies[i]->GetPositionY() - (enemies[i]->GetCurrentAnimation()->GetHeight() / 2), true);
                 }
-                else if (enemies[i]->GetEnemyType() == ENEMY_TYPE::SMOL_BALLOON) {} // Needs explosion effect
+                else if (enemies[i]->GetEnemyType() == ENEMY_TYPE::SMOL_BALLOON) { game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->smolBalloonExplosion, enemies[i]->GetPositionX(), enemies[i]->GetPositionY()); }
                 delete enemies[i];
                 enemies[i] = nullptr;
             }

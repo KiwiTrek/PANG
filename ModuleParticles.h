@@ -64,6 +64,9 @@ public:
     //Shots (and others) go here
     Particle normalWire;
     Particle bigBalloonExplosion;
+    Particle notThatMehBalloonExplosion;
+    Particle mehBalloonExplosion;
+    Particle smolBalloonExplosion;
 	Particle muzzleFlash;
 };
 
