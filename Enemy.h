@@ -22,7 +22,7 @@ public:
 
     // Constructor
     // Saves the spawn position for later movement calculations
-    Enemy(int x, int y);
+    Enemy(int x, int y, ENEMY_TYPE _type);
 
     // Destructor
     virtual ~Enemy();
@@ -49,6 +49,8 @@ public:
     void SetDestroyedFx(uint _destroyedFx);
     int GetPositionX();
     int GetPositionY();
+
+	void SetEnemyType(ENEMY_TYPE _type);
 
 protected:
     // The current position in the world

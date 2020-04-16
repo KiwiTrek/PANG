@@ -6,9 +6,9 @@
 #include "ModuleAudio.h"
 #include "ModuleRender.h"
 
-Enemy::Enemy(int x, int y) : position(x, y) {
+Enemy::Enemy(int x, int y, ENEMY_TYPE _type) : position(x, y) {
     spawnPos = position;
-    type = ENEMY_TYPE::NO_TYPE;
+    type = _type;
 }
 
 Enemy::~Enemy() { if (collider != nullptr) { collider->SetPendingToDelete(true); } }
@@ -37,3 +37,5 @@ void Enemy::SetDestroyedFx(uint _destroyedFx) { destroyedFx = _destroyedFx; }
 int Enemy::GetPositionX() { return position.x; }
 
 int Enemy::GetPositionY() { return position.y; }
+
+void Enemy::SetEnemyType(ENEMY_TYPE _type) { type = _type; }

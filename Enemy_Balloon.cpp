@@ -3,16 +3,19 @@
 #include "ModuleAudio.h"
 #include "ModuleCollisions.h"
 #include "ModuleEnemies.h"
+#include "Enemy.h"
 
-Enemy_Balloon::Enemy_Balloon(int x, int y) : Enemy(x, y) {
-    idle.PushBack({ 1,6,48,40 });
-    currentAnim = &idle;
+Enemy_Balloon::Enemy_Balloon(int x, int y, ENEMY_TYPE _type) : Enemy(x, y, _type) {
+	if (GetEnemyType() == ENEMY_TYPE::CHUNGUS_BALLOON ) { idle.PushBack({ 1,6,48,40 }); }
+	if (GetEnemyType() == 1) { idle.PushBack({ 52,63,31,25 }); }
+	currentAnim = &idle;
     speed.x = 150.0f;
     speed.y = -50.0f;
     collider = game->GetModuleCollisions()->AddCollider({ 1,6,48,40 }, Collider::TYPE::BALLOON, (Module*)game->GetModuleEnemies());
 }
 
 void Enemy_Balloon::Update() {
+
     //This is where the physics go
     const float gravity = 600.0f;				// pixels / second^2
     const float deltaTime = 1.0f / 60.0f;		// More or less 60 frames per second

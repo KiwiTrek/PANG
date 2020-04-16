@@ -102,16 +102,16 @@ void ModuleEnemies::SpawnEnemy(const EnemySpawnpoint& info) {
             switch (info.type)
             {
             case ENEMY_TYPE::CHUNGUS_BALLOON:
-                enemies[i] = new Enemy_Balloon(info.x, info.y);
+                enemies[i] = new Enemy_Balloon(info.x, info.y, info.type);
                 break;
             case ENEMY_TYPE::NOT_THAT_MEH_BALLOON:
-                enemies[i] = new Enemy_Balloon(info.x, info.y);
+                enemies[i] = new Enemy_Balloon(info.x, info.y, info.type);
                 break;
             case ENEMY_TYPE::MEH_BALLOON:
-                enemies[i] = new Enemy_Balloon(info.x, info.y);
+                enemies[i] = new Enemy_Balloon(info.x, info.y, info.type);
                 break;
             case ENEMY_TYPE::SMOL_BALLOON:
-                enemies[i] = new Enemy_Balloon(info.x, info.y);
+                enemies[i] = new Enemy_Balloon(info.x, info.y, info.type);
                 break;
             }
             enemies[i]->SetEnemyTexture(texture);
@@ -148,3 +148,4 @@ void ModuleEnemies::OnCollision(Collider* c1, Collider* c2) {
         }
     }
 }
+
