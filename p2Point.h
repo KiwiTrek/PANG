@@ -60,18 +60,12 @@ public:
         return(*this);
     }
 
-    bool operator ==(const P2Point& _v) const {
-        return (x == _v.x && y == _v.y);
-    }
+    bool operator ==(const P2Point& _v) const { return (x == _v.x && y == _v.y); }
 
-    bool operator !=(const P2Point& _v) const {
-        return (x != _v.x || y != _v.y);
-    }
+    bool operator !=(const P2Point& _v) const { return (x != _v.x || y != _v.y); }
 
     // Utils ------------------------------------------------
-    bool IsZero() const {
-        return (x == 0 && y == 0);
-    }
+    bool IsZero() const { return (x == 0 && y == 0); }
 
     P2Point& SetToZero() {
         x = 0;
@@ -113,9 +107,7 @@ public:
         return (fx * fx) + (fy * fy);
     }
 
-    TYPE DistanceManhattan(const P2Point& _v) const {
-        return abs(_v.x - x) + abs(_v.y - y);
-    }
+    TYPE DistanceManhattan(const P2Point& _v) const { return abs(_v.x - x) + abs(_v.y - y); }
 };
 
 typedef P2Point<int> iPoint;

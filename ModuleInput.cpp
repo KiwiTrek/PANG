@@ -47,10 +47,5 @@ bool ModuleInput::CleanUp() {
     return true;
 }
 
-void ModuleInput::SetKey(const KEY_STATE _key, int i) {
-    keys[i] = _key;
-}
-
-KEY_STATE ModuleInput::GetKey(int i) const {
-    return keys[i];
-}
+void ModuleInput::SetKey(const KEY_STATE _key, int i) { keys[i] = _key; }
+KEY_STATE ModuleInput::GetKey(int i) const { return keys[i]; }

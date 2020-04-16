@@ -1,21 +1,14 @@
-//#include <stdio.h>
-//#include <iostream>
-
 #include "Game.h"
 #include "Globals.h"
 
 #include "SDL/include/SDL.h"
-//#include "SDL_Image/include/SDL_image.h"
-//#include "SDL_Mixer/include/SDL_mixer.h"
 
 #pragma comment(lib,"SDL/libx86/SDL2.lib")
 #pragma comment(lib,"SDL/libx86/SDL2main.lib")
-//#pragma comment(lib,"SDL_Image/libx86/SDL2_image.lib")
-//#pragma comment(lib,"SDL_Mixer/libx86/SDL2_mixer.lib")
 
 
-enum class MAIN_STATES
-{
+
+enum class MAIN_STATES {
     MAIN_CREATION,
     MAIN_START,
     MAIN_UPDATE,
@@ -37,7 +30,7 @@ int main(int argc, char* argv[]) {
             LOG("Game Creation --------------\n");
             game = new Game();
             state = MAIN_STATES::MAIN_START;
-        }	
+        }
         break;
 
         case MAIN_STATES::MAIN_START: {
@@ -47,7 +40,7 @@ int main(int argc, char* argv[]) {
                 state = MAIN_STATES::MAIN_EXIT;
             }
             else { state = MAIN_STATES::MAIN_UPDATE; }
-        }	
+        }
         break;
 
         case MAIN_STATES::MAIN_UPDATE: {

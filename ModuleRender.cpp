@@ -11,9 +11,6 @@ ModuleRender::ModuleRender(bool startEnabled) : Module(startEnabled) {}
 
 ModuleRender::~ModuleRender() {}
 
-SDL_Renderer* ModuleRender::GetRenderer() const { return renderer; }
-void ModuleRender::SetRenderer(SDL_Renderer* _renderer) { renderer = _renderer; }
-
 bool ModuleRender::Init() {
     LOG("Creating Renderer context");
     bool ret = true;
@@ -120,3 +117,6 @@ bool ModuleRender::DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uin
     }
     return ret;
 }
+
+SDL_Renderer* ModuleRender::GetRenderer() const { return renderer; }
+void ModuleRender::SetRenderer(SDL_Renderer* _renderer) { renderer = _renderer; }
