@@ -3,7 +3,7 @@
 
 #include "Globals.h"
 
-#define NUM_MODULES 10
+#define NUM_MODULES 11
 
 class Module;
 class ModuleWindow;
@@ -16,6 +16,7 @@ class ModuleParticles;
 class ModuleCollisions;
 class ModuleEnemies;
 class ModuleRender;
+class ModuleTransition;
 
 class Game {
 public:
@@ -40,6 +41,7 @@ public:
     ModuleParticles* GetModuleParticles() const;
     ModuleCollisions* GetModuleCollisions() const;
     ModuleRender* GetModuleRender() const;
+	ModuleTransition* GetModuleTransition() const;
 
 private:
     // An array to store all modules
@@ -55,6 +57,7 @@ private:
     ModuleParticles* particles = nullptr;
     ModuleCollisions* collisions = nullptr;
     ModuleRender* render = nullptr;
+	ModuleTransition* transition = nullptr;
 };
 
 // Global var made extern for Game ---

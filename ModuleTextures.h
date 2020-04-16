@@ -10,7 +10,7 @@ struct SDL_Texture;
 class ModuleTextures : public Module {
 public:
     //Constructor
-    ModuleTextures();
+    ModuleTextures(bool startEnabled);
 
     //Destructor
     ~ModuleTextures();

@@ -13,7 +13,7 @@ typedef struct _Mix_Music Mix_Music;
 class ModuleAudio : public Module {
 public:
     //Constructor
-    ModuleAudio();
+    ModuleAudio(bool startEnabled);
 
     //Destructor
     ~ModuleAudio();

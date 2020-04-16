@@ -79,6 +79,9 @@
     <ClCompile Include="Enemy_Balloon.cpp">
       <Filter>Archivos de origen\Entities\Enemies</Filter>
     </ClCompile>
+    <ClCompile Include="ModuleTransition.cpp">
+      <Filter>Archivos de origen\Modules\Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -137,6 +140,9 @@
     </ClInclude>
     <ClInclude Include="Enemy_Balloon.h">
       <Filter>Archivos de origen\Entities\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleTransition.h">
+      <Filter>Archivos de origen\Modules\Core</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

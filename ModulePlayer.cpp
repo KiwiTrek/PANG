@@ -10,20 +10,20 @@
 
 #include "SDL/include/SDL_scancode.h"
 
-ModulePlayer::ModulePlayer() {
-    //Animation setter
-    idle.PushBack({ 12,112,25,32 });
-    idle.SetSpeed(0.0f);
+ModulePlayer::ModulePlayer(bool startEnabled) : Module(startEnabled) {
+	//Animation setter
+	idle.PushBack({ 12,112,25,32 });
+	idle.SetSpeed(0.0f);
 
-    shoot.PushBack({ 44,112,27,32 });
-    shoot.SetSpeed(0.0f);
+	shoot.PushBack({ 44,112,27,32 });
+	shoot.SetSpeed(0.0f);
 
-    moving.PushBack({ 12,2,29,32 });
-    moving.PushBack({ 46,2,30,32 });
-    moving.PushBack({ 80,2,29,32 });
-    moving.PushBack({ 114,2,27,32 });
-    moving.PushBack({ 148,2,29,32 });
-    moving.SetSpeed(0.2f);
+	moving.PushBack({ 12,2,29,32 });
+	moving.PushBack({ 46,2,30,32 });
+	moving.PushBack({ 80,2,29,32 });
+	moving.PushBack({ 114,2,27,32 });
+	moving.PushBack({ 148,2,29,32 });
+	moving.SetSpeed(0.2f);
 }
 ModulePlayer::~ModulePlayer() {}
 

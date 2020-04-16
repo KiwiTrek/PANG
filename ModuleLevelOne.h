@@ -9,7 +9,7 @@ struct SDL_Texture;
 class ModuleLevelOne : public Module {
 public:
     //Constructor
-    ModuleLevelOne();
+    ModuleLevelOne(bool startEnabled);
     //Destructor
     ~ModuleLevelOne();
     // Called when the module is activated

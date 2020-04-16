@@ -15,7 +15,7 @@ enum KEY_STATE {
 
 class ModuleInput : public Module {
 public:
-    ModuleInput();
+    ModuleInput(bool startEnabled);
     ~ModuleInput();
 
     bool Init() override;

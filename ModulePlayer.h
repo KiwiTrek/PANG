@@ -10,7 +10,7 @@ struct Collider;
 
 class ModulePlayer : public Module {
 public:
-    ModulePlayer();
+    ModulePlayer(bool startEnabled);
     ~ModulePlayer();
 
     int GetSpeed() const;

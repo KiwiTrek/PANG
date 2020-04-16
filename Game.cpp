@@ -11,24 +11,27 @@
 #include "ModuleEnemies.h"
 #include "ModuleCollisions.h"
 #include "ModuleRender.h"
+#include "ModuleTransition.h"
 
 Game::Game() {
     // The order in which the modules are added is very important.
     // It will define the order in which Pre/Update/Post will be called
     // Render should always be last, as our last action should be updating the screen
-    modules[0] = window = new ModuleWindow();
-    modules[1] = input = new ModuleInput();
-    modules[2] = textures = new ModuleTextures();
-    modules[3] = audio = new ModuleAudio();
+    modules[0] = window = new ModuleWindow(true);
+    modules[1] = input = new ModuleInput(true);
+    modules[2] = textures = new ModuleTextures(true);
+    modules[3] = audio = new ModuleAudio(true);
     
-    modules[4] = levelOne = new ModuleLevelOne();
-    modules[5] = player = new ModulePlayer();
-    modules[6] = enemies = new ModuleEnemies();
-    modules[7] = particles = new ModuleParticles();
+    modules[4] = levelOne = new ModuleLevelOne(true);
+    modules[5] = player = new ModulePlayer(true);
+    modules[6] = enemies = new ModuleEnemies(true);
+    modules[7] = particles = new ModuleParticles(true);
 
-    modules[8] = collisions = new ModuleCollisions();
+    modules[8] = collisions = new ModuleCollisions(true);
 
-    modules[9] = render = new ModuleRender();
+	modules[9] = transition = new ModuleTransition(true);
+
+    modules[10] = render = new ModuleRender(true);
 }
 
 Game::~Game() {
@@ -78,3 +81,4 @@ ModuleEnemies* Game::GetModuleEnemies() const { return enemies; }
 ModuleParticles* Game::GetModuleParticles() const { return particles; }
 ModuleCollisions* Game::GetModuleCollisions() const { return collisions; }
 ModuleRender* Game::GetModuleRender() const { return render; }
+ModuleTransition* Game::GetModuleTransition() const { return transition; }

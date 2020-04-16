@@ -6,7 +6,7 @@
 #include "ModuleEnemies.h"
 #include "ModuleRender.h"
 
-ModuleLevelOne::ModuleLevelOne() {
+ModuleLevelOne::ModuleLevelOne(bool startEnabled) : Module(startEnabled) {
     // Background
     background = { 8, 8, 384, 207 };
     backgroundAdapter = { 0, 0, 384, 193 };

@@ -7,6 +7,7 @@ struct Collider;
 
 class Module {
 public:
+	Module(bool startEnabled);
     //Called at the beginning of the application execution
     virtual bool Init();
     //Called when the module is activated
@@ -24,11 +25,18 @@ public:
     //and the module is registered as the listener
     virtual void OnCollision(Collider* c1, Collider* c2);
 
+	void Enable();
+	void Disable();
+
+
     virtual bool GetInvertValue() const;
     virtual void ChangeInvert();
 
+	inline bool IsEnabled() const;
+	
 private:
     bool invert = false;
+	bool isEnabled = true;
 };
 
 #endif // __MODULE_H__
