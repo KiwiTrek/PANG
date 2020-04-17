@@ -1,18 +1,19 @@
-#ifndef __MODULE_TITLE_SCREEN_H
-#define __MODULE_TITLE_SCREEN_H
+#ifndef __MODULE_PROJECT_SHEET_H
+#define __MODULE_PROJECT_SHEET_H
+
 
 #include "Module.h"
 #include "Animation.h"
 
 struct SDL_Texture;
 
-class ModuleTitleScreen : public Module {
+class ModuleProjectSheet : public Module {
 public:
     //Constructor
-    ModuleTitleScreen(bool startEnabled);
+    ModuleProjectSheet(bool startEnabled);
 
     //Destructor
-    ~ModuleTitleScreen();
+    ~ModuleProjectSheet();
 
     // Called when the module is activated
     // Loads the necessary textures for the map background
@@ -30,7 +31,7 @@ public:
 
 private:
     // The scene sprite sheet loaded into an SDL_Texture
-    SDL_Texture* backgroundTexture = nullptr;
+    SDL_Texture* projectSheet = nullptr;
 };
 
 #endif

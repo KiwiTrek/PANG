@@ -79,7 +79,15 @@ bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, bool invert, SDL_Rec
 		rect.w = adapter->w;
 		rect.h = adapter->h;
 	}
-    else { SDL_QueryTexture(texture, nullptr, nullptr, &rect.w, &rect.h); }             //Collect texture size
+    else {
+        if (adapter != nullptr) {
+            rect.w = adapter->w;
+            rect.h = adapter->h;
+        }
+        else {
+            SDL_QueryTexture(texture, nullptr, nullptr, &rect.w, &rect.h); //Collect texture size
+        }
+    }             
 
     rect.w *= SCREEN_SIZE;
     rect.h *= SCREEN_SIZE;

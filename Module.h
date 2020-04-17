@@ -30,7 +30,7 @@ public:
 
     virtual bool GetInvertValue() const;
     virtual void ChangeInvert();
-    inline bool IsEnabled() const;
+    inline bool IsEnabled() const { return isEnabled; }
     
 private:
     bool invert = false;

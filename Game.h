@@ -3,7 +3,7 @@
 
 #include "Globals.h"
 
-#define NUM_MODULES 12
+#define NUM_MODULES 13
 
 class Module;
 class ModuleWindow;
@@ -11,6 +11,7 @@ class ModuleInput;
 class ModuleTextures;
 class ModuleAudio;
 class ModulePlayer;
+class ModuleProjectSheet;
 class ModuleTitleScreen;
 class ModuleLevelOne;
 class ModuleParticles;
@@ -36,6 +37,7 @@ public:
     ModuleInput* GetModuleInput() const;
     ModuleTextures* GetModuleTextures() const;
     ModuleAudio* GetModuleAudio() const;
+    ModuleProjectSheet* GetModuleProjectSheet() const;
     ModuleTitleScreen* GetModuleTitleScreen() const;
     ModuleLevelOne* GetModuleLevelOne() const;
     ModulePlayer* GetModulePlayer() const;
@@ -53,6 +55,7 @@ private:
     ModuleInput* input = nullptr;
     ModuleTextures* textures = nullptr;
     ModuleAudio* audio = nullptr;
+    ModuleProjectSheet* projectSheet = nullptr;
     ModuleTitleScreen* titleScreen = nullptr;
     ModuleLevelOne* levelOne = nullptr;
     ModulePlayer* player = nullptr;

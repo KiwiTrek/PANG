@@ -23,7 +23,7 @@ void Module::ChangeInvert() {
     else if (invert == false) { invert = true; }
 };
 
-inline bool Module::IsEnabled() const { return isEnabled; }
+//inline bool Module::IsEnabled() const { return isEnabled; }
 
 void Module::Enable() {
     if (!isEnabled) {

@@ -82,6 +82,9 @@
     <ClCompile Include="ModuleTransition.cpp">
       <Filter>Archivos de origen\Modules\Core</Filter>
     </ClCompile>
+    <ClCompile Include="ModuleProjectSheet.cpp">
+      <Filter>Archivos de origen\Modules\Gameplay</Filter>
+    </ClCompile>
     <ClCompile Include="ModuleTitleScreen.cpp">
       <Filter>Archivos de origen\Modules\Gameplay</Filter>
     </ClCompile>
@@ -146,6 +149,9 @@
     </ClInclude>
     <ClInclude Include="ModuleTransition.h">
       <Filter>Archivos de origen\Modules\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleProjectSheet.h">
+      <Filter>Archivos de origen\Modules\Gameplay</Filter>
     </ClInclude>
     <ClInclude Include="ModuleTitleScreen.h">
       <Filter>Archivos de origen\Modules\Gameplay</Filter>

@@ -4,6 +4,7 @@
 
 #include "ModuleAudio.h"
 #include "ModuleTextures.h"
+#include "ModuleParticles.h"
 #include "ModuleCollisions.h"
 #include "ModulePlayer.h"
 #include "ModuleEnemies.h"
@@ -34,6 +35,8 @@ bool ModuleLevelOne::Start() {
     
     game->GetModulePlayer()->Enable();
     game->GetModuleEnemies()->Enable();
+    game->GetModuleParticles()->Enable();
+    game->GetModuleCollisions()->Enable();
     return true;
 }
 

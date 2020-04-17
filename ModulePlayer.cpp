@@ -7,8 +7,9 @@
 #include "ModuleInput.h"
 #include "ModuleRender.h"
 #include "ModuleParticles.h"
-#include "Particle.h"
 #include "ModuleCollisions.h"
+
+#include "Particle.h"
 
 #include "SDL/include/SDL_timer.h"
 #include "SDL/include/SDL_scancode.h"
@@ -126,8 +127,7 @@ UPDATE_STATUS ModulePlayer::Update()
 }
 
 UPDATE_STATUS ModulePlayer::PostUpdate() {
-    SDL_Rect rect = currentAnimation->GetCurrentFrame();
-    game->GetModuleRender()->Blit(texture, position.x, position.y, GetInvertValue(), &rect);
+    game->GetModuleRender()->Blit(texture, position.x, position.y, GetInvertValue(), &currentAnimation->GetCurrentFrame());
 
     return UPDATE_STATUS::UPDATE_CONTINUE;
 }
