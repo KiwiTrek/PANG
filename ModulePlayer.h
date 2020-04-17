@@ -35,6 +35,7 @@ public:
 private:
     iPoint position;
     int speed = 1;
+    fPoint mruaSpeed;
     //Player Spritesheet
     SDL_Texture* texture = nullptr;
 

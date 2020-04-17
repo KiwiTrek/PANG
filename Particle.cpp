@@ -1,5 +1,6 @@
 #include "Game.h"
 
+#include "ModuleParticles.h"
 #include "Particle.h"
 #include "Collider.h"
 
@@ -16,7 +17,7 @@ Particle::Particle(const Particle& p) : anim(p.anim), position(p.position), spee
 Particle::~Particle() { if (collider != nullptr) { collider->SetPendingToDelete(true); } }
 
 bool Particle::Update() {
-    if (!game->GetModulePlayer()->CheckIfDestroyed()) {
+    if (!game->GetModulePlayer()->CheckIfDestroyed() || particleTexture == game->GetModuleParticles()->hitScreen.GetParticleTexture()) {
         frameCount++;
 
         // The particle is set to 'alive' when the delay has been reached

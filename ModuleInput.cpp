@@ -1,6 +1,9 @@
 #include "Globals.h"
+
 #include "Game.h"
+
 #include "ModuleInput.h"
+
 #include "SDL/include/SDL.h"
 
 ModuleInput::ModuleInput (bool startEnabled) : Module(startEnabled) {}

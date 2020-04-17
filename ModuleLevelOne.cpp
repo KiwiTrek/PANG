@@ -1,8 +1,11 @@
 #include "ModuleLevelOne.h"
+
 #include "Game.h"
+
 #include "ModuleAudio.h"
 #include "ModuleTextures.h"
 #include "ModuleCollisions.h"
+#include "ModulePlayer.h"
 #include "ModuleEnemies.h"
 #include "ModuleRender.h"
 
@@ -28,6 +31,9 @@ bool ModuleLevelOne::Start() {
     game->GetModuleCollisions()->AddCollider({ 376, 0, 8, 193 }, Collider::TYPE::WALL);
 
     game->GetModuleEnemies()->AddEnemy(ENEMY_TYPE::CHUNGUS_BALLOON, 177, 36);
+    
+    game->GetModulePlayer()->Enable();
+    game->GetModuleEnemies()->Enable();
     return true;
 }
 
@@ -36,10 +42,20 @@ UPDATE_STATUS ModuleLevelOne::Update() {
     return UPDATE_STATUS::UPDATE_CONTINUE;
 }
 
-
 // Update: draw background
 UPDATE_STATUS ModuleLevelOne::PostUpdate() {
     // Draw everything --------------------------------------
     game->GetModuleRender()->Blit(backgroundTexture, 0, 0, GetInvertValue(), &background, &backgroundAdapter);
     return UPDATE_STATUS::UPDATE_CONTINUE;
 }
+
+bool ModuleLevelOne::CleanUp() {
+    game->GetModuleTextures()->Unload(backgroundTexture);
+    game->GetModuleTextures()->Unload(game->GetModulePlayer()->GetTexture());
+    game->GetModulePlayer()->Disable();
+    game->GetModuleEnemies()->Disable();
+    
+    return true;
+}
+
+SDL_Rect ModuleLevelOne::GetBackgroundAdapter() const { return backgroundAdapter; }

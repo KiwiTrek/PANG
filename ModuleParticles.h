@@ -68,6 +68,7 @@ public:
     Particle mehBalloonExplosion;
     Particle smolBalloonExplosion;
 	Particle muzzleFlash;
+    Particle hitScreen;
 };
 
 #endif // !__MODULEPARTICLES_H__

@@ -1,8 +1,10 @@
 #include "ModuleCollisions.h"
+
 #include "Game.h"
 
 #include "ModuleRender.h"
 #include "ModuleInput.h"
+
 #include "SDL/include/SDL_Scancode.h"
 
 ModuleCollisions::ModuleCollisions(bool startEnabled) : Module(startEnabled) {

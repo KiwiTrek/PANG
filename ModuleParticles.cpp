@@ -1,9 +1,13 @@
 #include "ModuleParticles.h"
+
 #include "Game.h"
+
 #include "ModuleTextures.h"
 #include "ModuleRender.h"
 #include "ModulePlayer.h"
+#include "ModuleLevelOne.h"
 #include "ModuleCollisions.h"
+
 #include "SDL/include/SDL_timer.h"
 
 
@@ -51,7 +55,7 @@ ModuleParticles::ModuleParticles(bool startEnabled) : Module(startEnabled) {
     normalWire.SetAnimSpeed(0.44f); //0.44f
     normalWire.SetFSpeedY(-0.66f); //-0.66f
 
-	for (int i = 0; i < 4; ++i) { bigBalloonExplosion.SetAnimPushBack({ 8 + i * 48,511,48,46 }); }
+    for (int i = 0; i < 4; ++i) { bigBalloonExplosion.SetAnimPushBack({ 8 + i * 48,511,48,46 }); }
     bigBalloonExplosion.SetAnimLoop(false);
     bigBalloonExplosion.SetAnimSpeed(0.5f);
 
@@ -63,13 +67,18 @@ ModuleParticles::ModuleParticles(bool startEnabled) : Module(startEnabled) {
     mehBalloonExplosion.SetAnimLoop(false);
     mehBalloonExplosion.SetAnimSpeed(0.5f);
 
-    for(int i = 0; i < 3; ++i) { smolBalloonExplosion.SetAnimPushBack({ 8 + i*9,384,9,7 }); }
+    for (int i = 0; i < 3; ++i) { smolBalloonExplosion.SetAnimPushBack({ 8 + i * 9,384,9,7 }); }
     smolBalloonExplosion.SetAnimLoop(false);
     smolBalloonExplosion.SetAnimSpeed(0.5f);
 
-	for (int i = 0; i < 4; ++i) { muzzleFlash.SetAnimPushBack({ 23 + i * 16,7,16,13 }); }
-	muzzleFlash.SetAnimLoop(false);
-	muzzleFlash.SetAnimSpeed(0.2f);
+    for (int i = 0; i < 4; ++i) { muzzleFlash.SetAnimPushBack({ 23 + i * 16,7,16,13 }); }
+    muzzleFlash.SetAnimLoop(false);
+    muzzleFlash.SetAnimSpeed(0.2f);
+
+    hitScreen.SetAnimPushBack({ 0,0,384,208 });
+    hitScreen.SetAnimLoop(false);
+    hitScreen.SetAnimSpeed(0.0f);
+    hitScreen.SetLifetime(10);
 
 }
 
@@ -80,10 +89,11 @@ bool ModuleParticles::Start() {
 
     normalWire.SetParticleTexture(game->GetModuleTextures()->Load("Resources/Sprites/normalWire.png"));
     bigBalloonExplosion.SetParticleTexture(game->GetModuleTextures()->Load("Resources/Sprites/boom.png"));
-    notThatMehBalloonExplosion.SetParticleTexture(game->GetModuleTextures()->Load("Resources/Sprites/boom.png"));
-    mehBalloonExplosion.SetParticleTexture(game->GetModuleTextures()->Load("Resources/Sprites/boom.png"));
-    smolBalloonExplosion.SetParticleTexture(game->GetModuleTextures()->Load("Resources/Sprites/boom.png"));
+    notThatMehBalloonExplosion.SetParticleTexture(bigBalloonExplosion.GetParticleTexture());
+    mehBalloonExplosion.SetParticleTexture(bigBalloonExplosion.GetParticleTexture());
+    smolBalloonExplosion.SetParticleTexture(bigBalloonExplosion.GetParticleTexture());
 	muzzleFlash.SetParticleTexture(game->GetModuleTextures()->Load("Resources/Sprites/powerUps.png"));
+    hitScreen.SetParticleTexture(game->GetModuleTextures()->Load("Resources/Sprites/hit.png"));
 
     return true;
 }
@@ -99,6 +109,12 @@ bool ModuleParticles::CleanUp() {
             particles[i] = nullptr;
         }
     }
+
+    game->GetModuleTextures()->Unload(normalWire.GetParticleTexture());
+    game->GetModuleTextures()->Unload(bigBalloonExplosion.GetParticleTexture());
+    game->GetModuleTextures()->Unload(muzzleFlash.GetParticleTexture());
+    game->GetModuleTextures()->Unload(hitScreen.GetParticleTexture());
+
     return true;
 }
 
@@ -121,7 +137,9 @@ UPDATE_STATUS ModuleParticles::PostUpdate() {
     for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i) {
         Particle* particle = particles[i];
         if (particle != nullptr && particle->CheckIsAlive()) {
-            game->GetModuleRender()->Blit(particle->GetParticleTexture(), particle->GetPositionX(), particle->GetPositionY(), false, &(particle->GetCurrentAnim()));
+            if (particle->GetParticleTexture() == hitScreen.GetParticleTexture()) { game->GetModuleRender()->Blit(particle->GetParticleTexture(), particle->GetPositionX(), particle->GetPositionY(), false, &(particle->GetCurrentAnim()), &game->GetModuleLevelOne()->GetBackgroundAdapter()); }
+            else { game->GetModuleRender()->Blit(particle->GetParticleTexture(), particle->GetPositionX(), particle->GetPositionY(), false, &(particle->GetCurrentAnim())); }
+            
             if (particle->GetParticleTexture() == normalWire.GetParticleTexture()) { game->GetModuleRender()->Blit(game->GetModulePlayer()->GetTexture(), game->GetModulePlayer()->GetPosition().x, game->GetModulePlayer()->GetPosition().y, game->GetModulePlayer()->GetInvertValue(), &(game->GetModulePlayer()->GetCurrentAnimation())->GetCurrentFrame()); }
         }
     }

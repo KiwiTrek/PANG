@@ -1,6 +1,7 @@
 #include "ModuleWindow.h"
 
 #include "Game.h"
+
 #include "Globals.h"
 
 #include "SDL/include/SDL.h"

@@ -18,7 +18,7 @@ ModuleEnemies::ModuleEnemies(bool startEnabled) : Module(startEnabled) { for (ui
 ModuleEnemies::~ModuleEnemies() {}
 
 bool ModuleEnemies::Start() {
-    texture = game->GetModuleTextures()->Load("Resources/Sprites/enemies.png");
+    enemyTexture = game->GetModuleTextures()->Load("Resources/Sprites/enemies.png");
     balloogiExplosioni = game->GetModuleAudio()->LoadFx("Resources/SFX/balloonPopped.wav");
 
     return true;
@@ -59,6 +59,8 @@ bool ModuleEnemies::CleanUp() {
             enemies[i] = nullptr;
         }
     }
+
+    game->GetModuleTextures()->Unload(enemyTexture);
 
     return true;
 }
@@ -110,7 +112,7 @@ void ModuleEnemies::SpawnEnemy(const EnemySpawnpoint& info) {
                 enemies[i] = new Enemy_Balloon(info.x, info.y, info.type, info.isMovingRight);
                 break;
             }
-            enemies[i]->SetEnemyTexture(texture);
+            enemies[i]->SetEnemyTexture(enemyTexture);
             enemies[i]->SetDestroyedFx(balloogiExplosioni);
             break;
         }

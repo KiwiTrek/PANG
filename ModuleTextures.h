@@ -29,6 +29,13 @@ public:
     // Returns nullptr if the texture could not be created
     SDL_Texture* const Load(const char* path);
 
+    // Removes the memory from SDL_Texture and removes it from the array
+    bool Unload(SDL_Texture* texture);
+
+    // Retrieve size of a texture by modifying parameters with and height
+    void GetTextureSize(const SDL_Texture* texture, uint& width, uint& height) const;
+
+
     void SetTexture(SDL_Texture* _texture, int i);
     SDL_Texture* GetTexture(int i) const;
 

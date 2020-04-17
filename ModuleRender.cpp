@@ -1,5 +1,7 @@
 #include "ModuleRender.h"
+
 #include "Game.h"
+
 #include "ModuleWindow.h"
 #include "ModuleTextures.h"
 #include "ModuleInput.h"

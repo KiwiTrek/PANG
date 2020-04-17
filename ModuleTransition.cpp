@@ -1,6 +1,7 @@
 #include "ModuleTransition.h"
 
 #include "Game.h"
+
 #include "ModuleRender.h"
 
 #include "SDL/include/SDL_render.h"
@@ -54,8 +55,6 @@ UPDATE_STATUS ModuleTransition::PostUpdate() {
 }
 
 bool ModuleTransition::Transition(Module* moduleToDisable, Module* moduleToEnable, float frames) {
-    bool ret = false;
-
     // If we are already in a fade process, ignore this call
     if (currentStep == Transition_Step::NONE) {
         currentStep = Transition_Step::TO_BLACK;
@@ -65,8 +64,8 @@ bool ModuleTransition::Transition(Module* moduleToDisable, Module* moduleToEnabl
         this->moduleToDisable = moduleToDisable;
         this->moduleToEnable = moduleToEnable;
 
-        ret = true;
+        return true;
     }
 
-    return ret;
+    return false;
 }

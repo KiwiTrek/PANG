@@ -1,5 +1,7 @@
 #include "ModuleTextures.h"
+
 #include "Game.h"
+
 #include "ModuleRender.h"
 
 #include "SDL/include/SDL.h"
@@ -66,6 +68,25 @@ SDL_Texture* const ModuleTextures::Load(const char* path) {
     }
 
     return texture;
+}
+
+bool ModuleTextures::Unload(SDL_Texture* texture) {
+    if (texture != nullptr) {
+        for (int i = 0; i < MAX_TEXTURES; ++i) {
+            if (textures[i] == texture) {
+                textures[i] = nullptr;
+                return true;
+                break;
+            }
+        }
+        SDL_DestroyTexture(texture);
+    }
+
+    return false;
+}
+
+void ModuleTextures::GetTextureSize(const SDL_Texture* texture, uint& width, uint& height) const {
+    SDL_QueryTexture((SDL_Texture*)texture, NULL, NULL, (int*)&width, (int*)&height);
 }
 
 SDL_Texture* ModuleTextures::GetTexture(int i) const { return textures[i]; }

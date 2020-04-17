@@ -1,5 +1,7 @@
 #include "Enemy_Balloon.h"
+
 #include "Game.h"
+
 #include "ModuleAudio.h"
 #include "ModuleCollisions.h"
 #include "ModuleEnemies.h"
@@ -31,16 +33,16 @@ Enemy_Balloon::Enemy_Balloon(int x, int y, ENEMY_TYPE _type, bool _isMovingRight
 void Enemy_Balloon::Update() {
 
     //This is where the physics go
-    const float gravity = 600.0f;				// pixels / second^2
-    const float deltaTime = 1.0f / 60.0f;		// More or less 60 frames per second
 
-    position.x = position.x + speed.x * deltaTime;
-    position.y = position.y + speed.y * deltaTime + gravity * deltaTime * deltaTime;
-    speed.y = speed.y + gravity * deltaTime;
+
+    position.x = position.x + speed.x * DELTATIME;
+    position.y = position.y + speed.y * DELTATIME + GRAVITY * DELTATIME * DELTATIME;
+    speed.y = speed.y + GRAVITY * DELTATIME;
+
+    // LOG("Speed: X = %f, Y = %f\n",speed.x, speed.y);
 
     // Call to the base class. It must be called at the end
     // It will update the collider depending on the position
-    // LOG("Speed: X = %f, Y = %f\n",speed.x, speed.y);
     Enemy::Update();
 }
 

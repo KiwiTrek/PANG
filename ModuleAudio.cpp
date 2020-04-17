@@ -93,7 +93,6 @@ void ModuleAudio::PlayMusic(const char* path) {
     if (music != NULL) {
         Mix_HaltMusic();
         Mix_FreeMusic(music);
-
     }
 
     music = Mix_LoadMUS(path);

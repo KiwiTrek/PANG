@@ -1,9 +1,11 @@
+#include "ModulePlayer.h"
+
 #include "Game.h"
+
 #include "ModuleTextures.h"
 #include "ModuleAudio.h"
 #include "ModuleInput.h"
 #include "ModuleRender.h"
-#include "ModulePlayer.h"
 #include "ModuleParticles.h"
 #include "Particle.h"
 #include "ModuleCollisions.h"
@@ -28,6 +30,9 @@ ModulePlayer::ModulePlayer(bool startEnabled) : Module(startEnabled) {
 
     ded.PushBack({ 81,112,40,29 });
     ded.SetSpeed(0.0f);
+
+    mruaSpeed.x = 100;
+    mruaSpeed.y = -197;
 }
 ModulePlayer::~ModulePlayer() {}
 
@@ -100,11 +105,19 @@ UPDATE_STATUS ModulePlayer::Update()
 
     if (destroyed) {
         if (once) {
+            once = false;
             SDL_Delay(1000);
             game->GetModuleAudio()->PlayFx(dedSoundIndex);
-            once = false;
+            game->GetModuleCollisions()->AddCollider({ position.x, position.y, ded.GetWidth(), ded.GetHeight() }, Collider::TYPE::PLAYER, this);
+            game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->hitScreen, 0, 0);
         }
+        
+        position.x = position.x + mruaSpeed.x * DELTATIME;
+        position.y = position.y + mruaSpeed.y * DELTATIME + GRAVITY * DELTATIME * DELTATIME;
+        mruaSpeed.y = mruaSpeed.y + GRAVITY * DELTATIME;
+
         currentAnimation = &ded;
+        collider->SetPos(position.x, position.y, ded.GetWidth(), ded.GetHeight());
     }
 
     currentAnimation->Update();
@@ -120,6 +133,7 @@ UPDATE_STATUS ModulePlayer::PostUpdate() {
 }
 
 void ModulePlayer::OnCollision(Collider* c1, Collider* c2) {
+    short int counter = 0;
     if (!godMode) {
         if (c1 == collider && destroyed == false && c2->GetType() == Collider::TYPE::WALL) {
             if (position.x < (c2->GetRect().x + c2->GetRect().w) && position.x > c2->GetRect().x) { position.x = (c2->GetRect().x + c2->GetRect().w); }
@@ -143,7 +157,16 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2) {
             //}
         }
         else if (c1 == collider && destroyed == false && c2->GetType() == Collider::TYPE::BALLOON) { destroyed = true; }
-        else if (c1 == collider && destroyed == false && c2->GetType() == Collider::TYPE::ANIMAL) { destroyed = true; }
+        else if (c1 == collider && destroyed == false && c2->GetType() == Collider::TYPE::ANIMAL) { /*destroyed = true;*/ }
+        else if (destroyed) {
+            if ((position.x + currentAnimation->GetWidth()) > c2->GetRect().x&& position.x < c2->GetRect().x) {
+                mruaSpeed.x = -50;
+            }
+            if (c1 == collider && c2->GetType() == Collider::TYPE::FLOOR) {
+               mruaSpeed.y = -145;
+               godMode = true;
+            }
+        }
     }
 }
 
