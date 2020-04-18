@@ -166,6 +166,7 @@
     <ClCompile Include="ModuleTitleScreen.cpp" />
     <ClCompile Include="ModuleTransition.cpp" />
     <ClCompile Include="ModuleWindow.cpp" />
+    <ClCompile Include="ModuleWinScreen.cpp" />
     <ClCompile Include="Particle.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -189,6 +190,7 @@
     <ClInclude Include="ModuleTitleScreen.h" />
     <ClInclude Include="ModuleTransition.h" />
     <ClInclude Include="ModuleWindow.h" />
+    <ClInclude Include="ModuleWinScreen.h" />
     <ClInclude Include="p2Point.h" />
     <ClInclude Include="Particle.h" />
     <ClInclude Include="Physics.h" />

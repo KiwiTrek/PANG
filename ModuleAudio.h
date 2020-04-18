@@ -33,7 +33,10 @@ public:
     // Mix_Music* music is used for handling the current playing music
     bool PlayMusicOnce(const char* path);
     void PlayMusic(const char* path);
-    void DetectIntroEnd(const char* path, int s);
+    
+    //Detect internal music changes
+    bool DetectIfEnd() const;
+    void ChangeAtEnd(const char* newSong);
 
     // Loads a sound fx (WAV) file in memory
     // Returns an index to the sound fx array

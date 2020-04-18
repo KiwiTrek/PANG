@@ -88,6 +88,9 @@
     <ClCompile Include="ModuleTitleScreen.cpp">
       <Filter>Archivos de origen\Modules\Gameplay</Filter>
     </ClCompile>
+    <ClCompile Include="ModuleWinScreen.cpp">
+      <Filter>Archivos de origen\Modules\Gameplay</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -158,6 +161,9 @@
     </ClInclude>
     <ClInclude Include="Physics.h">
       <Filter>Archivos de origen\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleWinScreen.h">
+      <Filter>Archivos de origen\Modules\Gameplay</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

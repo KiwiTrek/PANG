@@ -21,9 +21,10 @@ ModuleLevelOne::~ModuleLevelOne() {}
 // Load assets
 bool ModuleLevelOne::Start() {
     LOG("Loading background assets");
+    once = true;
 
     backgroundTexture = game->GetModuleTextures()->Load("Resources/Sprites/backgrounds.png");
-    game->GetModuleAudio()->PlayMusic("Resources/BGM/introFuji.ogg");
+    game->GetModuleAudio()->PlayMusicOnce("Resources/BGM/introFuji.ogg");
 
     // Colliders ---
     game->GetModuleCollisions()->AddCollider({ 0, 186, 384, 7 }, Collider::TYPE::FLOOR);
@@ -41,7 +42,7 @@ bool ModuleLevelOne::Start() {
 }
 
 UPDATE_STATUS ModuleLevelOne::Update() {
-    game->GetModuleAudio()->DetectIntroEnd("Resources/BGM/fuji.ogg", 467);
+    if (!game->GetModulePlayer()->CheckIfDestroyed()) { game->GetModuleAudio()->ChangeAtEnd("Resources/BGM/fuji.ogg"); }
     return UPDATE_STATUS::UPDATE_CONTINUE;
 }
 
@@ -55,10 +56,11 @@ UPDATE_STATUS ModuleLevelOne::PostUpdate() {
 bool ModuleLevelOne::CleanUp() {
     game->GetModuleTextures()->Unload(backgroundTexture);
     game->GetModuleTextures()->Unload(game->GetModulePlayer()->GetTexture());
+    game->GetModuleAudio()->PlayMusicOnce("Resources/BGM/noMusic.ogg");
     game->GetModulePlayer()->Disable();
     game->GetModuleEnemies()->Disable();
+    game->GetModuleParticles()->Disable();
+    game->GetModuleCollisions()->Disable();
     
     return true;
 }
-
-SDL_Rect ModuleLevelOne::GetBackgroundAdapter() const { return backgroundAdapter; }

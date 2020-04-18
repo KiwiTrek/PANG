@@ -77,17 +77,12 @@ bool ModuleAudio::PlayMusicOnce(const char* path) {
     }
 
     LOG("Successfully playing %s", path);
+
     return true;
 }
 
-void ModuleAudio::DetectIntroEnd(const char* path, int s) {
-    if (introCounter >= 0) { ++introCounter; }
-    
-    if (introCounter == s) {
-        game->GetModuleAudio()->PlayMusic(path);
-        introCounter = -1;
-    }
-}
+bool ModuleAudio::DetectIfEnd() const { return Mix_PlayingMusic(); };
+void ModuleAudio::ChangeAtEnd(const char* newSong) { if (!DetectIfEnd()) { PlayMusic(newSong); } }
 
 void ModuleAudio::PlayMusic(const char* path) {
     if (music != NULL) {
@@ -105,7 +100,7 @@ void ModuleAudio::PlayMusic(const char* path) {
             LOG("Cannot play in music %s. Mix_GetError(): %s", path, Mix_GetError());
         }
     }
-
+    
     LOG("Successfully playing %s", path);
 }
 

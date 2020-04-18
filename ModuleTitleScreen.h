@@ -31,6 +31,12 @@ public:
 private:
     // The scene sprite sheet loaded into an SDL_Texture
     SDL_Texture* backgroundTexture = nullptr;
+
+    // Initial Animation Variables
+    SDL_Texture* titleScreenAnimationTexture = nullptr;
+    Animation titleScreenAnimation;
+    uint titleScreenAnimationSFX;
+    bool once;
 };
 
 #endif

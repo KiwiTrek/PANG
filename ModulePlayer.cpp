@@ -8,6 +8,7 @@
 #include "ModuleRender.h"
 #include "ModuleParticles.h"
 #include "ModuleCollisions.h"
+#include "ModuleTransition.h"
 
 #include "Particle.h"
 
@@ -32,6 +33,10 @@ ModulePlayer::ModulePlayer(bool startEnabled) : Module(startEnabled) {
     ded.PushBack({ 81,112,40,29 });
     ded.SetSpeed(0.0f);
 
+    gameOver = { 5,5,532,58 };
+    timeOver = { 5,69,532,58 };
+    ready = { 5,132,203,67 };
+
     mruaSpeed.x = 100;
     mruaSpeed.y = -197;
 }
@@ -41,7 +46,9 @@ bool ModulePlayer::Start() {
     LOG("Loading player textures");
     destroyed = false;
     once = true;
+    onceMusic = true;
 
+    blueText = game->GetModuleTextures()->Load("Resources/Sprites/blueText.png");
     texture = game->GetModuleTextures()->Load("Resources/Sprites/player.png"); // arcade version
     shotSoundIndex = game->GetModuleAudio()->LoadFx("Resources/SFX/shotClaw.wav");
     dedSoundIndex = game->GetModuleAudio()->LoadFx("Resources/SFX/dead.wav");
@@ -104,7 +111,8 @@ UPDATE_STATUS ModulePlayer::Update()
     }
 
     if (game->GetModuleInput()->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) { godMode = !godMode; }
-    physics.UpdatePhysics(position.x, position.y, mruaSpeed.x, mruaSpeed.y);
+    if (game->GetModuleInput()->GetKey(SDL_SCANCODE_F7) == KEY_DOWN) { destroyed = !destroyed; }
+    if (game->GetModuleInput()->GetKey(SDL_SCANCODE_F8) == KEY_DOWN) { game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelOne(), (Module*)game->GetModuleProjectSheet(), 90); }
 
     if (destroyed) {
         if (once) {
@@ -114,9 +122,16 @@ UPDATE_STATUS ModulePlayer::Update()
             game->GetModuleCollisions()->AddCollider({ position.x, position.y, ded.GetWidth(), ded.GetHeight() }, Collider::TYPE::PLAYER, this);
             game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->hitScreen, 0, 0);
             physics.SetAxis(true, true);
-            physics.UpdatePhysics(position.x, position.y, mruaSpeed.x, mruaSpeed.y);
         }
         currentAnimation = &ded;
+        if (position.y >= SCREEN_HEIGHT + currentAnimation->GetHeight()) {
+            if (onceMusic) {
+                game->GetModuleAudio()->PlayMusicOnce("Resources/BGM/gameOver.ogg");
+                onceMusic = false;
+            }
+            if (game->GetModuleAudio()->DetectIfEnd() == false) { game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelOne(), (Module*)game->GetModuleTitleScreen(), 4); }
+        }
+        else { physics.UpdatePhysics(position.x, position.y, mruaSpeed.x, mruaSpeed.y); }
         collider->SetPos(position.x, position.y, ded.GetWidth(), ded.GetHeight());
     }
 
@@ -127,7 +142,10 @@ UPDATE_STATUS ModulePlayer::Update()
 
 UPDATE_STATUS ModulePlayer::PostUpdate() {
     game->GetModuleRender()->Blit(texture, position.x, position.y, GetInvertValue(), &currentAnimation->GetCurrentFrame());
-
+    if (position.y >= SCREEN_HEIGHT + currentAnimation->GetHeight()) {
+        SDL_Rect backgroundAdapter = { 0, 0, 384, 193 };
+        game->GetModuleRender()->Blit(blueText, (backgroundAdapter.w / 2 - gameOver.w / 2), (backgroundAdapter.h / 2 - gameOver.h / 2), false, &gameOver);
+    }
     return UPDATE_STATUS::UPDATE_CONTINUE;
 }
 

@@ -16,6 +16,12 @@ public:
         axisY = _axisY;
     }
 
+    int GetNextPositionX(int x, float sx) { return (x + sx * deltaTime); }
+    int GetNextPositionY(int y, float sy) {
+        sy = sy + gravity * deltaTime;
+        return (y + sy * deltaTime + gravity * deltaTime * deltaTime);
+    }
+
 private:
     bool axisX;
     bool axisY;

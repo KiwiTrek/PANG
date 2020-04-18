@@ -15,6 +15,7 @@ class ModuleProjectSheet;
 class ModuleTitleScreen;
 class ModuleLevelOne;
 class ModuleParticles;
+class ModuleWinScreen;
 class ModuleCollisions;
 class ModuleEnemies;
 class ModuleRender;
@@ -43,6 +44,7 @@ public:
     ModulePlayer* GetModulePlayer() const;
     ModuleEnemies* GetModuleEnemies() const;
     ModuleParticles* GetModuleParticles() const;
+    ModuleWinScreen* GetModuleWinScreen() const;
     ModuleCollisions* GetModuleCollisions() const;
     ModuleRender* GetModuleRender() const;
 	ModuleTransition* GetModuleTransition() const;
@@ -61,6 +63,7 @@ private:
     ModulePlayer* player = nullptr;
     ModuleEnemies* enemies = nullptr;
     ModuleParticles* particles = nullptr;
+    ModuleWinScreen* winScreen = nullptr;
     ModuleCollisions* collisions = nullptr;
     ModuleRender* render = nullptr;
 	ModuleTransition* transition = nullptr;

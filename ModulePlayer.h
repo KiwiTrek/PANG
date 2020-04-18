@@ -59,11 +59,13 @@ private:
     // The player's collider
     Collider* collider = nullptr;
 
+    //Le physics
     Physics physics;
 
     // A flag to detect when the player has been destroyed
     bool destroyed = false;
     bool once = true;
+    bool onceMusic = true;
 
     // A flag to detect when the player has shot
     bool shot = false;
@@ -73,6 +75,14 @@ private:
 
     // A countdown to when the player gets destroyed. After a while, the game exits
     uint destroyedCountdown = 120;
+
+    //Ready, Game Over & Time Out
+    SDL_Rect ready;
+    SDL_Rect gameOver;
+    SDL_Rect timeOver;
+
+    //Blue Text sprite sheet
+    SDL_Texture* blueText = nullptr;
 };
 
 #endif //__MODULE_PLAYER_H__

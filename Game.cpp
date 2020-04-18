@@ -12,6 +12,7 @@
 #include "ModulePlayer.h"
 #include "ModuleEnemies.h"
 #include "ModuleParticles.h"
+#include "ModuleWinScreen.h"
 
 #include "ModuleCollisions.h"
 
@@ -35,6 +36,7 @@ Game::Game() {
     modules[7] = player = new ModulePlayer(false);
     modules[8] = enemies = new ModuleEnemies(false);
     modules[9] = particles = new ModuleParticles(false);
+    modules[10] = winScreen = new ModuleWinScreen(false);
 
     modules[10] = collisions = new ModuleCollisions(false);
 	modules[11] = transition = new ModuleTransition(true);
@@ -102,6 +104,7 @@ ModuleLevelOne* Game::GetModuleLevelOne() const { return levelOne; }
 ModulePlayer* Game::GetModulePlayer() const { return player; }
 ModuleEnemies* Game::GetModuleEnemies() const { return enemies; }
 ModuleParticles* Game::GetModuleParticles() const { return particles; }
+ModuleWinScreen* Game::GetModuleWinScreen() const { return winScreen; }
 ModuleCollisions* Game::GetModuleCollisions() const { return collisions; }
 ModuleRender* Game::GetModuleRender() const { return render; }
 ModuleTransition* Game::GetModuleTransition() const { return transition; }
