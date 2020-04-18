@@ -4,6 +4,7 @@
 #include "Module.h"
 #include "Animation.h"
 #include "p2Point.h"
+#include "Physics.h"
 
 struct SDL_Texture;
 struct Collider;
@@ -57,6 +58,8 @@ private:
 
     // The player's collider
     Collider* collider = nullptr;
+
+    Physics physics;
 
     // A flag to detect when the player has been destroyed
     bool destroyed = false;

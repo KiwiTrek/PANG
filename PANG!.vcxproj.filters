@@ -156,5 +156,8 @@
     <ClInclude Include="ModuleTitleScreen.h">
       <Filter>Archivos de origen\Modules\Gameplay</Filter>
     </ClInclude>
+    <ClInclude Include="Physics.h">
+      <Filter>Archivos de origen\Utils</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

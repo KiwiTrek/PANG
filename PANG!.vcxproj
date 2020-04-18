@@ -191,6 +191,7 @@
     <ClInclude Include="ModuleWindow.h" />
     <ClInclude Include="p2Point.h" />
     <ClInclude Include="Particle.h" />
+    <ClInclude Include="Physics.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

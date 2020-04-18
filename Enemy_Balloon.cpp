@@ -28,16 +28,14 @@ Enemy_Balloon::Enemy_Balloon(int x, int y, ENEMY_TYPE _type, bool _isMovingRight
     if (isMovingRight) { speed.x = 150.0f; }
     else { speed.x = -75.0f; }
     speed.y = -50.0f;
+    physics.SetAxis(true, true);
 }
 
 void Enemy_Balloon::Update() {
 
     //This is where the physics go
 
-
-    position.x = position.x + speed.x * DELTATIME;
-    position.y = position.y + speed.y * DELTATIME + GRAVITY * DELTATIME * DELTATIME;
-    speed.y = speed.y + GRAVITY * DELTATIME;
+    physics.UpdatePhysics(position.x, position.y, speed.x, speed.y);
 
     // LOG("Speed: X = %f, Y = %f\n",speed.x, speed.y);
 

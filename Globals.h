@@ -27,9 +27,4 @@ typedef unsigned int uint;
 #define WIN_BORDERLESS 0
 #define WIN_RESIZABLE 0
 #define VSYNC 1
-
-// Physics Global Data -----------
-#define GRAVITY 600.0f				// pixels / second^2
-#define DELTATIME (1.0f / 60.0f)	// More or less 60 frames per second
-
 #endif // __GLOBALS_H__

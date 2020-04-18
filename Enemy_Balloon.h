@@ -2,6 +2,7 @@
 #define __ENEMY_BALLOON_H__
 
 #include "Enemy.h"
+#include "Physics.h"
 
 class Enemy_Balloon : public Enemy {
 public:
@@ -19,6 +20,7 @@ private:
     // We are keeping it an animation for consistency with other enemies
     Animation idle;
     fPoint speed;
+    Physics physics;
 };
 
 #endif // __ENEMY_BALLOON_H__

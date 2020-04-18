@@ -48,6 +48,7 @@ bool ModulePlayer::Start() {
 
     position.x = 177;
     position.y = 186 - idle.GetHeight();
+    physics.SetAxis(false, false);
 
     collider = game->GetModuleCollisions()->AddCollider({ position.x, position.y, idle.GetWidth(), idle.GetHeight() }, Collider::TYPE::PLAYER, this); // adds a collider to the player
 
@@ -103,6 +104,7 @@ UPDATE_STATUS ModulePlayer::Update()
     }
 
     if (game->GetModuleInput()->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) { godMode = !godMode; }
+    physics.UpdatePhysics(position.x, position.y, mruaSpeed.x, mruaSpeed.y);
 
     if (destroyed) {
         if (once) {
@@ -111,12 +113,9 @@ UPDATE_STATUS ModulePlayer::Update()
             game->GetModuleAudio()->PlayFx(dedSoundIndex);
             game->GetModuleCollisions()->AddCollider({ position.x, position.y, ded.GetWidth(), ded.GetHeight() }, Collider::TYPE::PLAYER, this);
             game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->hitScreen, 0, 0);
+            physics.SetAxis(true, true);
+            physics.UpdatePhysics(position.x, position.y, mruaSpeed.x, mruaSpeed.y);
         }
-        
-        position.x = position.x + mruaSpeed.x * DELTATIME;
-        position.y = position.y + mruaSpeed.y * DELTATIME + GRAVITY * DELTATIME * DELTATIME;
-        mruaSpeed.y = mruaSpeed.y + GRAVITY * DELTATIME;
-
         currentAnimation = &ded;
         collider->SetPos(position.x, position.y, ded.GetWidth(), ded.GetHeight());
     }
