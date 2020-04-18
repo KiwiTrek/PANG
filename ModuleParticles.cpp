@@ -52,8 +52,8 @@ ModuleParticles::ModuleParticles(bool startEnabled) : Module(startEnabled) {
         normalWire.SetAnimPushBack({ 797 + (i * 17),52 - (i * 2) - j,9,136 + (i * 2) + j });
     }
     normalWire.SetAnimLoop(false);
-    normalWire.SetAnimSpeed(0.44f); //0.44f
-    normalWire.SetFSpeedY(-0.66f); //-0.66f
+    normalWire.SetAnimSpeed(0.888f); //0.888f
+    normalWire.SetFSpeedY(-1.5f); //-1.5f
 
     //Balloon Explosions
     for (int i = 0; i < 4; ++i) { bigBalloonExplosion.SetAnimPushBack({ 8 + i * 48,511,48,46 }); }
@@ -82,6 +82,12 @@ ModuleParticles::ModuleParticles(bool startEnabled) : Module(startEnabled) {
     hitScreen.SetAnimLoop(false);
     hitScreen.SetAnimSpeed(0.0f);
     hitScreen.SetLifetime(10);
+
+	//Ready
+	ready.SetAnimPushBack({ 5,132,203,67 });
+
+	ready.SetAnimLoop(false);
+	ready.SetLifetime(5);
 }
 
 ModuleParticles::~ModuleParticles() {}
@@ -96,6 +102,7 @@ bool ModuleParticles::Start() {
     smolBalloonExplosion.SetParticleTexture(bigBalloonExplosion.GetParticleTexture());
 	muzzleFlash.SetParticleTexture(game->GetModuleTextures()->Load("Resources/Sprites/powerUps.png"));
     hitScreen.SetParticleTexture(game->GetModuleTextures()->Load("Resources/Sprites/hit.png"));
+	ready.SetParticleTexture(game->GetModuleTextures()->Load("Resources/Sprites/blueText.png"));
 
     return true;
 }
@@ -139,10 +146,12 @@ UPDATE_STATUS ModuleParticles::PostUpdate() {
     for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i) {
         Particle* particle = particles[i];
         if (particle != nullptr && particle->CheckIsAlive()) {
-            if (particle->GetParticleTexture() == hitScreen.GetParticleTexture()) {
-                SDL_Rect backgroundAdapter = { 0, 0, 384, 193 };
-                game->GetModuleRender()->Blit(particle->GetParticleTexture(), particle->GetPositionX(), particle->GetPositionY(), false, &(particle->GetCurrentAnim()), &backgroundAdapter);
-            }
+			SDL_Rect backgroundAdapter = { 0, 0, 384, 193 };
+			if (particle->GetParticleTexture() == hitScreen.GetParticleTexture()) { game->GetModuleRender()->Blit(particle->GetParticleTexture(), particle->GetPositionX(), particle->GetPositionY(), false, &(particle->GetCurrentAnim()), &backgroundAdapter); }
+			else if (particle->GetParticleTexture() == ready.GetParticleTexture()) {
+				SDL_Rect gameOverAdapter = { SCREEN_WIDTH+85,backgroundAdapter.h+75,60,17 };
+			    game->GetModuleRender()->Blit(particle->GetParticleTexture(), particle->GetPositionX(), particle->GetPositionY(), false, &(particle->GetCurrentAnim()), &gameOverAdapter);
+			}
             else { game->GetModuleRender()->Blit(particle->GetParticleTexture(), particle->GetPositionX(), particle->GetPositionY(), false, &(particle->GetCurrentAnim())); }
             
             if (particle->GetParticleTexture() == normalWire.GetParticleTexture()) { game->GetModuleRender()->Blit(game->GetModulePlayer()->GetTexture(), game->GetModulePlayer()->GetPosition().x, game->GetModulePlayer()->GetPosition().y, game->GetModulePlayer()->GetInvertValue(), &(game->GetModulePlayer()->GetCurrentAnimation())->GetCurrentFrame()); }
@@ -151,7 +160,7 @@ UPDATE_STATUS ModuleParticles::PostUpdate() {
     return UPDATE_STATUS::UPDATE_CONTINUE;
 }
 
-void ModuleParticles::AddParticle(const Particle& particle, int x, int y, Collider::TYPE colliderType, uint delay) {
+Particle* ModuleParticles::AddParticle(const Particle& particle, int x, int y, Collider::TYPE colliderType, uint delay) {
     for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i) {
         //Finding an empty slot for a new particle
         if (particles[i] == nullptr) {
@@ -165,7 +174,7 @@ void ModuleParticles::AddParticle(const Particle& particle, int x, int y, Collid
             p->SetCollider(game->GetModuleCollisions()->AddCollider(p->GetCurrentAnim(), colliderType, this));
 
             particles[i] = p;
-            break;
+			return particles[i];
         }
     }
 }

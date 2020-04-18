@@ -7,6 +7,7 @@
 #include "ModuleParticles.h"
 #include "ModulePlayer.h"
 #include "ModuleAudio.h"
+#include "ModuleLevelOne.h"
 
 #include "Enemy.h"
 #include "Enemy_Balloon.h"
@@ -25,17 +26,18 @@ bool ModuleEnemies::Start() {
 }
 
 UPDATE_STATUS ModuleEnemies::Update() {
-    if (game->GetModulePlayer()->CheckIfDestroyed() == false) {
-        HandleEnemiesSpawn();
+	HandleEnemiesSpawn();
+	if (game->GetModuleLevelOne()->CheckIfStarted()) {
+		if (game->GetModulePlayer()->CheckIfDestroyed() == false) {
+			for (uint i = 0; i < MAX_ENEMIES; ++i) {
+				if (enemies[i] != nullptr)
+					enemies[i]->Update();
+			}
 
-        for (uint i = 0; i < MAX_ENEMIES; ++i) {
-            if (enemies[i] != nullptr)
-                enemies[i]->Update();
-        }
-
-        //HandleEnemiesDespawn();
-    }
-
+			//HandleEnemiesDespawn();
+		}
+	}
+    
     return UPDATE_STATUS::UPDATE_CONTINUE;
 }
 

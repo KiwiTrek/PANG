@@ -49,13 +49,14 @@ void Particle::SetPositionX(const int _positionX) { position.x = _positionX; }
 void Particle::SetPositionY(const int _positionY) { position.y = _positionY; }
 int Particle::GetPositionX() const { return position.x; }
 int Particle::GetPositionY() const { return position.y; }
-void Particle::SetFSpeedY(const float _speedY) { speed.y = _speedY; };
+void Particle::SetFSpeedY(const float _speedY) { speed.y = _speedY; }
 void Particle::SetAnimPushBack(const SDL_Rect _rect) { anim.PushBack(_rect); }
 SDL_Rect Particle::GetCurrentAnim() { return anim.GetCurrentFrame(); }
 void Particle::SetAnimLoop(bool _loop) { anim.SetLoop(_loop); }
 void Particle::SetAnimSpeed(float _speed) { anim.SetSpeed(_speed); }
-bool Particle::CheckIsAlive() const { return isAlive; };
+bool Particle::CheckIsAlive() const { return isAlive; }
 void Particle::SetFrameCount(const int _frameCount) { frameCount = _frameCount; }
+int Particle::GetFrameCount()const { return frameCount; }
 void Particle::SetLifetime(const uint _lifetime) { lifetime = _lifetime; }
 uint Particle::GetLifetime() const { return lifetime; }
 void Particle::SetCollider(Collider* _collider) { collider = _collider; }

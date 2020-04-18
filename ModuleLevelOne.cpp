@@ -23,8 +23,19 @@ bool ModuleLevelOne::Start() {
     LOG("Loading background assets");
     once = true;
 
+	game->GetModuleParticles()->Enable();
+	for (int i = 0; i < 9; i++) {
+		game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->ready, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, Collider::TYPE::NONE, i*5);
+	}
+	game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->ready, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, Collider::TYPE::NONE, 50);
+	game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->ready, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, Collider::TYPE::NONE, 60);
+	p = game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->ready, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, Collider::TYPE::NONE, 70);
+	
+
+	
+	
+
     backgroundTexture = game->GetModuleTextures()->Load("Resources/Sprites/backgrounds.png");
-    game->GetModuleAudio()->PlayMusicOnce("Resources/BGM/introFuji.ogg");
 
     // Colliders ---
     game->GetModuleCollisions()->AddCollider({ 0, 186, 384, 7 }, Collider::TYPE::FLOOR);
@@ -35,14 +46,23 @@ bool ModuleLevelOne::Start() {
     game->GetModuleEnemies()->AddEnemy(ENEMY_TYPE::CHUNGUS_BALLOON, 177, 36);
     
     game->GetModulePlayer()->Enable();
-    game->GetModuleEnemies()->Enable();
-    game->GetModuleParticles()->Enable();
+    game->GetModuleEnemies()->Enable(); 
     game->GetModuleCollisions()->Enable();
+	
+
     return true;
 }
 
 UPDATE_STATUS ModuleLevelOne::Update() {
-    if (!game->GetModulePlayer()->CheckIfDestroyed()) { game->GetModuleAudio()->ChangeAtEnd("Resources/BGM/fuji.ogg"); }
+	if (p->GetFrameCount() >= 5) { SetIfStarted(true); }
+	if (hasStarted) {
+		if (once) {
+			once = false;
+			game->GetModuleAudio()->PlayMusicOnce("Resources/BGM/introFuji.ogg");
+		}
+		if (!game->GetModulePlayer()->CheckIfDestroyed()) { game->GetModuleAudio()->ChangeAtEnd("Resources/BGM/fuji.ogg"); }
+	}
+	
     return UPDATE_STATUS::UPDATE_CONTINUE;
 }
 
@@ -64,3 +84,7 @@ bool ModuleLevelOne::CleanUp() {
     
     return true;
 }
+
+bool ModuleLevelOne::CheckIfStarted() const { return hasStarted; }
+void ModuleLevelOne::SetIfStarted(bool _hasStarted) { hasStarted = _hasStarted; }
+
