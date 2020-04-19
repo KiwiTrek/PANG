@@ -98,7 +98,7 @@ private:
 	int timer[3] = { 1,0,0 };
 
 	float deltaTime = 1.0f / 60.0f;
-	float time = deltaTime;
+    float time = -31.0f / 60.0f;
 };
 
 #endif //__MODULE_PLAYER_H__
