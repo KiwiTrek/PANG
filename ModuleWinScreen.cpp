@@ -12,10 +12,7 @@
 
 ModuleWinScreen::ModuleWinScreen(bool startEnabled) : Module(startEnabled) {
     //SplashArt Pushbacks
-    for (int i = 0; i != 14; ++i) { splashArt.PushBack({ i * 252,0,251,186 }); }
-    splashArt.PushBack({ 3524,0,251,186 });
-    for (int i = 0; i != 14; ++i) { splashArt.PushBack({ i * 252,190,251,186 }); }
-    //186 = segona height
+    for (int i = 0; i != 29; ++i) { splashArt.PushBack({ i * 300,22,300,178 }); }
     splashArt.SetSpeed(0.5f);
     splashArt.SetLoop(true);
 }
@@ -27,7 +24,7 @@ bool ModuleWinScreen::Start() {
     LOG("Loading background assets");
     once = true;
 
-    splashArtTexture = game->GetModuleTextures()->Load("Resources/Sprites/splashArts.png");
+    splashArtTexture = game->GetModuleTextures()->Load("Resources/Sprites/FirstStageSplashArt.png");
     game->GetModuleAudio()->PlayMusicOnce("Resources/BGM/levelComplete.ogg");
 
     return true;
@@ -48,7 +45,7 @@ UPDATE_STATUS ModuleWinScreen::PostUpdate() {
     // Draw everything --------------------------------------
     //Edit arguments of Blit
     SDL_Rect backgroundAdapter = { 0, 0, 384, 193 };
-    SDL_Rect splashArtAdapter = { (SCREEN_WIDTH / 2 + 150),backgroundAdapter.h + 55,150,94 };
+    SDL_Rect splashArtAdapter = { (SCREEN_WIDTH / 2 + 150),backgroundAdapter.h-100,150,85 };
     game->GetModuleRender()->Blit(splashArtTexture,0,0,false,&splashArt.GetCurrentFrame(),&splashArtAdapter);
     
     return UPDATE_STATUS::UPDATE_CONTINUE;
