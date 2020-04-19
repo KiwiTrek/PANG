@@ -17,7 +17,16 @@ Recreation of the 1989 classic from arcades by Bruhmentium INC:
 #### Check for more info at the [wiki](https://github.com/WillyTrek19/PANG/wiki)
 
 ## Changelog
-### Current version: 0.4
+### Current version: 0.4.5
+
+#### 0.4.5:
+- Added Module:
+  - Transitions
+- Added external physics support
+- Added project info screen, title screen & win screen
+- Created win & lose conditions (except for timer & lives)
+- Created main loop
+- Balloons now divide when hit up to 4 times.
 
 #### 0.4:
 - Added Module:
@@ -61,6 +70,14 @@ Recreation of the 1989 classic from arcades by Bruhmentium INC:
 - Created Player display (with no collisions nor animations)
 
 ## Bugs
+
+#### 0.4.5
+- Basic shot:
+  - Sometimes doesn't disappear when multiple balls are approaching it. (Shouldn't be a problem; but it's something to take into account).
+- Balloon:
+  - Hitbox is still not accurate to the original one (it's a square)
+- Win Condition:
+  - Counter should be reduced.
 
 #### 0.4:
 - Player:
