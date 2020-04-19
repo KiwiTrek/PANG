@@ -36,6 +36,9 @@ private:
     SDL_Texture* titleScreenAnimationTexture = nullptr;
     Animation titleScreenAnimation;
     uint titleScreenAnimationSFX;
+
+    uint creditSFX;
+
     bool once;
 };
 

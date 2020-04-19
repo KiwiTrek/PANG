@@ -28,12 +28,16 @@ bool ModuleTitleScreen::Start() {
     backgroundTexture = game->GetModuleTextures()->Load("Resources/Sprites/pangTitleCard.png");
     titleScreenAnimationTexture = game->GetModuleTextures()->Load("Resources/Sprites/pangAnimationTitleScreen.png");
     titleScreenAnimationSFX = game->GetModuleAudio()->LoadFx("Resources/SFX/titleScreenAnimationSound.wav");
+    creditSFX = game->GetModuleAudio()->LoadFx("Resources/SFX/credit.wav");
 
     return true;
 }
 
 UPDATE_STATUS ModuleTitleScreen::Update() {
-    if (game->GetModuleInput()->GetKey(SDL_SCANCODE_SPACE) == KEY_STATE::KEY_DOWN) { game->GetModuleTransition()->Transition(this, (Module*)game->GetModuleLevelOne(), 4); }
+    if (game->GetModuleInput()->GetKey(SDL_SCANCODE_SPACE) == KEY_STATE::KEY_DOWN) {
+        game->GetModuleAudio()->PlayFx(creditSFX);
+        game->GetModuleTransition()->Transition(this, (Module*)game->GetModuleLevelOne(), 4);
+    }
     if (once) {
         once = false;
         titleScreenAnimation.Reset();
