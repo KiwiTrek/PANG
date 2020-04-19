@@ -34,6 +34,8 @@ public:
     // Collision callback, called when the player intersects with another collider
     void OnCollision(Collider* c1, Collider* c2) override;
 
+	
+
 private:
     iPoint position;
     int speed = 1;
@@ -94,6 +96,9 @@ private:
 	int timerFont = -1;
 	char timerText[10] = { "\0" };
 	int timer[3] = { 1,0,0 };
+
+	float deltaTime = 1.0f / 60.0f;
+	float time = deltaTime;
 };
 
 #endif //__MODULE_PLAYER_H__

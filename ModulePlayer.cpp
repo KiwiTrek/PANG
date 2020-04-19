@@ -64,8 +64,8 @@ bool ModulePlayer::Start() {
 
     collider = game->GetModuleCollisions()->AddCollider({ position.x, position.y, idle.GetWidth(), idle.GetHeight() }, Collider::TYPE::PLAYER, this); // adds a collider to the player
 
-    normalFont = game->GetModuleFonts()->Load("Resources/Sprites/Font.png", "abcdefghijklmnopqrstuvwxyz0123456789.,!X-:©X", 6);
-    timerFont = game->GetModuleFonts()->Load("Resources/Sprites/Timer.png", "time:0123456789", 2);
+    normalFont = game->GetModuleFonts()->Load("Resources/Sprites/Font.png", "! @,_./0123456789$;<&?abcdefghijklmnopqrstuvwxyz", 6);
+    timerFont = game->GetModuleFonts()->Load("Resources/Sprites/Timer.png", "time0123456789:", 2);
 
 
     return true;
@@ -162,17 +162,41 @@ UPDATE_STATUS ModulePlayer::Update()
 }
 
 UPDATE_STATUS ModulePlayer::PostUpdate() {
+
     game->GetModuleRender()->Blit(texture, position.x, position.y, GetInvertValue(), &currentAnimation->GetCurrentFrame());
     if (position.y >= SCREEN_HEIGHT + currentAnimation->GetHeight()) {
         SDL_Rect backgroundAdapter = { 0, 0, 384, 193 };
         SDL_Rect gameOverAdapter = { (SCREEN_WIDTH / 2 + 150),backgroundAdapter.h + 75,150,17 };
         game->GetModuleRender()->Blit(blueText, 0, 0, false, &gameOver, &gameOverAdapter);
     }
-	for (int i = 9; i  >=0; i--) {
 
+	//Timer
+	sprintf_s(timerText, 10, "time%d%d%d", timer[0], timer[1], timer[2]);
+	game->GetModuleFonts()->BlitText(100, 20, timerFont, timerText);
+	if (timer[0] != 0 && timer[1] != 0 && timer[2] != 0) {
+		destroyed = true;
+		
 	}
-	sprintf_s(timerText, 10, "time:%d%d%d", timer[0], timer[1], timer[2]);
-  	game->GetModuleFonts()->BlitText(100, 20, timerFont, timerText);
+	else {
+		
+		if (time<=1) {
+			
+			time += deltaTime;
+		}
+		else {
+			time = deltaTime;
+			timer[2]--;
+		}
+		if (timer[2] < 0) {
+			timer[2] = 9;
+			timer[1]--;
+		}
+		if (timer[1] < 0) {
+			timer[1] = 9;
+			timer[0]--;
+		}
+	}
+	
 
     return UPDATE_STATUS::UPDATE_CONTINUE; 
 }
