@@ -22,19 +22,17 @@ ModuleLevelOne::~ModuleLevelOne() {}
 bool ModuleLevelOne::Start() {
     LOG("Loading background assets");
     once = true;
+    hasStarted = false;
 
-	game->GetModuleParticles()->Enable();
-	for (int i = 0; i < 9; i++) {
-		game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->ready, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, Collider::TYPE::NONE, i*5);
-	}
-	game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->ready, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, Collider::TYPE::NONE, 50);
-	game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->ready, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, Collider::TYPE::NONE, 60);
-	p = game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->ready, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, Collider::TYPE::NONE, 70);
-	
+    game->GetModuleParticles()->Enable();
 
-	
-	
-
+    for (int i = 0; i < 9; i++) {
+        game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->ready, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, Collider::TYPE::NONE, i*5);
+    }
+    game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->ready, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, Collider::TYPE::NONE, 50);
+    game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->ready, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, Collider::TYPE::NONE, 60);
+    p = game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->ready, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, Collider::TYPE::NONE, 70);
+    
     backgroundTexture = game->GetModuleTextures()->Load("Resources/Sprites/backgrounds.png");
 
     // Colliders ---
@@ -48,21 +46,21 @@ bool ModuleLevelOne::Start() {
     game->GetModulePlayer()->Enable();
     game->GetModuleEnemies()->Enable(); 
     game->GetModuleCollisions()->Enable();
-	
+    
 
     return true;
 }
 
 UPDATE_STATUS ModuleLevelOne::Update() {
-	if (p->GetFrameCount() >= 5) { SetIfStarted(true); }
-	if (hasStarted) {
-		if (once) {
-			once = false;
-			game->GetModuleAudio()->PlayMusicOnce("Resources/BGM/introFuji.ogg");
-		}
-		if (!game->GetModulePlayer()->CheckIfDestroyed()) { game->GetModuleAudio()->ChangeAtEnd("Resources/BGM/fuji.ogg"); }
-	}
-	
+    if (p->GetFrameCount() >= 5) { SetIfStarted(true); }
+    if (hasStarted) {
+        if (once) {
+            once = false;
+            game->GetModuleAudio()->PlayMusicOnce("Resources/BGM/introFuji.ogg");
+        }
+        if (!game->GetModulePlayer()->CheckIfDestroyed()) { game->GetModuleAudio()->ChangeAtEnd("Resources/BGM/fuji.ogg"); }
+    }
+    
     return UPDATE_STATUS::UPDATE_CONTINUE;
 }
 
@@ -76,6 +74,7 @@ UPDATE_STATUS ModuleLevelOne::PostUpdate() {
 bool ModuleLevelOne::CleanUp() {
     game->GetModuleTextures()->Unload(backgroundTexture);
     game->GetModuleTextures()->Unload(game->GetModulePlayer()->GetTexture());
+    game->GetModuleTextures()->Unload(game->GetModulePlayer()->GetBlueTextTexture());
     game->GetModuleAudio()->PlayMusicOnce("Resources/BGM/noMusic.ogg");
     game->GetModulePlayer()->Disable();
     game->GetModuleEnemies()->Disable();

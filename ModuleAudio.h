@@ -37,6 +37,7 @@ public:
     //Detect internal music changes
     bool DetectIfEnd() const;
     void ChangeAtEnd(const char* newSong);
+    void ChangeModuleAtEnd(const char* newSong);
 
     // Loads a sound fx (WAV) file in memory
     // Returns an index to the sound fx array

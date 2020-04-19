@@ -121,6 +121,15 @@ void ModuleEnemies::SpawnEnemy(const EnemySpawnpoint& info) {
     }
 }
 
+bool ModuleEnemies::CheckForBalloons() {
+    for (uint i = 0; i < MAX_ENEMIES; ++i) {
+        if (enemies[i] != nullptr && enemies[i]->GetCollider()->GetType() == Collider::TYPE::BALLOON) {
+            return false;
+        }
+    }
+    return true;
+}
+
 void ModuleEnemies::OnCollision(Collider* c1, Collider* c2) {
     for (uint i = 0; i < MAX_ENEMIES; ++i) {
         if (enemies[i] != nullptr && enemies[i]->GetCollider() == c1) {

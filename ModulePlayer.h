@@ -19,6 +19,7 @@ public:
     iPoint GetPosition() const;
     void SetPosition(iPoint _position);
     SDL_Texture* GetTexture() const;
+    SDL_Texture* GetBlueTextTexture() const;
     Animation* GetCurrentAnimation() const;
     uint GetShotSoundIndex() const;
     void SetShotSoundIndex(uint _shotSoundIndex);
@@ -73,8 +74,8 @@ private:
     // Cheat Code Enabler: God Mode
     bool godMode = false;
 
-    // A countdown to when the player gets destroyed. After a while, the game exits
-    uint destroyedCountdown = 120;
+    // Countdown for when the player wins. After a while, the game changes screen
+    uint winCountdown = 0;
 
     //Ready, Game Over & Time Out
     SDL_Rect ready;

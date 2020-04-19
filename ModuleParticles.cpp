@@ -8,8 +8,6 @@
 #include "ModuleLevelOne.h"
 #include "ModuleCollisions.h"
 
-#include "SDL/include/SDL_timer.h"
-
 
 
 ModuleParticles::ModuleParticles(bool startEnabled) : Module(startEnabled) {
@@ -83,11 +81,11 @@ ModuleParticles::ModuleParticles(bool startEnabled) : Module(startEnabled) {
     hitScreen.SetAnimSpeed(0.0f);
     hitScreen.SetLifetime(10);
 
-	//Ready
-	ready.SetAnimPushBack({ 5,132,203,67 });
+    //Ready
+    ready.SetAnimPushBack({ 5,132,203,67 });
 
-	ready.SetAnimLoop(false);
-	ready.SetLifetime(5);
+    ready.SetAnimLoop(false);
+    ready.SetLifetime(5);
 }
 
 ModuleParticles::~ModuleParticles() {}
@@ -121,8 +119,12 @@ bool ModuleParticles::CleanUp() {
 
     game->GetModuleTextures()->Unload(normalWire.GetParticleTexture());
     game->GetModuleTextures()->Unload(bigBalloonExplosion.GetParticleTexture());
+    game->GetModuleTextures()->Unload(notThatMehBalloonExplosion.GetParticleTexture());
+    game->GetModuleTextures()->Unload(mehBalloonExplosion.GetParticleTexture());
+    game->GetModuleTextures()->Unload(smolBalloonExplosion.GetParticleTexture());
     game->GetModuleTextures()->Unload(muzzleFlash.GetParticleTexture());
     game->GetModuleTextures()->Unload(hitScreen.GetParticleTexture());
+    game->GetModuleTextures()->Unload(ready.GetParticleTexture());
 
     return true;
 }

@@ -46,20 +46,20 @@ void Enemy_Balloon::Update() {
 
 void Enemy_Balloon::OnCollision(Collider* c2) {
     if (c2->GetType() == Collider::TYPE::WALL) {
-        if (physics.GetNextPositionX(position.x, speed.x) < (c2->GetRect().x + c2->GetRect().w) && physics.GetNextPositionX(position.x, speed.x) > c2->GetRect().x) {
+        if (position.x < (c2->GetRect().x + c2->GetRect().w) && position.x > c2->GetRect().x) {
             position.x = (c2->GetRect().x + c2->GetRect().w);
             if (speed.x <= 75.0f) { speed.x = -(speed.x * 2); } //We're as clueless as you on the reason why this works.
         }
-        else if ((physics.GetNextPositionX(position.x, speed.x) + currentAnim->GetWidth()) > c2->GetRect().x&& physics.GetNextPositionX(position.x, speed.x) < c2->GetRect().x) {
+        else if ((position.x + currentAnim->GetWidth()) > c2->GetRect().x && position.x < c2->GetRect().x) {
             position.x = (c2->GetRect().x - currentAnim->GetWidth());
             if (speed.x >= 75.0f) { speed.x = -(speed.x / 2); } //Please do not question it.
         }
     }
     else if (c2->GetType() == Collider::TYPE::FLOOR) {
-        if (physics.GetNextPositionY(position.y, speed.y) < (c2->GetRect().y + c2->GetRect().h) && physics.GetNextPositionY(position.y, speed.y) > c2->GetRect().y && physics.GetNextPositionY(position.y, speed.y) < 50) {
+        if (position.y < (c2->GetRect().y + c2->GetRect().h) && position.y > c2->GetRect().y && position.y < 50) {
             position.y = (c2->GetRect().h);
         }
-        else if ((physics.GetNextPositionY(position.y, speed.y) + currentAnim->GetHeight()) > c2->GetRect().y && physics.GetNextPositionY(position.y, speed.y) < c2->GetRect().y && physics.GetNextPositionY(position.y, speed.y) > 50) {
+        else if ((position.y + currentAnim->GetHeight()) > c2->GetRect().y && position.y < c2->GetRect().y && position.y > 50) {
             position.y = (c2->GetRect().y - currentAnim->GetHeight());
             if (GetEnemyType() == CHUNGUS_BALLOON) { speed.y = (-375); }
             if (GetEnemyType() == NOT_THAT_MEH_BALLOON) { speed.y = (-280); }

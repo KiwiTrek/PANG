@@ -26,13 +26,13 @@ public:
 
     bool CleanUp() override;
 
-	bool CheckIfStarted()const;
-	void SetIfStarted(bool _hasStarted);
+    bool CheckIfStarted()const;
+    void SetIfStarted(bool _hasStarted);
 
 private:
     bool once;
-	bool hasStarted = false;
-	Particle* p;
+    bool hasStarted = false;
+    Particle* p;
     // The sprite section for the background
     SDL_Rect background;
     SDL_Rect backgroundAdapter;

@@ -38,9 +38,9 @@ Game::Game() {
     modules[9] = particles = new ModuleParticles(false);
     modules[10] = winScreen = new ModuleWinScreen(false);
 
-    modules[10] = collisions = new ModuleCollisions(false);
-	modules[11] = transition = new ModuleTransition(true);
-    modules[12] = render = new ModuleRender(true);
+    modules[11] = collisions = new ModuleCollisions(false);
+	modules[12] = transition = new ModuleTransition(true);
+    modules[13] = render = new ModuleRender(true);
 }
 
 Game::~Game() {

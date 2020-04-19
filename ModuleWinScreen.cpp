@@ -12,6 +12,12 @@
 
 ModuleWinScreen::ModuleWinScreen(bool startEnabled) : Module(startEnabled) {
     //SplashArt Pushbacks
+    for (int i = 0; i != 14; ++i) { splashArt.PushBack({ i * 252,0,251,186 }); }
+    splashArt.PushBack({ 3524,0,251,186 });
+    for (int i = 0; i != 14; ++i) { splashArt.PushBack({ i * 252,190,251,186 }); }
+    //186 = segona height
+    splashArt.SetSpeed(0.5f);
+    splashArt.SetLoop(true);
 }
 
 ModuleWinScreen::~ModuleWinScreen() {}
@@ -19,15 +25,21 @@ ModuleWinScreen::~ModuleWinScreen() {}
 // Load assets
 bool ModuleWinScreen::Start() {
     LOG("Loading background assets");
+    once = true;
 
-    splashArtTexture = game->GetModuleTextures()->Load("Resources/Sprites/splashArts.png"); //Should be Group Project info
+    splashArtTexture = game->GetModuleTextures()->Load("Resources/Sprites/splashArts.png");
     game->GetModuleAudio()->PlayMusicOnce("Resources/BGM/levelComplete.ogg");
 
     return true;
 }
 
 UPDATE_STATUS ModuleWinScreen::Update() {
-    if (game->GetModuleAudio()->DetectIfEnd() == false) { game->GetModuleTransition()->Transition(this, (Module*)game->GetModuleTitleScreen(), 4); }
+    if (once) {
+        once = false;
+        splashArt.Reset();
+    }
+    splashArt.Update();
+
     return UPDATE_STATUS::UPDATE_CONTINUE;
 }
 
@@ -35,7 +47,9 @@ UPDATE_STATUS ModuleWinScreen::Update() {
 UPDATE_STATUS ModuleWinScreen::PostUpdate() {
     // Draw everything --------------------------------------
     //Edit arguments of Blit
-    game->GetModuleRender()->Blit(splashArtTexture, 0, 0, false, &splashArt.GetCurrentFrame());
+    SDL_Rect backgroundAdapter = { 0, 0, 384, 193 };
+    SDL_Rect splashArtAdapter = { (SCREEN_WIDTH / 2 + 150),backgroundAdapter.h + 55,150,94 };
+    game->GetModuleRender()->Blit(splashArtTexture,0,0,false,&splashArt.GetCurrentFrame(),&splashArtAdapter);
     
     return UPDATE_STATUS::UPDATE_CONTINUE;
 }

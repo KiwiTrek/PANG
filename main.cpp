@@ -1,5 +1,6 @@
 #include "Game.h"
 #include "Globals.h"
+#include "MemLeaks.h"
 
 #include "SDL/include/SDL.h"
 
@@ -21,7 +22,7 @@ Game* game = nullptr;
 int main(int argc, char* argv[]) {
     //ReportMemoryLeaks();
 
-    int main_return = EXIT_FAILURE;
+    int mainReturn = EXIT_FAILURE;
     MAIN_STATES state = MAIN_STATES::MAIN_CREATION;
 
     while (state != MAIN_STATES::MAIN_EXIT) {
@@ -57,7 +58,7 @@ int main(int argc, char* argv[]) {
         case MAIN_STATES::MAIN_FINISH: {
             LOG("Application Finish --------------\n");
 
-            if (game->CleanUp() == true) { main_return = EXIT_SUCCESS; }
+            if (game->CleanUp() == true) { mainReturn = EXIT_SUCCESS; }
             else { LOG("Application CleanUp exits with error -----\n"); }
 
             state = MAIN_STATES::MAIN_EXIT;
@@ -69,5 +70,5 @@ int main(int argc, char* argv[]) {
 
     delete game;
 
-    return main_return;
+    return mainReturn;
 }
