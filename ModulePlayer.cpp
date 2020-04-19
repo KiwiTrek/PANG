@@ -143,9 +143,11 @@ UPDATE_STATUS ModulePlayer::Update()
             else { physics.UpdatePhysics(position.x, position.y, mruaSpeed.x, mruaSpeed.y); }
             collider->SetPos(position.x, position.y, ded.GetWidth(), ded.GetHeight());
         }
+
         currentAnimation->Update();
+
         if (game->GetModuleEnemies()->CheckForBalloons()) {
-            if (winCountdown == 120) { game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelOne(), (Module*)game->GetModuleWinScreen(), 4); }
+            if (winCountdown == 100) { game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelOne(), (Module*)game->GetModuleWinScreen(), 4); }
             else { ++winCountdown; }
         }
     }

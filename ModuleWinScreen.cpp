@@ -36,6 +36,7 @@ UPDATE_STATUS ModuleWinScreen::Update() {
         splashArt.Reset();
     }
     splashArt.Update();
+    game->GetModuleAudio()->ChangeModuleAtEnd("Resources/BGM/noMusic.ogg");
 
     return UPDATE_STATUS::UPDATE_CONTINUE;
 }
