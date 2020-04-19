@@ -57,7 +57,7 @@ public:
 
     // Checks if there're any balloons onscreen
     bool CheckForBalloons();
-	
+    
 
 private:
     // Spawns a new enemy using the data from the queue

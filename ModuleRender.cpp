@@ -73,12 +73,12 @@ bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, bool invert, SDL_Rec
         rect.w = section->w;
         rect.h = section->h;
     }
-	else if (section != nullptr && adapter != nullptr) {
-		rect.x = adapter->x;
-		rect.y = adapter->y;
-		rect.w = adapter->w;
-		rect.h = adapter->h;
-	}
+    else if (section != nullptr && adapter != nullptr) {
+        rect.x = adapter->x;
+        rect.y = adapter->y;
+        rect.w = adapter->w;
+        rect.h = adapter->h;
+    }
     else {
         if (adapter != nullptr) {
             rect.w = adapter->w;

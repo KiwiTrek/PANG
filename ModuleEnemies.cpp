@@ -26,17 +26,17 @@ bool ModuleEnemies::Start() {
 }
 
 UPDATE_STATUS ModuleEnemies::Update() {
-	HandleEnemiesSpawn();
-	if (game->GetModuleLevelOne()->CheckIfStarted()) {
-		if (game->GetModulePlayer()->CheckIfDestroyed() == false) {
-			for (uint i = 0; i < MAX_ENEMIES; ++i) {
-				if (enemies[i] != nullptr)
-					enemies[i]->Update();
-			}
+    HandleEnemiesSpawn();
+    if (game->GetModuleLevelOne()->CheckIfStarted()) {
+        if (game->GetModulePlayer()->CheckIfDestroyed() == false) {
+            for (uint i = 0; i < MAX_ENEMIES; ++i) {
+                if (enemies[i] != nullptr)
+                    enemies[i]->Update();
+            }
 
-			//HandleEnemiesDespawn();
-		}
-	}
+            //HandleEnemiesDespawn();
+        }
+    }
     
     return UPDATE_STATUS::UPDATE_CONTINUE;
 }

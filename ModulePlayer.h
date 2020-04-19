@@ -84,6 +84,12 @@ private:
 
     //Blue Text sprite sheet
     SDL_Texture* blueText = nullptr;
+
+    // Font score index
+    uint score = 000;
+    int normalFont = -1;
+    int timerFont = -1;
+    char scoreText[10] = { "\0" };
 };
 
 #endif //__MODULE_PLAYER_H__

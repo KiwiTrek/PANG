@@ -47,7 +47,7 @@ public:
 
     // Collision callback, called when the player intersects with another collidernormalWire
     void OnCollision(Collider* c1, Collider* c2) override;
-	
+    
 private:
     // An array to store and handle all the particles
     Particle* particles[MAX_ACTIVE_PARTICLES] = { nullptr };
@@ -58,8 +58,8 @@ private:
     // The particle's collider
     Collider* collider = nullptr;
 
-	// A flag to detect when the particle has been destroyed
-	bool destroyed = false;
+    // A flag to detect when the particle has been destroyed
+    bool destroyed = false;
 
 public:
     //Shots (and others) go here
@@ -68,9 +68,9 @@ public:
     Particle notThatMehBalloonExplosion;
     Particle mehBalloonExplosion;
     Particle smolBalloonExplosion;
-	Particle muzzleFlash;
+    Particle muzzleFlash;
     Particle hitScreen;
-	Particle ready;
+    Particle ready;
 };
 
 #endif // !__MODULEPARTICLES_H__

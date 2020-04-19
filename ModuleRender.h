@@ -38,7 +38,7 @@ public:
     // Param x,y        - Position x,y on the screen
     // Param section    - The portion of the texture we want to copy (nullptr for the entire texture)
     // Param invert     - If the texture has to be flipped horizontally
-	bool Blit(SDL_Texture* texture, int x, int y, bool invert, SDL_Rect* section = nullptr, SDL_Rect* adapter = nullptr);
+    bool Blit(SDL_Texture* texture, int x, int y, bool invert, SDL_Rect* section = nullptr, SDL_Rect* adapter = nullptr);
 
     bool DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a);
 

@@ -18,6 +18,7 @@
 
 #include "ModuleTransition.h"
 
+#include "ModuleFonts.h"
 #include "ModuleRender.h"
 
 
@@ -34,13 +35,14 @@ Game::Game() {
     modules[5] = titleScreen = new ModuleTitleScreen(false);
     modules[6] = levelOne = new ModuleLevelOne(false);
     modules[7] = enemies = new ModuleEnemies(false);
-	modules[8] = player = new ModulePlayer(false);
+    modules[8] = player = new ModulePlayer(false);
     modules[9] = particles = new ModuleParticles(false);
     modules[10] = winScreen = new ModuleWinScreen(false);
 
     modules[11] = collisions = new ModuleCollisions(false);
-	modules[12] = transition = new ModuleTransition(true);
-    modules[13] = render = new ModuleRender(true);
+    modules[12] = transition = new ModuleTransition(true);
+    modules[13] = fonts = new ModuleFonts(true);
+    modules[14] = render = new ModuleRender(true);
 }
 
 Game::~Game() {
@@ -108,3 +110,4 @@ ModuleWinScreen* Game::GetModuleWinScreen() const { return winScreen; }
 ModuleCollisions* Game::GetModuleCollisions() const { return collisions; }
 ModuleRender* Game::GetModuleRender() const { return render; }
 ModuleTransition* Game::GetModuleTransition() const { return transition; }
+ModuleFonts* Game::GetModuleFonts() const { return fonts; }

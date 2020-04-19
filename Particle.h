@@ -35,14 +35,14 @@ public:
     void SetAnimSpeed(float _speed);
     bool CheckIsAlive() const;
     void SetFrameCount(const int _frameCount);
-	int GetFrameCount()const;
+    int GetFrameCount()const;
     void SetLifetime(const uint _lifetime);
     uint GetLifetime() const;
     void SetCollider(Collider* _collider);
     Collider* GetCollider() const;
     void SetParticleTexture(SDL_Texture* _particleTexture);
     SDL_Texture* GetParticleTexture();
-	
+    
 
 private:
     // Defines the position in the screen
