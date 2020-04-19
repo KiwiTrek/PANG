@@ -17,6 +17,7 @@
 
 #include "SDL/include/SDL_timer.h"
 #include "SDL/include/SDL_scancode.h"
+#include <stdio.h>
 
 ModulePlayer::ModulePlayer(bool startEnabled) : Module(startEnabled) {
     //Animation setter
@@ -167,6 +168,12 @@ UPDATE_STATUS ModulePlayer::PostUpdate() {
         SDL_Rect gameOverAdapter = { (SCREEN_WIDTH / 2 + 150),backgroundAdapter.h + 75,150,17 };
         game->GetModuleRender()->Blit(blueText, 0, 0, false, &gameOver, &gameOverAdapter);
     }
+	for (int i = 9; i  >=0; i--) {
+
+	}
+	sprintf_s(timerText, 10, "time:%d%d%d", timer[0], timer[1], timer[2]);
+  	game->GetModuleFonts()->BlitText(100, 20, timerFont, timerText);
+
     return UPDATE_STATUS::UPDATE_CONTINUE; 
 }
 

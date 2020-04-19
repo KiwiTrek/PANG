@@ -88,8 +88,12 @@ private:
     // Font score index
     uint score = 000;
     int normalFont = -1;
-    int timerFont = -1;
+
     char scoreText[10] = { "\0" };
+
+	int timerFont = -1;
+	char timerText[10] = { "\0" };
+	int timer[3] = { 1,0,0 };
 };
 
 #endif //__MODULE_PLAYER_H__
