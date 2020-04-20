@@ -24,10 +24,14 @@ ModuleTitleScreen::~ModuleTitleScreen() {}
 bool ModuleTitleScreen::Start() {
     LOG("Loading background assets");
     once = true;
+    counter = 0;
+    switchOn = true;
 
     titleScreenAnimation.Reset();
 
     backgroundTexture = game->GetModuleTextures()->Load("Resources/Sprites/pangTitleCard.png");
+    insertCoinTexture = game->GetModuleTextures()->Load("Resources/Sprites/insertCoin.png");
+    game->GetModuleTextures()->GetTextureSize(insertCoinTexture, insertCoin_w, insertCoin_h);
     titleScreenAnimationTexture = game->GetModuleTextures()->Load("Resources/Sprites/pangAnimationTitleScreen.png");
     titleScreenAnimationSFX = game->GetModuleAudio()->LoadFx("Resources/SFX/titleScreenAnimationSound.wav");
     creditSFX = game->GetModuleAudio()->LoadFx("Resources/SFX/credit.wav");
@@ -36,14 +40,18 @@ bool ModuleTitleScreen::Start() {
 }
 
 UPDATE_STATUS ModuleTitleScreen::Update() {
+    ++counter;
+    if (once) {
+        once = false;
+        game->GetModuleAudio()->PlayFx(titleScreenAnimationSFX);
+    }
     if (game->GetModuleInput()->GetKey(SDL_SCANCODE_SPACE) == KEY_STATE::KEY_DOWN && titleScreenAnimation.HasFinished()) {
         game->GetModuleAudio()->PlayFx(creditSFX);
         game->GetModuleTransition()->Transition(this, (Module*)game->GetModuleLevelOne(), 4);
     }
-    if (once) {
-        once = false;
-        titleScreenAnimation.Reset();
-        game->GetModuleAudio()->PlayFx(titleScreenAnimationSFX);
+    if (counter == 30){
+        counter = 0;
+        switchOn = !switchOn;
     }
     titleScreenAnimation.Update();
 
@@ -55,7 +63,10 @@ UPDATE_STATUS ModuleTitleScreen::PostUpdate() {
     // Draw everything --------------------------------------
     SDL_Rect backgroundRect = { 0,0,SCREEN_WIDTH,SCREEN_HEIGHT };
 
-    if (titleScreenAnimation.HasFinished()) { game->GetModuleRender()->Blit(backgroundTexture, 0, 0, false, nullptr, &backgroundRect); }
+    if (titleScreenAnimation.HasFinished()) {
+        game->GetModuleRender()->Blit(backgroundTexture, 0, 0, false, nullptr, &backgroundRect);
+        if (switchOn) { game->GetModuleRender()->Blit(insertCoinTexture, ((SCREEN_WIDTH / 2) - (insertCoin_w / 2)), 194, false); }
+    }
     else {game->GetModuleRender()->Blit(titleScreenAnimationTexture, 0, 0, false, &titleScreenAnimation.GetCurrentFrame(), &backgroundRect);}
 
     return UPDATE_STATUS::UPDATE_CONTINUE;

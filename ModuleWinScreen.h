@@ -30,8 +30,6 @@ public:
     bool CleanUp() override;
 
 private:
-    bool once;
-
     // The scene sprite sheet loaded into an SDL_Texture
     SDL_Texture* splashArtTexture = nullptr;
     Animation splashArt;

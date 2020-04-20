@@ -8,7 +8,10 @@
 class Animation {
 public:
     void PushBack(const SDL_Rect& rect) { frames[totalFrames++] = rect; }
-    void Reset() { currentFrame = 0; }
+    void Reset() {
+        currentFrame = 0;
+        loopCount = 0;
+    }
     bool HasFinished() { return !loop && loopCount > 0; }
     void Update() {
         currentFrame += speed;

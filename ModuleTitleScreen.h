@@ -32,6 +32,12 @@ private:
     // The scene sprite sheet loaded into an SDL_Texture
     SDL_Texture* backgroundTexture = nullptr;
 
+    int counter = 0;
+    bool switchOn = true;
+    SDL_Texture* insertCoinTexture = nullptr;
+    uint insertCoin_w;
+    uint insertCoin_h;
+
     // Initial Animation Variables
     SDL_Texture* titleScreenAnimationTexture = nullptr;
     Animation titleScreenAnimation;

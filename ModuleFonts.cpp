@@ -5,7 +5,7 @@
 #include "ModuleRender.h"
 #include "ModuleFonts.h"
 
-#include<string.h>
+#include <string.h>
 
 ModuleFonts::ModuleFonts(bool isEnabled) : Module(isEnabled) {}
 

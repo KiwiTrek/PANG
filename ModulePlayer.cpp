@@ -210,7 +210,6 @@ UPDATE_STATUS ModulePlayer::PostUpdate() {
          if (time <= 1) { time += deltaTime; }
          else {
              time = deltaTime;
-            
              --timer;
          }
          if (timer == 0 && onceHurry1 == true) {
