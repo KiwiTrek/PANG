@@ -167,6 +167,15 @@ UPDATE_STATUS ModulePlayer::Update()
 }
 
 UPDATE_STATUS ModulePlayer::PostUpdate() {
+	for (int i = 5; i >=0; i--) {
+		if (score[0] > 9) { score[i] = 9; }
+		else {
+			if (score[i] > 9) {
+				score[i] -= 10;
+				score[i - 1]++;
+			}
+		}
+	}
     if (score[0] == 0) {
         if (score[1] == 0) {
             if (score[2] == 0) {
