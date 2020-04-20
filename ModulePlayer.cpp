@@ -65,7 +65,7 @@ bool ModulePlayer::Start() {
 
     collider = game->GetModuleCollisions()->AddCollider({ position.x, position.y, idle.GetWidth(), idle.GetHeight() }, Collider::TYPE::PLAYER, this); // adds a collider to the player
 
-    normalFont = game->GetModuleFonts()->Load("Resources/Sprites/Font.png", "! @,_./0123456789$;<&?abcdefghijklmnopqrstuvwxyz", 6);
+    normalFont = game->GetModuleFonts()->Load("Resources/Sprites/Font.png", "abcdefghijklmnopqrstuvwxyz0123456789.,!<-:©>        ", 4);
     timerFont = game->GetModuleFonts()->Load("Resources/Sprites/Timer.png", "time:0123456789 ", 2);
     timer[0] = 1;
     timer[1] = 0;
