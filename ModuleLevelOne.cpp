@@ -15,8 +15,8 @@
 
 ModuleLevelOne::ModuleLevelOne(bool startEnabled) : Module(startEnabled) {
     // Background
-    background = { 8, 8, 384, 207 };
-    backgroundAdapter = { 0, 0, 384, 193 };
+    background = { 8, 8, 384, 208 };
+    backgroundAdapter = { 0, 0, 384, 194 };
 }
 
 ModuleLevelOne::~ModuleLevelOne() {}
@@ -71,11 +71,11 @@ UPDATE_STATUS ModuleLevelOne::Update() {
 UPDATE_STATUS ModuleLevelOne::PostUpdate() {
     // Draw everything --------------------------------------
     sprintf_s(levelTitle, 10, "mt.fuji");
-    game->GetModuleFonts()->BlitText(146, 193, game->GetModulePlayer()->GetFontIndex(), levelTitle);
+    game->GetModuleFonts()->BlitText(160, 194, game->GetModulePlayer()->GetFontIndex(), levelTitle);
     sprintf_s(stageText, 10, "1-1 stage");
-    game->GetModuleFonts()->BlitText(139, 207, game->GetModulePlayer()->GetFontIndex(), stageText);
+    game->GetModuleFonts()->BlitText(159, 209, game->GetModulePlayer()->GetFontIndex(), stageText);
     sprintf_s(highScore, 15, "hi: 100000");
-    game->GetModuleFonts()->BlitText(139, 214, game->GetModulePlayer()->GetFontIndex(), highScore);
+    game->GetModuleFonts()->BlitText(152, 217, game->GetModulePlayer()->GetFontIndex(), highScore);
     game->GetModuleRender()->Blit(backgroundTexture, 0, 0, GetInvertValue(), &background, &backgroundAdapter);
     return UPDATE_STATUS::UPDATE_CONTINUE;
 }

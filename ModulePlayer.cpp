@@ -67,7 +67,7 @@ bool ModulePlayer::Start() {
 
     collider = game->GetModuleCollisions()->AddCollider({ position.x, position.y, idle.GetWidth(), idle.GetHeight() }, Collider::TYPE::PLAYER, this); // adds a collider to the player
 
-    normalFont = game->GetModuleFonts()->Load("Resources/Sprites/Font.png", "a ',.0123456789:bcdefghijklmnopqrstuvwxyz ", 6);
+    normalFont = game->GetModuleFonts()->Load("Resources/Sprites/Font.png", "a ',.0123456789:bcdefghijklmnopqrstuvwxyz-", 6);
     timerFont = game->GetModuleFonts()->Load("Resources/Sprites/Timer.png", "time:0123456789 ", 2);
     timer = 100;
     time = -31.0f / 60.0f;
@@ -178,10 +178,10 @@ UPDATE_STATUS ModulePlayer::Update()
 }
 
 UPDATE_STATUS ModulePlayer::PostUpdate() {
-    sprintf_s(scoreText, 10, "%6d", score);
-    game->GetModuleFonts()->BlitText(100, 203, normalFont, scoreText);
-    sprintf_s(playerText, 10, "player1");
-    game->GetModuleFonts()->BlitText(20, 193, normalFont, playerText);
+    sprintf_s(scoreText, 10, "%05d", score);
+    game->GetModuleFonts()->BlitText(64, 202, normalFont, scoreText);
+    sprintf_s(playerText, 10, "player-1");
+    game->GetModuleFonts()->BlitText(16, 194, normalFont, playerText);
 
     for (int i = playerLifes; i > 0; i--) {
         SDL_Rect lifeAdapter = { i * 45,SCREEN_HEIGHT*3-45,15,15 };

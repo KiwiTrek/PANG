@@ -36,7 +36,7 @@ bool ModuleTitleScreen::Start() {
 }
 
 UPDATE_STATUS ModuleTitleScreen::Update() {
-    if (game->GetModuleInput()->GetKey(SDL_SCANCODE_SPACE) == KEY_STATE::KEY_DOWN) {
+    if (game->GetModuleInput()->GetKey(SDL_SCANCODE_SPACE) == KEY_STATE::KEY_DOWN && titleScreenAnimation.HasFinished()) {
         game->GetModuleAudio()->PlayFx(creditSFX);
         game->GetModuleTransition()->Transition(this, (Module*)game->GetModuleLevelOne(), 4);
     }
