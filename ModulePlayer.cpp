@@ -175,15 +175,15 @@ UPDATE_STATUS ModulePlayer::PostUpdate() {
 						if(score[5] == 0) {sprintf_s(scoreText, 10, "0");}
 						else { sprintf_s(scoreText, 10, "%d", score[5]); }
 					}
-					else { sprintf_s(scoreText, 10, "%d%d", score[5], score[4]); }
+					else { sprintf_s(scoreText, 10, "%d%d", score[4], score[5]); }
 				}
-				else { sprintf_s(scoreText, 10, "%d%d%d", score[5], score[4], score[3]); }
+				else { sprintf_s(scoreText, 10, "%d%d%d", score[3], score[4], score[5]); }
 			}
-			else { sprintf_s(scoreText, 10, "%d%d%d%d", score[5], score[4], score[3], score[2]); }
+			else { sprintf_s(scoreText, 10, "%d%d%d%d", score[2], score[3], score[4], score[5]); }
 		}
-		else { sprintf_s(scoreText, 10, "%d%d%d%d%d", score[5], score[4], score[3], score[2], score[1]); }
+		else { sprintf_s(scoreText, 10, "%d%d%d%d%d", score[1], score[2], score[3], score[4], score[5]); }
 	}
-	else { sprintf_s(scoreText, 10, "%d%d%d%d%d&d", score[5], score[4], score[3], score[2], score[1], score[0]); }
+	else { sprintf_s(scoreText, 10, "%d%d%d%d%d%d", score[0], score[1], score[2], score[3], score[4], score[5]); }
 
 	game->GetModuleFonts()->BlitText(100, 203, normalFont, scoreText);
 	sprintf_s(playerText, 10, "player1");
