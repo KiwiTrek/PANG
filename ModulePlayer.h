@@ -26,6 +26,7 @@ public:
     void SetIfShot(bool _shot);
     bool CheckIfGodMode() const;
     bool CheckIfDestroyed() const;
+    void AddScore(int _score, int i);
 
     bool Start() override;
     UPDATE_STATUS Update() override;
@@ -34,7 +35,7 @@ public:
     // Collision callback, called when the player intersects with another collider
     void OnCollision(Collider* c1, Collider* c2) override;
 
-	
+    
 
 private:
     iPoint position;
@@ -88,21 +89,21 @@ private:
     SDL_Texture* blueText = nullptr;
 
     // Font score index
-	int score[6] = { 0,0,0,0,0,0 };
+    int score[6] = { 0,0,0,0,0,0 };
     int normalFont = -1;
-	char playerText[10] = { "\0" };
+    char playerText[10] = { "\0" };
     char scoreText[10] = { "\0" };
 
-	int timerFont = -1;
-	char timerText[10] = { "\0" };
-	int timer[3] = { 1,0,0 };
+    int timerFont = -1;
+    char timerText[10] = { "\0" };
+    int timer[3] = { 1,0,0 };
 
-	float deltaTime = 1.0f / 60.0f;
+    float deltaTime = 1.0f / 60.0f;
     float time = -31.0f / 60.0f;
 
-	//Player life
-	int playerLifes = 3;
-	SDL_Rect life;
+    //Player life
+    int playerLifes = 3;
+    SDL_Rect life;
 
 };
 
