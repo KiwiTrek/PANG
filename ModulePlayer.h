@@ -88,9 +88,9 @@ private:
     SDL_Texture* blueText = nullptr;
 
     // Font score index
-    uint score = 000;
+	int score[6] = { 0,0,0,0,0,0 };
     int normalFont = -1;
-
+	char playerText[10] = { "\0" };
     char scoreText[10] = { "\0" };
 
 	int timerFont = -1;
@@ -99,6 +99,11 @@ private:
 
 	float deltaTime = 1.0f / 60.0f;
     float time = -31.0f / 60.0f;
+
+	//Player life
+	int playerLifes = 3;
+	SDL_Rect life;
+
 };
 
 #endif //__MODULE_PLAYER_H__

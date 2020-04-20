@@ -83,7 +83,6 @@ ModuleParticles::ModuleParticles(bool startEnabled) : Module(startEnabled) {
 
     //Ready
     ready.SetAnimPushBack({ 5,132,203,67 });
-
     ready.SetAnimLoop(false);
     ready.SetLifetime(5);
 }
