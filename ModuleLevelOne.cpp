@@ -8,7 +8,10 @@
 #include "ModuleCollisions.h"
 #include "ModulePlayer.h"
 #include "ModuleEnemies.h"
+#include "ModuleFonts.h"
 #include "ModuleRender.h"
+
+#include <stdio.h>
 
 ModuleLevelOne::ModuleLevelOne(bool startEnabled) : Module(startEnabled) {
     // Background
@@ -67,6 +70,12 @@ UPDATE_STATUS ModuleLevelOne::Update() {
 // Update: draw background
 UPDATE_STATUS ModuleLevelOne::PostUpdate() {
     // Draw everything --------------------------------------
+    sprintf_s(levelTitle, 10, "mt.fuji");
+    game->GetModuleFonts()->BlitText(146, 193, game->GetModulePlayer()->GetFontIndex(), levelTitle);
+    sprintf_s(stageText, 10, "1-1 stage");
+    game->GetModuleFonts()->BlitText(139, 207, game->GetModulePlayer()->GetFontIndex(), stageText);
+    sprintf_s(highScore, 15, "hi: 100000");
+    game->GetModuleFonts()->BlitText(139, 214, game->GetModulePlayer()->GetFontIndex(), highScore);
     game->GetModuleRender()->Blit(backgroundTexture, 0, 0, GetInvertValue(), &background, &backgroundAdapter);
     return UPDATE_STATUS::UPDATE_CONTINUE;
 }

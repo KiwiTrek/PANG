@@ -25,6 +25,7 @@ public:
     void SetShotSoundIndex(uint _shotSoundIndex);
     uint GetDedSoundIndex() const;
     void SetDedSoundIndex(uint _dedSoundIndex);
+    int GetFontIndex()const;
     void SetIfShot(bool _shot);
     bool CheckIfGodMode() const;
     bool CheckIfDestroyed() const;
@@ -100,7 +101,8 @@ private:
 
     int timerFont = -1;
     char timerText[10] = { "\0" };
-    int timer[3] = { 1,0,0 };
+    //int timer[3] = { 1,0,0 };
+    int timer = 0;
 
     float deltaTime = 1.0f / 60.0f;
     float time = -31.0f / 60.0f;

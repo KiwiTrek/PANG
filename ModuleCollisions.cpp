@@ -125,11 +125,11 @@ void ModuleCollisions::DebugDraw() {
         case Collider::TYPE::STAIRS: // magenta
             game->GetModuleRender()->DrawQuad(colliders[i]->GetRect(), 255, 0, 255, alpha);
             break;
-        case Collider::TYPE::PLAYER: // green
-            game->GetModuleRender()->DrawQuad(colliders[i]->GetRect(), 0, 255, 0, alpha);
-            break;
-        case Collider::TYPE::BALLOON: // red
+        case Collider::TYPE::PLAYER: // red
             game->GetModuleRender()->DrawQuad(colliders[i]->GetRect(), 255, 0, 0, alpha);
+            break;
+        case Collider::TYPE::BALLOON: // green
+            game->GetModuleRender()->DrawQuad(colliders[i]->GetRect(), 0, 255, 0, alpha);
             break;
         case Collider::TYPE::ANIMAL: // blue
             game->GetModuleRender()->DrawQuad(colliders[i]->GetRect(), 0, 0, 255, alpha);

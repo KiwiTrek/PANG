@@ -39,6 +39,10 @@ private:
 
     // The scene sprite sheet loaded into an SDL_Texture
     SDL_Texture* backgroundTexture = nullptr;
+
+    char levelTitle[10] = { "\0" };
+    char stageText[10] = { "\0" };
+    char highScore[15] = { "\0" };
 };
 
 #endif

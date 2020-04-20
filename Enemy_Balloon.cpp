@@ -10,7 +10,7 @@
 Enemy_Balloon::Enemy_Balloon(int x, int y, ENEMY_TYPE _type, bool _isMovingRight) : Enemy(x, y, _type, _isMovingRight) {
     if (GetEnemyType() == ENEMY_TYPE::CHUNGUS_BALLOON ) {
         idle.PushBack({ 1,6,48,40 });
-        collider = game->GetModuleCollisions()->AddCollider({ 1,6,48,40 }, Collider::TYPE::BALLOON, (Module*)game->GetModuleEnemies());
+        collider = game->GetModuleCollisions()->AddCollider({ 8,6,32,40 }, Collider::TYPE::BALLOON, (Module*)game->GetModuleEnemies());
     }
     if (GetEnemyType() == ENEMY_TYPE::NOT_THAT_MEH_BALLOON) {
         idle.PushBack({ 52,13,33,27 });
@@ -21,8 +21,8 @@ Enemy_Balloon::Enemy_Balloon(int x, int y, ENEMY_TYPE _type, bool _isMovingRight
         collider = game->GetModuleCollisions()->AddCollider({ 86,19,17,15 }, Collider::TYPE::BALLOON, (Module*)game->GetModuleEnemies());
     }
     if (GetEnemyType() == ENEMY_TYPE::SMOL_BALLOON) {
-        idle.PushBack({ 106,23,9,8 });
-        collider = game->GetModuleCollisions()->AddCollider({ 106,23,9,8 }, Collider::TYPE::BALLOON, (Module*)game->GetModuleEnemies());
+        idle.PushBack({ 106,23,8,7 });
+        collider = game->GetModuleCollisions()->AddCollider({ 106,23,8,7 }, Collider::TYPE::BALLOON, (Module*)game->GetModuleEnemies());
     }
     currentAnim = &idle;
     if (isMovingRight) { speed.x = 150.0f; }
