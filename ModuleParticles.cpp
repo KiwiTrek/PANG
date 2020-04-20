@@ -172,7 +172,7 @@ Particle* ModuleParticles::AddParticle(const Particle& particle, int x, int y, C
             p->SetPositionY(y);
 
             //Adding the particle's collider
-            p->SetCollider(game->GetModuleCollisions()->AddCollider(p->GetCurrentAnim(), colliderType, this));
+            p->SetCollider(game->GetModuleCollisions()->AddCollider({ p->GetCurrentAnim().x,p->GetCurrentAnim().y,p->GetCurrentAnim().w,p->GetCurrentAnim().h }, colliderType, this));
 
             particles[i] = p;
             return particles[i];
