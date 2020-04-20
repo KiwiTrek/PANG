@@ -23,10 +23,12 @@ public:
     Animation* GetCurrentAnimation() const;
     uint GetShotSoundIndex() const;
     void SetShotSoundIndex(uint _shotSoundIndex);
+    uint GetDedSoundIndex() const;
+    void SetDedSoundIndex(uint _dedSoundIndex);
     void SetIfShot(bool _shot);
     bool CheckIfGodMode() const;
     bool CheckIfDestroyed() const;
-    void AddScore(int _score, int i);
+    void AddScore(int _score);
 
     bool Start() override;
     UPDATE_STATUS Update() override;
@@ -70,6 +72,8 @@ private:
     bool destroyed = false;
     bool once = true;
     bool onceMusic = true;
+    bool onceHurry1 = true;
+    bool onceHurry2 = true;
 
     // A flag to detect when the player has shot
     bool shot = false;
@@ -89,7 +93,7 @@ private:
     SDL_Texture* blueText = nullptr;
 
     // Font score index
-    int score[6] = { 0,0,0,0,0,0 };
+    int score = 0;
     int normalFont = -1;
     char playerText[10] = { "\0" };
     char scoreText[10] = { "\0" };
@@ -102,7 +106,7 @@ private:
     float time = -31.0f / 60.0f;
 
     //Player life
-    int playerLifes = 3;
+    int playerLifes = 2;
     SDL_Rect life;
 
 };

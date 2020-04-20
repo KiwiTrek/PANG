@@ -25,6 +25,8 @@ bool ModuleTitleScreen::Start() {
     LOG("Loading background assets");
     once = true;
 
+    titleScreenAnimation.Reset();
+
     backgroundTexture = game->GetModuleTextures()->Load("Resources/Sprites/pangTitleCard.png");
     titleScreenAnimationTexture = game->GetModuleTextures()->Load("Resources/Sprites/pangAnimationTitleScreen.png");
     titleScreenAnimationSFX = game->GetModuleAudio()->LoadFx("Resources/SFX/titleScreenAnimationSound.wav");
@@ -62,5 +64,8 @@ UPDATE_STATUS ModuleTitleScreen::PostUpdate() {
 bool ModuleTitleScreen::CleanUp() {
     game->GetModuleTextures()->Unload(backgroundTexture);
     game->GetModuleTextures()->Unload(titleScreenAnimationTexture);
+    game->GetModuleAudio()->UnloadFx(titleScreenAnimationSFX);
+    //game->GetModuleAudio()->UnloadFx(creditSFX);
+
     return true;
 }

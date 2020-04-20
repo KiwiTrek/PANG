@@ -111,8 +111,7 @@ void ModuleAudio::PlayMusic(const char* path) {
     LOG("Successfully playing %s", path);
 }
 
-uint ModuleAudio::LoadFx(const char* path)
-{
+uint ModuleAudio::LoadFx(const char* path) {
     uint indexReturned = 0;
     Mix_Chunk* chunk = Mix_LoadWAV(path);
 
@@ -129,8 +128,19 @@ uint ModuleAudio::LoadFx(const char* path)
     return indexReturned;
 }
 
-bool ModuleAudio::PlayFx(uint index, int repeat)
-{
+bool ModuleAudio::UnloadFx(uint index) {
+    for (int i = 0; i < MAX_FX; ++i) {
+        if (i == index) {
+            Mix_FreeChunk(soundFx[index]);
+            soundFx[index] = nullptr;
+            return true;
+        }
+    }
+
+    return false;
+}
+
+bool ModuleAudio::PlayFx(uint index, int repeat) {
     if (soundFx[index] != nullptr) {
         Mix_PlayChannel(-1, soundFx[index], repeat);
         return true;

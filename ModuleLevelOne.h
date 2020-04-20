@@ -30,7 +30,7 @@ public:
     void SetIfStarted(bool _hasStarted);
 
 private:
-    bool once;
+    bool once = true;
     bool hasStarted = false;
     Particle* p;
     // The sprite section for the background

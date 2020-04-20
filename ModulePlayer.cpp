@@ -52,6 +52,8 @@ bool ModulePlayer::Start() {
     destroyed = false;
     once = true;
     onceMusic = true;
+    onceHurry1 = true;
+    onceHurry2 = true;
     godMode = false;
 
     blueText = game->GetModuleTextures()->Load("Resources/Sprites/blueText.png");
@@ -132,17 +134,25 @@ UPDATE_STATUS ModulePlayer::Update()
             game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelOne(), (Module*)game->GetModuleProjectSheet(), 90);
         }
         if (game->GetModuleInput()->GetKey(SDL_SCANCODE_F9) == KEY_DOWN) { game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelOne(), (Module*)game->GetModuleWinScreen(), 4); }
+        if (game->GetModuleInput()->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
+            timer[1] = 2;
+            timer[2] = 5;
+        }
+
         if (destroyed) {
             if (once) {
                 once = false;
-                SDL_Delay(1000);
+                if (timer[0] != 0 && timer[1] != 0 && timer[2] != 0) { SDL_Delay(1000); }
                 game->GetModuleAudio()->PlayFx(dedSoundIndex);
-                game->GetModuleCollisions()->AddCollider({ position.x, position.y, ded.GetWidth(), ded.GetHeight() }, Collider::TYPE::PLAYER, this);
-                game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->hitScreen, 0, 0);
-                physics.SetAxis(true, true);
+                if (timer[0] != 0 && timer[1] != 0 && timer[2] != 0) {
+                    game->GetModuleCollisions()->AddCollider({ position.x, position.y, ded.GetWidth(), ded.GetHeight() }, Collider::TYPE::PLAYER, this);
+                    game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->hitScreen, 0, 0);
+                    physics.SetAxis(true, true);
+                }
             }
-            currentAnimation = &ded;
-            if (position.y >= SCREEN_HEIGHT + currentAnimation->GetHeight()) {
+            if (timer[0] != 0 && timer[1] != 0 && timer[2] != 0) { currentAnimation = &ded; }
+            --playerLifes;
+            if (position.y >= SCREEN_HEIGHT + currentAnimation->GetHeight() && playerLifes < 0) {
                 if (onceMusic) {
 
                     game->GetModuleAudio()->PlayMusicOnce("Resources/BGM/gameOver.ogg");
@@ -151,8 +161,12 @@ UPDATE_STATUS ModulePlayer::Update()
         
                 if (game->GetModuleAudio()->DetectIfEnd() == false) { game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelOne(), (Module*)game->GetModuleTitleScreen(), 4); }
             }
-            else { physics.UpdatePhysics(position.x, position.y, mruaSpeed.x, mruaSpeed.y); }
-            collider->SetPos(position.x, position.y, ded.GetWidth(), ded.GetHeight());
+            else if (position.y >= SCREEN_HEIGHT + currentAnimation->GetHeight() && playerLifes >= 0) {
+                game->GetModuleTransition()->Transition(this, this, 4);
+            }
+            else if (timer[0] != 0 && timer[1] != 0 && timer[2] != 0) { physics.UpdatePhysics(position.x, position.y, mruaSpeed.x, mruaSpeed.y); }
+
+            if (timer[0] != 0 && timer[1] != 0 && timer[2] != 0) { collider->SetPos(position.x, position.y, ded.GetWidth(), ded.GetHeight()); }
         }
 
         currentAnimation->Update();
@@ -167,55 +181,33 @@ UPDATE_STATUS ModulePlayer::Update()
 }
 
 UPDATE_STATUS ModulePlayer::PostUpdate() {
-	for (int i = 5; i >=0; i--) {
-		if (score[0] > 9) { score[i] = 9; }
-		else {
-			if (score[i] > 9) {
-				score[i] -= 10;
-				score[i - 1]++;
-			}
-		}
-	}
-    if (score[0] == 0) {
-        if (score[1] == 0) {
-            if (score[2] == 0) {
-                if (score[3] == 0) {
-                    if (score[4] == 0) {
-                        if(score[5] == 0) {sprintf_s(scoreText, 10, "0");}
-                        else { sprintf_s(scoreText, 10, "%d", score[5]); }
-                    }
-                    else { sprintf_s(scoreText, 10, "%d%d", score[4], score[5]); }
-                }
-                else { sprintf_s(scoreText, 10, "%d%d%d", score[3], score[4], score[5]); }
-            }
-            else { sprintf_s(scoreText, 10, "%d%d%d%d", score[2], score[3], score[4], score[5]); }
-        }
-        else { sprintf_s(scoreText, 10, "%d%d%d%d%d", score[1], score[2], score[3], score[4], score[5]); }
-    }
-    else { sprintf_s(scoreText, 10, "%d%d%d%d%d%d", score[0], score[1], score[2], score[3], score[4], score[5]); }
-
+    sprintf_s(scoreText, 10, "%6d", score);
     game->GetModuleFonts()->BlitText(100, 203, normalFont, scoreText);
     sprintf_s(playerText, 10, "player1");
     game->GetModuleFonts()->BlitText(20, 193, normalFont, playerText);
 
-    for (int i = playerLifes - 1; i > 0; i--) {
+    for (int i = playerLifes; i > 0; i--) {
         SDL_Rect lifeAdapter = { i * 45,SCREEN_HEIGHT*3-45,15,15 };
         game->GetModuleRender()->Blit(texture, 0, 0, false, &life, &lifeAdapter);
     }
+
     game->GetModuleRender()->Blit(texture, position.x, position.y, GetInvertValue(), &currentAnimation->GetCurrentFrame());
-    if (position.y >= SCREEN_HEIGHT + currentAnimation->GetHeight()) {
-        playerLifes--;
+    if (playerLifes < 0) {
         SDL_Rect backgroundAdapter = { 0, 0, 384, 193 };
-        SDL_Rect gameOverAdapter = { (SCREEN_WIDTH / 2 + 150),backgroundAdapter.h + 75,150,17 };
-        game->GetModuleRender()->Blit(blueText, 0, 0, false, &gameOver, &gameOverAdapter);
-        
-        
+        if (timer[0] == 0 && timer[1] == 0 && timer[2] == 0) {
+            game->GetModuleAudio()->PlayMusic("Resources/BGM/noMusic.ogg");
+            SDL_Rect timeOverAdapter = { (SCREEN_WIDTH / 2 + 150),backgroundAdapter.h + 75,150,17 };
+            game->GetModuleRender()->Blit(blueText, 0, 0, false, &timeOver, &timeOverAdapter);
+        }
+        else if (position.y >= SCREEN_HEIGHT + currentAnimation->GetHeight()) {
+            SDL_Rect gameOverAdapter = { (SCREEN_WIDTH / 2 + 150),backgroundAdapter.h + 75,150,17 };
+            game->GetModuleRender()->Blit(blueText, 0, 0, false, &gameOver, &gameOverAdapter);
+        }
     }
 
     //Timer
     sprintf_s(timerText, 10, "time:%d%d%d", timer[0], timer[1], timer[2]);
     game->GetModuleFonts()->BlitText(SCREEN_WIDTH - 130, 10, timerFont, timerText);
-    //if (timer[0] != 0 && timer[1] != 0 && timer[2] != 0) { destroyed = true; }
     
      if (!destroyed) {
          if (time <= 1) { time += deltaTime; }
@@ -231,6 +223,15 @@ UPDATE_STATUS ModulePlayer::PostUpdate() {
                  }
              }
          }
+         if (timer[0] == 0 && timer[1] == 5 && timer[2] == 0 && onceHurry1 == true) {
+             game->GetModuleAudio()->PlayMusic("Resources/BGM/hurryUpLvl1.ogg");
+             onceHurry1 = false;
+         }
+         if (timer[0] == 0 && timer[1] == 2 && timer[2] == 0 && onceHurry2 == true) {
+             game->GetModuleAudio()->PlayMusic("Resources/BGM/hurryUpLvl2.ogg");
+             onceHurry2 = false;
+         }
+         if (timer[0] == 0 && timer[1] == 0 && timer[2] == 0) { destroyed = true; }
      }
     
     
@@ -291,7 +292,9 @@ SDL_Texture* ModulePlayer::GetBlueTextTexture() const { return blueText; }
 Animation* ModulePlayer::GetCurrentAnimation() const { return currentAnimation; }
 uint ModulePlayer::GetShotSoundIndex() const { return shotSoundIndex; }
 void ModulePlayer::SetShotSoundIndex(uint _shotSoundIndex) { shotSoundIndex = _shotSoundIndex; }
+uint ModulePlayer::GetDedSoundIndex() const { return shotSoundIndex; }
+void ModulePlayer::SetDedSoundIndex(uint _dedSoundIndex) { dedSoundIndex = _dedSoundIndex; }
 void ModulePlayer::SetIfShot(bool _shot) { shot = _shot; }
 bool ModulePlayer::CheckIfGodMode() const { return godMode; };
 bool ModulePlayer::CheckIfDestroyed() const { return destroyed; };
-void ModulePlayer::AddScore(int _score, int i) { score[i] += _score; }
+void ModulePlayer::AddScore(int _score) { score += _score; }

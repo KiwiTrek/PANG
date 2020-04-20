@@ -18,13 +18,14 @@ ModuleProjectSheet::~ModuleProjectSheet() {}
 bool ModuleProjectSheet::Start() {
     LOG("Loading background assets");
 
-    projectSheet = game->GetModuleTextures()->Load("Resources/Sprites/projectSheet.png"); //Should be Group Project info
+    projectSheet = game->GetModuleTextures()->Load("Resources/Sprites/projectSheet.png");
 
     return true;
 }
 
 UPDATE_STATUS ModuleProjectSheet::Update() {
     if (game->GetModuleInput()->GetKey(SDL_SCANCODE_SPACE) == KEY_STATE::KEY_DOWN) {game->GetModuleTransition()->Transition(this, (Module*)game->GetModuleTitleScreen(), 45);}
+    if (game->GetModuleInput()->GetKey(SDL_SCANCODE_F8) == KEY_STATE::KEY_DOWN) { game->GetModuleTransition()->Transition(this, (Module*)game->GetModuleLevelOne(), 4); }
     if (game->GetModuleInput()->GetKey(SDL_SCANCODE_F9) == KEY_STATE::KEY_DOWN) { game->GetModuleTransition()->Transition(this, (Module*)game->GetModuleWinScreen(), 4); }
 
     return UPDATE_STATUS::UPDATE_CONTINUE;
