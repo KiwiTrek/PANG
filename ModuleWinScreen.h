@@ -35,6 +35,16 @@ private:
     // The scene sprite sheet loaded into an SDL_Texture
     SDL_Texture* splashArtTexture = nullptr;
     Animation splashArt;
+
+    int nextExtendNumber = 20000;
+    char stage[10] = { "\0" };
+    char timeBonus[25] = { "\0" };
+    char nextExtend[25] = { "\0" };
+    //char timeBonus[10] = { "\0" };
+    //char timeBonus[10] = { "\0" };
+    //char timeBonus[10] = { "\0" };
+    //char timeBonus[10] = { "\0" };
+    //char timeBonus[10] = { "\0" };
 };
 
 #endif

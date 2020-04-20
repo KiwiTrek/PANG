@@ -7,8 +7,11 @@
 #include "ModuleAudio.h"
 #include "ModuleInput.h"
 #include "ModuleTransition.h"
+#include "ModulePlayer.h"
+#include "ModuleFonts.h"
 
 #include "SDL/include/SDL_scancode.h"
+#include <stdio.h>
 
 ModuleWinScreen::ModuleWinScreen(bool startEnabled) : Module(startEnabled) {
     //SplashArt Pushbacks
@@ -44,6 +47,12 @@ UPDATE_STATUS ModuleWinScreen::Update() {
 // Update: draw background
 UPDATE_STATUS ModuleWinScreen::PostUpdate() {
     // Draw everything --------------------------------------
+    sprintf_s(stage, 10, "1stage");
+    game->GetModuleFonts()->BlitText(160, 111, game->GetModulePlayer()->GetFontIndex(), stage);
+    sprintf_s(timeBonus, 24, "time bonus:    %5d pts.", ((game->GetModulePlayer()->GetTimer())*100));
+    game->GetModuleFonts()->BlitText(159, 135, game->GetModulePlayer()->GetFontIndex(), timeBonus);
+    sprintf_s(nextExtend, 15, "next extend:  %6d pts.",nextExtendNumber);
+    game->GetModuleFonts()->BlitText(152, 161, game->GetModulePlayer()->GetFontIndex(), nextExtend);
     //Edit arguments of Blit
     SDL_Rect backgroundAdapter = { 0, 0, 384, 193 };
     SDL_Rect splashArtAdapter = { (SCREEN_WIDTH / 2 + 100),backgroundAdapter.h-100,200,95 };

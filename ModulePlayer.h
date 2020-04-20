@@ -30,6 +30,7 @@ public:
     bool CheckIfGodMode() const;
     bool CheckIfDestroyed() const;
     void AddScore(int _score);
+    int GetTimer() const;
 
     bool Start() override;
     UPDATE_STATUS Update() override;
@@ -101,7 +102,6 @@ private:
 
     int timerFont = -1;
     char timerText[10] = { "\0" };
-    //int timer[3] = { 1,0,0 };
     int timer = 0;
 
     float deltaTime = 1.0f / 60.0f;
