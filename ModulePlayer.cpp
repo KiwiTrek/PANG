@@ -58,6 +58,7 @@ bool ModulePlayer::Start() {
     onceHurry2 = true;
     godMode = false;
     onceDeath = true;
+    onceDeathSpaguett = true;
 
     blueText = game->GetModuleTextures()->Load("Resources/Sprites/blueText.png");
     texture = game->GetModuleTextures()->Load("Resources/Sprites/player.png"); // arcade version
@@ -141,24 +142,28 @@ UPDATE_STATUS ModulePlayer::Update()
 
         if (isTimeOver) {
             if (once) {
-                playerLifes--;
                 once = false;
                 game->GetModuleAudio()->PlayMusicOnce("Resources/BGM/noMusic.ogg");
                 game->GetModuleAudio()->PlayFx(dedSoundIndex);
             }
-            if (playerLifes < 0) {
+            if (playerLifes == 0) {
                 if (onceMusic) {
                     game->GetModuleAudio()->PlayMusicOnce("Resources/BGM/gameOver.ogg");
                     onceMusic = false;
                 }
                 if (game->GetModuleAudio()->DetectIfEnd() == false) { game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelOne(), (Module*)game->GetModuleTitleScreen(), 4); }
             }
-            else if (playerLifes >= 0 && onceTimeIsOver == 125) { game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelOne(), (Module*)game->GetModuleLevelOne(), 4); }
+            else if (playerLifes >= 0 && onceTimeIsOver == 125) {
+                if (onceDeathSpaguett) {
+                    onceDeathSpaguett = false;
+                    playerLifes--;
+                }
+                game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelOne(), (Module*)game->GetModuleLevelOne(), 4);
+            }
         }
 
         if (destroyed) {
             if (once) {
-                playerLifes--;
                 once = false;
                 SDL_Delay(1000); //THIS SHIT HAS TO LEAVE AS SOON AS WE CAN. IT IS NO LONGER ALLOWED TO EXIST. THIS IS A NO SDL_DELAY ZONE. EVEN A FUCKING SECOND GIVES ME INSANE ANXIETY. AND ALSO AIDS. NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE. Oh hi Marc, fancy seeing you here :^3 - Luce <3
                 game->GetModuleAudio()->PlayFx(dedSoundIndex);
@@ -166,14 +171,20 @@ UPDATE_STATUS ModulePlayer::Update()
                 physics.SetAxis(true, true);
             }
             currentAnimation = &ded;
-            if (position.y >= SCREEN_HEIGHT + currentAnimation->GetHeight() && playerLifes < 0) {
+            if (position.y >= SCREEN_HEIGHT + currentAnimation->GetHeight() && playerLifes == 0) {
                 if (onceMusic) {
                     game->GetModuleAudio()->PlayMusicOnce("Resources/BGM/gameOver.ogg");
                     onceMusic = false;
                 }
                 if (game->GetModuleAudio()->DetectIfEnd() == false) { game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelOne(), (Module*)game->GetModuleTitleScreen(), 4); }
             }
-            else if (position.y >= SCREEN_HEIGHT + currentAnimation->GetHeight() && playerLifes >= 0) { game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelOne(), (Module*)game->GetModuleLevelOne(), 4); }
+            else if (position.y >= SCREEN_HEIGHT + currentAnimation->GetHeight() && playerLifes > 0) {
+                if (onceDeathSpaguett) {
+                    onceDeathSpaguett = false;
+                    playerLifes--;
+                }
+                game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelOne(), (Module*)game->GetModuleLevelOne(), 4);
+            }
             physics.UpdatePhysics(position.x, position.y, mruaSpeed.x, mruaSpeed.y);
             collider->SetPos(position.x, position.y, ded.GetWidth(), ded.GetHeight());
 
@@ -218,7 +229,7 @@ UPDATE_STATUS ModulePlayer::PostUpdate() {
         game->GetModuleRender()->Blit(blueText, 0, 0, false, &timeOver, &timeOverAdapter);
         onceTimeIsOver++;
     }
-    else if (playerLifes < 0 && position.y >= SCREEN_HEIGHT + currentAnimation->GetHeight()) {
+    else if (playerLifes == 0 && position.y >= SCREEN_HEIGHT + currentAnimation->GetHeight()) {
         SDL_Rect gameOverAdapter = { (SCREEN_WIDTH / 2 + 150),backgroundAdapter.h + 75,150,17 };
         game->GetModuleRender()->Blit(blueText, 0, 0, false, &gameOver, &gameOverAdapter);
     }

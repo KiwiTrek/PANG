@@ -77,8 +77,9 @@ private:
     bool isTimeOver = false;
     uint onceTimeIsOver = 0;
     bool onceDeath = true;
-    bool once = true;
-    bool onceMusic = true;
+    bool onceDeathSpaguett = true;
+    bool once = true; // Given the QA work that i have been given here to avoid italian code (spaguetti code, chapuzadas) 12 bools are a direct insult to my being. - Abraham
+    bool onceMusic = true; // Use flags in the near future
     bool onceHurry0 = true;
     bool onceHurry1 = true;
     bool onceHurry2 = true;

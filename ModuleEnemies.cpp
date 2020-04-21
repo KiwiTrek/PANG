@@ -123,11 +123,7 @@ void ModuleEnemies::SpawnEnemy(const EnemySpawnpoint& info) {
 }
 
 bool ModuleEnemies::CheckForBalloons() {
-    for (uint i = 0; i < MAX_ENEMIES; ++i) {
-        if (enemies[i] != nullptr && enemies[i]->GetCollider()->GetType() == Collider::TYPE::BALLOON) {
-            return false;
-        }
-    }
+    for (uint i = 0; i < MAX_ENEMIES; ++i) { if (enemies[i] != nullptr && enemies[i]->GetCollider()->GetType() == Collider::TYPE::BALLOON) { return false; } }
     return true;
 }
 
@@ -141,22 +137,22 @@ void ModuleEnemies::OnCollision(Collider* c1, Collider* c2) {
                 switch (enemies[i]->GetEnemyType()) {
                 case ENEMY_TYPE::CHUNGUS_BALLOON: {
                     game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->bigBalloonExplosion, enemies[i]->GetPositionX(), enemies[i]->GetPositionY());
-                    game->GetModuleEnemies()->AddEnemy(ENEMY_TYPE::NOT_THAT_MEH_BALLOON, enemies[i]->GetPositionX(), enemies[i]->GetPositionY() - (enemies[i]->GetCurrentAnimation()->GetHeight() / 2));
-                    game->GetModuleEnemies()->AddEnemy(ENEMY_TYPE::NOT_THAT_MEH_BALLOON, enemies[i]->GetPositionX() + (enemies[i]->GetCurrentAnimation()->GetWidth() / 2), enemies[i]->GetPositionY() - (enemies[i]->GetCurrentAnimation()->GetHeight() / 2), true);
+                    game->GetModuleEnemies()->AddEnemy(ENEMY_TYPE::NOT_THAT_MEH_BALLOON, enemies[i]->GetPositionX(), enemies[i]->GetPositionY() + (enemies[i]->GetCurrentAnimation()->GetHeight() / 2));
+                    game->GetModuleEnemies()->AddEnemy(ENEMY_TYPE::NOT_THAT_MEH_BALLOON, enemies[i]->GetPositionX() + (enemies[i]->GetCurrentAnimation()->GetWidth() / 2), enemies[i]->GetPositionY() + (enemies[i]->GetCurrentAnimation()->GetHeight() / 2), true);
                     game->GetModulePlayer()->AddScore(50);
                     break;
                 }
                 case ENEMY_TYPE::NOT_THAT_MEH_BALLOON: {
                     game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->notThatMehBalloonExplosion, enemies[i]->GetPositionX(), enemies[i]->GetPositionY());
-                    game->GetModuleEnemies()->AddEnemy(ENEMY_TYPE::MEH_BALLOON, enemies[i]->GetPositionX(), enemies[i]->GetPositionY() - (enemies[i]->GetCurrentAnimation()->GetHeight() / 2));
-                    game->GetModuleEnemies()->AddEnemy(ENEMY_TYPE::MEH_BALLOON, enemies[i]->GetPositionX() + (enemies[i]->GetCurrentAnimation()->GetWidth() / 2), enemies[i]->GetPositionY() - (enemies[i]->GetCurrentAnimation()->GetHeight() / 2), true);
+                    game->GetModuleEnemies()->AddEnemy(ENEMY_TYPE::MEH_BALLOON, enemies[i]->GetPositionX(), enemies[i]->GetPositionY() + (enemies[i]->GetCurrentAnimation()->GetHeight() / 2));
+                    game->GetModuleEnemies()->AddEnemy(ENEMY_TYPE::MEH_BALLOON, enemies[i]->GetPositionX() + (enemies[i]->GetCurrentAnimation()->GetWidth() / 2), enemies[i]->GetPositionY() + (enemies[i]->GetCurrentAnimation()->GetHeight() / 2), true);
                     game->GetModulePlayer()->AddScore(100);
                     break;
                 }
                 case ENEMY_TYPE::MEH_BALLOON: {
                     game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->mehBalloonExplosion, enemies[i]->GetPositionX(), enemies[i]->GetPositionY());
-                    game->GetModuleEnemies()->AddEnemy(ENEMY_TYPE::SMOL_BALLOON, enemies[i]->GetPositionX(), enemies[i]->GetPositionY() - (enemies[i]->GetCurrentAnimation()->GetHeight() / 2));
-                    game->GetModuleEnemies()->AddEnemy(ENEMY_TYPE::SMOL_BALLOON, enemies[i]->GetPositionX() + (enemies[i]->GetCurrentAnimation()->GetWidth() / 2), enemies[i]->GetPositionY() - (enemies[i]->GetCurrentAnimation()->GetHeight() / 2), true);
+                    game->GetModuleEnemies()->AddEnemy(ENEMY_TYPE::SMOL_BALLOON, enemies[i]->GetPositionX(), enemies[i]->GetPositionY() + (enemies[i]->GetCurrentAnimation()->GetHeight() / 2));
+                    game->GetModuleEnemies()->AddEnemy(ENEMY_TYPE::SMOL_BALLOON, enemies[i]->GetPositionX() + (enemies[i]->GetCurrentAnimation()->GetWidth() / 2), enemies[i]->GetPositionY() + (enemies[i]->GetCurrentAnimation()->GetHeight() / 2), true);
                     game->GetModulePlayer()->AddScore(150);
                     break;
                 }
