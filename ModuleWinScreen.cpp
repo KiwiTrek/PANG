@@ -25,9 +25,8 @@ ModuleWinScreen::~ModuleWinScreen() {}
 // Load assets
 bool ModuleWinScreen::Start() {
     LOG("Loading background assets");
-
+	bonusScore = game->GetModulePlayer()->GetTimer() * 100;
     splashArt.Reset();
-
     splashArtTexture = game->GetModuleTextures()->Load("Resources/Sprites/FirstStageSplashArt.png");
     game->GetModuleAudio()->PlayMusicOnce("Resources/BGM/levelComplete.ogg");
 
@@ -45,11 +44,12 @@ UPDATE_STATUS ModuleWinScreen::Update() {
 UPDATE_STATUS ModuleWinScreen::PostUpdate() {
     // Draw everything --------------------------------------
     sprintf_s(stage, 10, "1stage");
-    /*game->GetModuleFonts()->BlitText(160, 111, game->GetModulePlayer()->GetFontIndex(), stage);
-    sprintf_s(timeBonus, 10, "time bonus:    %5d pts.", (game->GetModulePlayer()->GetTimer()));
-    game->GetModuleFonts()->BlitText(159, 135, game->GetModulePlayer()->GetFontIndex(), timeBonus);
-    sprintf_s(nextExtend, 10, "next extend:  %6d pts.", nextExtendNumber);
-    game->GetModuleFonts()->BlitText(152, 161, game->GetModulePlayer()->GetFontIndex(), nextExtend);*/
+	game->GetModuleFonts()->BlitText(170, 140, game->GetModulePlayer()->GetFontIndex(), stage);
+	sprintf_s(timeBonus, 25, "time bonus    %5d pts.", bonusScore);
+    game->GetModuleFonts()->BlitText(110, 160, game->GetModulePlayer()->GetFontIndex(), timeBonus);
+    sprintf_s(nextExtend, 25, "next extend   %5d pts.", nextExtendNumber);
+    game->GetModuleFonts()->BlitText(110, 175, game->GetModulePlayer()->GetFontIndex(), nextExtend);
+
     //Edit arguments of Blit
     SDL_Rect backgroundAdapter = { 0, 0, 384, 193 };
     SDL_Rect splashArtAdapter = { (SCREEN_WIDTH / 2 + 100),backgroundAdapter.h-100,200,95 };

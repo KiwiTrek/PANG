@@ -34,15 +34,12 @@ private:
     SDL_Texture* splashArtTexture = nullptr;
     Animation splashArt;
 
+	int bonusScore = 0;
+
     int nextExtendNumber = 20000;
     char stage[10] = { "\0" };
     char timeBonus[25] = { "\0" };
     char nextExtend[25] = { "\0" };
-    //char timeBonus[10] = { "\0" };
-    //char timeBonus[10] = { "\0" };
-    //char timeBonus[10] = { "\0" };
-    //char timeBonus[10] = { "\0" };
-    //char timeBonus[10] = { "\0" };
 };
 
 #endif

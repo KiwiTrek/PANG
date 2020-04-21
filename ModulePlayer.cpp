@@ -212,15 +212,18 @@ UPDATE_STATUS ModulePlayer::PostUpdate() {
              time = deltaTime;
              --timer;
          }
-         if (timer == 0 && onceHurry1 == true) {
+         if (timer == 50 && onceHurry1 == true) {
              game->GetModuleAudio()->PlayMusic("Resources/BGM/hurryUpLvl1.ogg");
              onceHurry1 = false;
          }
-         if (timer == 0 && onceHurry2 == true) {
+         if (timer == 20 && onceHurry2 == true) {
              game->GetModuleAudio()->PlayMusic("Resources/BGM/hurryUpLvl2.ogg");
              onceHurry2 = false;
          }
-         if (timer == 0) { destroyed = true; }
+         if (timer == 0) { 
+			 playerLifes--;
+			 destroyed = true;
+		 }
      }
     
     
