@@ -328,3 +328,4 @@ bool ModulePlayer::CheckIfDestroyed() const { return (destroyed || isTimeOver); 
 void ModulePlayer::AddScore(int _score) { score += _score; }
 int ModulePlayer::GetTimer() const { return timer; }
 void ModulePlayer::SetPlayerLives(int lives) { playerLifes = lives; }
+void ModulePlayer::SetScore(int _score) { score = _score; };

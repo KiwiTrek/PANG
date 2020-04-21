@@ -30,6 +30,7 @@ bool ModuleTitleScreen::Start() {
 
     titleScreenAnimation.Reset();
     game->GetModulePlayer()->SetPlayerLives(2);
+    game->GetModulePlayer()->SetScore(0);
 
     backgroundTexture = game->GetModuleTextures()->Load("Resources/Sprites/pangTitleCard.png");
     insertCoinTexture = game->GetModuleTextures()->Load("Resources/Sprites/insertCoin.png");

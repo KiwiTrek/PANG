@@ -33,6 +33,7 @@ public:
     void AddScore(int _score);
     int GetTimer() const;
     void SetPlayerLives(int lives);
+    void SetScore(int _score);
 
     bool Start() override;
     UPDATE_STATUS Update() override;
