@@ -104,6 +104,10 @@ In this project, we extracted its assets to recreate this game using C++ and the
 - Calibrated blit positioning & counters
 - Checked for memory leaks
 - Same bugs as 0.4.5
+- Basic shot:
+  - When spammed, can create particle errors.
+- Player:
+  - Sometimes collides with balls when dead
 
 #### 0.4.5
 - Basic shot:
