@@ -36,6 +36,7 @@ private:
 
 	int bonusScore = 0;
 
+    int counter = 0;
     int nextExtendNumber = 20000;
     char stage[10] = { "\0" };
     char timeBonus[25] = { "\0" };

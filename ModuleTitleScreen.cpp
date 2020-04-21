@@ -6,6 +6,7 @@
 #include "ModuleRender.h"
 #include "ModuleAudio.h"
 #include "ModuleInput.h"
+#include "ModulePlayer.h"
 #include "ModuleTransition.h"
 
 #include "SDL/include/SDL_scancode.h"
@@ -28,6 +29,7 @@ bool ModuleTitleScreen::Start() {
     switchOn = true;
 
     titleScreenAnimation.Reset();
+    game->GetModulePlayer()->SetPlayerLives(2);
 
     backgroundTexture = game->GetModuleTextures()->Load("Resources/Sprites/pangTitleCard.png");
     insertCoinTexture = game->GetModuleTextures()->Load("Resources/Sprites/insertCoin.png");

@@ -292,3 +292,4 @@ bool ModulePlayer::CheckIfGodMode() const { return godMode; };
 bool ModulePlayer::CheckIfDestroyed() const { return destroyed; };
 void ModulePlayer::AddScore(int _score) { score += _score; }
 int ModulePlayer::GetTimer() const { return timer; }
+void ModulePlayer::SetPlayerLives(int lives) { playerLifes = lives; }

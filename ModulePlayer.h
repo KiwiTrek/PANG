@@ -31,6 +31,7 @@ public:
     bool CheckIfDestroyed() const;
     void AddScore(int _score);
     int GetTimer() const;
+    void SetPlayerLives(int lives);
 
     bool Start() override;
     UPDATE_STATUS Update() override;
