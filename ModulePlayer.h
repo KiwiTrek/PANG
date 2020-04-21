@@ -73,6 +73,7 @@ private:
 
     // A flag to detect when the player has been destroyed
     bool destroyed = false;
+    bool onceDeath = true;
     bool once = true;
     bool onceMusic = true;
     bool onceHurry1 = true;

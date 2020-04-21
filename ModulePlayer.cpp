@@ -41,9 +41,6 @@ ModulePlayer::ModulePlayer(bool startEnabled) : Module(startEnabled) {
     timeOver = { 5,69,532,58 };
     ready = { 5,132,203,67 };
     life = { 154,44,15,15 };
-
-    mruaSpeed.x = 100;
-    mruaSpeed.y = -197;
 }
 ModulePlayer::~ModulePlayer() {}
 
@@ -55,6 +52,7 @@ bool ModulePlayer::Start() {
     onceHurry1 = true;
     onceHurry2 = true;
     godMode = false;
+    onceDeath = true;
 
     blueText = game->GetModuleTextures()->Load("Resources/Sprites/blueText.png");
     texture = game->GetModuleTextures()->Load("Resources/Sprites/player.png"); // arcade version
@@ -63,7 +61,9 @@ bool ModulePlayer::Start() {
 
     position.x = 177;
     position.y = 186 - idle.GetHeight();
-    physics.SetAxis(false, false);
+    mruaSpeed.x = 100;
+    mruaSpeed.y = -197;
+    physics.SetAxis(false, false); // physics
 
     collider = game->GetModuleCollisions()->AddCollider({ position.x, position.y, idle.GetWidth(), idle.GetHeight() }, Collider::TYPE::PLAYER, this); // adds a collider to the player
 
@@ -132,9 +132,7 @@ UPDATE_STATUS ModulePlayer::Update()
             game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelOne(), (Module*)game->GetModuleProjectSheet(), 90);
         }
         if (game->GetModuleInput()->GetKey(SDL_SCANCODE_F9) == KEY_DOWN) { game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelOne(), (Module*)game->GetModuleWinScreen(), 4); }
-        if (game->GetModuleInput()->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
-            timer = 25;
-        }
+        if (game->GetModuleInput()->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) { timer = 25; }
 
         if (destroyed) {
             if (once) {
@@ -142,7 +140,6 @@ UPDATE_STATUS ModulePlayer::Update()
                 if (timer != 0) { SDL_Delay(1000); }
                 game->GetModuleAudio()->PlayFx(dedSoundIndex);
                 if (timer != 0) {
-                    game->GetModuleCollisions()->AddCollider({ position.x, position.y, ded.GetWidth(), ded.GetHeight() }, Collider::TYPE::PLAYER, this);
                     game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->hitScreen, 0, 0);
                     physics.SetAxis(true, true);
                 }
@@ -151,28 +148,22 @@ UPDATE_STATUS ModulePlayer::Update()
             --playerLifes;
             if (position.y >= SCREEN_HEIGHT + currentAnimation->GetHeight() && playerLifes < 0) {
                 if (onceMusic) {
-
                     game->GetModuleAudio()->PlayMusicOnce("Resources/BGM/gameOver.ogg");
                     onceMusic = false;
                 }
-        
                 if (game->GetModuleAudio()->DetectIfEnd() == false) { game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelOne(), (Module*)game->GetModuleTitleScreen(), 4); }
             }
-            else if (position.y >= SCREEN_HEIGHT + currentAnimation->GetHeight() && playerLifes >= 0) {
-                game->GetModuleTransition()->Transition(this, this, 4);
-            }
+            else if (position.y >= SCREEN_HEIGHT + currentAnimation->GetHeight() && playerLifes >= 0) { game->GetModuleTransition()->Transition(this, this, 4); }
             else if (timer != 0) { physics.UpdatePhysics(position.x, position.y, mruaSpeed.x, mruaSpeed.y); }
-
             if (timer != 0) { collider->SetPos(position.x, position.y, ded.GetWidth(), ded.GetHeight()); }
         }
 
         currentAnimation->Update();
 
         if (game->GetModuleEnemies()->CheckForBalloons()) {
-            if (winCountdown == 100) { game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelOne(), (Module*)game->GetModuleWinScreen(), 4); }
+            if (winCountdown == 75) { game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelOne(), (Module*)game->GetModuleWinScreen(), 4); }
             else { ++winCountdown; }
         }
-        
     }
     return UPDATE_STATUS::UPDATE_CONTINUE;
 }
@@ -221,9 +212,8 @@ UPDATE_STATUS ModulePlayer::PostUpdate() {
              onceHurry2 = false;
          }
          if (timer == 0) { 
-			 playerLifes--;
-			 destroyed = true;
-		 }
+             destroyed = true;
+         }
      }
     
     
@@ -234,14 +224,20 @@ UPDATE_STATUS ModulePlayer::PostUpdate() {
 void ModulePlayer::OnCollision(Collider* c1, Collider* c2) {
     short int counter = 0;
     if (!godMode) {
-        if (c1 == collider && destroyed == false && c2->GetType() == Collider::TYPE::WALL) {
+        if (c1 == collider && c2->GetType() == Collider::TYPE::WALL) {
             if (position.x < (c2->GetRect().x + c2->GetRect().w) && position.x > c2->GetRect().x) { 
                 position.x = (c2->GetRect().x + c2->GetRect().w);
-                if (destroyed) { ChangeInvert(); }
+                if (destroyed) {
+                    mruaSpeed.x = -mruaSpeed.x * 2; //slowly dying inside
+                    ChangeInvert();
+                }
             }
             else if ((position.x + currentAnimation->GetWidth()) > c2->GetRect().x&& position.x < c2->GetRect().x) { 
                 position.x = (c2->GetRect().x - currentAnimation->GetWidth()); 
-                if (destroyed) { ChangeInvert(); }
+                if (destroyed) {
+                    mruaSpeed.x = -mruaSpeed.x / 2; //slowly dying inside
+                    ChangeInvert();
+                }
             }
             //if (position.y < (c2->GetRect().y + c2->GetRect().h) && position.y > c2->GetRect().y) {
             //    position.y = (c2->GetRect().y + c2->GetRect().h);
@@ -267,9 +263,9 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2) {
             if ((position.x + currentAnimation->GetWidth()) > c2->GetRect().x&& position.x < c2->GetRect().x) {
                 mruaSpeed.x = -50;
             }
-            if (c1 == collider && c2->GetType() == Collider::TYPE::FLOOR) {
+            if (c1 == collider && onceDeath && c2->GetType() == Collider::TYPE::FLOOR) {
                mruaSpeed.y = -145;
-               godMode = true;
+               onceDeath = false;
             }
         }
     }
