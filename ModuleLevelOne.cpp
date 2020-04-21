@@ -44,7 +44,7 @@ bool ModuleLevelOne::Start() {
     game->GetModuleCollisions()->AddCollider({ 0, -93, 384, 100 }, Collider::TYPE::FLOOR); // {0,0,384,7} TOP
     game->GetModuleCollisions()->AddCollider({ 376, 0, 100, 193 }, Collider::TYPE::WALL); // {376,0,8,193} RIGHT
 
-    game->GetModuleEnemies()->AddEnemy(ENEMY_TYPE::CHUNGUS_BALLOON, 177, 36);
+    game->GetModuleEnemies()->AddEnemy(ENEMY_TYPE::CHUNGUS_BALLOON, 36, 16, true);
     
     game->GetModulePlayer()->Enable();
     game->GetModuleEnemies()->Enable(); 

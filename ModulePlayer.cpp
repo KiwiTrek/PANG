@@ -42,15 +42,18 @@ ModulePlayer::ModulePlayer(bool startEnabled) : Module(startEnabled) {
     ready = { 5,132,203,67 };
     life = { 154,44,15,15 };
 
-	
+    
 }
 ModulePlayer::~ModulePlayer() {}
 
 bool ModulePlayer::Start() {
     LOG("Loading player textures");
     destroyed = false;
+    isTimeOver = false;
+    onceTimeIsOver = 0;
     once = true;
     onceMusic = true;
+    onceHurry0 = true;
     onceHurry1 = true;
     onceHurry2 = true;
     godMode = false;
@@ -61,7 +64,7 @@ bool ModulePlayer::Start() {
     shotSoundIndex = game->GetModuleAudio()->LoadFx("Resources/SFX/shotClaw.wav");
     dedSoundIndex = game->GetModuleAudio()->LoadFx("Resources/SFX/dead.wav");
 
-    position.x = 177;
+    position.x = 163;
     position.y = 186 - idle.GetHeight();
     mruaSpeed.x = 100;
     mruaSpeed.y = -197;
@@ -84,7 +87,7 @@ UPDATE_STATUS ModulePlayer::Update()
 
     if (game->GetModuleLevelOne()->CheckIfStarted()) {
         //Reset the currentAnimation back to idle before updating the logic
-        if (!destroyed) {
+        if (!destroyed && !isTimeOver) {
             if (game->GetModuleInput()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && game->GetModuleInput()->GetKey(SDL_SCANCODE_A) != KEY_REPEAT && (returnToIdle == 0)) {
                 currentAnimation = &moving;
                 if (GetInvertValue()) { ChangeInvert(); }
@@ -136,38 +139,53 @@ UPDATE_STATUS ModulePlayer::Update()
         if (game->GetModuleInput()->GetKey(SDL_SCANCODE_F9) == KEY_DOWN) { game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelOne(), (Module*)game->GetModuleWinScreen(), 4); }
         if (game->GetModuleInput()->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) { timer = 2; }
 
+        if (isTimeOver) {
+            if (once) {
+                playerLifes--;
+                once = false;
+                game->GetModuleAudio()->PlayFx(dedSoundIndex);
+            }
+            if (playerLifes < 0) {
+                if (onceMusic) {
+                    game->GetModuleAudio()->PlayMusicOnce("Resources/BGM/gameOver.ogg");
+                    onceMusic = false;
+                }
+                if (game->GetModuleAudio()->DetectIfEnd() == false) { game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelOne(), (Module*)game->GetModuleTitleScreen(), 4); }
+            }
+            else if (playerLifes >= 0 && onceTimeIsOver == 200) { game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelOne(), (Module*)game->GetModuleLevelOne(), 4); }
+        }
+
         if (destroyed) {
             if (once) {
-				playerLifes--;
+                playerLifes--;
                 once = false;
-                if (timer != 0) { SDL_Delay(1000); } //THIS SHIT HAS TO LEAVE AS SOON AS WE CAN. IT IS NO LONGER ALLOWED TO EXIST. THIS IS A NO SDL_DELAY ZONE. EVEN A FUCKING SECOND GIVES ME INSANE ANXIETY. AND ALSO AIDS. NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE. Oh hi Marc, fancy seeing you here :^3 - Luce <3
+                /*if (timer != 0) {*/ SDL_Delay(1000); //} THIS SHIT HAS TO LEAVE AS SOON AS WE CAN. IT IS NO LONGER ALLOWED TO EXIST. THIS IS A NO SDL_DELAY ZONE. EVEN A FUCKING SECOND GIVES ME INSANE ANXIETY. AND ALSO AIDS. NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE. Oh hi Marc, fancy seeing you here :^3 - Luce <3
                 game->GetModuleAudio()->PlayFx(dedSoundIndex);
-                if (timer != 0) {
+                //if (timer != 0) {
                     game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->hitScreen, 0, 0);
                     physics.SetAxis(true, true);
-                }
+                //}
             }
-            if (timer != 0) { currentAnimation = &ded; }
+            /*if (timer != 0) {*/ currentAnimation = &ded; //}
             if (position.y >= SCREEN_HEIGHT + currentAnimation->GetHeight() && playerLifes < 0) {
-				if (onceMusic) {
+                if (onceMusic) {
                     game->GetModuleAudio()->PlayMusicOnce("Resources/BGM/gameOver.ogg");
                     onceMusic = false;
                 }
                 if (game->GetModuleAudio()->DetectIfEnd() == false) { game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelOne(), (Module*)game->GetModuleTitleScreen(), 4); }
             }
             else if (position.y >= SCREEN_HEIGHT + currentAnimation->GetHeight() && playerLifes >= 0) { game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelOne(), (Module*)game->GetModuleLevelOne(), 4); }
-            else if (timer != 0) { physics.UpdatePhysics(position.x, position.y, mruaSpeed.x, mruaSpeed.y); }
-            if (timer != 0) { collider->SetPos(position.x, position.y, ded.GetWidth(), ded.GetHeight()); }
+            /*else if (timer != 0) {*/ physics.UpdatePhysics(position.x, position.y, mruaSpeed.x, mruaSpeed.y); //}
+            /*if (timer != 0) {*/ collider->SetPos(position.x, position.y, ded.GetWidth(), ded.GetHeight()); //}
 
-			deltaTime = 1.0f / 60.0f;
-			if (time <= 10) { time += deltaTime; }
-			else {
-				time = deltaTime;
-				--timer;
-				playerLifes = 2;
-				game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelOne(), (Module*)game->GetModuleLevelOne(), 4);
-			}
-			
+            //deltaTime = 1.0f / 60.0f;
+            //if (time <= 10) { time += deltaTime; }
+            //else {
+            //    time = deltaTime;
+            //    --timer;
+            //    playerLifes = 2;
+            //    game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelOne(), (Module*)game->GetModuleLevelOne(), 4);
+            //}
         }
 
         currentAnimation->Update();
@@ -192,41 +210,43 @@ UPDATE_STATUS ModulePlayer::PostUpdate() {
     }
 
     game->GetModuleRender()->Blit(texture, position.x, position.y, GetInvertValue(), &currentAnimation->GetCurrentFrame());
-    if (playerLifes < 0) {
-        SDL_Rect backgroundAdapter = { 0, 0, 384, 193 };
-        if (timer == 0) {
-            game->GetModuleAudio()->PlayMusic("Resources/BGM/noMusic.ogg");
-            SDL_Rect timeOverAdapter = { (SCREEN_WIDTH / 2 + 150),backgroundAdapter.h + 75,150,17 };
-            game->GetModuleRender()->Blit(blueText, 0, 0, false, &timeOver, &timeOverAdapter);
-        }
-        else if (position.y >= SCREEN_HEIGHT + currentAnimation->GetHeight()) {
-            SDL_Rect gameOverAdapter = { (SCREEN_WIDTH / 2 + 150),backgroundAdapter.h + 75,150,17 };
-            game->GetModuleRender()->Blit(blueText, 0, 0, false, &gameOver, &gameOverAdapter);
-        }
+
+    SDL_Rect backgroundAdapter = { 0, 0, 384, 193 };
+    if (isTimeOver) {
+        SDL_Rect timeOverAdapter = { (SCREEN_WIDTH / 2 + 150),backgroundAdapter.h + 75,150,17 };
+        game->GetModuleRender()->Blit(blueText, 0, 0, false, &timeOver, &timeOverAdapter);
+        onceTimeIsOver++;
+    }
+    else if (playerLifes < 0 && position.y >= SCREEN_HEIGHT + currentAnimation->GetHeight()) {
+        SDL_Rect gameOverAdapter = { (SCREEN_WIDTH / 2 + 150),backgroundAdapter.h + 75,150,17 };
+        game->GetModuleRender()->Blit(blueText, 0, 0, false, &gameOver, &gameOverAdapter);
     }
 
     //Timer
     sprintf_s(timerText, 10, "time:%03d", timer);
-    game->GetModuleFonts()->BlitText(SCREEN_WIDTH - 130, 10, timerFont, timerText);
-    
-     if (!destroyed) {
+    game->GetModuleFonts()->BlitText(SCREEN_WIDTH - 129, 8, timerFont, timerText);
+
+     if (!destroyed && !isTimeOver) {
          if (time <= 1) { time += deltaTime; }
          else {
              time = deltaTime;
              --timer;
          }
-         if (timer == 0) { destroyed = true; }
+
+         if (timer <= 0) { isTimeOver = true; }
+
          if (timer == 20 && onceHurry2 == true) {
              onceHurry1 = false;
-             game->GetModuleAudio()->PlayMusic("Resources/BGM/hurryUpLvl2.ogg");
              onceHurry2 = false;
+             game->GetModuleAudio()->PlayMusic("Resources/BGM/hurryUpLvl2.ogg");
          }
+
          if (timer <= 50 && onceHurry1 == true) {
-             if (once) {
-                 once = false;
+             if (onceHurry0) {
+                 onceHurry0 = false;
                  game->GetModuleAudio()->PlayMusicOnce("Resources/BGM/introHurryUpLvl1.ogg");
              }
-             if (!destroyed) { game->GetModuleAudio()->ChangeAtEnd("Resources/BGM/hurryUpLvl1.ogg"); }
+             game->GetModuleAudio()->ChangeAtEnd("Resources/BGM/hurryUpLvl1.ogg");
          }
      }
 
@@ -240,25 +260,19 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2) {
             if (position.x < (c2->GetRect().x + c2->GetRect().w) && position.x > c2->GetRect().x) { 
                 position.x = (c2->GetRect().x + c2->GetRect().w);
                 if (destroyed) {
-                    mruaSpeed.x = -mruaSpeed.x * 2; //slowly dying inside
+                    mruaSpeed.x = -mruaSpeed.x * 2;
                     ChangeInvert();
                 }
             }
             else if ((position.x + currentAnimation->GetWidth()) > c2->GetRect().x&& position.x < c2->GetRect().x) { 
                 position.x = (c2->GetRect().x - currentAnimation->GetWidth()); 
                 if (destroyed) {
-                    mruaSpeed.x = -mruaSpeed.x / 2; //slowly dying inside
+                    mruaSpeed.x = -mruaSpeed.x / 2;
                     ChangeInvert();
                 }
             }
-            //if (position.y < (c2->GetRect().y + c2->GetRect().h) && position.y > c2->GetRect().y) {
-            //    position.y = (c2->GetRect().y + c2->GetRect().h);
-            //}
-            //else if ((position.y + currentAnimation->GetHeight()) > c2->GetRect().y&& position.y < c2->GetRect().y) {
-            //    position.y = (c2->GetRect().y - currentAnimation->GetHeight());
-            //}
         }
-        else if (c1 == collider && destroyed == false && c2->GetType() == Collider::TYPE::STAIRS) {
+        else if (c1 == collider && !destroyed && !isTimeOver && c2->GetType() == Collider::TYPE::STAIRS) {
             //if ((c2->GetRect().y + c2->GetRect().h) >= (position.y + currentAnimation->GetHeight())) { // (bottom of stairs) should be able to move both x and y
 
             //}
@@ -269,8 +283,8 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2) {
 
             //}
         }
-        else if (c1 == collider && destroyed == false && c2->GetType() == Collider::TYPE::BALLOON) { destroyed = true; }
-        else if (c1 == collider && destroyed == false && c2->GetType() == Collider::TYPE::ANIMAL) { /*destroyed = true;*/ }
+        else if (c1 == collider && !destroyed && !isTimeOver && c2->GetType() == Collider::TYPE::BALLOON) { destroyed = true; }
+        else if (c1 == collider && !destroyed && !isTimeOver && c2->GetType() == Collider::TYPE::ANIMAL) { /*destroyed = true;*/ }
         else if (destroyed) {
             if ((position.x + currentAnimation->GetWidth()) > c2->GetRect().x&& position.x < c2->GetRect().x) {
                 mruaSpeed.x = -50;
@@ -298,7 +312,7 @@ int ModulePlayer::GetFontIndex() const { return normalFont; }
 int ModulePlayer::GetTimerFontIndex() const { return timerFont; }
 void ModulePlayer::SetIfShot(bool _shot) { shot = _shot; }
 bool ModulePlayer::CheckIfGodMode() const { return godMode; };
-bool ModulePlayer::CheckIfDestroyed() const { return destroyed; };
+bool ModulePlayer::CheckIfDestroyed() const { return (destroyed || isTimeOver); };
 void ModulePlayer::AddScore(int _score) { score += _score; }
 int ModulePlayer::GetTimer() const { return timer; }
 void ModulePlayer::SetPlayerLives(int lives) { playerLifes = lives; }

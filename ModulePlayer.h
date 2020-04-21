@@ -74,9 +74,12 @@ private:
 
     // A flag to detect when the player has been destroyed
     bool destroyed = false;
+    bool isTimeOver = false;
+    uint onceTimeIsOver = 0;
     bool onceDeath = true;
     bool once = true;
     bool onceMusic = true;
+    bool onceHurry0 = true;
     bool onceHurry1 = true;
     bool onceHurry2 = true;
 
