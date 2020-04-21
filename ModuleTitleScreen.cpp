@@ -67,7 +67,7 @@ UPDATE_STATUS ModuleTitleScreen::PostUpdate() {
 
     if (titleScreenAnimation.HasFinished()) {
         game->GetModuleRender()->Blit(backgroundTexture, 0, 0, false, nullptr, &backgroundRect);
-        if (switchOn) { game->GetModuleRender()->Blit(insertCoinTexture, ((SCREEN_WIDTH / 2) - (insertCoin_w / 2)), 194, false); }
+        if (switchOn) { game->GetModuleRender()->Blit(insertCoinTexture, ((SCREEN_WIDTH / 2) - (insertCoin_w / 2) - 5), 192, false); }
     }
     else {game->GetModuleRender()->Blit(titleScreenAnimationTexture, 0, 0, false, &titleScreenAnimation.GetCurrentFrame(), &backgroundRect);}
 

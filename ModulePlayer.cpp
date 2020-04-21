@@ -134,7 +134,7 @@ UPDATE_STATUS ModulePlayer::Update()
             game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelOne(), (Module*)game->GetModuleProjectSheet(), 90);
         }
         if (game->GetModuleInput()->GetKey(SDL_SCANCODE_F9) == KEY_DOWN) { game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelOne(), (Module*)game->GetModuleWinScreen(), 4); }
-        if (game->GetModuleInput()->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) { timer = 25; }
+        if (game->GetModuleInput()->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) { timer = 2; }
 
         if (destroyed) {
             if (once) {
@@ -181,13 +181,13 @@ UPDATE_STATUS ModulePlayer::Update()
 }
 
 UPDATE_STATUS ModulePlayer::PostUpdate() {
-    sprintf_s(scoreText, 10, "%05d", score);
+    sprintf_s(scoreText, 10, "%5d", score);
     game->GetModuleFonts()->BlitText(64, 202, normalFont, scoreText);
     sprintf_s(playerText, 10, "player-1");
     game->GetModuleFonts()->BlitText(16, 194, normalFont, playerText);
 
     for (int i = playerLifes; i > 0; i--) {
-        SDL_Rect lifeAdapter = { i * 45,SCREEN_HEIGHT*3-45,15,15 };
+        SDL_Rect lifeAdapter = { i * 50,SCREEN_HEIGHT*3-50,16,16 };
         game->GetModuleRender()->Blit(texture, 0, 0, false, &life, &lifeAdapter);
     }
 
@@ -215,20 +215,20 @@ UPDATE_STATUS ModulePlayer::PostUpdate() {
              time = deltaTime;
              --timer;
          }
-         if (timer == 50 && onceHurry1 == true) {
-             game->GetModuleAudio()->PlayMusic("Resources/BGM/hurryUpLvl1.ogg");
-             onceHurry1 = false;
-         }
+         if (timer == 0) { destroyed = true; }
          if (timer == 20 && onceHurry2 == true) {
+             onceHurry1 = false;
              game->GetModuleAudio()->PlayMusic("Resources/BGM/hurryUpLvl2.ogg");
              onceHurry2 = false;
          }
-         if (timer == 0) { 
-             destroyed = true;
+         if (timer <= 50 && onceHurry1 == true) {
+             if (once) {
+                 once = false;
+                 game->GetModuleAudio()->PlayMusicOnce("Resources/BGM/introHurryUpLvl1.ogg");
+             }
+             if (!destroyed) { game->GetModuleAudio()->ChangeAtEnd("Resources/BGM/hurryUpLvl1.ogg"); }
          }
      }
-    
-    
 
     return UPDATE_STATUS::UPDATE_CONTINUE; 
 }
