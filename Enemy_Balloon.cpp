@@ -10,7 +10,7 @@
 Enemy_Balloon::Enemy_Balloon(int x, int y, ENEMY_TYPE _type, bool _isMovingRight) : Enemy(x, y, _type, _isMovingRight) {
     if (GetEnemyType() == ENEMY_TYPE::CHUNGUS_BALLOON ) {
         idle.PushBack({ 1,6,48,40 });
-        collider = game->GetModuleCollisions()->AddCollider({ 8,6,32,40 }, Collider::TYPE::BALLOON, (Module*)game->GetModuleEnemies());
+        collider = game->GetModuleCollisions()->AddCollider({ 1,6,48,40 }, Collider::TYPE::BALLOON, (Module*)game->GetModuleEnemies());
     }
     if (GetEnemyType() == ENEMY_TYPE::NOT_THAT_MEH_BALLOON) {
         idle.PushBack({ 52,13,33,27 });
@@ -27,7 +27,7 @@ Enemy_Balloon::Enemy_Balloon(int x, int y, ENEMY_TYPE _type, bool _isMovingRight
     currentAnim = &idle;
     if (isMovingRight) { speed.x = 119.5f; } // needs changing
     else { speed.x = -59.25f; }
-    speed.y = 0.0f;
+    speed.y = -40.0f;
     physics.SetAxis(true, true);
 }
 
@@ -56,7 +56,7 @@ void Enemy_Balloon::OnCollision(Collider* c2) {
         }
     }
     else if (c2->GetType() == Collider::TYPE::FLOOR) {
-        if (position.y < (c2->GetRect().y + c2->GetRect().h) && position.y > c2->GetRect().y && position.y < 50) { position.y = (c2->GetRect().h); }
+        if (position.y < (c2->GetRect().y + c2->GetRect().h) && position.y > c2->GetRect().y && position.y < 50) { position.y = (c2->GetRect().h - 93 ); }
         else if ((position.y + currentAnim->GetHeight()) > c2->GetRect().y && position.y < c2->GetRect().y && position.y > 50) {
             position.y = (c2->GetRect().y - currentAnim->GetHeight());
             if (GetEnemyType() == CHUNGUS_BALLOON) { speed.y = (-375); }

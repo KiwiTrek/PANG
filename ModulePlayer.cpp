@@ -143,6 +143,7 @@ UPDATE_STATUS ModulePlayer::Update()
             if (once) {
                 playerLifes--;
                 once = false;
+                game->GetModuleAudio()->PlayMusicOnce("Resources/BGM/noMusic.ogg");
                 game->GetModuleAudio()->PlayFx(dedSoundIndex);
             }
             if (playerLifes < 0) {
@@ -152,21 +153,19 @@ UPDATE_STATUS ModulePlayer::Update()
                 }
                 if (game->GetModuleAudio()->DetectIfEnd() == false) { game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelOne(), (Module*)game->GetModuleTitleScreen(), 4); }
             }
-            else if (playerLifes >= 0 && onceTimeIsOver == 200) { game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelOne(), (Module*)game->GetModuleLevelOne(), 4); }
+            else if (playerLifes >= 0 && onceTimeIsOver == 125) { game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelOne(), (Module*)game->GetModuleLevelOne(), 4); }
         }
 
         if (destroyed) {
             if (once) {
                 playerLifes--;
                 once = false;
-                /*if (timer != 0) {*/ SDL_Delay(1000); //} THIS SHIT HAS TO LEAVE AS SOON AS WE CAN. IT IS NO LONGER ALLOWED TO EXIST. THIS IS A NO SDL_DELAY ZONE. EVEN A FUCKING SECOND GIVES ME INSANE ANXIETY. AND ALSO AIDS. NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE. Oh hi Marc, fancy seeing you here :^3 - Luce <3
+                SDL_Delay(1000); //THIS SHIT HAS TO LEAVE AS SOON AS WE CAN. IT IS NO LONGER ALLOWED TO EXIST. THIS IS A NO SDL_DELAY ZONE. EVEN A FUCKING SECOND GIVES ME INSANE ANXIETY. AND ALSO AIDS. NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE. Oh hi Marc, fancy seeing you here :^3 - Luce <3
                 game->GetModuleAudio()->PlayFx(dedSoundIndex);
-                //if (timer != 0) {
-                    game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->hitScreen, 0, 0);
-                    physics.SetAxis(true, true);
-                //}
+                game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->hitScreen, 0, 0);
+                physics.SetAxis(true, true);
             }
-            /*if (timer != 0) {*/ currentAnimation = &ded; //}
+            currentAnimation = &ded;
             if (position.y >= SCREEN_HEIGHT + currentAnimation->GetHeight() && playerLifes < 0) {
                 if (onceMusic) {
                     game->GetModuleAudio()->PlayMusicOnce("Resources/BGM/gameOver.ogg");
@@ -175,9 +174,11 @@ UPDATE_STATUS ModulePlayer::Update()
                 if (game->GetModuleAudio()->DetectIfEnd() == false) { game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelOne(), (Module*)game->GetModuleTitleScreen(), 4); }
             }
             else if (position.y >= SCREEN_HEIGHT + currentAnimation->GetHeight() && playerLifes >= 0) { game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelOne(), (Module*)game->GetModuleLevelOne(), 4); }
-            /*else if (timer != 0) {*/ physics.UpdatePhysics(position.x, position.y, mruaSpeed.x, mruaSpeed.y); //}
-            /*if (timer != 0) {*/ collider->SetPos(position.x, position.y, ded.GetWidth(), ded.GetHeight()); //}
+            physics.UpdatePhysics(position.x, position.y, mruaSpeed.x, mruaSpeed.y);
+            collider->SetPos(position.x, position.y, ded.GetWidth(), ded.GetHeight());
 
+            //Unknown Code By Luce
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             //deltaTime = 1.0f / 60.0f;
             //if (time <= 10) { time += deltaTime; }
             //else {

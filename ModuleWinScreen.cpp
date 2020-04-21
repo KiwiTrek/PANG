@@ -39,7 +39,7 @@ bool ModuleWinScreen::Start() {
 
 UPDATE_STATUS ModuleWinScreen::Update() {
     splashArt.Update();
-//    game->GetModuleAudio()->ChangeModuleAtEnd("Resources/BGM/noMusic.ogg");
+    game->GetModuleAudio()->ChangeModuleAtEnd("Resources/BGM/noMusic.ogg");
 
     return UPDATE_STATUS::UPDATE_CONTINUE;
 }
