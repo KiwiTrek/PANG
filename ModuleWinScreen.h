@@ -35,6 +35,7 @@ private:
     Animation splashArt;
 
 	int bonusScore = 0;
+	int normalFont2 = -1;
 
     int counter = 0;
     int nextExtendNumber = 20000;

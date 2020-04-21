@@ -31,6 +31,8 @@ bool ModuleWinScreen::Start() {
     splashArt.Reset();
     splashArtTexture = game->GetModuleTextures()->Load("Resources/Sprites/FirstStageSplashArt.png");
     game->GetModuleAudio()->PlayMusicOnce("Resources/BGM/levelComplete.ogg");
+	normalFont2 = game->GetModuleFonts()->Load("Resources/Sprites/Font.png", "a ',.0123456789:bcdefghijklmnopqrstuvwxyz-", 6);
+
 
     return true;
 }
@@ -46,15 +48,15 @@ UPDATE_STATUS ModuleWinScreen::Update() {
 UPDATE_STATUS ModuleWinScreen::PostUpdate() {
     // Draw everything --------------------------------------
     ++counter;
-    if (counter >= 40) {
+    if (counter >= 1) {
         sprintf_s(stage, 10, "1stage");
-        game->GetModuleFonts()->BlitText(170, 140, game->GetModulePlayer()->GetFontIndex(), stage);
+        game->GetModuleFonts()->BlitText(170, 140, normalFont2, stage);
         sprintf_s(timeBonus, 25, "time bonus    %5d pts.", bonusScore);
-        game->GetModuleFonts()->BlitText(110, 160, game->GetModulePlayer()->GetFontIndex(), timeBonus);
+        game->GetModuleFonts()->BlitText(110, 160, normalFont2, timeBonus);
     }
-    if (counter >= 90) {
+    if (counter >= 51) {
         sprintf_s(nextExtend, 25, "next extend   %5d pts.", nextExtendNumber);
-        game->GetModuleFonts()->BlitText(110, 175, game->GetModulePlayer()->GetFontIndex(), nextExtend);
+        game->GetModuleFonts()->BlitText(110, 175, normalFont2, nextExtend);
     }
 
     //Edit arguments of Blit
@@ -67,5 +69,6 @@ UPDATE_STATUS ModuleWinScreen::PostUpdate() {
 
 bool ModuleWinScreen::CleanUp() {
     game->GetModuleTextures()->Unload(splashArtTexture);
+	game->GetModuleFonts()->Unload(normalFont2);
     return true;
 }

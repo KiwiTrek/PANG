@@ -84,6 +84,8 @@ bool ModuleLevelOne::CleanUp() {
     game->GetModuleTextures()->Unload(backgroundTexture);
     game->GetModuleTextures()->Unload(game->GetModulePlayer()->GetTexture());
     game->GetModuleTextures()->Unload(game->GetModulePlayer()->GetBlueTextTexture());
+	game->GetModuleFonts()->Unload(game->GetModulePlayer()->GetFontIndex());
+	game->GetModuleFonts()->Unload(game->GetModulePlayer()->GetTimerFontIndex());
     game->GetModuleAudio()->UnloadFx(game->GetModulePlayer()->GetShotSoundIndex());
     game->GetModuleAudio()->UnloadFx(game->GetModulePlayer()->GetDedSoundIndex());
     game->GetModuleAudio()->PlayMusicOnce("Resources/BGM/noMusic.ogg");

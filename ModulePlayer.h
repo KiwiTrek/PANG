@@ -26,6 +26,7 @@ public:
     uint GetDedSoundIndex() const;
     void SetDedSoundIndex(uint _dedSoundIndex);
     int GetFontIndex()const;
+	int GetTimerFontIndex()const;
     void SetIfShot(bool _shot);
     bool CheckIfGodMode() const;
     bool CheckIfDestroyed() const;

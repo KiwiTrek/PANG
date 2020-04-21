@@ -140,7 +140,7 @@ UPDATE_STATUS ModulePlayer::Update()
             if (once) {
 				playerLifes--;
                 once = false;
-                if (timer != 0) { SDL_Delay(1000); }
+                if (timer != 0) { SDL_Delay(1000); } //THIS SHIT HAS TO LEAVE AS SOON AS WE CAN. IT IS NO LONGER ALLOWED TO EXIST. THIS IS A NO SDL_DELAY ZONE. EVEN A FUCKING SECOND GIVES ME INSANE ANXIETY. AND ALSO AIDS. NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE. Oh hi Marc, fancy seeing you here :^3 - Luce <3
                 game->GetModuleAudio()->PlayFx(dedSoundIndex);
                 if (timer != 0) {
                     game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->hitScreen, 0, 0);
@@ -155,7 +155,7 @@ UPDATE_STATUS ModulePlayer::Update()
                 }
                 if (game->GetModuleAudio()->DetectIfEnd() == false) { game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelOne(), (Module*)game->GetModuleTitleScreen(), 4); }
             }
-            else if (position.y >= SCREEN_HEIGHT + currentAnimation->GetHeight() && playerLifes >= 0) { game->GetModuleTransition()->Transition(this, this, 4); }
+            else if (position.y >= SCREEN_HEIGHT + currentAnimation->GetHeight() && playerLifes >= 0) { game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelOne(), (Module*)game->GetModuleLevelOne(), 4); }
             else if (timer != 0) { physics.UpdatePhysics(position.x, position.y, mruaSpeed.x, mruaSpeed.y); }
             if (timer != 0) { collider->SetPos(position.x, position.y, ded.GetWidth(), ded.GetHeight()); }
 
@@ -164,9 +164,8 @@ UPDATE_STATUS ModulePlayer::Update()
 			else {
 				time = deltaTime;
 				--timer;
-				game->GetModuleLevelOne()->Disable();
 				playerLifes = 2;
-				game->GetModuleLevelOne()->Enable();
+				game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelOne(), (Module*)game->GetModuleLevelOne(), 4);
 			}
 			
         }
@@ -296,6 +295,7 @@ void ModulePlayer::SetShotSoundIndex(uint _shotSoundIndex) { shotSoundIndex = _s
 uint ModulePlayer::GetDedSoundIndex() const { return shotSoundIndex; }
 void ModulePlayer::SetDedSoundIndex(uint _dedSoundIndex) { dedSoundIndex = _dedSoundIndex; }
 int ModulePlayer::GetFontIndex() const { return normalFont; }
+int ModulePlayer::GetTimerFontIndex() const { return timerFont; }
 void ModulePlayer::SetIfShot(bool _shot) { shot = _shot; }
 bool ModulePlayer::CheckIfGodMode() const { return godMode; };
 bool ModulePlayer::CheckIfDestroyed() const { return destroyed; };
