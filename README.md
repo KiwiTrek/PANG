@@ -1,23 +1,51 @@
 # Pang
 
+## Page Link: https://github.com/WillyTrek19/PANG
+
 Recreation of the 1989 classic from arcades by Bruhmentium INC:
  - Guillem Álava (@WillyTrek19)
  - Sergi Colomer (@Lladruc37)
  - Arnau Lucena (@Theran1)
  - Abraham Díaz (@TitoLuce)
+ 
+## Description
+Pang (also known as Buster Bros. in the North American release and Pomping World in the Japanese) is a videogame created in 1989 by Mitchell Corporation that consists in two players cooperating in destroying various bubbles bouncing around the screen.
 
-<iframe width="560" height="315" src="https://www.youtube.com/watch?v=UyhP6uLk9Fg">
-  </iframe>
+In this project, we extracted its assets to recreate this game using C++ and the SDL library.
 
-## How to install
- - Download the files
- - Execute .exe (Inside Game Folder)
- - Done!
-
-#### Check for more info at the [wiki](https://github.com/WillyTrek19/PANG/wiki)
+## How to play (Controls)
+### Main controls
+- In title screen, press SPACE to enter the game.
+#### Player movement
+- WASD:
+  - A: Move Left
+  - D: Move Right
+- Q: Shot the gun
+#### Debug Controls
+- @Initial Screen
+  - F8: Jump to Lvl 1
+  - F9: Jump to win screen
+- Level 1
+  - F1: Show hitboxes
+  - F5: GodMode (unables collisions & disables claw sound (for the sake of your ears))
+  - F7: Kills the player
+  - F8: Returns to initial screen slide
+  - F9: Automatically win
+  - F10: Reduces timer to 2 seconds
 
 ## Changelog
-### Current version: 0.4.5
+### Current version: 0.5
+#### 0.5:
+- Added Module:
+  - Fonts
+- Level 1 and winscreen now have a simple UI
+- Created time support
+- Created point system
+- Created life system
+- Player can now lose if time arrives to 0 or when they lose all their lives
+- Lives reset at title screen
+- Checked for ~~spaggetti~~ faulty code
+- Adapted README.md to A2 project delivery
 
 #### 0.4.5:
 - Added Module:
@@ -70,6 +98,12 @@ Recreation of the 1989 classic from arcades by Bruhmentium INC:
 - Created Player display (with no collisions nor animations)
 
 ## Bugs
+#### 0.5
+- Some hitboxes are not equivalent to the original version
+- Fixed major collision bugs
+- Calibrated blit positioning & counters
+- Checked for memory leaks
+- Same bugs as 0.4.5
 
 #### 0.4.5
 - Basic shot:
