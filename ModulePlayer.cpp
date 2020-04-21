@@ -41,6 +41,8 @@ ModulePlayer::ModulePlayer(bool startEnabled) : Module(startEnabled) {
     timeOver = { 5,69,532,58 };
     ready = { 5,132,203,67 };
     life = { 154,44,15,15 };
+
+	
 }
 ModulePlayer::~ModulePlayer() {}
 
@@ -136,6 +138,7 @@ UPDATE_STATUS ModulePlayer::Update()
 
         if (destroyed) {
             if (once) {
+				playerLifes--;
                 once = false;
                 if (timer != 0) { SDL_Delay(1000); }
                 game->GetModuleAudio()->PlayFx(dedSoundIndex);
@@ -145,9 +148,8 @@ UPDATE_STATUS ModulePlayer::Update()
                 }
             }
             if (timer != 0) { currentAnimation = &ded; }
-            --playerLifes;
             if (position.y >= SCREEN_HEIGHT + currentAnimation->GetHeight() && playerLifes < 0) {
-                if (onceMusic) {
+				if (onceMusic) {
                     game->GetModuleAudio()->PlayMusicOnce("Resources/BGM/gameOver.ogg");
                     onceMusic = false;
                 }
@@ -156,6 +158,17 @@ UPDATE_STATUS ModulePlayer::Update()
             else if (position.y >= SCREEN_HEIGHT + currentAnimation->GetHeight() && playerLifes >= 0) { game->GetModuleTransition()->Transition(this, this, 4); }
             else if (timer != 0) { physics.UpdatePhysics(position.x, position.y, mruaSpeed.x, mruaSpeed.y); }
             if (timer != 0) { collider->SetPos(position.x, position.y, ded.GetWidth(), ded.GetHeight()); }
+
+			deltaTime = 1.0f / 60.0f;
+			if (time <= 10) { time += deltaTime; }
+			else {
+				time = deltaTime;
+				--timer;
+				game->GetModuleLevelOne()->Disable();
+				playerLifes = 2;
+				game->GetModuleLevelOne()->Enable();
+			}
+			
         }
 
         currentAnimation->Update();
