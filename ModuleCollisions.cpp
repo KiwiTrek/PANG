@@ -113,9 +113,6 @@ void ModuleCollisions::DebugDraw() {
         if (colliders[i] == nullptr) { continue; }
 
         switch (colliders[i]->GetType()) {
-        case Collider::TYPE::NONE: // white
-            game->GetModuleRender()->DrawQuad(colliders[i]->GetRect(), 255, 255, 255, alpha);
-            break;
         case Collider::TYPE::WALL: // yellow
             game->GetModuleRender()->DrawQuad(colliders[i]->GetRect(), 255, 255, 0, alpha);
             break;
