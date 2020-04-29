@@ -40,7 +40,7 @@ ModulePlayer::ModulePlayer(bool startEnabled) : Module(startEnabled) {
     gameOver = { 5,5,532,58 };
     timeOver = { 5,69,532,58 };
     ready = { 5,132,203,67 };
-    life = { 154,44,15,15 };
+    life = { 154,44,16,16 };
 
     
 }
