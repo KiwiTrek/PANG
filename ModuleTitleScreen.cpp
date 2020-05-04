@@ -48,7 +48,7 @@ UPDATE_STATUS ModuleTitleScreen::Update() {
         once = false;
         game->GetModuleAudio()->PlayFx(titleScreenAnimationSFX);
     }
-    if (game->GetModuleInput()->GetKey(SDL_SCANCODE_SPACE) == KEY_STATE::KEY_DOWN && titleScreenAnimation.HasFinished()) {
+    if ((game->GetModuleInput()->GetKey(SDL_SCANCODE_SPACE) == KEY_STATE::KEY_DOWN || game->GetModuleInput()->GetGamePad().start) && titleScreenAnimation.HasFinished()) {
         game->GetModuleAudio()->PlayFx(creditSFX);
         game->GetModuleTransition()->Transition(this, (Module*)game->GetModuleLevelOne(), 4);
     }

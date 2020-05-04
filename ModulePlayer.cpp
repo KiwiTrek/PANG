@@ -83,34 +83,62 @@ bool ModulePlayer::Start() {
 
 UPDATE_STATUS ModulePlayer::Update()
 {
+    GamePad& pad = game->GetModuleInput()->GetGamePad(0);
+
     if (returnToIdle == 0) { currentAnimation = &idle; }
     else { --returnToIdle; }
 
     if (game->GetModuleLevelOne()->CheckIfStarted()) {
         //Reset the currentAnimation back to idle before updating the logic
         if (!destroyed && !isTimeOver) {
-            if (game->GetModuleInput()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && game->GetModuleInput()->GetKey(SDL_SCANCODE_A) != KEY_REPEAT && (returnToIdle == 0)) {
+            if (((game->GetModuleInput()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT
+                && game->GetModuleInput()->GetKey(SDL_SCANCODE_A) != KEY_REPEAT)
+                || (game->GetModuleInput()->GetGamePad().right
+                && !game->GetModuleInput()->GetGamePad().left)
+                || game->GetModuleInput()->GetGamePad().l_x > 0)
+                && (returnToIdle == 0)) {
                 currentAnimation = &moving;
                 if (GetInvertValue()) { ChangeInvert(); }
                 position.x += speed;
             }
-            if (game->GetModuleInput()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && game->GetModuleInput()->GetKey(SDL_SCANCODE_D) != KEY_REPEAT && (returnToIdle == 0)) {
+            if (((game->GetModuleInput()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT
+                && game->GetModuleInput()->GetKey(SDL_SCANCODE_D) != KEY_REPEAT)
+                || (game->GetModuleInput()->GetGamePad().left
+                && !game->GetModuleInput()->GetGamePad().right)
+                || game->GetModuleInput()->GetGamePad().l_x < 0)
+                && (returnToIdle == 0)) {
                 currentAnimation = &moving;
                 if (!(GetInvertValue())) { ChangeInvert(); }
                 position.x -= speed;
             }
+
             // we need to activate it only when the player is on the stairs (OnCollision)
-            //if (game->GetModuleInput()->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && (returnToIdle == 0)) {
-            //    currentAnimation = &idle;
-            //    if (!(GetInvertValue())) { ChangeInvert(); }
-            //    position.y -= speed;
-            //}
-            //if (game->GetModuleInput()->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && (returnToIdle == 0)) {
-            //    currentAnimation = &idle;
-            //    if (!(GetInvertValue())) { ChangeInvert(); }
-            //    position.y += speed;
-            //}
-            if (game->GetModuleInput()->GetKey(SDL_SCANCODE_Q) == KEY_DOWN && shot == false) {
+            /*if (game->GetModuleInput()->GetKey(SDL_SCANCODE_W) == KEY_REPEAT 
+                && game->GetModuleInput()->GetKey(SDL_SCANCODE_S) != KEY_REPEAT
+                && game->GetModuleInput()->GetGamePad().up
+                && game->GetModuleInput()->GetGamePad().down
+                && game->GetModuleInput()->GetGamePad().l_y < 0
+                (returnToIdle == 0)) {
+                currentAnimation = &idle;
+                if (!(GetInvertValue())) { ChangeInvert(); }
+                position.y -= speed;
+            }
+            if (game->GetModuleInput()->GetKey(SDL_SCANCODE_S) == KEY_REPEAT
+                && game->GetModuleInput()->GetKey(SDL_SCANCODE_W) != KEY_REPEAT
+                && game->GetModuleInput()->GetGamePad().down
+                && game->GetModuleInput()->GetGamePad().up
+                && game->GetModuleInput()->GetGamePad().l_y > 0
+                && (returnToIdle == 0)) {
+                currentAnimation = &idle;
+                if (!(GetInvertValue())) { ChangeInvert(); }
+                position.y += speed;
+            }*/
+
+            if ((game->GetModuleInput()->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN
+                || game->GetModuleInput()->GetGamePad().x
+                || game->GetModuleInput()->GetGamePad().b
+                || game->GetModuleInput()->GetGamePad().r2 > 0)
+                && shot == false) {
                 shot = true;
                 if (!godMode) { game->GetModuleAudio()->PlayFx(shotSoundIndex); }
                 currentAnimation = &shoot;

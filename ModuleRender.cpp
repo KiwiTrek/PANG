@@ -25,6 +25,9 @@ bool ModuleRender::Init() {
     LOG("Renderer could not be created! SDL_Error: %s\n", SDL_GetError());
     ret = false;
     }
+    else {
+        //SDL_RenderSetLogicalSize(renderer, SCREEN_WIDTH, SCREEN_HEIGHT);
+    }
 
     return ret;
 }
@@ -41,7 +44,8 @@ UPDATE_STATUS ModuleRender::PreUpdate() {
 }
 
 UPDATE_STATUS ModuleRender::Update() {
-    if (game->GetModuleInput()->GetKey(SDL_SCANCODE_ESCAPE)) { return UPDATE_STATUS::UPDATE_STOP; }
+    GamePad& pad = game->GetModuleInput()->GetGamePad(0);
+    if (game->GetModuleInput()->GetKey(SDL_SCANCODE_ESCAPE) || game->GetModuleInput()->GetGamePad().back) { return UPDATE_STATUS::UPDATE_STOP; }
     return UPDATE_STATUS::UPDATE_CONTINUE;
 }
 

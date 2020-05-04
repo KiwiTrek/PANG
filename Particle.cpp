@@ -38,7 +38,7 @@ bool Particle::Update() {
             position.x += speed.x;
             position.y += speed.y;
 
-            if (collider != nullptr) { collider->SetPos(position.x, position.y, anim.GetWidth(), anim.GetHeight()); }
+            if (collider != nullptr) { collider->SetPos(position.x, position.y, anim.GetWidth() - 2, anim.GetHeight()); }
         }
     }
     
