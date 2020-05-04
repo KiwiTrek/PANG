@@ -21,7 +21,7 @@
 
 ModulePlayer::ModulePlayer(bool startEnabled) : Module(startEnabled) {
     //Animation setter
-    idle.PushBack({ 12,112,25,32 });
+    idle.PushBack({ 12,112,25,32 }); //x,y,w,h
     idle.SetSpeed(0.0f);
 
     shoot.PushBack({ 44,112,27,32 });
@@ -147,14 +147,17 @@ UPDATE_STATUS ModulePlayer::Update()
                     game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->normalWire, position.x + (shoot.GetWidth() / 3), position.y - 1, Collider::TYPE::PLAYER_SHOT);
                     game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->muzzleFlash, position.x + 3, position.y - 10, Collider::TYPE::PLAYER_SHOT);
                 }
-                if (!GetInvertValue()) {
+                else {
                     game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->normalWire, position.x + (shoot.GetWidth() / 2), position.y - 1, Collider::TYPE::PLAYER_SHOT);
                     game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->muzzleFlash, position.x + currentAnimation->GetWidth() / 2 - 6, position.y - 10, Collider::TYPE::PLAYER_SHOT); //It works, it just works ~Todd Howard,from Skyrim
                 }
 
                 returnToIdle = 20;
             }
-            if (currentAnimation == &idle) { collider->SetPos(position.x, position.y, idle.GetWidth(), idle.GetHeight()); }
+            if (currentAnimation == &idle) {
+                if (GetInvertValue()) { collider->SetPos(position.x + 10, position.y + 6, idle.GetWidth() - 16, idle.GetHeight() - 6); }
+                else { collider->SetPos(position.x + 6, position.y + 6, idle.GetWidth() - 16, idle.GetHeight() - 6); }
+            }
             else if (currentAnimation == &moving) { collider->SetPos(position.x, position.y, moving.GetWidth(), moving.GetHeight()); }
             else if (currentAnimation == &shoot) { collider->SetPos(position.x, position.y, shoot.GetWidth(), shoot.GetHeight()); }
         }

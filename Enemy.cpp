@@ -17,7 +17,7 @@ Enemy::~Enemy() { if (collider != nullptr) { collider->SetPendingToDelete(true);
 
 void Enemy::Update() {
     if (currentAnim != nullptr) { currentAnim->Update(); }
-    if (collider != nullptr) { collider->SetPos(position.x, position.y, currentAnim->GetWidth(), currentAnim->GetHeight()); }
+    if (collider != nullptr) { collider->SetPos(position.x + (currentAnim->GetWidth()/5), position.y, currentAnim->GetWidth() - (currentAnim->GetWidth()*2/5), currentAnim->GetHeight()); }
 }
 
 void Enemy::Draw() { if (currentAnim != nullptr) { game->GetModuleRender()->Blit(texture, position.x, position.y, false, &(currentAnim->GetCurrentFrame())); } }
