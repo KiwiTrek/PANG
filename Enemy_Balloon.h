@@ -13,7 +13,7 @@ public:
     // The enemy is going to follow the different steps in the path
     // Position will be updated depending on the speed defined at each step
     void Update() override;
-    void Enemy::OnCollision(Collider* c2) override;
+    void Enemy::OnCollision(Collider* c1, Collider* c2) override;
 
 private:
     // This enemy has one sprite and one frame

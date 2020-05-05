@@ -130,7 +130,7 @@ bool ModuleEnemies::CheckForBalloons() {
 void ModuleEnemies::OnCollision(Collider* c1, Collider* c2) {
     for (uint i = 0; i < MAX_ENEMIES; ++i) {
         if (enemies[i] != nullptr && enemies[i]->GetCollider() == c1) {
-            enemies[i]->OnCollision(c2); //Notify the enemy of a collision
+            enemies[i]->OnCollision(c1, c2); //Notify the enemy of a collision
             if (enemies[i]->GetLethality()) {
                 if (c1->GetType() == Collider::TYPE::BALLOON) { game->GetModuleAudio()->PlayFx(enemies[i]->GetDestroyedFx()); }
 

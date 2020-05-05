@@ -39,7 +39,7 @@ public:
 
     // Collision response
     // Triggers an animation and a sound fx
-    virtual void OnCollision(Collider* c2) = 0;
+    virtual void OnCollision(Collider* c1, Collider* c2) = 0;
 
     void SetLethality(bool _lethality);
     bool GetLethality();

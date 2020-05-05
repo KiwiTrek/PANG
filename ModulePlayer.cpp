@@ -144,22 +144,28 @@ UPDATE_STATUS ModulePlayer::Update()
                 currentAnimation = &shoot;
 
                 if (GetInvertValue()) {
-                    game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->normalWire, position.x + (shoot.GetWidth() / 3), position.y - 1, Collider::TYPE::PLAYER_SHOT);
+                    game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->normalWire, position.x + (shoot.GetWidth() / 3) - 2, position.y - 1, Collider::TYPE::PLAYER_SHOT);
                     game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->muzzleFlash, position.x + 3, position.y - 10, Collider::TYPE::PLAYER_SHOT);
                 }
                 else {
-                    game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->normalWire, position.x + (shoot.GetWidth() / 2), position.y - 1, Collider::TYPE::PLAYER_SHOT);
+                    game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->normalWire, position.x + (shoot.GetWidth() / 2) - 2, position.y - 1, Collider::TYPE::PLAYER_SHOT);
                     game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->muzzleFlash, position.x + currentAnimation->GetWidth() / 2 - 6, position.y - 10, Collider::TYPE::PLAYER_SHOT); //It works, it just works ~Todd Howard,from Skyrim
                 }
 
                 returnToIdle = 20;
             }
             if (currentAnimation == &idle) {
-                if (GetInvertValue()) { collider->SetPos(position.x + 10, position.y + 6, idle.GetWidth() - 16, idle.GetHeight() - 6); }
-                else { collider->SetPos(position.x + 6, position.y + 6, idle.GetWidth() - 16, idle.GetHeight() - 6); }
+                if (GetInvertValue()) { collider->SetPos(position.x + 7, position.y + 6, idle.GetWidth() - 13, idle.GetHeight() - 6); }
+                else { collider->SetPos(position.x + 6, position.y + 6, idle.GetWidth() - 13, idle.GetHeight() - 6); }
             }
-            else if (currentAnimation == &moving) { collider->SetPos(position.x, position.y, moving.GetWidth(), moving.GetHeight()); }
-            else if (currentAnimation == &shoot) { collider->SetPos(position.x, position.y, shoot.GetWidth(), shoot.GetHeight()); }
+            else if (currentAnimation == &moving) {
+                if (GetInvertValue()) { collider->SetPos(position.x + 10, position.y + 4, moving.GetWidth() - 16, moving.GetHeight() - 4); }
+                else { collider->SetPos(position.x + 6, position.y + 4, moving.GetWidth() - 16, moving.GetHeight() - 4); }
+            }
+            else if (currentAnimation == &shoot) {
+                if(GetInvertValue()){ collider->SetPos(position.x + 8, position.y + 9, shoot.GetWidth() - 16, shoot.GetHeight() - 9); }
+                else{ collider->SetPos(position.x + 8, position.y + 9, shoot.GetWidth() - 16, shoot.GetHeight() - 9); }
+            }
         }
 
         if (game->GetModuleInput()->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) { godMode = !godMode; }
