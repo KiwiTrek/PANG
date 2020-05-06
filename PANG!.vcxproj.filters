@@ -26,6 +26,9 @@
     <Filter Include="Archivos de origen\Entities\Enemies">
       <UniqueIdentifier>{bf6b05ca-8e1d-43f5-91e0-503e9188ef65}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Archivos de origen\App\Icon">
+      <UniqueIdentifier>{8770ffcf-524e-4777-b73d-d945f1494c45}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -180,5 +183,18 @@
     <ClInclude Include="ModuleTileset.h">
       <Filter>Archivos de origen\Modules\Core</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Archivos de origen\App\Icon</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Game\Resources\Sprites\NUT!.ico">
+      <Filter>Archivos de origen\App\Icon</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resource.rc">
+      <Filter>Archivos de origen\App\Icon</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>
