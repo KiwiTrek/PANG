@@ -255,14 +255,14 @@ UPDATE_STATUS ModulePlayer::PostUpdate() {
 
     game->GetModuleRender()->Blit(texture, position.x, position.y, GetInvertValue(), &currentAnimation->GetCurrentFrame());
 
-    SDL_Rect backgroundAdapter = { 0, 0, 384, 193 };
+    SDL_Rect backgroundAdapter = { 0, 0, 384, 192 };
     if (isTimeOver) {
-        SDL_Rect timeOverAdapter = { (SCREEN_WIDTH / 2 + 150),backgroundAdapter.h + 75,150,17 };
+        SDL_Rect timeOverAdapter = { (SCREEN_WIDTH / 2 + 150),backgroundAdapter.h + 76,150,17 };
         game->GetModuleRender()->Blit(blueText, 0, 0, false, &timeOver, &timeOverAdapter);
         onceTimeIsOver++;
     }
     else if (playerLifes == 0 && position.y >= SCREEN_HEIGHT + currentAnimation->GetHeight()) {
-        SDL_Rect gameOverAdapter = { (SCREEN_WIDTH / 2 + 150),backgroundAdapter.h + 75,150,17 };
+        SDL_Rect gameOverAdapter = { (SCREEN_WIDTH / 2 + 150),backgroundAdapter.h + 76,150,17 };
         game->GetModuleRender()->Blit(blueText, 0, 0, false, &gameOver, &gameOverAdapter);
     }
 

@@ -60,8 +60,8 @@ UPDATE_STATUS ModuleWinScreen::PostUpdate() {
     }
 
     //Edit arguments of Blit
-    SDL_Rect backgroundAdapter = { 0, 0, 384, 193 };
-    SDL_Rect splashArtAdapter = { (SCREEN_WIDTH / 2 + 100),backgroundAdapter.h-100,200,95 };
+    SDL_Rect backgroundAdapter = { 0, 0, 384, 192 };
+    SDL_Rect splashArtAdapter = { (SCREEN_WIDTH / 2 + 100),backgroundAdapter.h-99,200,95 };
     game->GetModuleRender()->Blit(splashArtTexture,0,0,false,&splashArt.GetCurrentFrame(),&splashArtAdapter);
     
     return UPDATE_STATUS::UPDATE_CONTINUE;

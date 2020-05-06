@@ -147,10 +147,10 @@ UPDATE_STATUS ModuleParticles::PostUpdate() {
     for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i) {
         Particle* particle = particles[i];
         if (particle != nullptr && particle->CheckIsAlive()) {
-            SDL_Rect backgroundAdapter = { 0, 0, 384, 193 };
+            SDL_Rect backgroundAdapter = { 0, 0, 384, 192 };
             if (particle->GetParticleTexture() == hitScreen.GetParticleTexture()) { game->GetModuleRender()->Blit(particle->GetParticleTexture(), particle->GetPositionX(), particle->GetPositionY(), false, &(particle->GetCurrentAnim()), &backgroundAdapter); }
             else if (particle->GetParticleTexture() == ready.GetParticleTexture()) {
-                SDL_Rect gameOverAdapter = { SCREEN_WIDTH+85,backgroundAdapter.h+75,60,17 };
+                SDL_Rect gameOverAdapter = { SCREEN_WIDTH+85,backgroundAdapter.h+76,60,17 };
                 game->GetModuleRender()->Blit(particle->GetParticleTexture(), particle->GetPositionX(), particle->GetPositionY(), false, &(particle->GetCurrentAnim()), &gameOverAdapter);
             }
             else { game->GetModuleRender()->Blit(particle->GetParticleTexture(), particle->GetPositionX(), particle->GetPositionY(), false, &(particle->GetCurrentAnim())); }

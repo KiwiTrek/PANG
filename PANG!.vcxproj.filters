@@ -94,6 +94,9 @@
     <ClCompile Include="ModuleFonts.cpp">
       <Filter>Archivos de origen\Modules\Core</Filter>
     </ClCompile>
+    <ClCompile Include="ModuleTileset.cpp">
+      <Filter>Archivos de origen\Modules\Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -172,6 +175,9 @@
       <Filter>Archivos de origen\App</Filter>
     </ClInclude>
     <ClInclude Include="ModuleFonts.h">
+      <Filter>Archivos de origen\Modules\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleTileset.h">
       <Filter>Archivos de origen\Modules\Core</Filter>
     </ClInclude>
   </ItemGroup>

@@ -8,6 +8,7 @@
 
 #include "ModuleProjectSheet.h"
 #include "ModuleTitleScreen.h"
+#include "ModuleTileset.h"
 #include "ModuleLevelOne.h"
 #include "ModulePlayer.h"
 #include "ModuleEnemies.h"
@@ -30,19 +31,20 @@ Game::Game() {
     modules[1] = input = new ModuleInput(true);
     modules[2] = textures = new ModuleTextures(true);
     modules[3] = audio = new ModuleAudio(true);
-    
+
     modules[4] = projectSheet = new ModuleProjectSheet(true);
     modules[5] = titleScreen = new ModuleTitleScreen(false);
-    modules[6] = levelOne = new ModuleLevelOne(false);
-    modules[7] = enemies = new ModuleEnemies(false);
-    modules[8] = player = new ModulePlayer(false);
-    modules[9] = particles = new ModuleParticles(false);
-    modules[10] = winScreen = new ModuleWinScreen(false);
+    modules[6] = tileset = new ModuleTileset(false);
+    modules[7] = levelOne = new ModuleLevelOne(false);
+    modules[8] = enemies = new ModuleEnemies(false);
+    modules[9] = player = new ModulePlayer(false);
+    modules[10] = particles = new ModuleParticles(false);
+    modules[11] = winScreen = new ModuleWinScreen(false);
 
-    modules[11] = collisions = new ModuleCollisions(false);
-    modules[12] = transition = new ModuleTransition(true);
-    modules[13] = fonts = new ModuleFonts(true);
-    modules[14] = render = new ModuleRender(true);
+    modules[12] = collisions = new ModuleCollisions(false);
+    modules[13] = transition = new ModuleTransition(true);
+    modules[14] = fonts = new ModuleFonts(true);
+    modules[15] = render = new ModuleRender(true);
 }
 
 Game::~Game() {
@@ -111,3 +113,4 @@ ModuleCollisions* Game::GetModuleCollisions() const { return collisions; }
 ModuleRender* Game::GetModuleRender() const { return render; }
 ModuleTransition* Game::GetModuleTransition() const { return transition; }
 ModuleFonts* Game::GetModuleFonts() const { return fonts; }
+ModuleTileset* Game::GetModuleTileset() const { return tileset; }

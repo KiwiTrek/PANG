@@ -164,6 +164,7 @@
     <ClCompile Include="ModuleProjectSheet.cpp" />
     <ClCompile Include="ModuleRender.cpp" />
     <ClCompile Include="ModuleTextures.cpp" />
+    <ClCompile Include="ModuleTileset.cpp" />
     <ClCompile Include="ModuleTitleScreen.cpp" />
     <ClCompile Include="ModuleTransition.cpp" />
     <ClCompile Include="ModuleWindow.cpp" />
@@ -190,6 +191,7 @@
     <ClInclude Include="ModuleProjectSheet.h" />
     <ClInclude Include="ModuleRender.h" />
     <ClInclude Include="ModuleTextures.h" />
+    <ClInclude Include="ModuleTileset.h" />
     <ClInclude Include="ModuleTitleScreen.h" />
     <ClInclude Include="ModuleTransition.h" />
     <ClInclude Include="ModuleWindow.h" />
