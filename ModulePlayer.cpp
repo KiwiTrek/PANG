@@ -34,8 +34,10 @@ ModulePlayer::ModulePlayer(bool startEnabled) : Module(startEnabled) {
     moving.PushBack({ 148,2,29,32 });
     moving.SetSpeed(0.2f);
 
+    ded.PushBack({ 147,80,31,29 });
     ded.PushBack({ 81,112,40,29 });
-    ded.SetSpeed(0.0f);
+    ded.SetSpeed(0.2f);
+    ded.SetLoop(false);
 
     gameOver = { 5,5,532,58 };
     timeOver = { 5,69,532,58 };
@@ -59,11 +61,15 @@ bool ModulePlayer::Start() {
     godMode = false;
     onceDeath = true;
     onceDeathSpaguett = true;
+    shot = false;
 
     blueText = game->GetModuleTextures()->Load("Resources/Sprites/blueText.png");
     texture = game->GetModuleTextures()->Load("Resources/Sprites/player.png"); // arcade version
     shotSoundIndex = game->GetModuleAudio()->LoadFx("Resources/SFX/shotClaw.wav");
     dedSoundIndex = game->GetModuleAudio()->LoadFx("Resources/SFX/dead.wav");
+
+    moving.Reset();
+    ded.Reset();
 
     position.x = 163;
     position.y = 186 - idle.GetHeight();
@@ -152,7 +158,7 @@ UPDATE_STATUS ModulePlayer::Update()
                     game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->muzzleFlash, position.x + currentAnimation->GetWidth() / 2 - 6, position.y - 10, Collider::TYPE::PLAYER_SHOT); //It works, it just works ~Todd Howard,from Skyrim
                 }
 
-                returnToIdle = 20;
+                returnToIdle = 12;
             }
             if (currentAnimation == &idle) {
                 if (GetInvertValue()) { collider->SetPos(position.x + 7, position.y + 6, idle.GetWidth() - 13, idle.GetHeight() - 6); }
@@ -224,17 +230,6 @@ UPDATE_STATUS ModulePlayer::Update()
             }
             physics.UpdatePhysics(position.x, position.y, mruaSpeed.x, mruaSpeed.y);
             collider->SetPos(position.x, position.y, ded.GetWidth(), ded.GetHeight());
-
-            //Unknown Code By Luce
-            /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            //deltaTime = 1.0f / 60.0f;
-            //if (time <= 10) { time += deltaTime; }
-            //else {
-            //    time = deltaTime;
-            //    --timer;
-            //    playerLifes = 2;
-            //    game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelOne(), (Module*)game->GetModuleLevelOne(), 4);
-            //}
         }
 
         currentAnimation->Update();
