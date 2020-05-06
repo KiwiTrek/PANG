@@ -30,11 +30,8 @@ UPDATE_STATUS ModuleEnemies::Update() {
     if (game->GetModuleLevelOne()->CheckIfStarted()) {
         if (game->GetModulePlayer()->CheckIfDestroyed() == false) {
             for (uint i = 0; i < MAX_ENEMIES; ++i) {
-                if (enemies[i] != nullptr)
-                    enemies[i]->Update();
+                if (enemies[i] != nullptr) { enemies[i]->Update(); }
             }
-
-            //HandleEnemiesDespawn();
         }
     }
     
@@ -44,8 +41,7 @@ UPDATE_STATUS ModuleEnemies::Update() {
 UPDATE_STATUS ModuleEnemies::PostUpdate() {
     for (uint i = 0; i < MAX_ENEMIES; ++i)
     {
-        if (enemies[i] != nullptr)
-            enemies[i]->Draw();
+        if (enemies[i] != nullptr) { enemies[i]->Draw(); }
     }
 
     return UPDATE_STATUS::UPDATE_CONTINUE;
@@ -90,11 +86,6 @@ void ModuleEnemies::HandleEnemiesSpawn() {
             spawnQueue[i].type = ENEMY_TYPE::NO_TYPE;
         }
     }
-}
-
-void ModuleEnemies::HandleEnemiesDespawn() {
-    // Iterate existing enemies
-    for (uint i = 0; i < MAX_ENEMIES; ++i) {}
 }
 
 void ModuleEnemies::SpawnEnemy(const EnemySpawnpoint& info) {
@@ -163,29 +154,6 @@ void ModuleEnemies::OnCollision(Collider* c1, Collider* c2) {
                 }
                 default: {break; }
                 }
-
-                /*if (enemies[i]->GetEnemyType() == ENEMY_TYPE::CHUNGUS_BALLOON) {
-                    game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->bigBalloonExplosion, enemies[i]->GetPositionX(), enemies[i]->GetPositionY());
-                    game->GetModuleEnemies()->AddEnemy(ENEMY_TYPE::NOT_THAT_MEH_BALLOON, enemies[i]->GetPositionX(), enemies[i]->GetPositionY() - (enemies[i]->GetCurrentAnimation()->GetHeight() / 2));
-                    game->GetModuleEnemies()->AddEnemy(ENEMY_TYPE::NOT_THAT_MEH_BALLOON, enemies[i]->GetPositionX() + (enemies[i]->GetCurrentAnimation()->GetWidth() / 2), enemies[i]->GetPositionY() - (enemies[i]->GetCurrentAnimation()->GetHeight() / 2), true);
-                    game->GetModulePlayer()->AddScore(50);
-                }
-                else if(enemies[i]->GetEnemyType() == ENEMY_TYPE::NOT_THAT_MEH_BALLOON) {
-                    game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->notThatMehBalloonExplosion, enemies[i]->GetPositionX(), enemies[i]->GetPositionY());
-                    game->GetModuleEnemies()->AddEnemy(ENEMY_TYPE::MEH_BALLOON, enemies[i]->GetPositionX(), enemies[i]->GetPositionY() -(enemies[i]->GetCurrentAnimation()->GetHeight() / 2));
-                    game->GetModuleEnemies()->AddEnemy(ENEMY_TYPE::MEH_BALLOON, enemies[i]->GetPositionX() + (enemies[i]->GetCurrentAnimation()->GetWidth() / 2), enemies[i]->GetPositionY() - (enemies[i]->GetCurrentAnimation()->GetHeight() / 2), true);
-                    game->GetModulePlayer()->AddScore(100);
-                }
-                else if (enemies[i]->GetEnemyType() == ENEMY_TYPE::MEH_BALLOON) {
-                    game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->mehBalloonExplosion, enemies[i]->GetPositionX(), enemies[i]->GetPositionY());
-                    game->GetModuleEnemies()->AddEnemy(ENEMY_TYPE::SMOL_BALLOON, enemies[i]->GetPositionX(), enemies[i]->GetPositionY() - (enemies[i]->GetCurrentAnimation()->GetHeight() / 2));
-                    game->GetModuleEnemies()->AddEnemy(ENEMY_TYPE::SMOL_BALLOON, enemies[i]->GetPositionX() + (enemies[i]->GetCurrentAnimation()->GetWidth() / 2), enemies[i]->GetPositionY() - (enemies[i]->GetCurrentAnimation()->GetHeight() / 2), true);
-                    game->GetModulePlayer()->AddScore(150);
-                }
-                else if (enemies[i]->GetEnemyType() == ENEMY_TYPE::SMOL_BALLOON) {
-                    game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->smolBalloonExplosion, enemies[i]->GetPositionX(), enemies[i]->GetPositionY());
-                    game->GetModulePlayer()->AddScore(200);
-                }*/
 
                 delete enemies[i];
                 enemies[i] = nullptr;

@@ -71,8 +71,8 @@ bool ModulePlayer::Start() {
     moving.Reset();
     ded.Reset();
 
-    position.x = 163;
-    position.y = 186 - idle.GetHeight();
+    position.x = (TILE_SIZE * 20) + 2;
+    position.y = game->GetModuleLevelOne()->GetBackgroundAdapter().h - TILE_SIZE - idle.GetHeight();
     mruaSpeed.x = 100;
     mruaSpeed.y = -197;
     physics.SetAxis(false, false); // physics
@@ -244,9 +244,9 @@ UPDATE_STATUS ModulePlayer::Update()
 
 UPDATE_STATUS ModulePlayer::PostUpdate() {
     sprintf_s(scoreText, 10, "%5d", score);
-    game->GetModuleFonts()->BlitText(64, 202, normalFont, scoreText);
+    game->GetModuleFonts()->BlitText(TILE_SIZE * 8, game->GetModuleLevelOne()->GetBackgroundAdapter().h + TILE_SIZE, normalFont, scoreText);
     sprintf_s(playerText, 10, "player-1");
-    game->GetModuleFonts()->BlitText(16, 194, normalFont, playerText);
+    game->GetModuleFonts()->BlitText(TILE_SIZE * 2, game->GetModuleLevelOne()->GetBackgroundAdapter().h, normalFont, playerText);
 
     for (int i = playerLifes; i > 0; i--) {
         SDL_Rect lifeAdapter = { i * 50,SCREEN_HEIGHT*3-50,16,16 };
@@ -255,20 +255,19 @@ UPDATE_STATUS ModulePlayer::PostUpdate() {
 
     game->GetModuleRender()->Blit(texture, position.x, position.y, GetInvertValue(), &currentAnimation->GetCurrentFrame());
 
-    SDL_Rect backgroundAdapter = { 0, 0, 384, 192 };
     if (isTimeOver) {
-        SDL_Rect timeOverAdapter = { (SCREEN_WIDTH / 2 + 150),backgroundAdapter.h + 76,150,17 };
+        SDL_Rect timeOverAdapter = { (SCREEN_WIDTH / 2 + 150),game->GetModuleLevelOne()->GetBackgroundAdapter().h + 76,150,17 };
         game->GetModuleRender()->Blit(blueText, 0, 0, false, &timeOver, &timeOverAdapter);
         onceTimeIsOver++;
     }
     else if (playerLifes == 0 && position.y >= SCREEN_HEIGHT + currentAnimation->GetHeight()) {
-        SDL_Rect gameOverAdapter = { (SCREEN_WIDTH / 2 + 150),backgroundAdapter.h + 76,150,17 };
+        SDL_Rect gameOverAdapter = { (SCREEN_WIDTH / 2 + 150),game->GetModuleLevelOne()->GetBackgroundAdapter().h + 76,150,17 };
         game->GetModuleRender()->Blit(blueText, 0, 0, false, &gameOver, &gameOverAdapter);
     }
 
     //Timer
     sprintf_s(timerText, 10, "time:%03d", timer);
-    game->GetModuleFonts()->BlitText(SCREEN_WIDTH - 129, 8, timerFont, timerText);
+    game->GetModuleFonts()->BlitText(game->GetModuleLevelOne()->GetBackgroundAdapter().w - (TILE_SIZE * 16) - 1, TILE_SIZE + 1, timerFont, timerText);
 
      if (!destroyed && !isTimeOver) {
          if (time <= 1) { time += deltaTime; }

@@ -26,15 +26,16 @@ public:
 
     bool CleanUp() override;
 
-    bool CheckIfStarted()const;
+    bool CheckIfStarted() const;
     void SetIfStarted(bool _hasStarted);
+    SDL_Rect GetBackgroundAdapter() const;
 
 private:
     bool once = true;
     bool hasStarted = false;
     Particle* p;
     // The sprite section for the background
-    SDL_Rect background;
+    //SDL_Rect background;
     SDL_Rect backgroundAdapter;
 
     // The scene sprite sheet loaded into an SDL_Texture

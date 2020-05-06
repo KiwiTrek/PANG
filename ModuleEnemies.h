@@ -52,9 +52,6 @@ public:
     // Iterates the queue and checks for camera position
     void HandleEnemiesSpawn();
 
-    // Destroys any enemies that have moved outside the camera limits
-    void HandleEnemiesDespawn();
-
     // Checks if there're any balloons onscreen
     bool CheckForBalloons();
     

@@ -15,8 +15,8 @@
 
 ModuleLevelOne::ModuleLevelOne(bool startEnabled) : Module(startEnabled) {
     // Background
-    background = { 8, 8, 384, 208 };
-    backgroundAdapter = { 0, 0, 384, 192 };
+    //background = { 8, 8, 384, 208 };
+    backgroundAdapter = { 0, 0, 384, 208 };
 }
 
 ModuleLevelOne::~ModuleLevelOne() {}
@@ -36,13 +36,13 @@ bool ModuleLevelOne::Start() {
     game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->ready, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, Collider::TYPE::NONE, 60);
     p = game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->ready, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, Collider::TYPE::NONE, 70);
     
-    backgroundTexture = game->GetModuleTextures()->Load("Resources/Sprites/backgrounds.png");
+    backgroundTexture = game->GetModuleTextures()->Load("Resources/Sprites/Backgrounds/Background1.png");
 
     // Colliders ---
-    game->GetModuleCollisions()->AddCollider({ 0, 184, 384, 100 }, Collider::TYPE::FLOOR); // {0,186,384,7} BOTTOM
-    game->GetModuleCollisions()->AddCollider({ -92, 0, 100 , 193 }, Collider::TYPE::WALL); // {0,0,8,193} LEFT
-    game->GetModuleCollisions()->AddCollider({ 0, -92, 384, 100 }, Collider::TYPE::FLOOR); // {0,0,384,7} TOP
-    game->GetModuleCollisions()->AddCollider({ 376, 0, 100, 193 }, Collider::TYPE::WALL); // {376,0,8,193} RIGHT
+    game->GetModuleCollisions()->AddCollider({ 0, backgroundAdapter.h-TILE_SIZE, backgroundAdapter.w, TILE_SIZE }, Collider::TYPE::FLOOR); // {0,186,384,7} BOTTOM
+    game->GetModuleCollisions()->AddCollider({0, 0, TILE_SIZE , backgroundAdapter.h }, Collider::TYPE::WALL); // {0,0,8,193} LEFT
+    game->GetModuleCollisions()->AddCollider({ 0, 0, backgroundAdapter.w, TILE_SIZE }, Collider::TYPE::FLOOR); // {0,0,384,7} TOP
+    game->GetModuleCollisions()->AddCollider({ backgroundAdapter.w-TILE_SIZE, 0, TILE_SIZE, backgroundAdapter.h }, Collider::TYPE::WALL); // {376,0,8,193} RIGHT
 
     game->GetModuleEnemies()->AddEnemy(ENEMY_TYPE::CHUNGUS_BALLOON, 36, 16, true);
     
@@ -71,12 +71,12 @@ UPDATE_STATUS ModuleLevelOne::Update() {
 UPDATE_STATUS ModuleLevelOne::PostUpdate() {
     // Draw everything --------------------------------------
     sprintf_s(levelTitle, 10, "mt.fuji");
-    game->GetModuleFonts()->BlitText(160, 194, game->GetModulePlayer()->GetFontIndex(), levelTitle);
+    game->GetModuleFonts()->BlitText(TILE_SIZE * 20, backgroundAdapter.h, game->GetModulePlayer()->GetFontIndex(), levelTitle);
     sprintf_s(stageText, 10, "1-1 stage");
-    game->GetModuleFonts()->BlitText(159, 209, game->GetModulePlayer()->GetFontIndex(), stageText);
+    game->GetModuleFonts()->BlitText(TILE_SIZE * 20, backgroundAdapter.h + (TILE_SIZE * 2), game->GetModulePlayer()->GetFontIndex(), stageText);
     sprintf_s(highScore, 15, "hi: 100000");
-    game->GetModuleFonts()->BlitText(152, 217, game->GetModulePlayer()->GetFontIndex(), highScore);
-    game->GetModuleRender()->Blit(backgroundTexture, 0, 0, GetInvertValue(), &background, &backgroundAdapter);
+    game->GetModuleFonts()->BlitText(TILE_SIZE * 19, backgroundAdapter.h + (TILE_SIZE * 3), game->GetModulePlayer()->GetFontIndex(), highScore);
+    game->GetModuleRender()->Blit(backgroundTexture, 0, 0, GetInvertValue(), NULL);
     return UPDATE_STATUS::UPDATE_CONTINUE;
 }
 
@@ -99,4 +99,5 @@ bool ModuleLevelOne::CleanUp() {
 
 bool ModuleLevelOne::CheckIfStarted() const { return hasStarted; }
 void ModuleLevelOne::SetIfStarted(bool _hasStarted) { hasStarted = _hasStarted; }
+SDL_Rect ModuleLevelOne::GetBackgroundAdapter() const { return backgroundAdapter; };
 

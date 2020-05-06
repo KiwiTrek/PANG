@@ -8,6 +8,7 @@
 #include "ModuleInput.h"
 #include "ModulePlayer.h"
 #include "ModuleTransition.h"
+#include "ModuleLevelOne.h"
 
 #include "SDL/include/SDL_scancode.h"
 
@@ -68,7 +69,7 @@ UPDATE_STATUS ModuleTitleScreen::PostUpdate() {
 
     if (titleScreenAnimation.HasFinished()) {
         game->GetModuleRender()->Blit(backgroundTexture, 0, 0, false, nullptr, &backgroundRect);
-        if (switchOn) { game->GetModuleRender()->Blit(insertCoinTexture, ((SCREEN_WIDTH / 2) - (insertCoin_w / 2) - 5), 192, false); }
+        if (switchOn) { game->GetModuleRender()->Blit(insertCoinTexture, ((SCREEN_WIDTH / 2) - (insertCoin_w / 2) - 5), game->GetModuleLevelOne()->GetBackgroundAdapter().h, false); }
     }
     else {game->GetModuleRender()->Blit(titleScreenAnimationTexture, 0, 0, false, &titleScreenAnimation.GetCurrentFrame(), &backgroundRect);}
 
@@ -79,7 +80,6 @@ bool ModuleTitleScreen::CleanUp() {
     game->GetModuleTextures()->Unload(backgroundTexture);
     game->GetModuleTextures()->Unload(titleScreenAnimationTexture);
     game->GetModuleAudio()->UnloadFx(titleScreenAnimationSFX);
-    //game->GetModuleAudio()->UnloadFx(creditSFX);
 
     return true;
 }
