@@ -43,8 +43,6 @@ ModulePlayer::ModulePlayer(bool startEnabled) : Module(startEnabled) {
     timeOver = { 5,69,532,58 };
     ready = { 5,132,203,67 };
     life = { 154,44,16,16 };
-
-    
 }
 ModulePlayer::~ModulePlayer() {}
 
@@ -249,19 +247,19 @@ UPDATE_STATUS ModulePlayer::PostUpdate() {
     game->GetModuleFonts()->BlitText(TILE_SIZE * 2, game->GetModuleLevelOne()->GetBackgroundAdapter().h, normalFont, playerText);
 
     for (int i = playerLifes; i > 0; i--) {
-        SDL_Rect lifeAdapter = { i * 50,SCREEN_HEIGHT*3-50,16,16 };
+        SDL_Rect lifeAdapter = { i * (TILE_SIZE * 2),game->GetModuleLevelOne()->GetBackgroundAdapter().h + (TILE_SIZE * 2),TILE_SIZE * 2,TILE_SIZE * 2 };
         game->GetModuleRender()->Blit(texture, 0, 0, false, &life, &lifeAdapter);
     }
 
     game->GetModuleRender()->Blit(texture, position.x, position.y, GetInvertValue(), &currentAnimation->GetCurrentFrame());
 
     if (isTimeOver) {
-        SDL_Rect timeOverAdapter = { (SCREEN_WIDTH / 2 + 150),game->GetModuleLevelOne()->GetBackgroundAdapter().h + 76,150,17 };
+        SDL_Rect timeOverAdapter = { (game->GetModuleLevelOne()->GetBackgroundAdapter().w / 2) - 75,game->GetModuleLevelOne()->GetBackgroundAdapter().h / 2 - (TILE_SIZE),150,17 };
         game->GetModuleRender()->Blit(blueText, 0, 0, false, &timeOver, &timeOverAdapter);
         onceTimeIsOver++;
     }
     else if (playerLifes == 0 && position.y >= SCREEN_HEIGHT + currentAnimation->GetHeight()) {
-        SDL_Rect gameOverAdapter = { (SCREEN_WIDTH / 2 + 150),game->GetModuleLevelOne()->GetBackgroundAdapter().h + 76,150,17 };
+        SDL_Rect gameOverAdapter = { (game->GetModuleLevelOne()->GetBackgroundAdapter().w / 2) - 75,(game->GetModuleLevelOne()->GetBackgroundAdapter().h / 2) - (TILE_SIZE),150,17 };
         game->GetModuleRender()->Blit(blueText, 0, 0, false, &gameOver, &gameOverAdapter);
     }
 
@@ -327,7 +325,6 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2) {
             //}
         }
         else if (c1 == collider && !destroyed && !isTimeOver && c2->GetType() == Collider::TYPE::BALLOON) { destroyed = true; }
-        else if (c1 == collider && !destroyed && !isTimeOver && c2->GetType() == Collider::TYPE::ANIMAL) { /*destroyed = true;*/ }
         else if (destroyed) {
             if ((position.x + currentAnimation->GetWidth()) > c2->GetRect().x&& position.x < c2->GetRect().x) {
                 mruaSpeed.x = -50;
