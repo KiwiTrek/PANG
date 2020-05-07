@@ -32,6 +32,7 @@ public:
     bool CheckIfDestroyed() const;
     void AddScore(int _score);
     int GetTimer() const;
+    int GetPlayerLives() const;
     void SetPlayerLives(int lives);
     void SetScore(int _score);
 
