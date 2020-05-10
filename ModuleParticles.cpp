@@ -23,7 +23,7 @@ ModuleParticles::ModuleParticles(bool startEnabled) : Module(startEnabled) {
             j++;
             counter = 0;
         }
-        normalWire.SetAnimPushBack({ 0 + (i * 17),155 - (i * 2) - j,9,33 + (i * 2) + j });
+        normalWire.SetAnimPushBack({ 0 + (i * 17),220 - (i * 2) - j,9,33 + (i * 2) + j });
     }
 
     counter = 0;
@@ -35,23 +35,23 @@ ModuleParticles::ModuleParticles(bool startEnabled) : Module(startEnabled) {
             j++;
             counter = 0;
         }
-        normalWire.SetAnimPushBack({ 407 + (i * 17),103 - (i * 2) - j,9,85 + (i * 2) + j });
+        normalWire.SetAnimPushBack({ 407 + (i * 17),168 - (i * 2) - j,9,85 + (i * 2) + j });
 
     }
     counter = 2;
     j = 0;
 	
-    for (int i = 0; i < 23; i++) {
+    for (int i = 0; i < 26; i++) {
         counter++;
         if (counter == 4) {
             j++;
             counter = 0;
         }
-        normalWire.SetAnimPushBack({ 797 + (i * 17),52 - (i * 2) - j,9,136 + (i * 2) + j });
+        normalWire.SetAnimPushBack({ 797 + (i * 17),117 - (i * 2) - j,9,136 + (i * 2) + j });
     }
     normalWire.SetAnimLoop(false);
-    normalWire.SetAnimSpeed(0.5f); //0.888f
-    normalWire.SetFSpeedY(-2.0f); //-1.5f
+    normalWire.SetAnimSpeed(0.888f); //0.888f
+    normalWire.SetFSpeedY(-1.5f); //-1.5f
 
     //Balloon Explosions
     for (int i = 0; i < 4; ++i) { bigBalloonExplosion.SetAnimPushBack({ 8 + i * 48,511,48,46 }); }
