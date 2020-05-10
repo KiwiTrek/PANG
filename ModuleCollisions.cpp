@@ -10,6 +10,7 @@
 ModuleCollisions::ModuleCollisions(bool startEnabled) : Module(startEnabled) {
     for (uint i = 0; i < MAX_COLLIDERS; ++i) { colliders[i] = nullptr; }
 
+    matrix[Collider::TYPE::WALL][Collider::TYPE::NONE] = false;
     matrix[Collider::TYPE::WALL][Collider::TYPE::WALL] = false;
     matrix[Collider::TYPE::WALL][Collider::TYPE::FLOOR] = false;
     matrix[Collider::TYPE::WALL][Collider::TYPE::STAIRS] = false;
@@ -18,6 +19,7 @@ ModuleCollisions::ModuleCollisions(bool startEnabled) : Module(startEnabled) {
     matrix[Collider::TYPE::WALL][Collider::TYPE::ANIMAL] = false;
     matrix[Collider::TYPE::WALL][Collider::TYPE::PLAYER_SHOT] = true;
 
+    matrix[Collider::TYPE::FLOOR][Collider::TYPE::NONE] = false;
     matrix[Collider::TYPE::FLOOR][Collider::TYPE::WALL] = false;
     matrix[Collider::TYPE::FLOOR][Collider::TYPE::FLOOR] = false;
     matrix[Collider::TYPE::FLOOR][Collider::TYPE::STAIRS] = false;
@@ -26,6 +28,7 @@ ModuleCollisions::ModuleCollisions(bool startEnabled) : Module(startEnabled) {
     matrix[Collider::TYPE::FLOOR][Collider::TYPE::ANIMAL] = false;
     matrix[Collider::TYPE::FLOOR][Collider::TYPE::PLAYER_SHOT] = true;
 
+    matrix[Collider::TYPE::PLAYER][Collider::TYPE::NONE] = false;
     matrix[Collider::TYPE::PLAYER][Collider::TYPE::WALL] = true;
     matrix[Collider::TYPE::PLAYER][Collider::TYPE::FLOOR] = true;
     matrix[Collider::TYPE::PLAYER][Collider::TYPE::STAIRS] = true;
@@ -34,6 +37,7 @@ ModuleCollisions::ModuleCollisions(bool startEnabled) : Module(startEnabled) {
     matrix[Collider::TYPE::PLAYER][Collider::TYPE::ANIMAL] = true;
     matrix[Collider::TYPE::PLAYER][Collider::TYPE::PLAYER_SHOT] = false;
 
+    matrix[Collider::TYPE::BALLOON][Collider::TYPE::NONE] = false;
     matrix[Collider::TYPE::BALLOON][Collider::TYPE::WALL] = true;
     matrix[Collider::TYPE::BALLOON][Collider::TYPE::FLOOR] = true;
     matrix[Collider::TYPE::BALLOON][Collider::TYPE::STAIRS] = false;
@@ -42,6 +46,7 @@ ModuleCollisions::ModuleCollisions(bool startEnabled) : Module(startEnabled) {
     matrix[Collider::TYPE::BALLOON][Collider::TYPE::ANIMAL] = false;
     matrix[Collider::TYPE::BALLOON][Collider::TYPE::PLAYER_SHOT] = true;
 
+    matrix[Collider::TYPE::ANIMAL][Collider::TYPE::NONE] = false;
     matrix[Collider::TYPE::ANIMAL][Collider::TYPE::WALL] = false;
     matrix[Collider::TYPE::ANIMAL][Collider::TYPE::FLOOR] = false;
     matrix[Collider::TYPE::ANIMAL][Collider::TYPE::STAIRS] = false;
@@ -50,6 +55,7 @@ ModuleCollisions::ModuleCollisions(bool startEnabled) : Module(startEnabled) {
     matrix[Collider::TYPE::ANIMAL][Collider::TYPE::ANIMAL] = false;
     matrix[Collider::TYPE::ANIMAL][Collider::TYPE::PLAYER_SHOT] = true;
 
+    matrix[Collider::TYPE::PLAYER_SHOT][Collider::TYPE::NONE] = false;
     matrix[Collider::TYPE::PLAYER_SHOT][Collider::TYPE::WALL] = true;
     matrix[Collider::TYPE::PLAYER_SHOT][Collider::TYPE::FLOOR] = true;
     matrix[Collider::TYPE::PLAYER_SHOT][Collider::TYPE::STAIRS] = false;

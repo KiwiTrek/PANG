@@ -148,11 +148,11 @@ UPDATE_STATUS ModulePlayer::Update()
                 currentAnimation = &shoot;
                 if (GetInvertValue()) {
                     game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->normalWire, position.x + (shoot.GetWidth() / 3) - 2, position.y - 1, Collider::TYPE::PLAYER_SHOT);
-                    game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->muzzleFlash, position.x + 3, position.y - 10, Collider::TYPE::PLAYER_SHOT);
+                    game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->muzzleFlash, position.x + 3, position.y - 10, Collider::TYPE::NONE);
                 }
                 else {
                     game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->normalWire, position.x + (shoot.GetWidth() / 2) - 2, position.y - 1, Collider::TYPE::PLAYER_SHOT);
-                    game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->muzzleFlash, position.x + currentAnimation->GetWidth() / 2 - 6, position.y - 10, Collider::TYPE::PLAYER_SHOT); //It works, it just works ~Todd Howard,from Skyrim
+                    game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->muzzleFlash, position.x + currentAnimation->GetWidth() / 2 - 6, position.y - 10, Collider::TYPE::NONE); //It works, it just works ~Todd Howard,from Skyrim
                 }
 
                 returnToIdle = 12;
@@ -205,7 +205,7 @@ UPDATE_STATUS ModulePlayer::Update()
         if (destroyed) {
             if (once) {
                 once = false;
-                SDL_Delay(1000); //THIS SHIT HAS TO LEAVE AS SOON AS WE CAN. IT IS NO LONGER ALLOWED TO EXIST. THIS IS A NO SDL_DELAY ZONE. EVEN A FUCKING SECOND GIVES ME INSANE ANXIETY. AND ALSO AIDS. NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE. Oh hi Marc, fancy seeing you here :^3 - Luce <3
+                SDL_Delay(500); //THIS SHIT HAS TO LEAVE AS SOON AS WE CAN. IT IS NO LONGER ALLOWED TO EXIST. THIS IS A NO SDL_DELAY ZONE. EVEN A FUCKING SECOND GIVES ME INSANE ANXIETY. AND ALSO AIDS. NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE. Oh hi Marc, fancy seeing you here :^3 - Luce <3
                 game->GetModuleAudio()->PlayFx(dedSoundIndex);
                 game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->hitScreen, 0, 0);
                 physics.SetAxis(true, true);
@@ -325,7 +325,7 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2) {
         }
         else if (c1 == collider && !destroyed && !isTimeOver && c2->GetType() == Collider::TYPE::BALLOON) { destroyed = true; }
         else if (destroyed) {
-            if ((position.x + currentAnimation->GetWidth()) > c2->GetRect().x&& position.x < c2->GetRect().x) {
+            if ((position.x + currentAnimation->GetWidth()) > c2->GetRect().x&& position.x < c2->GetRect().x && c2->GetType() == Collider::TYPE::WALL) {
                 mruaSpeed.x = -50;
             }
             if (c1 == collider && onceDeath && c2->GetType() == Collider::TYPE::FLOOR) {
