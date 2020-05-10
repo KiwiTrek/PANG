@@ -95,21 +95,17 @@ UPDATE_STATUS ModulePlayer::Update()
     if (game->GetModuleLevelOne()->CheckIfStarted()) {
         //Reset the currentAnimation back to idle before updating the logic
         if (!destroyed && !isTimeOver) {
-            if (((game->GetModuleInput()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT
-                && game->GetModuleInput()->GetKey(SDL_SCANCODE_A) != KEY_REPEAT)
-                || (game->GetModuleInput()->GetGamePad().right
-                && !game->GetModuleInput()->GetGamePad().left)
-                || game->GetModuleInput()->GetGamePad().l_x > 0)
+            if (((game->GetModuleInput()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && game->GetModuleInput()->GetKey(SDL_SCANCODE_A) != KEY_REPEAT)
+                || (pad.right && !pad.left)
+                || pad.l_x > 0)
                 && (returnToIdle == 0)) {
                 currentAnimation = &moving;
                 if (GetInvertValue()) { ChangeInvert(); }
                 position.x += speed;
             }
-            if (((game->GetModuleInput()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT
-                && game->GetModuleInput()->GetKey(SDL_SCANCODE_D) != KEY_REPEAT)
-                || (game->GetModuleInput()->GetGamePad().left
-                && !game->GetModuleInput()->GetGamePad().right)
-                || game->GetModuleInput()->GetGamePad().l_x < 0)
+            if (((game->GetModuleInput()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && game->GetModuleInput()->GetKey(SDL_SCANCODE_D) != KEY_REPEAT)
+                || (pad.left && !pad.right)
+                || pad.l_x < 0)
                 && (returnToIdle == 0)) {
                 currentAnimation = &moving;
                 if (!(GetInvertValue())) { ChangeInvert(); }
@@ -138,10 +134,7 @@ UPDATE_STATUS ModulePlayer::Update()
                 position.y += speed;
             }*/
 
-            if ((game->GetModuleInput()->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN
-                || game->GetModuleInput()->GetGamePad().x
-                || game->GetModuleInput()->GetGamePad().b
-                || game->GetModuleInput()->GetGamePad().r2 > 0)
+            if ((game->GetModuleInput()->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || pad.x || pad.b || pad.r2 > 0)
                 && shot == false) {
                 shot = true;
                 if (!godMode) { game->GetModuleAudio()->PlayFx(shotSoundIndex); }

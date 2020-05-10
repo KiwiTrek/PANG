@@ -25,7 +25,7 @@ bool ModuleProjectSheet::Start() {
 
 UPDATE_STATUS ModuleProjectSheet::Update() {
     GamePad& pad = game->GetModuleInput()->GetGamePad(0);
-    if (game->GetModuleInput()->GetKey(SDL_SCANCODE_SPACE) == KEY_STATE::KEY_DOWN || game->GetModuleInput()->GetGamePad().start) {game->GetModuleTransition()->Transition(this, (Module*)game->GetModuleTitleScreen(), 45);}
+    if (game->GetModuleInput()->GetKey(SDL_SCANCODE_SPACE) == KEY_STATE::KEY_DOWN || pad.start) {game->GetModuleTransition()->Transition(this, (Module*)game->GetModuleTitleScreen(), 45);}
     if (game->GetModuleInput()->GetKey(SDL_SCANCODE_F8) == KEY_STATE::KEY_DOWN) { game->GetModuleTransition()->Transition(this, (Module*)game->GetModuleLevelOne(), 4); }
     if (game->GetModuleInput()->GetKey(SDL_SCANCODE_F9) == KEY_STATE::KEY_DOWN) { game->GetModuleTransition()->Transition(this, (Module*)game->GetModuleWinScreen(), 4); }
 

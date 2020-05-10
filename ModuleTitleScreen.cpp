@@ -44,12 +44,13 @@ bool ModuleTitleScreen::Start() {
 }
 
 UPDATE_STATUS ModuleTitleScreen::Update() {
+    GamePad& pad = game->GetModuleInput()->GetGamePad(0);
     ++counter;
     if (once) {
         once = false;
         game->GetModuleAudio()->PlayFx(titleScreenAnimationSFX);
     }
-    if ((game->GetModuleInput()->GetKey(SDL_SCANCODE_SPACE) == KEY_STATE::KEY_DOWN || game->GetModuleInput()->GetGamePad().start) && titleScreenAnimation.HasFinished()) {
+    if ((game->GetModuleInput()->GetKey(SDL_SCANCODE_SPACE) == KEY_STATE::KEY_DOWN || pad.start) && titleScreenAnimation.HasFinished()) {
         game->GetModuleAudio()->PlayFx(creditSFX);
         game->GetModuleTransition()->Transition(this, (Module*)game->GetModuleLevelOne(), 4);
     }
