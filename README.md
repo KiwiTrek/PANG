@@ -15,12 +15,16 @@ In this project, we extracted its assets to recreate this game using C++ and the
 
 ## How to play (Controls)
 ### Main controls
-- In title screen, press SPACE to enter the game.
 #### Player movement
-- WASD:
-  - A: Move Left
-  - D: Move Right
-- Q: Shot the gun
+- Keyboard:
+  - WASD: Move
+  - SPACEBAR: Interact (Start)/Shoot
+  - ESC: Leave game
+- Gamepad:
+  - D-Pad/Left Stick: Move
+  - A/X/RT (X/□/R2) Button: Shoot
+  - START: Interact (Start)
+  - BACK (SELECT): Leave game
 #### Debug Controls
 - @Initial Screen
   - F8: Jump to Lvl 1
@@ -35,6 +39,14 @@ In this project, we extracted its assets to recreate this game using C++ and the
 
 ## Changelog
 ### Current version: 0.5
+#### 0.5.5
+- Started developing Module:
+  - Tilesets
+- Fixed a lot of bugs
+- Added Gamepad support
+- Game now plays on fullscreen only
+- Game now has a .exe icon
+
 #### 0.5:
 - Added Module:
   - Fonts
@@ -98,6 +110,18 @@ In this project, we extracted its assets to recreate this game using C++ and the
 - Created Player display (with no collisions nor animations)
 
 ## Bugs
+#### 0.5.5
+- Changed Hitboxes
+- Fixed collider flashes on debug mode
+- Basic Shot:
+  - Claw shot now erases at all times
+  - Claw shot still can break two balloons at once
+- Player: 
+  - Fixed minor issue with not being able to shoot after 2nd run
+  - Fixed shooting animation. Now you can shoot faster.
+  - Fixed dead bounce bug (player only bounces on walls and floor)
+  - You now shoot with Spacebar instead of Q
+
 #### 0.5
 - Some hitboxes are not equivalent to the original version
 - Fixed major collision bugs
