@@ -144,9 +144,9 @@ UPDATE_STATUS ModulePlayer::Update()
                 || game->GetModuleInput()->GetGamePad().r2 > 0)
                 && shot == false) {
                 shot = true;
+                game->GetModuleParticles()->normalWire.SetIsAlive(true);
                 if (!godMode) { game->GetModuleAudio()->PlayFx(shotSoundIndex); }
                 currentAnimation = &shoot;
-
                 if (GetInvertValue()) {
                     game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->normalWire, position.x + (shoot.GetWidth() / 3) - 2, position.y - 1, Collider::TYPE::PLAYER_SHOT);
                     game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->muzzleFlash, position.x + 3, position.y - 10, Collider::TYPE::PLAYER_SHOT);

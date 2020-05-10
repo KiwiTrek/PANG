@@ -54,6 +54,7 @@ void Particle::SetAnimPushBack(const SDL_Rect _rect) { anim.PushBack(_rect); }
 SDL_Rect Particle::GetCurrentAnim() { return anim.GetCurrentFrame(); }
 void Particle::SetAnimLoop(bool _loop) { anim.SetLoop(_loop); }
 void Particle::SetAnimSpeed(float _speed) { anim.SetSpeed(_speed); }
+void Particle::SetIsAlive(bool _isAlive) { isAlive = _isAlive; }
 bool Particle::CheckIsAlive() const { return isAlive; }
 void Particle::SetFrameCount(const int _frameCount) { frameCount = _frameCount; }
 int Particle::GetFrameCount()const { return frameCount; }

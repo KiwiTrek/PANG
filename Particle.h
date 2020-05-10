@@ -33,6 +33,7 @@ public:
     SDL_Rect GetCurrentAnim();
     void SetAnimLoop(bool _loop);
     void SetAnimSpeed(float _speed);
+    void SetIsAlive(bool _isAlive);
     bool CheckIsAlive() const;
     void SetFrameCount(const int _frameCount);
     int GetFrameCount()const;
