@@ -40,7 +40,7 @@ ModuleParticles::ModuleParticles(bool startEnabled) : Module(startEnabled) {
     }
     counter = 2;
     j = 0;
-
+	
     for (int i = 0; i < 23; i++) {
         counter++;
         if (counter == 4) {
@@ -50,8 +50,8 @@ ModuleParticles::ModuleParticles(bool startEnabled) : Module(startEnabled) {
         normalWire.SetAnimPushBack({ 797 + (i * 17),52 - (i * 2) - j,9,136 + (i * 2) + j });
     }
     normalWire.SetAnimLoop(false);
-    normalWire.SetAnimSpeed(0.888f); //0.888f
-    normalWire.SetFSpeedY(-1.65f); //-1.5f
+    normalWire.SetAnimSpeed(0.5f); //0.888f
+    normalWire.SetFSpeedY(-2.0f); //-1.5f
 
     //Balloon Explosions
     for (int i = 0; i < 4; ++i) { bigBalloonExplosion.SetAnimPushBack({ 8 + i * 48,511,48,46 }); }
@@ -184,7 +184,6 @@ void ModuleParticles::OnCollision(Collider* c1, Collider* c2) {
         // Always destroy particles that collide
         if (particles[i] != nullptr && particles[i]->GetCollider() == c1 && particles[i]->GetCollider()->GetType() == Collider::TYPE::PLAYER_SHOT) {
             game->GetModulePlayer()->SetIfShot(false);
-            normalWire.SetIsAlive(false);
             delete particles[i];
             particles[i] = nullptr;
             break;

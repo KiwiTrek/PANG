@@ -144,7 +144,6 @@ UPDATE_STATUS ModulePlayer::Update()
                 || game->GetModuleInput()->GetGamePad().r2 > 0)
                 && shot == false) {
                 shot = true;
-                game->GetModuleParticles()->normalWire.SetIsAlive(true);
                 if (!godMode) { game->GetModuleAudio()->PlayFx(shotSoundIndex); }
                 currentAnimation = &shoot;
                 if (GetInvertValue()) {
