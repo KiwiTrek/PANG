@@ -33,14 +33,14 @@ public:
         STAIRS
     };
 
-	struct Tile {
-		TileType id;
-		SDL_Rect tileBlit;
-		Collider* tileCollider = nullptr;
-	};
+    struct Tile {
+        TileType id;
+        SDL_Rect tileBlit;
+        Collider* tileCollider = nullptr;
+    };
 
 private:
-	SDL_Texture* foreground = nullptr;
+    SDL_Texture* foreground = nullptr;
     int level[26][48] = {
         {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
         {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
