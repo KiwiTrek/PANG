@@ -37,7 +37,6 @@ private:
     // The sprite section for the background
     //SDL_Rect background;
     SDL_Rect backgroundAdapter;
-
     // The scene sprite sheet loaded into an SDL_Texture
     SDL_Texture* backgroundTexture = nullptr;
 
