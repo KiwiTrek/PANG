@@ -35,6 +35,8 @@ public:
     void SetAnimSpeed(float _speed);
     void SetIsAlive(bool _isAlive);
     bool CheckIsAlive() const;
+    void SetLethality(bool _lethality);
+    bool GetLethality() const;
     void SetFrameCount(const int _frameCount);
     int GetFrameCount()const;
     void SetLifetime(const uint _lifetime);
@@ -58,6 +60,9 @@ private:
     // Defines wether the particle is alive or not
     // Particles will be set to not alive until "spawnTime" is reached
     bool isAlive = false;
+
+    // Defines wether the particle has collided or not with something
+    bool lethality = false;
 
     // Defines the amout of frames this particle has been active
     // Negative values mean the particle is waiting to be activated

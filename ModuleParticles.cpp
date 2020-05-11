@@ -182,8 +182,9 @@ Particle* ModuleParticles::AddParticle(const Particle& particle, int x, int y, C
 void ModuleParticles::OnCollision(Collider* c1, Collider* c2) {
     for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i) {
         // Always destroy particles that collide
-        if (particles[i] != nullptr && particles[i]->GetCollider() == c1 && particles[i]->GetCollider()->GetType() == Collider::TYPE::PLAYER_SHOT) {
+        if (particles[i] != nullptr && particles[i]->GetLethality() == false && particles[i]->GetCollider() == c1 && particles[i]->GetCollider()->GetType() == Collider::TYPE::PLAYER_SHOT) {
             game->GetModulePlayer()->SetIfShot(false);
+            normalWire.SetLethality(true);
             delete particles[i];
             particles[i] = nullptr;
             break;

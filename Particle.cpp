@@ -56,6 +56,8 @@ void Particle::SetAnimLoop(bool _loop) { anim.SetLoop(_loop); }
 void Particle::SetAnimSpeed(float _speed) { anim.SetSpeed(_speed); }
 void Particle::SetIsAlive(bool _isAlive) { isAlive = _isAlive; }
 bool Particle::CheckIsAlive() const { return isAlive; }
+void Particle::SetLethality(bool _lethality) { lethality = _lethality; }
+bool Particle::GetLethality() const { return lethality; }
 void Particle::SetFrameCount(const int _frameCount) { frameCount = _frameCount; }
 int Particle::GetFrameCount()const { return frameCount; }
 void Particle::SetLifetime(const uint _lifetime) { lifetime = _lifetime; }
