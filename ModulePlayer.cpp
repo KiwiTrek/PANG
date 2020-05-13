@@ -289,43 +289,32 @@ UPDATE_STATUS ModulePlayer::PostUpdate() {
 void ModulePlayer::OnCollision(Collider* c1, Collider* c2) {
     short int counter = 0;
     if (!godMode) {
-        if (c1 == collider && c2->GetType() == Collider::TYPE::WALL) {
-            if (position.x < (c2->GetRect().x + c2->GetRect().w) && position.x > c2->GetRect().x) { 
-                position.x = (c2->GetRect().x + c2->GetRect().w);
-                if (destroyed) {
-                    mruaSpeed.x = -mruaSpeed.x * 2;
-                    ChangeInvert();
-                }
-            }
-            else if ((position.x + currentAnimation->GetWidth()) > c2->GetRect().x&& position.x < c2->GetRect().x) { 
-                position.x = (c2->GetRect().x - currentAnimation->GetWidth()); 
-                if (destroyed) {
-                    mruaSpeed.x = -mruaSpeed.x / 2;
-                    ChangeInvert();
-                }
-            }
-        }
-        else if (c1 == collider && !destroyed && !isTimeOver && c2->GetType() == Collider::TYPE::STAIRS) {
-            //if ((c2->GetRect().y + c2->GetRect().h) >= (position.y + currentAnimation->GetHeight())) { // (bottom of stairs) should be able to move both x and y
-
-            //}
-            //else if (c2->GetRect().y <= position.y) { // (top of stairs) should be able to move both x and y
-
-            //}
-            //else { // (middle of stairs) should only be able to move y
-
-            //}
-        }
-        else if (c1 == collider && !destroyed && !isTimeOver && c2->GetType() == Collider::TYPE::BALLOON) { destroyed = true; }
-        else if (destroyed) {
-            if ((position.x + currentAnimation->GetWidth()) > c2->GetRect().x&& position.x < c2->GetRect().x && c2->GetType() == Collider::TYPE::WALL) {
-                mruaSpeed.x = -50;
-            }
-            if (c1 == collider && onceDeath && c2->GetType() == Collider::TYPE::FLOOR) {
-               mruaSpeed.y = -145;
-               onceDeath = false;
-            }
-        }
+        //if (c1 == collider && c2->GetType() == Collider::TYPE::WALL) {
+        //    if (position.x < (c2->GetRect().x + c2->GetRect().w) && position.x > c2->GetRect().x) { 
+        //        position.x = (c2->GetRect().x + c2->GetRect().w);
+        //        if (destroyed) {
+        //            mruaSpeed.x = -mruaSpeed.x * 2;
+        //            ChangeInvert();
+        //        }
+        //    }
+        //    else if ((position.x + currentAnimation->GetWidth()) > c2->GetRect().x&& position.x < c2->GetRect().x) { 
+        //        position.x = (c2->GetRect().x - currentAnimation->GetWidth()); 
+        //        if (destroyed) {
+        //            mruaSpeed.x = -mruaSpeed.x / 2;
+        //            ChangeInvert();
+        //        }
+        //    }
+        //}
+        if (c1 == collider && !destroyed && !isTimeOver && c2->GetType() == Collider::TYPE::BALLOON) { destroyed = true; }
+        //else if (destroyed) {
+        //    if ((position.x + currentAnimation->GetWidth()) > c2->GetRect().x&& position.x < c2->GetRect().x && c2->GetType() == Collider::TYPE::WALL) {
+        //        mruaSpeed.x = -50;
+        //    }
+        //    if (c1 == collider && onceDeath && c2->GetType() == Collider::TYPE::FLOOR) {
+        //       mruaSpeed.y = -145;
+        //       onceDeath = false;
+        //    }
+        //}
     }
 }
 

@@ -8,12 +8,10 @@ class Module;
 struct Collider {
     enum TYPE {
         NONE = -1,
-        WALL,
         FLOOR,
-        STAIRS,
         PLAYER,
         BALLOON,
-        ANIMAL,
+        //ANIMAL,
         PLAYER_SHOT,
         MAX
     };

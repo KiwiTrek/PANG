@@ -10,58 +10,39 @@
 ModuleCollisions::ModuleCollisions(bool startEnabled) : Module(startEnabled) {
     for (uint i = 0; i < MAX_COLLIDERS; ++i) { colliders[i] = nullptr; }
 
-    matrix[Collider::TYPE::WALL][Collider::TYPE::NONE] = false;
-    matrix[Collider::TYPE::WALL][Collider::TYPE::WALL] = false;
-    matrix[Collider::TYPE::WALL][Collider::TYPE::FLOOR] = false;
-    matrix[Collider::TYPE::WALL][Collider::TYPE::STAIRS] = false;
-    matrix[Collider::TYPE::WALL][Collider::TYPE::PLAYER] = true;
-    matrix[Collider::TYPE::WALL][Collider::TYPE::BALLOON] = true;
-    matrix[Collider::TYPE::WALL][Collider::TYPE::ANIMAL] = false;
-    matrix[Collider::TYPE::WALL][Collider::TYPE::PLAYER_SHOT] = true;
-
     matrix[Collider::TYPE::FLOOR][Collider::TYPE::NONE] = false;
-    matrix[Collider::TYPE::FLOOR][Collider::TYPE::WALL] = false;
     matrix[Collider::TYPE::FLOOR][Collider::TYPE::FLOOR] = false;
-    matrix[Collider::TYPE::FLOOR][Collider::TYPE::STAIRS] = false;
     matrix[Collider::TYPE::FLOOR][Collider::TYPE::PLAYER] = true;
     matrix[Collider::TYPE::FLOOR][Collider::TYPE::BALLOON] = true;
-    matrix[Collider::TYPE::FLOOR][Collider::TYPE::ANIMAL] = false;
+    //matrix[Collider::TYPE::FLOOR][Collider::TYPE::ANIMAL] = false;
     matrix[Collider::TYPE::FLOOR][Collider::TYPE::PLAYER_SHOT] = true;
 
     matrix[Collider::TYPE::PLAYER][Collider::TYPE::NONE] = false;
-    matrix[Collider::TYPE::PLAYER][Collider::TYPE::WALL] = true;
     matrix[Collider::TYPE::PLAYER][Collider::TYPE::FLOOR] = true;
-    matrix[Collider::TYPE::PLAYER][Collider::TYPE::STAIRS] = true;
     matrix[Collider::TYPE::PLAYER][Collider::TYPE::PLAYER] = false;
     matrix[Collider::TYPE::PLAYER][Collider::TYPE::BALLOON] = true;
-    matrix[Collider::TYPE::PLAYER][Collider::TYPE::ANIMAL] = true;
+    //matrix[Collider::TYPE::PLAYER][Collider::TYPE::ANIMAL] = true;
     matrix[Collider::TYPE::PLAYER][Collider::TYPE::PLAYER_SHOT] = false;
 
     matrix[Collider::TYPE::BALLOON][Collider::TYPE::NONE] = false;
-    matrix[Collider::TYPE::BALLOON][Collider::TYPE::WALL] = true;
     matrix[Collider::TYPE::BALLOON][Collider::TYPE::FLOOR] = true;
-    matrix[Collider::TYPE::BALLOON][Collider::TYPE::STAIRS] = false;
     matrix[Collider::TYPE::BALLOON][Collider::TYPE::PLAYER] = true;
     matrix[Collider::TYPE::BALLOON][Collider::TYPE::BALLOON] = true;
-    matrix[Collider::TYPE::BALLOON][Collider::TYPE::ANIMAL] = false;
+    //matrix[Collider::TYPE::BALLOON][Collider::TYPE::ANIMAL] = false;
     matrix[Collider::TYPE::BALLOON][Collider::TYPE::PLAYER_SHOT] = true;
 
-    matrix[Collider::TYPE::ANIMAL][Collider::TYPE::NONE] = false;
-    matrix[Collider::TYPE::ANIMAL][Collider::TYPE::WALL] = false;
-    matrix[Collider::TYPE::ANIMAL][Collider::TYPE::FLOOR] = false;
-    matrix[Collider::TYPE::ANIMAL][Collider::TYPE::STAIRS] = false;
-    matrix[Collider::TYPE::ANIMAL][Collider::TYPE::PLAYER] = true;
-    matrix[Collider::TYPE::ANIMAL][Collider::TYPE::BALLOON] = false;
-    matrix[Collider::TYPE::ANIMAL][Collider::TYPE::ANIMAL] = false;
-    matrix[Collider::TYPE::ANIMAL][Collider::TYPE::PLAYER_SHOT] = true;
+    //matrix[Collider::TYPE::ANIMAL][Collider::TYPE::NONE] = false;
+    //matrix[Collider::TYPE::ANIMAL][Collider::TYPE::FLOOR] = false;
+    //matrix[Collider::TYPE::ANIMAL][Collider::TYPE::PLAYER] = true;
+    //matrix[Collider::TYPE::ANIMAL][Collider::TYPE::BALLOON] = false;
+    //matrix[Collider::TYPE::ANIMAL][Collider::TYPE::ANIMAL] = false;
+    //matrix[Collider::TYPE::ANIMAL][Collider::TYPE::PLAYER_SHOT] = true;
 
     matrix[Collider::TYPE::PLAYER_SHOT][Collider::TYPE::NONE] = false;
-    matrix[Collider::TYPE::PLAYER_SHOT][Collider::TYPE::WALL] = true;
     matrix[Collider::TYPE::PLAYER_SHOT][Collider::TYPE::FLOOR] = true;
-    matrix[Collider::TYPE::PLAYER_SHOT][Collider::TYPE::STAIRS] = false;
     matrix[Collider::TYPE::PLAYER_SHOT][Collider::TYPE::PLAYER] = false;
     matrix[Collider::TYPE::PLAYER_SHOT][Collider::TYPE::BALLOON] = true;
-    matrix[Collider::TYPE::PLAYER_SHOT][Collider::TYPE::ANIMAL] = true;
+    //matrix[Collider::TYPE::PLAYER_SHOT][Collider::TYPE::ANIMAL] = true;
     matrix[Collider::TYPE::PLAYER_SHOT][Collider::TYPE::PLAYER_SHOT] = false;
 }
 
@@ -119,14 +100,8 @@ void ModuleCollisions::DebugDraw() {
         if (colliders[i] == nullptr) { continue; }
 
         switch (colliders[i]->GetType()) {
-        case Collider::TYPE::WALL: // yellow
-            game->GetModuleRender()->DrawQuad(colliders[i]->GetRect(), 255, 255, 0, alpha);
-            break;
         case Collider::TYPE::FLOOR: // yellow
             game->GetModuleRender()->DrawQuad(colliders[i]->GetRect(), 255, 255, 0, alpha);
-            break;
-        case Collider::TYPE::STAIRS: // magenta
-            game->GetModuleRender()->DrawQuad(colliders[i]->GetRect(), 255, 0, 255, alpha);
             break;
         case Collider::TYPE::PLAYER: // red
             game->GetModuleRender()->DrawQuad(colliders[i]->GetRect(), 255, 0, 0, alpha);
@@ -134,14 +109,20 @@ void ModuleCollisions::DebugDraw() {
         case Collider::TYPE::BALLOON: // green
             game->GetModuleRender()->DrawQuad(colliders[i]->GetRect(), 0, 255, 0, alpha);
             break;
-        case Collider::TYPE::ANIMAL: // blue
-            game->GetModuleRender()->DrawQuad(colliders[i]->GetRect(), 0, 0, 255, alpha);
-            break;
+        //case Collider::TYPE::ANIMAL: // blue
+        //    game->GetModuleRender()->DrawQuad(colliders[i]->GetRect(), 0, 0, 255, alpha);
+        //    break;
         case Collider::TYPE::PLAYER_SHOT: // cyan
             game->GetModuleRender()->DrawQuad(colliders[i]->GetRect(), 0, 255, 255 , alpha);
             break;
         }
     }
+    game->GetModuleRender()->DrawQuad({ 0,0, TILE_SIZE, TILE_SIZE * 26 }, 255, 255, 0, alpha);
+    game->GetModuleRender()->DrawQuad({ 0,0, TILE_SIZE * 48, TILE_SIZE }, 255, 255, 0, alpha);
+    game->GetModuleRender()->DrawQuad({ TILE_SIZE * 47,0, TILE_SIZE, TILE_SIZE * 26 }, 255, 255, 0, alpha);
+    game->GetModuleRender()->DrawQuad({ 0,TILE_SIZE * 25, TILE_SIZE * 48, TILE_SIZE }, 255, 255, 0, alpha);
+    //game->GetModuleRender()->DrawQuad({ 0,TILE_SIZE * 25 - 40, TILE_SIZE * 48, 2 }, 255, 255, 0, alpha);
+    game->GetModuleRender()->DrawQuad({ 0,TILE_SIZE * 2, TILE_SIZE * 48, 2 }, 255, 255, 0, alpha);
 }
 
 // Called before quitting
