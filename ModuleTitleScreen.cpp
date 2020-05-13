@@ -4,6 +4,7 @@
 #include "ModuleWindow.h"
 #include "ModuleTextures.h"
 #include "ModuleRender.h"
+#include "ModuleTileset.h"
 #include "ModuleAudio.h"
 #include "ModuleInput.h"
 #include "ModulePlayer.h"

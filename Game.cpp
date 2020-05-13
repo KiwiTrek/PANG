@@ -34,8 +34,8 @@ Game::Game() {
 
     modules[4] = projectSheet = new ModuleProjectSheet(true);
     modules[5] = titleScreen = new ModuleTitleScreen(false);
-    modules[6] = tileset = new ModuleTileset(false);
-    modules[7] = levelOne = new ModuleLevelOne(false);
+    modules[6] = levelOne = new ModuleLevelOne(false);
+    modules[7] = tileset = new ModuleTileset(false);
     modules[8] = enemies = new ModuleEnemies(false);
     modules[9] = player = new ModulePlayer(false);
     modules[10] = particles = new ModuleParticles(false);

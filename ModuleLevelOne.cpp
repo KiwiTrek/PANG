@@ -49,6 +49,7 @@ bool ModuleLevelOne::Start() {
     game->GetModulePlayer()->Enable();
     game->GetModuleEnemies()->Enable(); 
     game->GetModuleCollisions()->Enable();
+    game->GetModuleTileset()->Enable();
     
 
     return true;
@@ -88,11 +89,14 @@ bool ModuleLevelOne::CleanUp() {
 	game->GetModuleFonts()->Unload(game->GetModulePlayer()->GetTimerFontIndex());
     game->GetModuleAudio()->UnloadFx(game->GetModulePlayer()->GetShotSoundIndex());
     game->GetModuleAudio()->UnloadFx(game->GetModulePlayer()->GetDedSoundIndex());
+
     game->GetModuleAudio()->PlayMusicOnce("Resources/BGM/noMusic.ogg");
+
     game->GetModulePlayer()->Disable();
     game->GetModuleEnemies()->Disable();
     game->GetModuleParticles()->Disable();
     game->GetModuleCollisions()->Disable();
+    game->GetModuleTileset()->Disable();
     
     return true;
 }

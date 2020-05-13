@@ -19,39 +19,64 @@ bool ModuleTileset::Init() {
 }
 //By now we will consider all modules to be permanently active
 bool ModuleTileset::Start() {
-    if (game->GetModuleLevelOne()->IsEnabled) {
-        foreground = game->GetModuleTextures()->Load("Resources/Sprites/Foreground1.png");
-        for (int i = 0; i != 26; ++i) {
-            for (int j = 0; j != 48; ++j) {
-                switch (level[i][j]) {
-                case 0:
-                    levelTiled[i][j] = {
-                        TileType::AIR,
-                        {i * TILE_SIZE,j * TILE_SIZE,TILE_SIZE,TILE_SIZE},
-                        game->GetModuleCollisions()->AddCollider(levelTiled[i][j].tileBlit,Collider::TYPE::NONE)
-                    };
-                    break;
-                case 1:
-                    levelTiled[i][j] = {
-                        TileType::WALL,
-                        {i * TILE_SIZE,j * TILE_SIZE,TILE_SIZE,TILE_SIZE},
-                        game->GetModuleCollisions()->AddCollider(levelTiled[i][j].tileBlit,Collider::TYPE::WALL)
-                    };
-                    break;
-                default:
-                    break;
-                }
+    if (game->GetModuleLevelOne()->IsEnabled()) {foreground = game->GetModuleTextures()->Load("Resources/Sprites/Foregrounds/Foreground1.png");}
+    /*else if (game->GetModuleLevelTwo()->IsEnabled())*/
+    else { return false; }
+
+    for (int i = 0; i != 26; ++i) {
+        for (int j = 0; j != 48; ++j) {
+            switch (level[i][j]) {
+            case 0:
+                levelTiled[i][j] = {
+                    TileType::AIR,
+                    {i * TILE_SIZE,j * TILE_SIZE,TILE_SIZE,TILE_SIZE}
+                };
+                break;
+            case 1:
+                levelTiled[i][j] = {
+                    TileType::WALL,
+                    {i * TILE_SIZE,j * TILE_SIZE,TILE_SIZE,TILE_SIZE}
+                };
+                break;
+            case 2:
+                levelTiled[i][j] = {
+                    TileType::DESTRUCTIBLE1,
+                    {i * TILE_SIZE,j * TILE_SIZE,TILE_SIZE,TILE_SIZE}
+                };
+                break;
+            case 3:
+                levelTiled[i][j] = {
+                    TileType::DESTRUCTIBLE2,
+                    {i * TILE_SIZE,j * TILE_SIZE,TILE_SIZE,TILE_SIZE}
+                };
+                break;
+            case 4:
+                levelTiled[i][j] = {
+                    TileType::NOT_DESTRUCTIBLE,
+                    {i * TILE_SIZE,j * TILE_SIZE,TILE_SIZE,TILE_SIZE}
+                };
+                break;
+            case 5:
+                levelTiled[i][j] = {
+                    TileType::STAIRS,
+                    {i * TILE_SIZE,j * TILE_SIZE,TILE_SIZE,TILE_SIZE}
+                };
+                break;
+            case 6:
+                levelTiled[i][j] = {
+                    TileType::TOP_STAIRS,
+                    {i * TILE_SIZE,j * TILE_SIZE,TILE_SIZE,TILE_SIZE}
+                };
+                break;
+            default:
+                break;
             }
         }
     }
-    /*else if (game->GetModuleLevelTwo()->IsEnabled)*/
-    else { return false; }
+
     return true;
 }
-//Called at the beginning of each application loop
-UPDATE_STATUS ModuleTileset::PreUpdate() { return UPDATE_STATUS::UPDATE_CONTINUE; }
-//Called at the middle of each application loop
-UPDATE_STATUS ModuleTileset::Update() { return UPDATE_STATUS::UPDATE_CONTINUE; }
+
 //Called at the end of each application loop
 UPDATE_STATUS ModuleTileset::PostUpdate() { 
     for (int y = 0; y < 26; y++) {
