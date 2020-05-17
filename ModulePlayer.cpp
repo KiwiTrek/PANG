@@ -173,6 +173,41 @@ UPDATE_STATUS ModulePlayer::Update()
         if (game->GetModuleInput()->GetKey(SDL_SCANCODE_F9) == KEY_DOWN) { game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelOne(), (Module*)game->GetModuleWinScreen(), 4); }
         if (game->GetModuleInput()->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) { timer = 2; }
 
+        // This is where the physics go
+        physics.UpdatePhysics(position.x, position.y, mruaSpeed.x, mruaSpeed.y);
+
+        // This is where the movement collisions go
+        if (!godMode) {
+            //LEFT WALL
+            if (physics.CheckMovementCollision({ position.x, position.y,currentAnimation->GetWidth(), currentAnimation->GetHeight() }, { 0,0, TILE_SIZE, TILE_SIZE * 26 })) {
+                position.x = 2 * TILE_SIZE - position.x;
+                if (destroyed) {
+                    mruaSpeed.x = -mruaSpeed.x * 2;
+                    ChangeInvert();
+                }
+            }
+            //TOP FLOOR
+
+            //RIGHT WALL
+            if (physics.CheckMovementCollision({ position.x, position.y,currentAnimation->GetWidth(), currentAnimation->GetHeight() }, { TILE_SIZE * 47,0, TILE_SIZE, TILE_SIZE * 26 })) {
+                position.x = 2 * TILE_SIZE * 47 - currentAnimation->GetWidth() * 2 - position.x;
+                if (destroyed) {
+                    mruaSpeed.x = -mruaSpeed.x / 2;
+                    ChangeInvert();
+                }
+            }
+            //BOTTOM FLOOR
+            if (physics.CheckMovementCollision({ position.x, position.y,currentAnimation->GetWidth(), currentAnimation->GetHeight() }, { 0,TILE_SIZE * 25, TILE_SIZE * 48, TILE_SIZE })) {
+                if (destroyed) {
+                    if (onceDeath) {
+                        mruaSpeed.y = -145;
+                        onceDeath = false;
+                    }
+                }
+                else { position.y = 2 * TILE_SIZE * 25 - currentAnimation->GetHeight() * 2 - position.y; }
+            }
+        }
+
         if (isTimeOver) {
             if (once) {
                 once = false;
@@ -218,8 +253,6 @@ UPDATE_STATUS ModulePlayer::Update()
                 }
                 game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelOne(), (Module*)game->GetModuleLevelOne(), 4);
             }
-            physics.UpdatePhysics(position.x, position.y, mruaSpeed.x, mruaSpeed.y);
-            collider->SetPos(position.x, position.y, ded.GetWidth(), ded.GetHeight());
         }
 
         currentAnimation->Update();
@@ -286,37 +319,7 @@ UPDATE_STATUS ModulePlayer::PostUpdate() {
     return UPDATE_STATUS::UPDATE_CONTINUE; 
 }
 
-void ModulePlayer::OnCollision(Collider* c1, Collider* c2) {
-    short int counter = 0;
-    if (!godMode) {
-        //if (c1 == collider && c2->GetType() == Collider::TYPE::WALL) {
-        //    if (position.x < (c2->GetRect().x + c2->GetRect().w) && position.x > c2->GetRect().x) { 
-        //        position.x = (c2->GetRect().x + c2->GetRect().w);
-        //        if (destroyed) {
-        //            mruaSpeed.x = -mruaSpeed.x * 2;
-        //            ChangeInvert();
-        //        }
-        //    }
-        //    else if ((position.x + currentAnimation->GetWidth()) > c2->GetRect().x&& position.x < c2->GetRect().x) { 
-        //        position.x = (c2->GetRect().x - currentAnimation->GetWidth()); 
-        //        if (destroyed) {
-        //            mruaSpeed.x = -mruaSpeed.x / 2;
-        //            ChangeInvert();
-        //        }
-        //    }
-        //}
-        if (c1 == collider && !destroyed && !isTimeOver && c2->GetType() == Collider::TYPE::BALLOON) { destroyed = true; }
-        //else if (destroyed) {
-        //    if ((position.x + currentAnimation->GetWidth()) > c2->GetRect().x&& position.x < c2->GetRect().x && c2->GetType() == Collider::TYPE::WALL) {
-        //        mruaSpeed.x = -50;
-        //    }
-        //    if (c1 == collider && onceDeath && c2->GetType() == Collider::TYPE::FLOOR) {
-        //       mruaSpeed.y = -145;
-        //       onceDeath = false;
-        //    }
-        //}
-    }
-}
+void ModulePlayer::OnCollision(Collider* c1, Collider* c2) { if (!godMode && c1 == collider && !destroyed && !isTimeOver && c2->GetType() == Collider::TYPE::BALLOON) { destroyed = true; } }
 
 int ModulePlayer::GetSpeed() const { return speed; }
 void ModulePlayer::SetSpeed(int _speed) { speed = _speed; }
