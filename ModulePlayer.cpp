@@ -11,6 +11,7 @@
 #include "ModuleCollisions.h"
 #include "ModuleTransition.h"
 #include "ModuleLevelOne.h"
+#include "ModuleTileset.h"
 #include "ModuleFonts.h"
 
 #include "Particle.h"
@@ -177,35 +178,93 @@ UPDATE_STATUS ModulePlayer::Update()
         physics.UpdatePhysics(position.x, position.y, mruaSpeed.x, mruaSpeed.y);
 
         // This is where the movement collisions go
+        iPoint tile = { position.x / TILE_SIZE, position.y / TILE_SIZE };
+        float collisionSpeedM = -mruaSpeed.x * 2;
+        float collisionSpeedm = -mruaSpeed.x / 2;
+        LOG("Tile = %d, %d", tile.x, tile.y);
+        if (tile.x < 0) { tile.x = 0; }
+        if (tile.y < 0) { tile.y = 0; }
         if (!godMode) {
-            //LEFT WALL
-            if (physics.CheckMovementCollision({ position.x, position.y,currentAnimation->GetWidth(), currentAnimation->GetHeight() }, { 0,0, TILE_SIZE, TILE_SIZE * 26 })) {
-                position.x = 2 * TILE_SIZE - position.x;
-                if (destroyed) {
-                    mruaSpeed.x = -mruaSpeed.x * 2;
-                    ChangeInvert();
+            if (destroyed) {
+                for (int i = 0; i < 4; i++) {
+                    if (game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x).id == ModuleTileset::TileType::WALL && position.y >= 25 * TILE_SIZE) {
+                        position.x = 2 * TILE_SIZE - position.x;
+                        mruaSpeed.x = 100;
+                        ChangeInvert();
+                        break;
+                    }
+                }
+
+                for (int i = -1; i < 3; i++) {
+                    if (game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x + 5).id == ModuleTileset::TileType::WALL && position.y >= 25 * TILE_SIZE) {
+                        position.x = 2 * TILE_SIZE * 47 - currentAnimation->GetWidth() * 2 - position.x;
+                        mruaSpeed.x = -50;
+                        ChangeInvert();
+                        break;
+                    }
+                }
+
+                for (int i = 1; i < 4; i++) {
+                    if (destroyed && onceDeath && game->GetModuleTileset()->GetLevelTile(tile.y + 3, tile.x + i).id == ModuleTileset::TileType::WALL) {
+                        mruaSpeed.y = -145;
+                        onceDeath = false;
+                        break;
+                    }
                 }
             }
+            else {
+                for (int i = 0; i < 4; i++) {
+                    if (game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x).id == ModuleTileset::TileType::WALL) {
+                        position.x = 2 * TILE_SIZE - position.x;
+                        break;
+                    }
+                }
+
+                for (int i = -1; i < 3; i++) {
+                    if (game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x + 4).id == ModuleTileset::TileType::WALL) {
+                        position.x = 2 * TILE_SIZE * 47 - currentAnimation->GetWidth() * 2 - position.x;
+                        break;
+                    }
+                }
+
+                for (int i = 1; i < 4; i++) {
+                    if (game->GetModuleTileset()->GetLevelTile(tile.y + 3, tile.x + i).id == ModuleTileset::TileType::WALL) {
+                        position.y = 2 * TILE_SIZE * 25 - currentAnimation->GetHeight() * 2 - position.y;
+                        break;
+                    }
+                }
+            }
+
+            //LEFT WALL
+            //if (physics.CheckMovementCollision({ position.x, position.y,currentAnimation->GetWidth(), currentAnimation->GetHeight() }, { 0,0, TILE_SIZE, TILE_SIZE * 26 })) {
+            //    position.x = 2 * TILE_SIZE - position.x;
+            //    if (destroyed) {
+            //        mruaSpeed.x = -mruaSpeed.x * 2;
+            //        ChangeInvert();
+            //    }
+            //}
+
             //TOP FLOOR
 
             //RIGHT WALL
-            if (physics.CheckMovementCollision({ position.x, position.y,currentAnimation->GetWidth(), currentAnimation->GetHeight() }, { TILE_SIZE * 47,0, TILE_SIZE, TILE_SIZE * 26 })) {
-                position.x = 2 * TILE_SIZE * 47 - currentAnimation->GetWidth() * 2 - position.x;
-                if (destroyed) {
-                    mruaSpeed.x = -mruaSpeed.x / 2;
-                    ChangeInvert();
-                }
-            }
+            //if (physics.CheckMovementCollision({ position.x, position.y,currentAnimation->GetWidth(), currentAnimation->GetHeight() }, { TILE_SIZE * 47,0, TILE_SIZE, TILE_SIZE * 26 })) {
+            //    position.x = 2 * TILE_SIZE * 47 - currentAnimation->GetWidth() * 2 - position.x;
+            //    if (destroyed) {
+            //        mruaSpeed.x = -mruaSpeed.x / 2;
+            //        ChangeInvert();
+            //    }
+            //}
+
             //BOTTOM FLOOR
-            if (physics.CheckMovementCollision({ position.x, position.y,currentAnimation->GetWidth(), currentAnimation->GetHeight() }, { 0,TILE_SIZE * 25, TILE_SIZE * 48, TILE_SIZE })) {
-                if (destroyed) {
-                    if (onceDeath) {
-                        mruaSpeed.y = -145;
-                        onceDeath = false;
-                    }
-                }
-                else { position.y = 2 * TILE_SIZE * 25 - currentAnimation->GetHeight() * 2 - position.y; }
-            }
+            //if (physics.CheckMovementCollision({ position.x, position.y,currentAnimation->GetWidth(), currentAnimation->GetHeight() }, { 0,TILE_SIZE * 25, TILE_SIZE * 48, TILE_SIZE })) {
+            //    if (destroyed) {
+            //        if (onceDeath) {
+            //            mruaSpeed.y = -145;
+            //            onceDeath = false;
+            //        }
+            //    }
+            //    else { position.y = 2 * TILE_SIZE * 25 - currentAnimation->GetHeight() * 2 - position.y; }
+            //}
         }
 
         if (isTimeOver) {
@@ -319,7 +378,15 @@ UPDATE_STATUS ModulePlayer::PostUpdate() {
     return UPDATE_STATUS::UPDATE_CONTINUE; 
 }
 
-void ModulePlayer::OnCollision(Collider* c1, Collider* c2) { if (!godMode && c1 == collider && !destroyed && !isTimeOver && c2->GetType() == Collider::TYPE::BALLOON) { destroyed = true; } }
+void ModulePlayer::OnCollision(Collider* c1, Collider* c2) {
+    if (!godMode && c1 == collider && !destroyed && !isTimeOver && c2->GetType() == Collider::TYPE::BALLOON) {
+        destroyed = true;
+        if (position.x < c2->GetRect().x) {
+            mruaSpeed.x = -100 / 2;
+            ChangeInvert();
+        }
+    }
+}
 
 int ModulePlayer::GetSpeed() const { return speed; }
 void ModulePlayer::SetSpeed(int _speed) { speed = _speed; }
