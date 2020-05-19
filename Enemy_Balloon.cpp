@@ -6,6 +6,7 @@
 #include "ModuleCollisions.h"
 #include "ModuleEnemies.h"
 #include "ModuleRender.h"
+#include "ModuleTileset.h"
 #include "Enemy.h"
 
 Enemy_Balloon::Enemy_Balloon(int x, int y, ENEMY_TYPE _type, bool _isMovingRight) : Enemy(x, y, _type, _isMovingRight) {
@@ -37,26 +38,141 @@ void Enemy_Balloon::Update() {
     physics.UpdatePhysics(position.x, position.y, speed.x, speed.y);
 
     // This is where the movement collisions go
-    //LEFT WALL
-    if (physics.CheckMovementCollision({ position.x, position.y,currentAnim->GetWidth(), currentAnim->GetHeight() }, { 0,0, TILE_SIZE, TILE_SIZE * 26 })) {
-        position.x = 2 * TILE_SIZE - position.x;
-        speed.x = -(speed.x * 2);
+    iPoint tile = { position.x / TILE_SIZE, position.y / TILE_SIZE };
+    LOG("Tile = %d, %d", tile.x, tile.y);
+    if (tile.x < 0) { tile.x = 0; }
+    if (tile.y < 0) { tile.y = 0; }
+
+    //LEFT WALL                                                                                                     {x-1T, y-1T, w+2, h+2}
+    //if (physics.CheckMovementCollision({ position.x, position.y,currentAnim->GetWidth(), currentAnim->GetHeight() }, { 0,0, TILE_SIZE, TILE_SIZE * 26 })) {
+    //    position.x = 2 * TILE_SIZE - position.x;
+    //    speed.x = -(speed.x * 2);
+    //}
+
+    if (GetEnemyType() == CHUNGUS_BALLOON) {
+        for (int i = 0; i < 5; i++) {
+            if (game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x).id == ModuleTileset::TileType::WALL) {
+                position.x = 2 * TILE_SIZE - position.x;
+                speed.x = 119.5f;
+                break;
+            }
+        }
+    }
+    else if (GetEnemyType() == NOT_THAT_MEH_BALLOON) {
+        for (int i = 0; i < 3; i++) {
+            if (game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x).id == ModuleTileset::TileType::WALL) {
+                position.x = 2 * TILE_SIZE - position.x;
+                speed.x = 119.5f;
+                break;
+            }
+        }
+    }
+    else if (GetEnemyType() == MEH_BALLOON) {
+        for (int i = 0; i < 2; i++) {
+            if (game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x).id == ModuleTileset::TileType::WALL) {
+                position.x = 2 * TILE_SIZE - position.x;
+                speed.x = 119.5f;
+                break;
+            }
+        }
+    }
+    else if (GetEnemyType() == SMOL_BALLOON) {
+        for (int i = 0; i < 1; i++) {
+            if (game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x).id == ModuleTileset::TileType::WALL) {
+                position.x = 2 * TILE_SIZE - position.x;
+                speed.x = 119.5f;
+                break;
+            }
+        }
     }
     //TOP FLOOR
 
     //RIGHT WALL
-    if (physics.CheckMovementCollision({ position.x, position.y,currentAnim->GetWidth(), currentAnim->GetHeight() }, { TILE_SIZE * 47,0, TILE_SIZE, TILE_SIZE * 26 })) {
-        position.x = 2 * TILE_SIZE * 47 - currentAnim->GetWidth() * 2 - position.x;
-        speed.x = -(speed.x / 2);
+    //if (physics.CheckMovementCollision({ position.x, position.y,currentAnim->GetWidth(), currentAnim->GetHeight() }, { TILE_SIZE * 47,0, TILE_SIZE, TILE_SIZE * 26 })) {
+    //    position.x = 2 * TILE_SIZE * 47 - currentAnim->GetWidth() * 2 - position.x;
+    //    speed.x = -(speed.x / 2);
+    //}
+    if (GetEnemyType() == CHUNGUS_BALLOON) {
+        for (int i = -1; i < 4; i++) {
+            if (game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x + 6).id == ModuleTileset::TileType::WALL) {
+                position.x = 2 * TILE_SIZE * 47 - currentAnim->GetWidth() * 2 - position.x;
+                speed.x = -59.25f;
+                break;
+            }
+        }
     }
+    else if (GetEnemyType() == NOT_THAT_MEH_BALLOON) {
+        for (int i = -1; i < 3; i++) {
+            if (game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x + 4).id == ModuleTileset::TileType::WALL) {
+                position.x = 2 * TILE_SIZE * 47 - currentAnim->GetWidth() * 2 - position.x;
+                speed.x = -59.25f;
+                break;
+            }
+        }
+    }
+    else if (GetEnemyType() == MEH_BALLOON) {
+        for (int i = -1; i < 1; i++) {
+            if (game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x + 2).id == ModuleTileset::TileType::WALL) {
+                position.x = 2 * TILE_SIZE * 47 - currentAnim->GetWidth() * 2 - position.x;
+                speed.x = -59.25f;
+                break;
+            }
+        }
+    }
+    else if (GetEnemyType() == SMOL_BALLOON) {
+        for (int i = -1; i < 0; i++) {
+            if (game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x + 1).id == ModuleTileset::TileType::WALL) {
+                position.x = 2 * TILE_SIZE * 47 - currentAnim->GetWidth() * 2 - position.x;
+                speed.x = -59.25f;
+                break;
+            }
+        }
+    }
+
     //BOTTOM FLOOR
-    if (physics.CheckMovementCollision({ position.x, position.y,currentAnim->GetWidth(), currentAnim->GetHeight() }, { 0,TILE_SIZE * 25, TILE_SIZE * 48, TILE_SIZE })) {
-        position.y = 2 * TILE_SIZE * 25 - currentAnim->GetHeight() * 2 - position.y;
-        if (GetEnemyType() == CHUNGUS_BALLOON) { speed.y = -physics.CalculateSpeed(position, speed, currentAnim->GetHeight(), TILE_SIZE * 3); } // -375
-        if (GetEnemyType() == NOT_THAT_MEH_BALLOON) { speed.y = -physics.CalculateSpeed(position, speed, currentAnim->GetHeight(), TILE_SIZE * 10); } // - 312
-        if (GetEnemyType() == MEH_BALLOON) { speed.y = -physics.CalculateSpeed(position, speed, currentAnim->GetHeight(), TILE_SIZE * 14); } // -252
-        if (GetEnemyType() == SMOL_BALLOON) { speed.y = -physics.CalculateSpeed(position, speed, currentAnim->GetHeight(), TILE_SIZE * 20); } // -197
+    //if (physics.CheckMovementCollision({ position.x, position.y,currentAnim->GetWidth(), currentAnim->GetHeight() }, { 0,TILE_SIZE * 25, TILE_SIZE * 48, TILE_SIZE })) {
+    //    position.y = 2 * TILE_SIZE * 25 - currentAnim->GetHeight() * 2 - position.y;
+    //    if (GetEnemyType() == CHUNGUS_BALLOON) { speed.y = -physics.CalculateSpeed(position, speed, currentAnim->GetHeight(), TILE_SIZE * 3); } // -375
+    //    else if (GetEnemyType() == NOT_THAT_MEH_BALLOON) { speed.y = -physics.CalculateSpeed(position, speed, currentAnim->GetHeight(), TILE_SIZE * 10); } // - 312
+    //    else if (GetEnemyType() == MEH_BALLOON) { speed.y = -physics.CalculateSpeed(position, speed, currentAnim->GetHeight(), TILE_SIZE * 14); } // -252
+    //    else if (GetEnemyType() == SMOL_BALLOON) { speed.y = -physics.CalculateSpeed(position, speed, currentAnim->GetHeight(), TILE_SIZE * 20); } // -197
+    //}
+
+
+    if (GetEnemyType() == CHUNGUS_BALLOON) {
+        for (int i = 1; i < 6; i++) {
+            if (game->GetModuleTileset()->GetLevelTile(tile.y + 5, tile.x + i).id == ModuleTileset::TileType::WALL) {
+                position.y = 2 * TILE_SIZE * 25 - currentAnim->GetHeight() * 2 - position.y;
+                speed.y = -physics.CalculateSpeed(position, speed, currentAnim->GetHeight(), TILE_SIZE * 3);
+                break;
+            }
+        }
     }
+    else if (GetEnemyType() == NOT_THAT_MEH_BALLOON) {
+        for (int i = 1; i < 4; i++) {
+            if (game->GetModuleTileset()->GetLevelTile(tile.y + 3, tile.x + i).id == ModuleTileset::TileType::WALL) {
+                position.y = 2 * TILE_SIZE * 25 - currentAnim->GetHeight() * 2 - position.y;
+                speed.y = -physics.CalculateSpeed(position, speed, currentAnim->GetHeight(), TILE_SIZE * 10);
+                break;
+            }
+        }
+    }
+    else if (GetEnemyType() == MEH_BALLOON) {
+        for (int i = 1; i < 2; i++) {
+            if (game->GetModuleTileset()->GetLevelTile(tile.y + 2, tile.x + i).id == ModuleTileset::TileType::WALL) {
+                position.y = 2 * TILE_SIZE * 25 - currentAnim->GetHeight() * 2 - position.y;
+                speed.y = -physics.CalculateSpeed(position, speed, currentAnim->GetHeight(), TILE_SIZE * 14);
+                break;
+            }
+        }
+    }
+    else if (GetEnemyType() == SMOL_BALLOON) {
+        if (game->GetModuleTileset()->GetLevelTile(tile.y + 1, tile.x + 1).id == ModuleTileset::TileType::WALL) {
+            position.y = 2 * TILE_SIZE * 25 - currentAnim->GetHeight() * 2 - position.y;
+            speed.y = -physics.CalculateSpeed(position, speed, currentAnim->GetHeight(), TILE_SIZE * 20);
+        }
+    }
+
     //LOG("PositionY = %d\n", position.y);
     // Call to the base class. It must be called at the end
     // It will update the collider depending on the position

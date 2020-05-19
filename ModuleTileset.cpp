@@ -92,3 +92,5 @@ UPDATE_STATUS ModuleTileset::PostUpdate() {
 }
 // Called on application exit.
 bool ModuleTileset::CleanUp() { return true; }
+
+ModuleTileset::Tile ModuleTileset::GetLevelTile(int y, int x) const { return levelTiled[y][x]; }
