@@ -58,7 +58,8 @@ bool ModulePlayer::Start() {
     onceHurry1 = true;
     onceHurry2 = true;
     godMode = false;
-    onceDeath = true;
+    //onceDeath = true;
+    deathJumps = 0;
     onceDeathSpaguett = true;
     shot = false;
 
@@ -185,56 +186,50 @@ UPDATE_STATUS ModulePlayer::Update()
         if (tile.x < 0) { tile.x = 0; }
         if (tile.y < 0) { tile.y = 0; }
         if (tile.y > 26) { tile.y = 26; }
-        if (!godMode) {
             if (destroyed) {
-                for (int i = 0; i < 4; i++) { // LEFT WALL
-                    if (game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x).id == ModuleTileset::TileType::WALL && game->GetModuleTileset()->GetLevelTile(tile.y + 4, tile.x + 1).id == ModuleTileset::TileType::AIR) {
-                        position.x = 2 * TILE_SIZE - position.x;
-                        mruaSpeed.x = 200;
-                        ChangeInvert();
+                for (int i = 1; i < 5; i++) { // BOTTOM FLOOR
+                    if (!godMode && game->GetModuleTileset()->GetLevelTile(tile.y + 4, tile.x + 2).id == ModuleTileset::TileType::WALL && (game->GetModuleTileset()->GetLevelTile(tile.y + 4, tile.x + 1).id == ModuleTileset::TileType::WALL || game->GetModuleTileset()->GetLevelTile(tile.y + 4, tile.x + 3).id == ModuleTileset::TileType::WALL) && game->GetModuleTileset()->GetLevelTile(tile.y, tile.x).id == ModuleTileset::TileType::AIR) {
+                        if (deathJumps == 1) {
+                            godMode = true;
+                            mruaSpeed.y = -163.0f; // -145
+                        }
+                        else {
+                            deathJumps++;
+                            mruaSpeed.y = -257.0f;
+                        }
                         break;
                     }
-                    else if (game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x).id == ModuleTileset::TileType::WALL && game->GetModuleTileset()->GetLevelTile(tile.y + 4, tile.x + 1).id == ModuleTileset::TileType::WALL) {
+                }
+
+                for (int i = 0; i < 4; i++) { // LEFT WALL
+                    if (!godMode && game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x).id == ModuleTileset::TileType::WALL) {
                         position.x = 2 * TILE_SIZE - position.x;
-                        mruaSpeed.x = 200;
+                        mruaSpeed.x = 100.0f;
                         ChangeInvert();
-                        if (onceDeath) {
-                            mruaSpeed.y = -145;
-                            onceDeath = false;
-                        }
+                        godMode = true;
                         break;
                     }
                 }
 
                 for (int i = 0; i < 4; i++) { // RIGHT WALL
-                    if (game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x + 5).id == ModuleTileset::TileType::WALL && game->GetModuleTileset()->GetLevelTile(tile.y + 4, tile.x).id == ModuleTileset::TileType::AIR) {
+                    if (!godMode && game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x + 5).id == ModuleTileset::TileType::WALL) {
                         position.x = 2 * TILE_SIZE * 47 - currentAnimation->GetWidth() * 2 - position.x;
-                        mruaSpeed.x = -100;
+                        mruaSpeed.x = -50.0f;
                         ChangeInvert();
+                        godMode = true;
                         break;
                     }
-                    else if (game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x + 5).id == ModuleTileset::TileType::WALL && game->GetModuleTileset()->GetLevelTile(tile.y + 4, tile.x).id == ModuleTileset::TileType::WALL) {
-                        position.x = 2 * TILE_SIZE * 47 - currentAnimation->GetWidth() * 2 - position.x;
-                        mruaSpeed.x = -100;
-                        ChangeInvert();
-                        if (onceDeath) {
-                            mruaSpeed.y = -145;
-                            onceDeath = false;
-                        }
+                }
+            }
+            else { // alive
+                for (int i = 1; i < 3; i++) { // BOTTOM FLOOR
+                    //if (onceDeath && game->GetModuleTileset()->GetLevelTile(tile.y + 4, tile.x).id == ModuleTileset::TileType::WALL && (game->GetModuleTileset()->GetLevelTile(tile.y + 4, tile.x + 1).id == ModuleTileset::TileType::WALL || game->GetModuleTileset()->GetLevelTile(tile.y + 4, tile.x - 1).id == ModuleTileset::TileType::WALL) && game->GetModuleTileset()->GetLevelTile(tile.y, tile.x).id == ModuleTileset::TileType::AIR) {
+                    if (game->GetModuleTileset()->GetLevelTile(tile.y + 4, tile.x + i).id == ModuleTileset::TileType::WALL) {
+                        position.y = 2 * TILE_SIZE * 25 - idle.GetHeight() * 2 - position.y;
                         break;
                     }
                 }
 
-                //for (int i = 1; i < 5; i++) { // BOTTOM FLOOR
-                    if (onceDeath && game->GetModuleTileset()->GetLevelTile(tile.y + 4, tile.x).id == ModuleTileset::TileType::WALL && (game->GetModuleTileset()->GetLevelTile(tile.y + 4, tile.x + 1).id == ModuleTileset::TileType::WALL || game->GetModuleTileset()->GetLevelTile(tile.y + 4, tile.x - 1).id == ModuleTileset::TileType::WALL) && game->GetModuleTileset()->GetLevelTile(tile.y, tile.x).id == ModuleTileset::TileType::AIR) {
-                    //if (onceDeath && game->GetModuleTileset()->GetLevelTile(tile.y + 4, tile.x + i).id == ModuleTileset::TileType::WALL && game->GetModuleTileset()->GetLevelTile(tile.y, tile.x + i).id == ModuleTileset::TileType::AIR) {
-                        mruaSpeed.y = -145;
-                        onceDeath = false;
-                        //break;
-                    }
-                //}
-            }
-            else { // alive
                 for (int i = 0; i < 4; i++) { // LEFT WALL
                     //if (game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x).id == ModuleTileset::TileType::WALL && game->GetModuleTileset()->GetLevelTile(tile.y + 4, tile.x + 1).id == ModuleTileset::TileType::AIR) {
                     if (game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x).id == ModuleTileset::TileType::WALL) {
@@ -245,16 +240,8 @@ UPDATE_STATUS ModulePlayer::Update()
 
                 for (int i = 0; i < 4; i++) { // RIGHT WALL
                     //if (game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x + 4).id == ModuleTileset::TileType::WALL && game->GetModuleTileset()->GetLevelTile(tile.y + 4, tile.x).id == ModuleTileset::TileType::AIR) {
-                    if (game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x + 4).id == ModuleTileset::TileType::WALL) {
-                        position.x = 2 * TILE_SIZE * 47 - currentAnimation->GetWidth() * 2 - position.x;
-                        break;
-                    }
-                }
-
-                for (int i = 1; i < 4; i++) { // BOTTOM FLOOR
-                    //if (onceDeath && game->GetModuleTileset()->GetLevelTile(tile.y + 4, tile.x).id == ModuleTileset::TileType::WALL && (game->GetModuleTileset()->GetLevelTile(tile.y + 4, tile.x + 1).id == ModuleTileset::TileType::WALL || game->GetModuleTileset()->GetLevelTile(tile.y + 4, tile.x - 1).id == ModuleTileset::TileType::WALL) && game->GetModuleTileset()->GetLevelTile(tile.y, tile.x).id == ModuleTileset::TileType::AIR) {
-                    if (game->GetModuleTileset()->GetLevelTile(tile.y + 4, tile.x + i).id == ModuleTileset::TileType::WALL) {
-                        position.y = 2 * TILE_SIZE * 25 - currentAnimation->GetHeight() * 2 - position.y;
+                    if (game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x + 3).id == ModuleTileset::TileType::WALL) {
+                        position.x = 2 * TILE_SIZE * 47 - idle.GetWidth() * 2 - position.x;
                         break;
                     }
                 }
@@ -290,7 +277,6 @@ UPDATE_STATUS ModulePlayer::Update()
             //    }
             //    else { position.y = 2 * TILE_SIZE * 25 - currentAnimation->GetHeight() * 2 - position.y; }
             //}
-        }
 
         if (isTimeOver) {
             if (once) {
