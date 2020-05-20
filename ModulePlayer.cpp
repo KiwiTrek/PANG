@@ -188,40 +188,63 @@ UPDATE_STATUS ModulePlayer::Update()
         if (!godMode) {
             if (destroyed) {
                 for (int i = 0; i < 4; i++) { // LEFT WALL
-                    if (game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x).id == ModuleTileset::TileType::WALL && position.y >= 25 * TILE_SIZE) {
+                    if (game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x).id == ModuleTileset::TileType::WALL && game->GetModuleTileset()->GetLevelTile(tile.y + 4, tile.x + 1).id == ModuleTileset::TileType::AIR) {
                         position.x = 2 * TILE_SIZE - position.x;
-                        mruaSpeed.x = 100;
+                        mruaSpeed.x = 200;
                         ChangeInvert();
+                        break;
+                    }
+                    else if (game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x).id == ModuleTileset::TileType::WALL && game->GetModuleTileset()->GetLevelTile(tile.y + 4, tile.x + 1).id == ModuleTileset::TileType::WALL) {
+                        position.x = 2 * TILE_SIZE - position.x;
+                        mruaSpeed.x = 200;
+                        ChangeInvert();
+                        if (onceDeath) {
+                            mruaSpeed.y = -145;
+                            onceDeath = false;
+                        }
                         break;
                     }
                 }
 
-                for (int i = -1; i < 3; i++) { // RIGHT WALL
-                    if (game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x + 5).id == ModuleTileset::TileType::WALL && position.y >= 25 * TILE_SIZE) {
+                for (int i = 0; i < 4; i++) { // RIGHT WALL
+                    if (game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x + 5).id == ModuleTileset::TileType::WALL && game->GetModuleTileset()->GetLevelTile(tile.y + 4, tile.x).id == ModuleTileset::TileType::AIR) {
                         position.x = 2 * TILE_SIZE * 47 - currentAnimation->GetWidth() * 2 - position.x;
-                        mruaSpeed.x = -50;
+                        mruaSpeed.x = -100;
                         ChangeInvert();
+                        break;
+                    }
+                    else if (game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x + 5).id == ModuleTileset::TileType::WALL && game->GetModuleTileset()->GetLevelTile(tile.y + 4, tile.x).id == ModuleTileset::TileType::WALL) {
+                        position.x = 2 * TILE_SIZE * 47 - currentAnimation->GetWidth() * 2 - position.x;
+                        mruaSpeed.x = -100;
+                        ChangeInvert();
+                        if (onceDeath) {
+                            mruaSpeed.y = -145;
+                            onceDeath = false;
+                        }
                         break;
                     }
                 }
 
-                for (int i = 1; i < 4; i++) { // BOTTOM FLOOR
-                    if (destroyed && onceDeath && game->GetModuleTileset()->GetLevelTile(tile.y + 3, tile.x + i).id == ModuleTileset::TileType::WALL) {
+                //for (int i = 1; i < 5; i++) { // BOTTOM FLOOR
+                    if (onceDeath && game->GetModuleTileset()->GetLevelTile(tile.y + 4, tile.x).id == ModuleTileset::TileType::WALL && (game->GetModuleTileset()->GetLevelTile(tile.y + 4, tile.x + 1).id == ModuleTileset::TileType::WALL || game->GetModuleTileset()->GetLevelTile(tile.y + 4, tile.x - 1).id == ModuleTileset::TileType::WALL) && game->GetModuleTileset()->GetLevelTile(tile.y, tile.x).id == ModuleTileset::TileType::AIR) {
+                    //if (onceDeath && game->GetModuleTileset()->GetLevelTile(tile.y + 4, tile.x + i).id == ModuleTileset::TileType::WALL && game->GetModuleTileset()->GetLevelTile(tile.y, tile.x + i).id == ModuleTileset::TileType::AIR) {
                         mruaSpeed.y = -145;
                         onceDeath = false;
-                        break;
+                        //break;
                     }
-                }
+                //}
             }
-            else {
+            else { // alive
                 for (int i = 0; i < 4; i++) { // LEFT WALL
+                    //if (game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x).id == ModuleTileset::TileType::WALL && game->GetModuleTileset()->GetLevelTile(tile.y + 4, tile.x + 1).id == ModuleTileset::TileType::AIR) {
                     if (game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x).id == ModuleTileset::TileType::WALL) {
                         position.x = 2 * TILE_SIZE - position.x;
                         break;
                     }
                 }
 
-                for (int i = -1; i < 3; i++) { // RIGHT WALL
+                for (int i = 0; i < 4; i++) { // RIGHT WALL
+                    //if (game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x + 4).id == ModuleTileset::TileType::WALL && game->GetModuleTileset()->GetLevelTile(tile.y + 4, tile.x).id == ModuleTileset::TileType::AIR) {
                     if (game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x + 4).id == ModuleTileset::TileType::WALL) {
                         position.x = 2 * TILE_SIZE * 47 - currentAnimation->GetWidth() * 2 - position.x;
                         break;
@@ -229,7 +252,8 @@ UPDATE_STATUS ModulePlayer::Update()
                 }
 
                 for (int i = 1; i < 4; i++) { // BOTTOM FLOOR
-                    if (game->GetModuleTileset()->GetLevelTile(tile.y + 3, tile.x + i).id == ModuleTileset::TileType::WALL) {
+                    //if (onceDeath && game->GetModuleTileset()->GetLevelTile(tile.y + 4, tile.x).id == ModuleTileset::TileType::WALL && (game->GetModuleTileset()->GetLevelTile(tile.y + 4, tile.x + 1).id == ModuleTileset::TileType::WALL || game->GetModuleTileset()->GetLevelTile(tile.y + 4, tile.x - 1).id == ModuleTileset::TileType::WALL) && game->GetModuleTileset()->GetLevelTile(tile.y, tile.x).id == ModuleTileset::TileType::AIR) {
+                    if (game->GetModuleTileset()->GetLevelTile(tile.y + 4, tile.x + i).id == ModuleTileset::TileType::WALL) {
                         position.y = 2 * TILE_SIZE * 25 - currentAnimation->GetHeight() * 2 - position.y;
                         break;
                     }
