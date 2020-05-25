@@ -353,7 +353,7 @@ UPDATE_STATUS ModulePlayer::PostUpdate() {
         game->GetModuleRender()->Blit(blueText, 0, 0, false, &timeOver, &timeOverAdapter);
         onceTimeIsOver++;
     }
-    else if (playerLifes == 0 && position.y >= SCREEN_HEIGHT + currentAnimation->GetHeight()) {
+    else if (playerLifes <= 0 && position.y >= SCREEN_HEIGHT + currentAnimation->GetHeight()) {
         SDL_Rect gameOverAdapter = { (game->GetModuleLevelOne()->GetBackgroundAdapter().w / 2) - 75,(game->GetModuleLevelOne()->GetBackgroundAdapter().h / 2) - (TILE_SIZE),150,17 };
         game->GetModuleRender()->Blit(blueText, 0, 0, false, &gameOver, &gameOverAdapter);
     }
