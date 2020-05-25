@@ -100,6 +100,9 @@
     <ClCompile Include="ModuleTileset.cpp">
       <Filter>Archivos de origen\Modules\Core</Filter>
     </ClCompile>
+    <ClCompile Include="ModuleLevelTwo.cpp">
+      <Filter>Archivos de origen\Modules\Gameplay</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -185,6 +188,12 @@
     </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>Archivos de origen\App\Icon</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleLevelTwo.h">
+      <Filter>Archivos de origen\Modules\Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="Tilesets.h">
+      <Filter>Archivos de origen\Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

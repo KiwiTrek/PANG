@@ -84,10 +84,10 @@ bool ModuleAudio::PlayMusicOnce(const char* path) {
 
 bool ModuleAudio::DetectIfEnd() const { return Mix_PlayingMusic(); };
 void ModuleAudio::ChangeAtEnd(const char* newSong) { if (!DetectIfEnd()) { PlayMusic(newSong); } }
-void ModuleAudio::ChangeModuleAtEnd(const char* newSong) {
+void ModuleAudio::ChangeModuleAtEnd(const char* newSong,Module* newModule) {
     if (!DetectIfEnd()) {
     PlayMusic(newSong);
-    game->GetModuleTransition()->Transition((Module*)game->GetModuleWinScreen(), (Module*)game->GetModuleTitleScreen(), 4);
+    game->GetModuleTransition()->Transition((Module*)game->GetModuleWinScreen(), newModule, 4);
     }
 }
 

@@ -10,6 +10,7 @@
 #include "ModuleTitleScreen.h"
 #include "ModuleTileset.h"
 #include "ModuleLevelOne.h"
+#include "ModuleLevelTwo.h"
 #include "ModulePlayer.h"
 #include "ModuleEnemies.h"
 #include "ModuleParticles.h"
@@ -35,16 +36,17 @@ Game::Game() {
     modules[4] = projectSheet = new ModuleProjectSheet(true);
     modules[5] = titleScreen = new ModuleTitleScreen(false);
     modules[6] = levelOne = new ModuleLevelOne(false);
-    modules[7] = tileset = new ModuleTileset(false);
-    modules[8] = enemies = new ModuleEnemies(false);
-    modules[9] = player = new ModulePlayer(false);
-    modules[10] = particles = new ModuleParticles(false);
-    modules[11] = winScreen = new ModuleWinScreen(false);
+    modules[7] = levelTwo = new ModuleLevelTwo(false);
+    modules[8] = tileset = new ModuleTileset(false);
+    modules[9] = enemies = new ModuleEnemies(false);
+    modules[10] = player = new ModulePlayer(false);
+    modules[11] = particles = new ModuleParticles(false);
+    modules[12] = winScreen = new ModuleWinScreen(false);
 
-    modules[12] = collisions = new ModuleCollisions(false);
-    modules[13] = transition = new ModuleTransition(true);
-    modules[14] = fonts = new ModuleFonts(true);
-    modules[15] = render = new ModuleRender(true);
+    modules[13] = collisions = new ModuleCollisions(false);
+    modules[14] = transition = new ModuleTransition(true);
+    modules[15] = fonts = new ModuleFonts(true);
+    modules[16] = render = new ModuleRender(true);
 }
 
 Game::~Game() {
@@ -105,6 +107,7 @@ ModuleAudio* Game::GetModuleAudio() const { return audio; }
 ModuleProjectSheet* Game::GetModuleProjectSheet() const { return projectSheet; }
 ModuleTitleScreen* Game::GetModuleTitleScreen() const { return titleScreen; }
 ModuleLevelOne* Game::GetModuleLevelOne() const { return levelOne; }
+ModuleLevelTwo* Game::GetModuleLevelTwo() const { return levelTwo; }
 ModulePlayer* Game::GetModulePlayer() const { return player; }
 ModuleEnemies* Game::GetModuleEnemies() const { return enemies; }
 ModuleParticles* Game::GetModuleParticles() const { return particles; }

@@ -6,9 +6,10 @@
 #include "ModuleTextures.h"
 #include "ModuleRender.h"
 #include "ModuleLevelOne.h"
-//#include "ModuleLevelTwo.h"
+#include "ModuleLevelTwo.h"
 
 #include "Globals.h"
+#include "Tilesets.h"
 
 ModuleTileset::ModuleTileset(bool startEnabled): Module(startEnabled){}
 // Destructor
@@ -19,8 +20,14 @@ bool ModuleTileset::Init() {
 }
 //By now we will consider all modules to be permanently active
 bool ModuleTileset::Start() {
-    if (game->GetModuleLevelOne()->IsEnabled()) {foreground = game->GetModuleTextures()->Load("Resources/Sprites/Foregrounds/Foreground1.png");}
-    /*else if (game->GetModuleLevelTwo()->IsEnabled())*/
+    if (game->GetModuleLevelOne()->IsEnabled()) {
+        foreground = game->GetModuleTextures()->Load("Resources/Sprites/Foregrounds/Foreground1.png");
+        level = level1;
+    }
+    else if (game->GetModuleLevelTwo()->IsEnabled()) {
+        foreground = game->GetModuleTextures()->Load("Resources/Sprites/Foregrounds/Foreground2.png");
+        level = level2;
+    }
     else { return false; }
 
     for (int i = 0; i != 26; ++i) {

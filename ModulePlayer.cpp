@@ -13,6 +13,7 @@
 #include "ModuleLevelOne.h"
 #include "ModuleTileset.h"
 #include "ModuleFonts.h"
+#include "ModuleWinScreen.h"
 
 #include "Particle.h"
 
@@ -170,9 +171,29 @@ UPDATE_STATUS ModulePlayer::Update()
         if (game->GetModuleInput()->GetKey(SDL_SCANCODE_F7) == KEY_DOWN) { destroyed = !destroyed; }
         if (game->GetModuleInput()->GetKey(SDL_SCANCODE_F8) == KEY_DOWN) {
             //!puppy
-            game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelOne(), (Module*)game->GetModuleProjectSheet(), 90);
+            switch (game->GetModuleWinScreen()->GetCurrentLevel()) {
+            case 1: {
+                game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelOne(), (Module*)game->GetModuleProjectSheet(), 90);
+                break;
+            }
+            default: {
+                game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelOne(), (Module*)game->GetModuleProjectSheet(), 90);
+                break;
+            }
+            }
         }
-        if (game->GetModuleInput()->GetKey(SDL_SCANCODE_F9) == KEY_DOWN) { game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelOne(), (Module*)game->GetModuleWinScreen(), 4); }
+        if (game->GetModuleInput()->GetKey(SDL_SCANCODE_F9) == KEY_DOWN) {
+            switch (game->GetModuleWinScreen()->GetCurrentLevel()) {
+            case 1: {
+                game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelTwo(), (Module*)game->GetModuleWinScreen(), 4);
+                break;
+            }
+            default:{
+                game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelOne(), (Module*)game->GetModuleWinScreen(), 4);
+                break;
+            }
+            }
+        }
         if (game->GetModuleInput()->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) { timer = 2; }
 
         // This is where the physics go

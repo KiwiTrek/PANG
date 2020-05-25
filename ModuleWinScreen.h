@@ -29,11 +29,15 @@ public:
 
     bool CleanUp() override;
 
+    int GetCurrentLevel() const;
 private:
     // The scene sprite sheet loaded into an SDL_Texture
     SDL_Texture* splashArtTexture = nullptr;
-    Animation splashArt;
+    Animation splashArt1;
+    SDL_Rect staticSplashArt = { 0,0,1009,447 };
+    Animation splashArt3;
 
+    int currentLevel = 0;
 	int bonusScore = 0;
 	int normalFont2 = -1;
 
