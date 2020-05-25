@@ -122,7 +122,6 @@ In this project, we extracted its assets to recreate this game using C++ and the
 #### 0.6
 - Small pixel offset when colliding against a wall
 - Sometimes the hook goes through a balloon without destroying the balloon or the hook itself
-- Music bug when dying just as changing from intro to looping
 - Code polishing is required
 
 #### 0.5.5
