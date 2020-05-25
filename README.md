@@ -38,7 +38,16 @@ In this project, we extracted its assets to recreate this game using C++ and the
   - F10: Reduces timer to 2 seconds
 
 ## Changelog
-### Current version: 0.5
+### Current version: 0.6
+#### 0.6
+- Module Tileset prepared to support wall tiles
+- Game is now adapted to the tileset module, including:
+  - Physics
+  - Collisions
+  - Level One
+  - Game Scaling
+- Polished some bugs
+
 #### 0.5.5
 - Started developing Module:
   - Tilesets
@@ -110,6 +119,12 @@ In this project, we extracted its assets to recreate this game using C++ and the
 - Created Player display (with no collisions nor animations)
 
 ## Bugs
+#### 0.6
+- Small pixel offset when colliding against a wall
+- Sometimes the hook goes through a balloon without destroying the balloon or the hook itself
+- Music bug when dying just as changing from intro to looping
+- Code polishing is required
+
 #### 0.5.5
 - Changed Hitboxes
 - Fixed collider flashes on debug mode
