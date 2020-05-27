@@ -33,7 +33,7 @@ public:
 private:
     bool once = true;
     bool hasStarted = false;
-    Particle* p;
+    Particle* p2;
     // The sprite section for the background
     //SDL_Rect background;
     SDL_Rect backgroundAdapter;

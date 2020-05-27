@@ -10,12 +10,14 @@
 #include "ModuleParticles.h"
 #include "ModuleCollisions.h"
 #include "ModuleTransition.h"
-#include "ModuleLevelOne.h"
 #include "ModuleTileset.h"
 #include "ModuleFonts.h"
 #include "ModuleWinScreen.h"
 
 #include "Particle.h"
+
+#include "ModuleLevelOne.h"
+#include "ModuleLevelTwo.h"
 
 #include "SDL/include/SDL_timer.h"
 #include "SDL/include/SDL_scancode.h"
@@ -95,7 +97,8 @@ UPDATE_STATUS ModulePlayer::Update()
     if (returnToIdle == 0) { currentAnimation = &idle; }
     else { --returnToIdle; }
 
-    if (game->GetModuleLevelOne()->CheckIfStarted()) {
+    if (game->GetModuleLevelOne()->CheckIfStarted() ||
+        game->GetModuleLevelTwo()->CheckIfStarted()) {
         //Reset the currentAnimation back to idle before updating the logic
         if (!destroyed && !isTimeOver) {
             if (((game->GetModuleInput()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && game->GetModuleInput()->GetKey(SDL_SCANCODE_A) != KEY_REPEAT)
@@ -310,14 +313,18 @@ UPDATE_STATUS ModulePlayer::Update()
                     game->GetModuleAudio()->PlayMusicOnce("Resources/BGM/gameOver.ogg");
                     onceMusic = false;
                 }
-                if (game->GetModuleAudio()->DetectIfEnd() == false) { game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelOne(), (Module*)game->GetModuleTitleScreen(), 4); }
+                if (game->GetModuleAudio()->DetectIfEnd() == false) { 
+                    if (game->GetModuleLevelOne()->IsEnabled()) { game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelOne(), (Module*)game->GetModuleTitleScreen(), 4); }
+                    else if (game->GetModuleLevelTwo()->IsEnabled()) { game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelTwo(), (Module*)game->GetModuleTitleScreen(), 4); }
+                }
             }
             else if (playerLifes >= 0 && onceTimeIsOver == 125) {
                 if (onceDeathSpaguett) {
                     onceDeathSpaguett = false;
                     playerLifes--;
                 }
-                game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelOne(), (Module*)game->GetModuleLevelOne(), 4);
+                if (game->GetModuleLevelOne()->IsEnabled()) { game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelOne(), (Module*)game->GetModuleLevelOne(), 4); }
+                else if (game->GetModuleLevelTwo()->IsEnabled()) { game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelTwo(), (Module*)game->GetModuleLevelTwo(), 4); }
             }
         }
 
@@ -335,14 +342,18 @@ UPDATE_STATUS ModulePlayer::Update()
                     game->GetModuleAudio()->PlayMusicOnce("Resources/BGM/gameOver.ogg");
                     onceMusic = false;
                 }
-                if (game->GetModuleAudio()->DetectIfEnd() == false) { game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelOne(), (Module*)game->GetModuleTitleScreen(), 4); }
+                if (game->GetModuleAudio()->DetectIfEnd() == false) {
+                    if (game->GetModuleLevelOne()->IsEnabled()) { game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelOne(), (Module*)game->GetModuleTitleScreen(), 4); }
+                    else if (game->GetModuleLevelTwo()->IsEnabled()) { game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelTwo(), (Module*)game->GetModuleTitleScreen(), 4); }
+                }
             }
             else if (position.y >= SCREEN_HEIGHT + currentAnimation->GetHeight() && playerLifes > 0) {
                 if (onceDeathSpaguett) {
                     onceDeathSpaguett = false;
                     playerLifes--;
                 }
-                game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelOne(), (Module*)game->GetModuleLevelOne(), 4);
+                if (game->GetModuleLevelOne()->IsEnabled()) { game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelOne(), (Module*)game->GetModuleLevelOne(), 4); }
+                else if (game->GetModuleLevelTwo()->IsEnabled()) { game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelTwo(), (Module*)game->GetModuleLevelTwo(), 4); }
             }
         }
 
@@ -374,7 +385,7 @@ UPDATE_STATUS ModulePlayer::PostUpdate() {
         game->GetModuleRender()->Blit(blueText, 0, 0, false, &timeOver, &timeOverAdapter);
         onceTimeIsOver++;
     }
-    else if (playerLifes <= 0 && position.y >= SCREEN_HEIGHT + currentAnimation->GetHeight()) {
+    else if (playerLifes < 0 && position.y >= SCREEN_HEIGHT + currentAnimation->GetHeight()) {
         SDL_Rect gameOverAdapter = { (game->GetModuleLevelOne()->GetBackgroundAdapter().w / 2) - 75,(game->GetModuleLevelOne()->GetBackgroundAdapter().h / 2) - (TILE_SIZE),150,17 };
         game->GetModuleRender()->Blit(blueText, 0, 0, false, &gameOver, &gameOverAdapter);
     }

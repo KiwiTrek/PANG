@@ -98,6 +98,7 @@ bool ModuleLevelOne::CleanUp() {
     game->GetModuleCollisions()->Disable();
     game->GetModuleTileset()->Disable();
     
+    hasStarted = false;
     return true;
 }
 

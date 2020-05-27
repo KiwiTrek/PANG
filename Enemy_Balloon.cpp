@@ -7,23 +7,35 @@
 #include "ModuleEnemies.h"
 #include "ModuleRender.h"
 #include "ModuleTileset.h"
+
+#include "ModuleLevelOne.h"
+#include "ModuleLevelTwo.h"
+
 #include "Enemy.h"
 
 Enemy_Balloon::Enemy_Balloon(int x, int y, ENEMY_TYPE _type, bool _isMovingRight) : Enemy(x, y, _type, _isMovingRight) {
     if (GetEnemyType() == ENEMY_TYPE::CHUNGUS_BALLOON ) {
-        idle.PushBack({ 1,6,48,40 });
+        if (game->GetModuleLevelOne()->IsEnabled()) { idle.PushBack({ 1,6,48,40 }); }
+        else if (game->GetModuleLevelTwo()->IsEnabled()) { idle.PushBack({ 1,56,48,40 }); }
+
         collider = game->GetModuleCollisions()->AddCollider({ 36,16,48,40 }, Collider::TYPE::BALLOON, (Module*)game->GetModuleEnemies());
     }
     if (GetEnemyType() == ENEMY_TYPE::NOT_THAT_MEH_BALLOON) {
-        idle.PushBack({ 52,13,33,27 });
+        if (game->GetModuleLevelOne()->IsEnabled()) { idle.PushBack({ 52,13,33,27 }); }
+        else if (game->GetModuleLevelTwo()->IsEnabled()) { idle.PushBack({ 52,63,33,27 }); }
+
         collider = game->GetModuleCollisions()->AddCollider({ 52,13,33,27 }, Collider::TYPE::BALLOON, (Module*)game->GetModuleEnemies());
     }
     if (GetEnemyType() == ENEMY_TYPE::MEH_BALLOON) {
-        idle.PushBack({ 86,19,17,15 });
+        if (game->GetModuleLevelOne()->IsEnabled()) { idle.PushBack({ 86,19,17,15 }); }
+        else if (game->GetModuleLevelTwo()->IsEnabled()) { idle.PushBack({ 86,69,17,15 }); }
+
         collider = game->GetModuleCollisions()->AddCollider({ 86,19,17,15 }, Collider::TYPE::BALLOON, (Module*)game->GetModuleEnemies());
     }
     if (GetEnemyType() == ENEMY_TYPE::SMOL_BALLOON) {
-        idle.PushBack({ 106,23,8,7 });
+        if (game->GetModuleLevelOne()->IsEnabled()) { idle.PushBack({ 106,23,8,7 }); }
+        else if (game->GetModuleLevelTwo()->IsEnabled()) { idle.PushBack({ 106,73,8,7 }); }
+
         collider = game->GetModuleCollisions()->AddCollider({ 106,23,8,7 }, Collider::TYPE::BALLOON, (Module*)game->GetModuleEnemies());
     }
     currentAnim = &idle;

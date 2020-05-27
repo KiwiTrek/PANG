@@ -34,7 +34,7 @@ bool ModuleLevelTwo::Start() {
     }
     game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->ready, (backgroundAdapter.w / 2) - (game->GetModuleParticles()->ready.GetCurrentAnim().w / 2), (backgroundAdapter.h / 2) - (game->GetModuleParticles()->ready.GetCurrentAnim().h / 2), Collider::TYPE::NONE, 50);
     game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->ready, (backgroundAdapter.w / 2) - (game->GetModuleParticles()->ready.GetCurrentAnim().w / 2), (backgroundAdapter.h / 2) - (game->GetModuleParticles()->ready.GetCurrentAnim().h / 2), Collider::TYPE::NONE, 60);
-    p = game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->ready, (backgroundAdapter.w / 2) - (game->GetModuleParticles()->ready.GetCurrentAnim().w / 2), (backgroundAdapter.h / 2) - (game->GetModuleParticles()->ready.GetCurrentAnim().h / 2), Collider::TYPE::NONE, 70);
+    p2 = game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->ready, (backgroundAdapter.w / 2) - (game->GetModuleParticles()->ready.GetCurrentAnim().w / 2), (backgroundAdapter.h / 2) - (game->GetModuleParticles()->ready.GetCurrentAnim().h / 2), Collider::TYPE::NONE, 70);
     
     backgroundTexture = game->GetModuleTextures()->Load("Resources/Sprites/Backgrounds/Background2.png");
 
@@ -56,7 +56,7 @@ bool ModuleLevelTwo::Start() {
 }
 
 UPDATE_STATUS ModuleLevelTwo::Update() {
-    if (p->GetFrameCount() >= 5) { SetIfStarted(true); }
+    if (p2->GetFrameCount() >= 5) { SetIfStarted(true); }
     if (hasStarted) {
         if (once) {
             once = false;
@@ -98,6 +98,7 @@ bool ModuleLevelTwo::CleanUp() {
     game->GetModuleCollisions()->Disable();
     game->GetModuleTileset()->Disable();
     
+    hasStarted = false;
     return true;
 }
 

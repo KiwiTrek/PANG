@@ -5,8 +5,10 @@
 #include "ModuleTextures.h"
 #include "ModuleRender.h"
 #include "ModulePlayer.h"
-#include "ModuleLevelOne.h"
 #include "ModuleCollisions.h"
+
+#include "ModuleLevelOne.h"
+#include "ModuleLevelTwo.h"
 
 
 
@@ -54,21 +56,39 @@ ModuleParticles::ModuleParticles(bool startEnabled) : Module(startEnabled) {
     normalWire.SetFSpeedY(-1.5f); //-1.5f
 
     //Balloon Explosions
-    for (int i = 0; i < 4; ++i) { bigBalloonExplosion.SetAnimPushBack({ 8 + i * 48,511,48,46 }); }
-    bigBalloonExplosion.SetAnimLoop(false);
-    bigBalloonExplosion.SetAnimSpeed(0.5f);
+    for (int i = 0; i < 4; ++i) { rBigBalloonExplosion.SetAnimPushBack({ 8 + i * 48,511,48,46 }); }
+    rBigBalloonExplosion.SetAnimLoop(false);
+    rBigBalloonExplosion.SetAnimSpeed(0.5f);
 
-    for (int i = 0; i < 4; ++i) { notThatMehBalloonExplosion.SetAnimPushBack({ 8 + i * 31,457,31,29 }); }
-    notThatMehBalloonExplosion.SetAnimLoop(false);
-    notThatMehBalloonExplosion.SetAnimSpeed(0.5f);
+    for (int i = 0; i < 4; ++i) { rNotThatMehBalloonExplosion.SetAnimPushBack({ 8 + i * 31,457,31,29 }); }
+    rNotThatMehBalloonExplosion.SetAnimLoop(false);
+    rNotThatMehBalloonExplosion.SetAnimSpeed(0.5f);
 
-    for (int i = 0; i < 4; ++i) { mehBalloonExplosion.SetAnimPushBack({ 8 + i * 15,416,15,15 }); }
-    mehBalloonExplosion.SetAnimLoop(false);
-    mehBalloonExplosion.SetAnimSpeed(0.5f);
+    for (int i = 0; i < 4; ++i) { rMehBalloonExplosion.SetAnimPushBack({ 8 + i * 15,416,15,15 }); }
+    rMehBalloonExplosion.SetAnimLoop(false);
+    rMehBalloonExplosion.SetAnimSpeed(0.5f);
 
-    for (int i = 0; i < 3; ++i) { smolBalloonExplosion.SetAnimPushBack({ 8 + i * 9,384,9,7 }); }
-    smolBalloonExplosion.SetAnimLoop(false);
-    smolBalloonExplosion.SetAnimSpeed(0.5f);
+    for (int i = 0; i < 3; ++i) { rSmolBalloonExplosion.SetAnimPushBack({ 8 + i * 9,384,9,7 }); }
+    rSmolBalloonExplosion.SetAnimLoop(false);
+    rSmolBalloonExplosion.SetAnimSpeed(0.5f);
+    
+
+
+    for (int i = 0; i < 4; ++i) { bBigBalloonExplosion.SetAnimPushBack({ 8 + i * 48,322,48,46 }); }
+    bBigBalloonExplosion.SetAnimLoop(false);
+    bBigBalloonExplosion.SetAnimSpeed(0.5f);
+
+    for (int i = 0; i < 4; ++i) { bNotThatMehBalloonExplosion.SetAnimPushBack({ 8 + i * 31,267,31,29 }); }
+    bNotThatMehBalloonExplosion.SetAnimLoop(false);
+    bNotThatMehBalloonExplosion.SetAnimSpeed(0.5f);
+
+    for (int i = 0; i < 4; ++i) { bMehBalloonExplosion.SetAnimPushBack({ 8 + i * 15,227,15,15 }); }
+    bMehBalloonExplosion.SetAnimLoop(false);
+    bMehBalloonExplosion.SetAnimSpeed(0.5f);
+
+    for (int i = 0; i < 3; ++i) { bSmolBalloonExplosion.SetAnimPushBack({ 8 + i * 9,195,9,7 }); }
+    bSmolBalloonExplosion.SetAnimLoop(false);
+    bSmolBalloonExplosion.SetAnimSpeed(0.5f);
 
     //Muzzle Flash
     for (int i = 0; i < 4; ++i) { muzzleFlash.SetAnimPushBack({ 23 + i * 16,7,16,13 }); }
@@ -93,10 +113,14 @@ bool ModuleParticles::Start() {
     LOG("Loading particles");
 
     normalWire.SetParticleTexture(game->GetModuleTextures()->Load("Resources/Sprites/normalWire.png"));
-    bigBalloonExplosion.SetParticleTexture(game->GetModuleTextures()->Load("Resources/Sprites/boom.png"));
-    notThatMehBalloonExplosion.SetParticleTexture(bigBalloonExplosion.GetParticleTexture());
-    mehBalloonExplosion.SetParticleTexture(bigBalloonExplosion.GetParticleTexture());
-    smolBalloonExplosion.SetParticleTexture(bigBalloonExplosion.GetParticleTexture());
+    rBigBalloonExplosion.SetParticleTexture(game->GetModuleTextures()->Load("Resources/Sprites/boom.png"));
+    rNotThatMehBalloonExplosion.SetParticleTexture(rBigBalloonExplosion.GetParticleTexture());
+    rMehBalloonExplosion.SetParticleTexture(rBigBalloonExplosion.GetParticleTexture());
+    rSmolBalloonExplosion.SetParticleTexture(rBigBalloonExplosion.GetParticleTexture());
+    bBigBalloonExplosion.SetParticleTexture(rBigBalloonExplosion.GetParticleTexture());
+    bNotThatMehBalloonExplosion.SetParticleTexture(rBigBalloonExplosion.GetParticleTexture());
+    bMehBalloonExplosion.SetParticleTexture(rBigBalloonExplosion.GetParticleTexture());
+    bSmolBalloonExplosion.SetParticleTexture(rBigBalloonExplosion.GetParticleTexture());
     muzzleFlash.SetParticleTexture(game->GetModuleTextures()->Load("Resources/Sprites/powerUps.png"));
     hitScreen.SetParticleTexture(game->GetModuleTextures()->Load("Resources/Sprites/hit.png"));
     ready.SetParticleTexture(game->GetModuleTextures()->Load("Resources/Sprites/blueText.png"));
@@ -117,10 +141,14 @@ bool ModuleParticles::CleanUp() {
     }
 
     game->GetModuleTextures()->Unload(normalWire.GetParticleTexture());
-    game->GetModuleTextures()->Unload(bigBalloonExplosion.GetParticleTexture());
-    game->GetModuleTextures()->Unload(notThatMehBalloonExplosion.GetParticleTexture());
-    game->GetModuleTextures()->Unload(mehBalloonExplosion.GetParticleTexture());
-    game->GetModuleTextures()->Unload(smolBalloonExplosion.GetParticleTexture());
+    game->GetModuleTextures()->Unload(rBigBalloonExplosion.GetParticleTexture());
+    game->GetModuleTextures()->Unload(rNotThatMehBalloonExplosion.GetParticleTexture());
+    game->GetModuleTextures()->Unload(rMehBalloonExplosion.GetParticleTexture());
+    game->GetModuleTextures()->Unload(rSmolBalloonExplosion.GetParticleTexture());
+    game->GetModuleTextures()->Unload(bBigBalloonExplosion.GetParticleTexture());
+    game->GetModuleTextures()->Unload(bNotThatMehBalloonExplosion.GetParticleTexture());
+    game->GetModuleTextures()->Unload(bMehBalloonExplosion.GetParticleTexture());
+    game->GetModuleTextures()->Unload(bSmolBalloonExplosion.GetParticleTexture());
     game->GetModuleTextures()->Unload(muzzleFlash.GetParticleTexture());
     game->GetModuleTextures()->Unload(hitScreen.GetParticleTexture());
     game->GetModuleTextures()->Unload(ready.GetParticleTexture());

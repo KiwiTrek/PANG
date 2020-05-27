@@ -32,6 +32,14 @@ public:
 private:
     // The scene sprite sheet loaded into an SDL_Texture
     SDL_Texture* projectSheet = nullptr;
+    
+    SDL_Texture* levelBackground = nullptr;
+    bool levelSelector = false;
+    int levelFont = -1;
+
+    char levelTitle[15] = { "\0" };
+    char stage1[20] = { "\0" };
+    char stage2[20] = { "\0" };
 };
 
 #endif
