@@ -303,12 +303,13 @@ UPDATE_STATUS ModulePlayer::Update()
             //}
 
         if (isTimeOver) {
+			playerLifes--;
             if (once) {
                 once = false;
                 game->GetModuleAudio()->PlayMusicOnce("Resources/BGM/noMusic.ogg");
                 game->GetModuleAudio()->PlayFx(dedSoundIndex);
             }
-            if (playerLifes == 0) {
+            if (playerLifes < 0) {
                 if (onceMusic) {
                     game->GetModuleAudio()->PlayMusicOnce("Resources/BGM/gameOver.ogg");
                     onceMusic = false;
@@ -330,14 +331,16 @@ UPDATE_STATUS ModulePlayer::Update()
 
         if (destroyed) {
             if (once) {
+				playerLifes--; //Life system seems to work well with these adjustments
                 once = false;
                 SDL_Delay(500); //THIS SHIT HAS TO LEAVE AS SOON AS WE CAN. IT IS NO LONGER ALLOWED TO EXIST. THIS IS A NO SDL_DELAY ZONE. EVEN A FUCKING SECOND GIVES ME INSANE ANXIETY. AND ALSO AIDS. NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE. Oh hi Marc, fancy seeing you here :^3 - Luce <3
                 game->GetModuleAudio()->PlayFx(dedSoundIndex);
                 game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->hitScreen, 0, 0);
                 physics.SetAxis(true, true);
             }
+
             currentAnimation = &ded;
-            if (position.y >= SCREEN_HEIGHT + currentAnimation->GetHeight() && playerLifes == 0) {
+            if (position.y >= SCREEN_HEIGHT + currentAnimation->GetHeight() && playerLifes < 0) {
                 if (onceMusic) {
                     game->GetModuleAudio()->PlayMusicOnce("Resources/BGM/gameOver.ogg");
                     onceMusic = false;
@@ -347,11 +350,12 @@ UPDATE_STATUS ModulePlayer::Update()
                     else if (game->GetModuleLevelTwo()->IsEnabled()) { game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelTwo(), (Module*)game->GetModuleTitleScreen(), 4); }
                 }
             }
-            else if (position.y >= SCREEN_HEIGHT + currentAnimation->GetHeight() && playerLifes > 0) {
-                if (onceDeathSpaguett) {
-                    onceDeathSpaguett = false;
-                    playerLifes--;
-                }
+            else if (position.y >= SCREEN_HEIGHT + currentAnimation->GetHeight() && playerLifes >= 0) {
+     //           if (onceDeathSpaguett) {
+     //               onceDeathSpaguett = false;
+					////playerLifes--;  
+     //           }
+				//What the fuck is onceDeathSpaguett and why does it exist and why is is Spaguett and not Spaghett?????????
                 if (game->GetModuleLevelOne()->IsEnabled()) { game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelOne(), (Module*)game->GetModuleLevelOne(), 4); }
                 else if (game->GetModuleLevelTwo()->IsEnabled()) { game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelTwo(), (Module*)game->GetModuleLevelTwo(), 4); }
             }
