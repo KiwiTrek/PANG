@@ -64,14 +64,22 @@ private:
 public:
     //Shots (and others) go here
     Particle normalWire;
+
     Particle rBigBalloonExplosion;
     Particle rNotThatMehBalloonExplosion;
     Particle rMehBalloonExplosion;
     Particle rSmolBalloonExplosion;
+
     Particle bBigBalloonExplosion;
     Particle bNotThatMehBalloonExplosion;
     Particle bMehBalloonExplosion;
     Particle bSmolBalloonExplosion;
+
+    Particle gBigBalloonExplosion;
+    Particle gNotThatMehBalloonExplosion;
+    Particle gMehBalloonExplosion;
+    Particle gSmolBalloonExplosion;
+
     Particle muzzleFlash;
     Particle hitScreen;
     Particle ready;

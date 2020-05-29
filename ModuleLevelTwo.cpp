@@ -11,6 +11,7 @@
 #include "ModuleFonts.h"
 #include "ModuleRender.h"
 #include "ModuleTileset.h"
+#include "ModuleWinScreen.h"
 
 #include <stdio.h>
 
@@ -26,6 +27,8 @@ bool ModuleLevelTwo::Start() {
     LOG("Loading background assets");
     once = true;
     hasStarted = false;
+
+    game->GetModuleWinScreen()->SetCurrentLevel(2);
 
     game->GetModuleParticles()->Enable();
 

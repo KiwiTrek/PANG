@@ -1,4 +1,4 @@
-#include "ModuleLevelOne.h"
+#include "ModuleLevelThree.h"
 
 #include "Game.h"
 
@@ -15,20 +15,20 @@
 
 #include <stdio.h>
 
-ModuleLevelOne::ModuleLevelOne(bool startEnabled) : Module(startEnabled) {
+ModuleLevelThree::ModuleLevelThree(bool startEnabled) : Module(startEnabled) {
     // Background
     backgroundAdapter = { 0, 0, 384, 208 };
 }
 
-ModuleLevelOne::~ModuleLevelOne() {}
+ModuleLevelThree::~ModuleLevelThree() {}
 
 // Load assets
-bool ModuleLevelOne::Start() {
+bool ModuleLevelThree::Start() {
     LOG("Loading background assets");
     once = true;
     hasStarted = false;
 
-    game->GetModuleWinScreen()->SetCurrentLevel(1);
+    game->GetModuleWinScreen()->SetCurrentLevel(3);
 
     game->GetModuleParticles()->Enable();
 
@@ -37,9 +37,9 @@ bool ModuleLevelOne::Start() {
     }
     game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->ready, (backgroundAdapter.w / 2) - (game->GetModuleParticles()->ready.GetCurrentAnim().w / 2), (backgroundAdapter.h / 2) - (game->GetModuleParticles()->ready.GetCurrentAnim().h / 2), Collider::TYPE::NONE, 50);
     game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->ready, (backgroundAdapter.w / 2) - (game->GetModuleParticles()->ready.GetCurrentAnim().w / 2), (backgroundAdapter.h / 2) - (game->GetModuleParticles()->ready.GetCurrentAnim().h / 2), Collider::TYPE::NONE, 60);
-    p = game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->ready, (backgroundAdapter.w / 2) - (game->GetModuleParticles()->ready.GetCurrentAnim().w / 2), (backgroundAdapter.h / 2) - (game->GetModuleParticles()->ready.GetCurrentAnim().h / 2), Collider::TYPE::NONE, 70);
+    p2 = game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->ready, (backgroundAdapter.w / 2) - (game->GetModuleParticles()->ready.GetCurrentAnim().w / 2), (backgroundAdapter.h / 2) - (game->GetModuleParticles()->ready.GetCurrentAnim().h / 2), Collider::TYPE::NONE, 70);
     
-    backgroundTexture = game->GetModuleTextures()->Load("Resources/Sprites/Backgrounds/Background1.png");
+    backgroundTexture = game->GetModuleTextures()->Load("Resources/Sprites/Backgrounds/Background3.png");
 
     // Colliders ---
     //game->GetModuleCollisions()->AddCollider({ 0, backgroundAdapter.h-TILE_SIZE, backgroundAdapter.w, TILE_SIZE }, Collider::TYPE::FLOOR); // {0,186,384,7} BOTTOM
@@ -58,8 +58,8 @@ bool ModuleLevelOne::Start() {
     return true;
 }
 
-UPDATE_STATUS ModuleLevelOne::Update() {
-    if (p->GetFrameCount() >= 5) { SetIfStarted(true); }
+UPDATE_STATUS ModuleLevelThree::Update() {
+    if (p2->GetFrameCount() >= 5) { SetIfStarted(true); }
     if (hasStarted) {
         if (once) {
             once = false;
@@ -72,11 +72,11 @@ UPDATE_STATUS ModuleLevelOne::Update() {
 }
 
 // Update: draw background
-UPDATE_STATUS ModuleLevelOne::PostUpdate() {
+UPDATE_STATUS ModuleLevelThree::PostUpdate() {
     // Draw everything --------------------------------------
     sprintf_s(levelTitle, 10, "mt.fuji");
     game->GetModuleFonts()->BlitText(TILE_SIZE * 20, backgroundAdapter.h, game->GetModulePlayer()->GetFontIndex(), levelTitle);
-    sprintf_s(stageText, 10, "1-1 stage");
+    sprintf_s(stageText, 10, "1-3 stage");
     game->GetModuleFonts()->BlitText(TILE_SIZE * 20, backgroundAdapter.h + (TILE_SIZE * 2), game->GetModulePlayer()->GetFontIndex(), stageText);
     sprintf_s(highScore, 15, "hi: 100000");
     game->GetModuleFonts()->BlitText(TILE_SIZE * 19, backgroundAdapter.h + (TILE_SIZE * 3), game->GetModulePlayer()->GetFontIndex(), highScore);
@@ -84,7 +84,7 @@ UPDATE_STATUS ModuleLevelOne::PostUpdate() {
     return UPDATE_STATUS::UPDATE_CONTINUE;
 }
 
-bool ModuleLevelOne::CleanUp() {
+bool ModuleLevelThree::CleanUp() {
     game->GetModuleTextures()->Unload(backgroundTexture);
     game->GetModuleTextures()->Unload(game->GetModulePlayer()->GetTexture());
     game->GetModuleTextures()->Unload(game->GetModulePlayer()->GetBlueTextTexture());
@@ -105,7 +105,6 @@ bool ModuleLevelOne::CleanUp() {
     return true;
 }
 
-bool ModuleLevelOne::CheckIfStarted() const { return hasStarted; }
-void ModuleLevelOne::SetIfStarted(bool _hasStarted) { hasStarted = _hasStarted; }
-SDL_Rect ModuleLevelOne::GetBackgroundAdapter() const { return backgroundAdapter; }
-
+bool ModuleLevelThree::CheckIfStarted() const { return hasStarted; }
+void ModuleLevelThree::SetIfStarted(bool _hasStarted) { hasStarted = _hasStarted; }
+SDL_Rect ModuleLevelThree::GetBackgroundAdapter() const { return backgroundAdapter; }

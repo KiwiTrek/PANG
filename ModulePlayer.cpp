@@ -18,6 +18,7 @@
 
 #include "ModuleLevelOne.h"
 #include "ModuleLevelTwo.h"
+#include "ModuleLevelThree.h"
 
 #include "SDL/include/SDL_timer.h"
 #include "SDL/include/SDL_scancode.h"
@@ -65,6 +66,7 @@ bool ModulePlayer::Start() {
     deathJumps = 0;
     onceDeathSpaguett = true;
     shot = false;
+    winCountdown = 0;
 
     blueText = game->GetModuleTextures()->Load("Resources/Sprites/blueText.png");
     texture = game->GetModuleTextures()->Load("Resources/Sprites/player.png"); // arcade version
@@ -98,7 +100,8 @@ UPDATE_STATUS ModulePlayer::Update()
     else { --returnToIdle; }
 
     if (game->GetModuleLevelOne()->CheckIfStarted() ||
-        game->GetModuleLevelTwo()->CheckIfStarted()) {
+        game->GetModuleLevelTwo()->CheckIfStarted() ||
+        game->GetModuleLevelThree()->CheckIfStarted()) {
         //Reset the currentAnimation back to idle before updating the logic
         if (!destroyed && !isTimeOver) {
             if (((game->GetModuleInput()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && game->GetModuleInput()->GetKey(SDL_SCANCODE_A) != KEY_REPEAT)
@@ -179,8 +182,15 @@ UPDATE_STATUS ModulePlayer::Update()
                 game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelOne(), (Module*)game->GetModuleProjectSheet(), 90);
                 break;
             }
+            case 2: {
+                game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelTwo(), (Module*)game->GetModuleProjectSheet(), 90);
+                break;
+            }
+            case 3: {
+                game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelThree(), (Module*)game->GetModuleProjectSheet(), 90);
+                break;
+            }
             default: {
-                game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelOne(), (Module*)game->GetModuleProjectSheet(), 90);
                 break;
             }
             }
@@ -188,11 +198,18 @@ UPDATE_STATUS ModulePlayer::Update()
         if (game->GetModuleInput()->GetKey(SDL_SCANCODE_F9) == KEY_DOWN) {
             switch (game->GetModuleWinScreen()->GetCurrentLevel()) {
             case 1: {
+                game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelOne(), (Module*)game->GetModuleWinScreen(), 4);
+                break;
+            }
+            case 2: {
                 game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelTwo(), (Module*)game->GetModuleWinScreen(), 4);
                 break;
             }
-            default:{
-                game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelOne(), (Module*)game->GetModuleWinScreen(), 4);
+            case 3: {
+                game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelThree(), (Module*)game->GetModuleWinScreen(), 4);
+                break;
+            }
+            default: {
                 break;
             }
             }
@@ -317,6 +334,7 @@ UPDATE_STATUS ModulePlayer::Update()
                 if (game->GetModuleAudio()->DetectIfEnd() == false) { 
                     if (game->GetModuleLevelOne()->IsEnabled()) { game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelOne(), (Module*)game->GetModuleTitleScreen(), 4); }
                     else if (game->GetModuleLevelTwo()->IsEnabled()) { game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelTwo(), (Module*)game->GetModuleTitleScreen(), 4); }
+                    else if (game->GetModuleLevelThree()->IsEnabled()) { game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelThree(), (Module*)game->GetModuleTitleScreen(), 4); }
                 }
             }
             else if (playerLifes >= 0 && onceTimeIsOver == 125) {
@@ -326,6 +344,7 @@ UPDATE_STATUS ModulePlayer::Update()
                 }
                 if (game->GetModuleLevelOne()->IsEnabled()) { game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelOne(), (Module*)game->GetModuleLevelOne(), 4); }
                 else if (game->GetModuleLevelTwo()->IsEnabled()) { game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelTwo(), (Module*)game->GetModuleLevelTwo(), 4); }
+                else if (game->GetModuleLevelThree()->IsEnabled()) { game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelThree(), (Module*)game->GetModuleLevelThree(), 4); }
             }
         }
 
@@ -348,6 +367,7 @@ UPDATE_STATUS ModulePlayer::Update()
                 if (game->GetModuleAudio()->DetectIfEnd() == false) {
                     if (game->GetModuleLevelOne()->IsEnabled()) { game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelOne(), (Module*)game->GetModuleTitleScreen(), 4); }
                     else if (game->GetModuleLevelTwo()->IsEnabled()) { game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelTwo(), (Module*)game->GetModuleTitleScreen(), 4); }
+                    else if (game->GetModuleLevelThree()->IsEnabled()) { game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelThree(), (Module*)game->GetModuleTitleScreen(), 4); }
                 }
             }
             else if (position.y >= SCREEN_HEIGHT + currentAnimation->GetHeight() && playerLifes >= 0) {
@@ -358,13 +378,18 @@ UPDATE_STATUS ModulePlayer::Update()
 				//What the fuck is onceDeathSpaguett and why does it exist and why is is Spaguett and not Spaghett?????????
                 if (game->GetModuleLevelOne()->IsEnabled()) { game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelOne(), (Module*)game->GetModuleLevelOne(), 4); }
                 else if (game->GetModuleLevelTwo()->IsEnabled()) { game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelTwo(), (Module*)game->GetModuleLevelTwo(), 4); }
+                else if (game->GetModuleLevelThree()->IsEnabled()) { game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelThree(), (Module*)game->GetModuleLevelThree(), 4); }
             }
         }
 
         currentAnimation->Update();
 
         if (game->GetModuleEnemies()->CheckForBalloons()) {
-            if (winCountdown == 75) { game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelOne(), (Module*)game->GetModuleWinScreen(), 4); }
+            if (winCountdown == 75) {
+                if (game->GetModuleLevelOne()->IsEnabled()) { game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelOne(), (Module*)game->GetModuleWinScreen(), 4); }
+                else if (game->GetModuleLevelTwo()->IsEnabled()) { game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelTwo(), (Module*)game->GetModuleWinScreen(), 4); }
+                else if (game->GetModuleLevelThree()->IsEnabled()) { game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelThree(), (Module*)game->GetModuleWinScreen(), 4); }
+            }
             else { ++winCountdown; }
         }
     }

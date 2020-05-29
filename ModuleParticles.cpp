@@ -74,21 +74,39 @@ ModuleParticles::ModuleParticles(bool startEnabled) : Module(startEnabled) {
     
 
 
-    for (int i = 0; i < 4; ++i) { bBigBalloonExplosion.SetAnimPushBack({ 8 + i * 48,322,48,46 }); }
+    for (int i = 0; i < 4; ++i) { bBigBalloonExplosion.SetAnimPushBack({ 8 + i * 48,326,48,46 }); }
     bBigBalloonExplosion.SetAnimLoop(false);
     bBigBalloonExplosion.SetAnimSpeed(0.5f);
 
-    for (int i = 0; i < 4; ++i) { bNotThatMehBalloonExplosion.SetAnimPushBack({ 8 + i * 31,267,31,29 }); }
+    for (int i = 0; i < 4; ++i) { bNotThatMehBalloonExplosion.SetAnimPushBack({ 8 + i * 31,269,31,29 }); }
     bNotThatMehBalloonExplosion.SetAnimLoop(false);
     bNotThatMehBalloonExplosion.SetAnimSpeed(0.5f);
 
-    for (int i = 0; i < 4; ++i) { bMehBalloonExplosion.SetAnimPushBack({ 8 + i * 15,227,15,15 }); }
+    for (int i = 0; i < 4; ++i) { bMehBalloonExplosion.SetAnimPushBack({ 8 + i * 15,228,15,15 }); }
     bMehBalloonExplosion.SetAnimLoop(false);
     bMehBalloonExplosion.SetAnimSpeed(0.5f);
 
-    for (int i = 0; i < 3; ++i) { bSmolBalloonExplosion.SetAnimPushBack({ 8 + i * 9,195,9,7 }); }
+    for (int i = 0; i < 3; ++i) { bSmolBalloonExplosion.SetAnimPushBack({ 8 + i * 9,196,9,7 }); }
     bSmolBalloonExplosion.SetAnimLoop(false);
     bSmolBalloonExplosion.SetAnimSpeed(0.5f);
+
+
+
+    for (int i = 0; i < 4; ++i) { gBigBalloonExplosion.SetAnimPushBack({ 8 + i * 48,139,48,46 }); }
+    gBigBalloonExplosion.SetAnimLoop(false);
+    gBigBalloonExplosion.SetAnimSpeed(0.5f);
+
+    for (int i = 0; i < 4; ++i) { gNotThatMehBalloonExplosion.SetAnimPushBack({ 8 + i * 31,82,31,29 }); }
+    gNotThatMehBalloonExplosion.SetAnimLoop(false);
+    gNotThatMehBalloonExplosion.SetAnimSpeed(0.5f);
+
+    for (int i = 0; i < 4; ++i) { gMehBalloonExplosion.SetAnimPushBack({ 8 + i * 15,41,15,15 }); }
+    gMehBalloonExplosion.SetAnimLoop(false);
+    gMehBalloonExplosion.SetAnimSpeed(0.5f);
+
+    for (int i = 0; i < 3; ++i) { gSmolBalloonExplosion.SetAnimPushBack({ 8 + i * 9,9,9,7 }); }
+    gSmolBalloonExplosion.SetAnimLoop(false);
+    gSmolBalloonExplosion.SetAnimSpeed(0.5f);
 
     //Muzzle Flash
     for (int i = 0; i < 4; ++i) { muzzleFlash.SetAnimPushBack({ 23 + i * 16,7,16,13 }); }
@@ -121,6 +139,10 @@ bool ModuleParticles::Start() {
     bNotThatMehBalloonExplosion.SetParticleTexture(rBigBalloonExplosion.GetParticleTexture());
     bMehBalloonExplosion.SetParticleTexture(rBigBalloonExplosion.GetParticleTexture());
     bSmolBalloonExplosion.SetParticleTexture(rBigBalloonExplosion.GetParticleTexture());
+    gBigBalloonExplosion.SetParticleTexture(rBigBalloonExplosion.GetParticleTexture());
+    gNotThatMehBalloonExplosion.SetParticleTexture(rBigBalloonExplosion.GetParticleTexture());
+    gMehBalloonExplosion.SetParticleTexture(rBigBalloonExplosion.GetParticleTexture());
+    gSmolBalloonExplosion.SetParticleTexture(rBigBalloonExplosion.GetParticleTexture());
     muzzleFlash.SetParticleTexture(game->GetModuleTextures()->Load("Resources/Sprites/powerUps.png"));
     hitScreen.SetParticleTexture(game->GetModuleTextures()->Load("Resources/Sprites/hit.png"));
     ready.SetParticleTexture(game->GetModuleTextures()->Load("Resources/Sprites/blueText.png"));
@@ -149,6 +171,10 @@ bool ModuleParticles::CleanUp() {
     game->GetModuleTextures()->Unload(bNotThatMehBalloonExplosion.GetParticleTexture());
     game->GetModuleTextures()->Unload(bMehBalloonExplosion.GetParticleTexture());
     game->GetModuleTextures()->Unload(bSmolBalloonExplosion.GetParticleTexture());
+    game->GetModuleTextures()->Unload(gBigBalloonExplosion.GetParticleTexture());
+    game->GetModuleTextures()->Unload(gNotThatMehBalloonExplosion.GetParticleTexture());
+    game->GetModuleTextures()->Unload(gMehBalloonExplosion.GetParticleTexture());
+    game->GetModuleTextures()->Unload(gSmolBalloonExplosion.GetParticleTexture());
     game->GetModuleTextures()->Unload(muzzleFlash.GetParticleTexture());
     game->GetModuleTextures()->Unload(hitScreen.GetParticleTexture());
     game->GetModuleTextures()->Unload(ready.GetParticleTexture());

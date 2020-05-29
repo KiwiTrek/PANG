@@ -8,6 +8,8 @@
 #include "ModuleInput.h"
 #include "ModuleTransition.h"
 #include "ModuleFonts.h"
+#include "ModulePlayer.h"
+#include "ModuleWinScreen.h"
 
 #include "SDL/include/SDL_scancode.h"
 #include <stdio.h>
@@ -19,6 +21,10 @@ ModuleProjectSheet::~ModuleProjectSheet() {}
 // Load assets
 bool ModuleProjectSheet::Start() {
     LOG("Loading background assets");
+
+    game->GetModulePlayer()->SetPlayerLives(2);
+    game->GetModulePlayer()->SetScore(0);
+    game->GetModuleWinScreen()->SetCurrentLevel(0);
 
     projectSheet = game->GetModuleTextures()->Load("Resources/Sprites/projectSheet.png");
     levelBackground = game->GetModuleTextures()->Load("Resources/Sprites/test.png");
@@ -34,6 +40,7 @@ UPDATE_STATUS ModuleProjectSheet::Update() {
     if (levelSelector) {
         if (game->GetModuleInput()->GetKey(SDL_SCANCODE_1)) { game->GetModuleTransition()->Transition(this, (Module*)game->GetModuleLevelOne(), 4); }
         else if (game->GetModuleInput()->GetKey(SDL_SCANCODE_2)) { game->GetModuleTransition()->Transition(this, (Module*)game->GetModuleLevelTwo(), 4); }
+        else if (game->GetModuleInput()->GetKey(SDL_SCANCODE_3)) { game->GetModuleTransition()->Transition(this, (Module*)game->GetModuleLevelThree(), 4); }
     }
     return UPDATE_STATUS::UPDATE_CONTINUE;
 }
@@ -50,6 +57,8 @@ UPDATE_STATUS ModuleProjectSheet::PostUpdate() {
         game->GetModuleFonts()->BlitText(TILE_SIZE * 3, TILE_SIZE * 7, levelFont, stage1);
         sprintf_s(stage2, 20, "level 2: press 2");
         game->GetModuleFonts()->BlitText(TILE_SIZE * 3, TILE_SIZE * 9, levelFont, stage2);
+        sprintf_s(stage3, 20, "level 3: press 3");
+        game->GetModuleFonts()->BlitText(TILE_SIZE * 3, TILE_SIZE * 11, levelFont, stage3);
     }
     else { game->GetModuleRender()->Blit(projectSheet, 0, 0, false, nullptr, &backgroundRect); }
 

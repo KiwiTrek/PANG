@@ -159,6 +159,7 @@
     <ClCompile Include="ModuleFonts.cpp" />
     <ClCompile Include="ModuleInput.cpp" />
     <ClCompile Include="ModuleLevelOne.cpp" />
+    <ClCompile Include="ModuleLevelThree.cpp" />
     <ClCompile Include="ModuleLevelTwo.cpp" />
     <ClCompile Include="ModuleParticles.cpp" />
     <ClCompile Include="ModulePlayer.cpp" />
@@ -187,6 +188,7 @@
     <ClInclude Include="ModuleFonts.h" />
     <ClInclude Include="ModuleInput.h" />
     <ClInclude Include="ModuleLevelOne.h" />
+    <ClInclude Include="ModuleLevelThree.h" />
     <ClInclude Include="ModuleLevelTwo.h" />
     <ClInclude Include="ModuleParticles.h" />
     <ClInclude Include="ModulePlayer.h" />
