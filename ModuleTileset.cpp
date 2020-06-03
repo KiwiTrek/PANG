@@ -43,14 +43,14 @@ bool ModuleTileset::Start() {
                 levelTiled[i][j] = {
                     TileType::AIR,
                     {i * TILE_SIZE,j * TILE_SIZE,TILE_SIZE,TILE_SIZE},
-					game->GetModuleCollisions()->AddCollider({ i * TILE_SIZE, j * TILE_SIZE, TILE_SIZE, TILE_SIZE }, Collider::TYPE::AIR)
+                    nullptr
                 };
                 break;
             case 1:
                 levelTiled[i][j] = {
                     TileType::WALL,
                     {i * TILE_SIZE,j * TILE_SIZE,TILE_SIZE,TILE_SIZE},
-					game->GetModuleCollisions()->AddCollider({ i * TILE_SIZE, j * TILE_SIZE, TILE_SIZE, TILE_SIZE }, Collider::TYPE::AIR)
+                    nullptr
                 };
                 break;
             case 2:
@@ -78,14 +78,14 @@ bool ModuleTileset::Start() {
                 levelTiled[i][j] = {
                     TileType::STAIRS,
                     {i * TILE_SIZE,j * TILE_SIZE,TILE_SIZE,TILE_SIZE},
-					game->GetModuleCollisions()->AddCollider({ i * TILE_SIZE, j * TILE_SIZE, TILE_SIZE, TILE_SIZE }, Collider::TYPE::AIR)
+					nullptr
                 };
                 break;
             case 6:
                 levelTiled[i][j] = {
                     TileType::TOP_STAIRS,
                     {i * TILE_SIZE,j * TILE_SIZE,TILE_SIZE,TILE_SIZE},
-					game->GetModuleCollisions()->AddCollider({ i * TILE_SIZE, j * TILE_SIZE, TILE_SIZE, TILE_SIZE }, Collider::TYPE::AIR)
+					nullptr
                 };
                 break;
             default:

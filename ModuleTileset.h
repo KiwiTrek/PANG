@@ -22,7 +22,7 @@ public:
     struct Tile {
         TileType id;
         SDL_Rect tileBlit;
-		Collider* collider;
+		Collider* tileCollider;
     };
 
     //Constructor
@@ -38,7 +38,7 @@ public:
     // Called on application exit.
     bool CleanUp() override;
 
-    Tile GetLevelTile(int x, int y);
+    Tile GetLevelTile(int y, int x);
 
 
 private:
