@@ -40,6 +40,7 @@ public:
 
     Tile GetLevelTile(int y, int x);
 
+	void OnCollision(Collider* c1, Collider* c2) override;
 
 private:
     SDL_Texture* foreground = nullptr;

@@ -64,6 +64,9 @@ private:
 public:
     //Shots (and others) go here
     Particle normalWire;
+	Particle powerWire;
+	Particle powerWireEnd;
+	Particle powerShot;
 
     Particle rBigBalloonExplosion;
     Particle rNotThatMehBalloonExplosion;

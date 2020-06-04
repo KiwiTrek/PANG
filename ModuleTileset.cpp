@@ -115,3 +115,6 @@ bool ModuleTileset::CleanUp() { return true; }
 
 ModuleTileset::Tile ModuleTileset::GetLevelTile(int y, int x) { return levelTiled[y][x]; }
 
+void ModuleTileset::OnCollision(Collider* c1, Collider* c2) {
+	//if(GetLevelTile().id== TileType::DESTRUCTIBLE1)
+}

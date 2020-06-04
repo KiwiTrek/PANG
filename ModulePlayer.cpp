@@ -145,15 +145,15 @@ UPDATE_STATUS ModulePlayer::Update()
 
             if ((game->GetModuleInput()->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || pad.x || pad.b || pad.r2 > 0)
                 && shot == false) {
-                shot = true;
+                //shot = true;
                 if (!godMode) { game->GetModuleAudio()->PlayFx(shotSoundIndex); }
                 currentAnimation = &shoot;
                 if (GetInvertValue()) {
-                    game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->normalWire, position.x + (shoot.GetWidth() / 3) - 2, position.y - 1, Collider::TYPE::PLAYER_SHOT);
+                    game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->powerShot, position.x + (shoot.GetWidth() / 3) - 2, position.y - 1, Collider::TYPE::PLAYER_SHOT);
                     game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->muzzleFlash, position.x + 3, position.y - 10, Collider::TYPE::NONE);
                 }
                 else {
-                    game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->normalWire, position.x + (shoot.GetWidth() / 2) - 2, position.y - 1, Collider::TYPE::PLAYER_SHOT);
+                    game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->powerShot, position.x + (shoot.GetWidth() / 2) - 2, position.y - 1, Collider::TYPE::PLAYER_SHOT);
                     game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->muzzleFlash, position.x + currentAnimation->GetWidth() / 2 - 6, position.y - 10, Collider::TYPE::NONE); //It works, it just works ~Todd Howard,from Skyrim
                 }
 

@@ -55,6 +55,40 @@ ModuleParticles::ModuleParticles(bool startEnabled) : Module(startEnabled) {
     normalWire.SetAnimSpeed(0.888f); //0.888f
     normalWire.SetFSpeedY(-1.5f); //-1.5f
 
+	//Power Wire animation
+	int counterTwo = -1;
+	int k = 0;
+	for (int i = 0; i < 73; i++) {
+		counterTwo++;
+		if (counterTwo == 4) {
+			k++;
+			counterTwo = 0;
+		}
+		powerWire.SetAnimPushBack({ 8 + i * 17,161 - (i * 2) - k,9,33 + (i * 2) + k });
+	}
+
+	powerWire.SetAnimLoop(false);
+	powerWire.SetAnimSpeed(0.888f); //0.888f
+	powerWire.SetFSpeedY(-1.5f); //-1.5f
+
+	//Power Wire End animation (TBA)
+	powerWireEnd.SetAnimPushBack({ 1260,0,9,195 }); //Needs testing
+	powerWireEnd.SetAnimLoop(true);
+
+	//Power Shot animation
+	powerShot.SetAnimPushBack({ 0,1,16,8 });
+	powerShot.SetAnimPushBack({ 14,1,16,8 });
+	powerShot.SetAnimPushBack({ 32,1,16,8 });
+
+	for (int i = 0; i < 40; i++) {
+		powerShot.SetAnimPushBack({ 54,2,16,7 });
+		powerShot.SetAnimPushBack({ 77,0,16,14 });
+	}
+
+	powerShot.SetAnimLoop(false);
+	powerShot.SetAnimSpeed(0.25f);
+	powerShot.SetFSpeedY(-1.5f);
+
     //Balloon Explosions
     for (int i = 0; i < 4; ++i) { rBigBalloonExplosion.SetAnimPushBack({ 8 + i * 48,511,48,46 }); }
     rBigBalloonExplosion.SetAnimLoop(false);
@@ -131,6 +165,9 @@ bool ModuleParticles::Start() {
     LOG("Loading particles");
 
     normalWire.SetParticleTexture(game->GetModuleTextures()->Load("Resources/Sprites/normalWire.png"));
+	powerWire.SetParticleTexture(game->GetModuleTextures()->Load("Resources/Sprites/PowerWire.png"));
+	powerWireEnd.SetParticleTexture(game->GetModuleTextures()->Load("Resources/Sprites/PowerWire.png"));
+	powerShot.SetParticleTexture(game->GetModuleTextures()->Load("Resources/Sprites/PowerShot.png"));
     rBigBalloonExplosion.SetParticleTexture(game->GetModuleTextures()->Load("Resources/Sprites/boom.png"));
     rNotThatMehBalloonExplosion.SetParticleTexture(rBigBalloonExplosion.GetParticleTexture());
     rMehBalloonExplosion.SetParticleTexture(rBigBalloonExplosion.GetParticleTexture());
