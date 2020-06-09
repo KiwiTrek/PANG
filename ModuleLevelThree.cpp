@@ -47,7 +47,8 @@ bool ModuleLevelThree::Start() {
     game->GetModuleCollisions()->AddCollider({ 0, 0, backgroundAdapter.w, TILE_SIZE }, Collider::TYPE::FLOOR); // {0,0,384,7} TOP
     //game->GetModuleCollisions()->AddCollider({ backgroundAdapter.w-TILE_SIZE, 0, TILE_SIZE, backgroundAdapter.h }, Collider::TYPE::WALL); // {376,0,8,193} RIGHT
 
-    game->GetModuleEnemies()->AddEnemy(ENEMY_TYPE::CHUNGUS_BALLOON, 32, 24, true);
+    game->GetModuleEnemies()->AddEnemy(ENEMY_TYPE::CHUNGUS_BALLOON, 48, 24, true);
+    game->GetModuleEnemies()->AddEnemy(ENEMY_TYPE::MEH_BALLOON, 201, 105, true);
     
     game->GetModulePlayer()->Enable();
     game->GetModuleEnemies()->Enable(); 
@@ -90,7 +91,8 @@ bool ModuleLevelThree::CleanUp() {
     game->GetModuleTextures()->Unload(game->GetModulePlayer()->GetBlueTextTexture());
 	game->GetModuleFonts()->Unload(game->GetModulePlayer()->GetFontIndex());
 	game->GetModuleFonts()->Unload(game->GetModulePlayer()->GetTimerFontIndex());
-    game->GetModuleAudio()->UnloadFx(game->GetModulePlayer()->GetShotSoundIndex());
+    game->GetModuleAudio()->UnloadFx(game->GetModulePlayer()->GetNormalShotSoundIndex());
+    game->GetModuleAudio()->UnloadFx(game->GetModulePlayer()->GetVulcanShotSoundIndex());
     game->GetModuleAudio()->UnloadFx(game->GetModulePlayer()->GetDedSoundIndex());
 
     game->GetModuleAudio()->PlayMusicOnce("Resources/BGM/noMusic.ogg");

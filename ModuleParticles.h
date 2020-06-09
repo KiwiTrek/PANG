@@ -55,6 +55,8 @@ private:
     // An index to the last added particle
     uint lastParticle = 0;
 
+    uint vulcanCeilingSoundIndex;
+
     // The particle's collider
     Collider* collider = nullptr;
 
@@ -84,6 +86,7 @@ public:
     Particle gSmolBalloonExplosion;
 
     Particle muzzleFlash;
+    Particle vulcanCeiling;
     Particle hitScreen;
     Particle ready;
 };

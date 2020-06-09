@@ -2,6 +2,7 @@
 
 #include "Game.h"
 
+#include "ModuleAudio.h"
 #include "ModuleTextures.h"
 #include "ModuleRender.h"
 #include "ModulePlayer.h"
@@ -87,7 +88,7 @@ ModuleParticles::ModuleParticles(bool startEnabled) : Module(startEnabled) {
 
 	powerShot.SetAnimLoop(false);
 	powerShot.SetAnimSpeed(0.25f);
-	powerShot.SetFSpeedY(-1.5f);
+	powerShot.SetFSpeedY(-3.0f);
 
     //Balloon Explosions
     for (int i = 0; i < 4; ++i) { rBigBalloonExplosion.SetAnimPushBack({ 8 + i * 48,511,48,46 }); }
@@ -147,6 +148,12 @@ ModuleParticles::ModuleParticles(bool startEnabled) : Module(startEnabled) {
     muzzleFlash.SetAnimLoop(false);
     muzzleFlash.SetAnimSpeed(0.2f);
 
+    //Vulcan Screen
+    vulcanCeiling.SetAnimPushBack({ 212,16,14,5 });
+    vulcanCeiling.SetAnimPushBack({ 232,16,14,5 });
+    vulcanCeiling.SetAnimLoop(false);
+    vulcanCeiling.SetAnimSpeed(0.2f);
+
     //Hit Screen
     hitScreen.SetAnimPushBack({ 0,0,384,208 });
     hitScreen.SetAnimLoop(false);
@@ -183,6 +190,9 @@ bool ModuleParticles::Start() {
     muzzleFlash.SetParticleTexture(game->GetModuleTextures()->Load("Resources/Sprites/powerUps.png"));
     hitScreen.SetParticleTexture(game->GetModuleTextures()->Load("Resources/Sprites/hit.png"));
     ready.SetParticleTexture(game->GetModuleTextures()->Load("Resources/Sprites/blueText.png"));
+    vulcanCeiling.SetParticleTexture(game->GetModuleTextures()->Load("Resources/Sprites/powerUps.png"));
+
+    vulcanCeilingSoundIndex = game->GetModuleAudio()->LoadFx("Resources/SFX/shotgunCeiling.wav");
 
     return true;
 }
@@ -199,6 +209,8 @@ bool ModuleParticles::CleanUp() {
         }
     }
 
+    game->GetModuleTextures()->Unload(normalWire.GetParticleTexture());
+    game->GetModuleTextures()->Unload(powerWire.GetParticleTexture());
     game->GetModuleTextures()->Unload(normalWire.GetParticleTexture());
     game->GetModuleTextures()->Unload(rBigBalloonExplosion.GetParticleTexture());
     game->GetModuleTextures()->Unload(rNotThatMehBalloonExplosion.GetParticleTexture());
@@ -273,9 +285,12 @@ Particle* ModuleParticles::AddParticle(const Particle& particle, int x, int y, C
 void ModuleParticles::OnCollision(Collider* c1, Collider* c2) {
     for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i) {
         // Always destroy particles that collide
-        if (particles[i] != nullptr && particles[i]->GetLethality() == false && particles[i]->GetCollider() == c1 && particles[i]->GetCollider()->GetType() == Collider::TYPE::PLAYER_SHOT) {
-            game->GetModulePlayer()->SetIfShot(false);
-            normalWire.SetLethality(true);
+        if (particles[i] != nullptr && particles[i]->GetCollider() == c1 && particles[i]->GetCollider()->GetType() == Collider::TYPE::PLAYER_SHOT) {
+            game->GetModulePlayer()->IncreaseShoot();
+            if (game->GetModulePlayer()->GetCurrentShotType() == SHOT_TYPES::VULCAN && c2->GetType() != Collider::TYPE::BALLOON) {
+                game->GetModuleParticles()->AddParticle(vulcanCeiling, particles[i]->GetPositionX(), particles[i]->GetPositionY(), Collider::TYPE::NONE);
+                game->GetModuleAudio()->PlayFx(vulcanCeilingSoundIndex, 0);
+            }
             delete particles[i];
             particles[i] = nullptr;
             break;

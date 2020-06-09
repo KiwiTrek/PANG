@@ -65,12 +65,16 @@ bool ModulePlayer::Start() {
     //onceDeath = true;
     deathJumps = 0;
     onceDeathSpaguett = true;
-    shot = false;
+    shot = 1;
+    maxShots = 1;
     winCountdown = 0;
+    shotType = SHOT_TYPES::NORMAL;
+    onceSetNumShots = true;
 
     blueText = game->GetModuleTextures()->Load("Resources/Sprites/blueText.png");
     texture = game->GetModuleTextures()->Load("Resources/Sprites/player.png"); // arcade version
-    shotSoundIndex = game->GetModuleAudio()->LoadFx("Resources/SFX/shotClaw.wav");
+    normalShotSoundIndex = game->GetModuleAudio()->LoadFx("Resources/SFX/shotClaw.wav");
+    vulcanShotSoundIndex = game->GetModuleAudio()->LoadFx("Resources/SFX/shotgun.wav");
     dedSoundIndex = game->GetModuleAudio()->LoadFx("Resources/SFX/dead.wav");
 
     moving.Reset();
@@ -144,19 +148,76 @@ UPDATE_STATUS ModulePlayer::Update()
             }*/
 
             if ((game->GetModuleInput()->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || pad.x || pad.b || pad.r2 > 0)
-                && shot == false) {
-                //shot = true;
-                if (!godMode) { game->GetModuleAudio()->PlayFx(shotSoundIndex); }
+                && shot >= 1) {
+                shot--;
                 currentAnimation = &shoot;
-                if (GetInvertValue()) {
-                    game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->powerShot, position.x + (shoot.GetWidth() / 3) - 2, position.y - 1, Collider::TYPE::PLAYER_SHOT);
-                    game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->muzzleFlash, position.x + 3, position.y - 10, Collider::TYPE::NONE);
+                switch (shotType) {
+                case SHOT_TYPES::NORMAL: {
+                    onceSetNumShots = true;
+                    maxShots = 1;
+                    if (!godMode) { game->GetModuleAudio()->PlayFx(normalShotSoundIndex); }
+                    if (GetInvertValue()) {
+                        game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->normalWire, position.x + (shoot.GetWidth() / 3) - 2, position.y - 1, Collider::TYPE::PLAYER_SHOT);
+                        game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->muzzleFlash, position.x + 3, position.y - 10, Collider::TYPE::NONE);
+                    }
+                    else {
+                        game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->normalWire, position.x + (shoot.GetWidth() / 2) - 2, position.y - 1, Collider::TYPE::PLAYER_SHOT);
+                        game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->muzzleFlash, position.x + currentAnimation->GetWidth() / 2 - 6, position.y - 10, Collider::TYPE::NONE); //It works, it just works ~Todd Howard,from Skyrim
+                    }
+                    break;
                 }
-                else {
-                    game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->powerShot, position.x + (shoot.GetWidth() / 2) - 2, position.y - 1, Collider::TYPE::PLAYER_SHOT);
-                    game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->muzzleFlash, position.x + currentAnimation->GetWidth() / 2 - 6, position.y - 10, Collider::TYPE::NONE); //It works, it just works ~Todd Howard,from Skyrim
+                case SHOT_TYPES::DWIRE: {
+                    if (!godMode) { game->GetModuleAudio()->PlayFx(normalShotSoundIndex); }
+                    if (onceSetNumShots) {
+                        onceSetNumShots = false;
+                        shot = 1;
+                        maxShots = 2;
+                    }
+                    if (GetInvertValue()) {
+                        game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->normalWire, position.x + (shoot.GetWidth() / 3) - 2, position.y - 1, Collider::TYPE::PLAYER_SHOT);
+                        game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->muzzleFlash, position.x + 3, position.y - 10, Collider::TYPE::NONE);
+                    }
+                    else {
+                        game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->normalWire, position.x + (shoot.GetWidth() / 2) - 2, position.y - 1, Collider::TYPE::PLAYER_SHOT);
+                        game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->muzzleFlash, position.x + currentAnimation->GetWidth() / 2 - 6, position.y - 10, Collider::TYPE::NONE); //It works, it just works ~Todd Howard,from Skyrim
+                    }
+                    break;
                 }
-
+                case SHOT_TYPES::POWER: {
+                    if (!godMode) { game->GetModuleAudio()->PlayFx(normalShotSoundIndex); }
+                    if (onceSetNumShots) {
+                        onceSetNumShots = false;
+                        shot = 0;
+                        maxShots = 1;
+                    }
+                    if (GetInvertValue()) {
+                        game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->powerWire, position.x + (shoot.GetWidth() / 3) - 2, position.y - 1, Collider::TYPE::PLAYER_SHOT);
+                        game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->muzzleFlash, position.x + 3, position.y - 10, Collider::TYPE::NONE);
+                    }
+                    else {
+                        game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->powerWire, position.x + (shoot.GetWidth() / 2) - 2, position.y - 1, Collider::TYPE::PLAYER_SHOT);
+                        game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->muzzleFlash, position.x + currentAnimation->GetWidth() / 2 - 6, position.y - 10, Collider::TYPE::NONE); //It works, it just works ~Todd Howard,from Skyrim
+                    }
+                    break;
+                }
+                case SHOT_TYPES::VULCAN: {
+                    if (!godMode) { game->GetModuleAudio()->PlayFx(vulcanShotSoundIndex); }
+                    if (onceSetNumShots) {
+                        onceSetNumShots = false;
+                        shot = 25;
+                        maxShots = 25;
+                    }
+                    if (GetInvertValue()) {
+                        game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->powerShot, position.x + (shoot.GetWidth() / 3) - 2, position.y - 1, Collider::TYPE::PLAYER_SHOT);
+                        game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->muzzleFlash, position.x + 3, position.y - 10, Collider::TYPE::NONE);
+                    }
+                    else {
+                        game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->powerShot, position.x + (shoot.GetWidth() / 2) - 2, position.y - 1, Collider::TYPE::PLAYER_SHOT);
+                        game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->muzzleFlash, position.x + currentAnimation->GetWidth() / 2 - 6, position.y - 10, Collider::TYPE::NONE); //It works, it just works ~Todd Howard,from Skyrim
+                    }
+                    break;
+                }
+                }
                 returnToIdle = 12;
             }
             if (currentAnimation == &idle) {
@@ -173,6 +234,28 @@ UPDATE_STATUS ModulePlayer::Update()
             }
         }
 
+        //Debug
+        if (game->GetModuleInput()->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) {
+            onceSetNumShots = true;
+            switch (shotType) {
+            case SHOT_TYPES::NORMAL: {
+                shotType = SHOT_TYPES::DWIRE;
+                break;
+            }
+            case SHOT_TYPES::DWIRE: {
+                shotType = SHOT_TYPES::POWER;
+                break;
+            }
+            case SHOT_TYPES::POWER: {
+                shotType = SHOT_TYPES::VULCAN;
+                break;
+            }
+            case SHOT_TYPES::VULCAN: {
+                shotType = SHOT_TYPES::NORMAL;
+                break;
+            }
+            }
+        }
         if (game->GetModuleInput()->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) { godMode = !godMode; }
         if (game->GetModuleInput()->GetKey(SDL_SCANCODE_F7) == KEY_DOWN) { destroyed = !destroyed; }
         if (game->GetModuleInput()->GetKey(SDL_SCANCODE_F8) == KEY_DOWN) {
@@ -216,6 +299,8 @@ UPDATE_STATUS ModulePlayer::Update()
         }
         if (game->GetModuleInput()->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) { timer = 2; }
 
+
+
         // This is where the physics go
         physics.UpdatePhysics(position.x, position.y, mruaSpeed.x, mruaSpeed.y);
 
@@ -223,7 +308,7 @@ UPDATE_STATUS ModulePlayer::Update()
         iPoint tile = { position.x / TILE_SIZE, position.y / TILE_SIZE };
         float collisionSpeedM = -mruaSpeed.x * 2;
         float collisionSpeedm = -mruaSpeed.x / 2;
-        LOG("Tile = %d, %d", tile.x, tile.y);
+//        LOG("Tile = %d, %d", tile.x, tile.y);
         if (tile.x < 0) { tile.x = 0; }
         if (tile.y < 0) { tile.y = 0; }
         if (tile.y > 26) { tile.y = 26; }
@@ -288,37 +373,8 @@ UPDATE_STATUS ModulePlayer::Update()
                 }
             }
 
-            //LEFT WALL
-            //if (physics.CheckMovementCollision({ position.x, position.y,currentAnimation->GetWidth(), currentAnimation->GetHeight() }, { 0,0, TILE_SIZE, TILE_SIZE * 26 })) {
-            //    position.x = 2 * TILE_SIZE - position.x;
-            //    if (destroyed) {
-            //        mruaSpeed.x = -mruaSpeed.x * 2;
-            //        ChangeInvert();
-            //    }
-            //}
 
-            //TOP FLOOR
-
-            //RIGHT WALL
-            //if (physics.CheckMovementCollision({ position.x, position.y,currentAnimation->GetWidth(), currentAnimation->GetHeight() }, { TILE_SIZE * 47,0, TILE_SIZE, TILE_SIZE * 26 })) {
-            //    position.x = 2 * TILE_SIZE * 47 - currentAnimation->GetWidth() * 2 - position.x;
-            //    if (destroyed) {
-            //        mruaSpeed.x = -mruaSpeed.x / 2;
-            //        ChangeInvert();
-            //    }
-            //}
-
-            //BOTTOM FLOOR
-            //if (physics.CheckMovementCollision({ position.x, position.y,currentAnimation->GetWidth(), currentAnimation->GetHeight() }, { 0,TILE_SIZE * 25, TILE_SIZE * 48, TILE_SIZE })) {
-            //    if (destroyed) {
-            //        if (onceDeath) {
-            //            mruaSpeed.y = -145;
-            //            onceDeath = false;
-            //        }
-            //    }
-            //    else { position.y = 2 * TILE_SIZE * 25 - currentAnimation->GetHeight() * 2 - position.y; }
-            //}
-
+        //Game Overs
         if (isTimeOver) {
 			playerLifes--;
             if (once) {
@@ -382,8 +438,10 @@ UPDATE_STATUS ModulePlayer::Update()
             }
         }
 
+
         currentAnimation->Update();
 
+        //Win condition
         if (game->GetModuleEnemies()->CheckForBalloons()) {
             if (winCountdown == 75) {
                 if (game->GetModuleLevelOne()->IsEnabled()) { game->GetModuleTransition()->Transition((Module*)game->GetModuleLevelOne(), (Module*)game->GetModuleWinScreen(), 4); }
@@ -467,13 +525,17 @@ void ModulePlayer::SetPosition(iPoint _position) { position = _position; }
 SDL_Texture* ModulePlayer::GetTexture() const { return texture; }
 SDL_Texture* ModulePlayer::GetBlueTextTexture() const { return blueText; }
 Animation* ModulePlayer::GetCurrentAnimation() const { return currentAnimation; }
-uint ModulePlayer::GetShotSoundIndex() const { return shotSoundIndex; }
-void ModulePlayer::SetShotSoundIndex(uint _shotSoundIndex) { shotSoundIndex = _shotSoundIndex; }
-uint ModulePlayer::GetDedSoundIndex() const { return shotSoundIndex; }
+SHOT_TYPES ModulePlayer::GetCurrentShotType() const { return shotType; }
+uint ModulePlayer::GetNormalShotSoundIndex() const { return normalShotSoundIndex; }
+void ModulePlayer::SetNormalShotSoundIndex(uint _normalShotSoundIndex) { normalShotSoundIndex = _normalShotSoundIndex; }
+uint ModulePlayer::GetVulcanShotSoundIndex() const { return vulcanShotSoundIndex; }
+void ModulePlayer::SetVulcanShotSoundIndex(uint _vulcanShotSoundIndex) { vulcanShotSoundIndex = _vulcanShotSoundIndex; }
+uint ModulePlayer::GetDedSoundIndex() const { return dedSoundIndex; }
 void ModulePlayer::SetDedSoundIndex(uint _dedSoundIndex) { dedSoundIndex = _dedSoundIndex; }
 int ModulePlayer::GetFontIndex() const { return normalFont; }
 int ModulePlayer::GetTimerFontIndex() const { return timerFont; }
-void ModulePlayer::SetIfShot(bool _shot) { shot = _shot; }
+void ModulePlayer::IncreaseShoot() { if (shot != maxShots) { shot++; } }
+void ModulePlayer::DecreaseShoot() { shot -= (shot - 1); }
 bool ModulePlayer::CheckIfGodMode() const { return godMode; };
 bool ModulePlayer::CheckIfDestroyed() const { return (destroyed || isTimeOver); };
 void ModulePlayer::AddScore(int _score) { score += _score; }

@@ -44,7 +44,7 @@ Enemy_Balloon::Enemy_Balloon(int x, int y, ENEMY_TYPE _type, bool _isMovingRight
         collider = game->GetModuleCollisions()->AddCollider({ 106,23,8,7 }, Collider::TYPE::BALLOON, (Module*)game->GetModuleEnemies());
     }
     currentAnim = &idle;
-    if (isMovingRight) { speed.x = 119.5f; } // needs changing
+    if (isMovingRight) { speed.x = 119.5f; } // Es posible que el motivo por el cual empiece con mucha velocidad es porque tenga una velocidad inicial de serie
     else { speed.x = -59.25f; }
     speed.y = -40.0f;
     physics.SetAxis(true, true);
@@ -60,18 +60,14 @@ void Enemy_Balloon::Update() {
     if (tile.x < 0) { tile.x = 0; }
     if (tile.y < 0) { tile.y = 0; }
 
-    //BOTTOM FLOOR
-    //if (physics.CheckMovementCollision({ position.x, position.y,currentAnim->GetWidth(), currentAnim->GetHeight() }, { 0,TILE_SIZE * 25, TILE_SIZE * 48, TILE_SIZE })) {
-    //    position.y = 2 * TILE_SIZE * 25 - currentAnim->GetHeight() * 2 - position.y;
-    //    if (GetEnemyType() == CHUNGUS_BALLOON) { speed.y = -physics.CalculateSpeed(position, speed, currentAnim->GetHeight(), TILE_SIZE * 3); } // -375
-    //    else if (GetEnemyType() == NOT_THAT_MEH_BALLOON) { speed.y = -physics.CalculateSpeed(position, speed, currentAnim->GetHeight(), TILE_SIZE * 10); } // - 312
-    //    else if (GetEnemyType() == MEH_BALLOON) { speed.y = -physics.CalculateSpeed(position, speed, currentAnim->GetHeight(), TILE_SIZE * 14); } // -252
-    //    else if (GetEnemyType() == SMOL_BALLOON) { speed.y = -physics.CalculateSpeed(position, speed, currentAnim->GetHeight(), TILE_SIZE * 20); } // -197
-    //}
+    //BOTTOMS
 
     if (GetEnemyType() == CHUNGUS_BALLOON) {
         for (int i = 1; i < 6; i++) {
-            if (game->GetModuleTileset()->GetLevelTile(tile.y + 5, tile.x + i).id == ModuleTileset::TileType::WALL) {
+            if (game->GetModuleTileset()->GetLevelTile(tile.y + 5, tile.x + i).id == ModuleTileset::TileType::WALL /*||
+                game->GetModuleTileset()->GetLevelTile(tile.y + 5, tile.x + i).id == ModuleTileset::TileType::DESTRUCTIBLE1 ||
+                game->GetModuleTileset()->GetLevelTile(tile.y + 5, tile.x + i).id == ModuleTileset::TileType::DESTRUCTIBLE2 ||
+                game->GetModuleTileset()->GetLevelTile(tile.y + 5, tile.x + i).id == ModuleTileset::TileType::NOT_DESTRUCTIBLE*/) {
                 position.y = 2 * TILE_SIZE * 25 - currentAnim->GetHeight() * 2 - position.y;
                 speed.y = -physics.CalculateSpeed(position, speed, currentAnim->GetHeight(), TILE_SIZE * 3);
                 break;
@@ -80,7 +76,10 @@ void Enemy_Balloon::Update() {
     }
     else if (GetEnemyType() == NOT_THAT_MEH_BALLOON) {
         for (int i = 1; i < 4; i++) {
-            if (game->GetModuleTileset()->GetLevelTile(tile.y + 3, tile.x + i).id == ModuleTileset::TileType::WALL) {
+            if (game->GetModuleTileset()->GetLevelTile(tile.y + 3, tile.x + i).id == ModuleTileset::TileType::WALL /*||
+                game->GetModuleTileset()->GetLevelTile(tile.y + 3, tile.x + i).id == ModuleTileset::TileType::DESTRUCTIBLE1 ||
+                game->GetModuleTileset()->GetLevelTile(tile.y + 3, tile.x + i).id == ModuleTileset::TileType::DESTRUCTIBLE2 ||
+                game->GetModuleTileset()->GetLevelTile(tile.y + 3, tile.x + i).id == ModuleTileset::TileType::NOT_DESTRUCTIBLE*/) {
                 position.y = 2 * TILE_SIZE * 25 - currentAnim->GetHeight() * 2 - position.y;
                 speed.y = -physics.CalculateSpeed(position, speed, currentAnim->GetHeight(), TILE_SIZE * 10);
                 break;
@@ -89,7 +88,10 @@ void Enemy_Balloon::Update() {
     }
     else if (GetEnemyType() == MEH_BALLOON) {
         for (int i = 1; i < 2; i++) {
-            if (game->GetModuleTileset()->GetLevelTile(tile.y + 2, tile.x + i).id == ModuleTileset::TileType::WALL) {
+            if (game->GetModuleTileset()->GetLevelTile(tile.y + 2, tile.x + i).id == ModuleTileset::TileType::WALL /*||
+                game->GetModuleTileset()->GetLevelTile(tile.y + 2, tile.x + i).id == ModuleTileset::TileType::DESTRUCTIBLE1 ||
+                game->GetModuleTileset()->GetLevelTile(tile.y + 2, tile.x + i).id == ModuleTileset::TileType::DESTRUCTIBLE2 ||
+                game->GetModuleTileset()->GetLevelTile(tile.y + 2, tile.x + i).id == ModuleTileset::TileType::NOT_DESTRUCTIBLE*/) {
                 position.y = 2 * TILE_SIZE * 25 - currentAnim->GetHeight() * 2 - position.y;
                 speed.y = -physics.CalculateSpeed(position, speed, currentAnim->GetHeight(), TILE_SIZE * 14);
                 break;
@@ -97,21 +99,44 @@ void Enemy_Balloon::Update() {
         }
     }
     else if (GetEnemyType() == SMOL_BALLOON) {
-        if (game->GetModuleTileset()->GetLevelTile(tile.y + 1, tile.x).id == ModuleTileset::TileType::WALL && (game->GetModuleTileset()->GetLevelTile(tile.y + 1, tile.x - 1).id == ModuleTileset::TileType::WALL || game->GetModuleTileset()->GetLevelTile(tile.y + 1, tile.x + 1).id == ModuleTileset::TileType::WALL) && game->GetModuleTileset()->GetLevelTile(tile.y, tile.x).id == ModuleTileset::TileType::AIR) {
+        if (
+            ((game->GetModuleTileset()->GetLevelTile(tile.y + 1, tile.x).id == ModuleTileset::TileType::WALL 
+            && (game->GetModuleTileset()->GetLevelTile(tile.y + 1, tile.x - 1).id == ModuleTileset::TileType::WALL 
+            || game->GetModuleTileset()->GetLevelTile(tile.y + 1, tile.x + 1).id == ModuleTileset::TileType::WALL))
+/*
+            ||
+
+            (game->GetModuleTileset()->GetLevelTile(tile.y + 1, tile.x).id == ModuleTileset::TileType::DESTRUCTIBLE1
+            && (game->GetModuleTileset()->GetLevelTile(tile.y + 1, tile.x - 1).id == ModuleTileset::TileType::DESTRUCTIBLE1
+            || game->GetModuleTileset()->GetLevelTile(tile.y + 1, tile.x + 1).id == ModuleTileset::TileType::DESTRUCTIBLE1))
+
+            ||
+
+            (game->GetModuleTileset()->GetLevelTile(tile.y + 1, tile.x).id == ModuleTileset::TileType::DESTRUCTIBLE2
+            && (game->GetModuleTileset()->GetLevelTile(tile.y + 1, tile.x - 1).id == ModuleTileset::TileType::DESTRUCTIBLE2
+            || game->GetModuleTileset()->GetLevelTile(tile.y + 1, tile.x + 1).id == ModuleTileset::TileType::DESTRUCTIBLE2))
+
+            ||
+
+            (game->GetModuleTileset()->GetLevelTile(tile.y + 1, tile.x).id == ModuleTileset::TileType::NOT_DESTRUCTIBLE
+            && (game->GetModuleTileset()->GetLevelTile(tile.y + 1, tile.x - 1).id == ModuleTileset::TileType::NOT_DESTRUCTIBLE
+            || game->GetModuleTileset()->GetLevelTile(tile.y + 1, tile.x + 1).id == ModuleTileset::TileType::NOT_DESTRUCTIBLE))*/
+            )
+
+            && game->GetModuleTileset()->GetLevelTile(tile.y, tile.x).id == ModuleTileset::TileType::AIR) {
             position.y = 2 * TILE_SIZE * 25 - currentAnim->GetHeight() * 2 - position.y;
             speed.y = -physics.CalculateSpeed(position, speed, currentAnim->GetHeight(), TILE_SIZE * 20);
         }
     }
 
-    //LEFT WALL                                                                                                     {x-1T, y-1T, w+2, h+2}
-    //if (physics.CheckMovementCollision({ position.x, position.y,currentAnim->GetWidth(), currentAnim->GetHeight() }, { 0,0, TILE_SIZE, TILE_SIZE * 26 })) {
-    //    position.x = 2 * TILE_SIZE - position.x;
-    //    speed.x = -(speed.x * 2);
-    //}
+    //LEFTS                                                                                                     {x-1T, y-1T, w+2, h+2}
 
     if (GetEnemyType() == CHUNGUS_BALLOON) {
         for (int i = 0; i < 5; i++) {
-            if (game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x).id == ModuleTileset::TileType::WALL) {
+            if (game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x).id == ModuleTileset::TileType::WALL /*||
+                game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x).id == ModuleTileset::TileType::DESTRUCTIBLE1 ||
+                game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x).id == ModuleTileset::TileType::DESTRUCTIBLE2 ||
+                game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x).id == ModuleTileset::TileType::NOT_DESTRUCTIBLE*/) {
                 position.x = 2 * TILE_SIZE - position.x;
                 speed.x = 119.5f;
                 break;
@@ -120,7 +145,10 @@ void Enemy_Balloon::Update() {
     }
     else if (GetEnemyType() == NOT_THAT_MEH_BALLOON) {
         for (int i = 0; i < 3; i++) {
-            if (game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x).id == ModuleTileset::TileType::WALL) {
+            if (game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x).id == ModuleTileset::TileType::WALL /*||
+                game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x).id == ModuleTileset::TileType::DESTRUCTIBLE1 ||
+                game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x).id == ModuleTileset::TileType::DESTRUCTIBLE2 ||
+                game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x).id == ModuleTileset::TileType::NOT_DESTRUCTIBLE*/) {
                 position.x = 2 * TILE_SIZE - position.x;
                 speed.x = 119.5f;
                 break;
@@ -129,7 +157,10 @@ void Enemy_Balloon::Update() {
     }
     else if (GetEnemyType() == MEH_BALLOON) {
         for (int i = 0; i < 2; i++) {
-            if (game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x).id == ModuleTileset::TileType::WALL) {
+            if (game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x).id == ModuleTileset::TileType::WALL /*||
+                game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x).id == ModuleTileset::TileType::DESTRUCTIBLE1 ||
+                game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x).id == ModuleTileset::TileType::DESTRUCTIBLE2 ||
+                game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x).id == ModuleTileset::TileType::NOT_DESTRUCTIBLE*/) {
                 position.x = 2 * TILE_SIZE - position.x;
                 speed.x = 119.5f;
                 break;
@@ -137,11 +168,23 @@ void Enemy_Balloon::Update() {
         }
     }
     else if (GetEnemyType() == SMOL_BALLOON) {
-        if (game->GetModuleTileset()->GetLevelTile(tile.y, tile.x).id == ModuleTileset::TileType::WALL && game->GetModuleTileset()->GetLevelTile(tile.y + 1, tile.x + 1).id == ModuleTileset::TileType::AIR) {
+        if ((game->GetModuleTileset()->GetLevelTile(tile.y, tile.x).id == ModuleTileset::TileType::WALL /*||
+            game->GetModuleTileset()->GetLevelTile(tile.y, tile.x).id == ModuleTileset::TileType::DESTRUCTIBLE1 ||
+            game->GetModuleTileset()->GetLevelTile(tile.y, tile.x).id == ModuleTileset::TileType::DESTRUCTIBLE2 ||
+            game->GetModuleTileset()->GetLevelTile(tile.y, tile.x).id == ModuleTileset::TileType::NOT_DESTRUCTIBLE*/) &&
+            game->GetModuleTileset()->GetLevelTile(tile.y + 1, tile.x + 1).id == ModuleTileset::TileType::AIR) {
             position.x = 2 * TILE_SIZE - position.x;
             speed.x = 119.5f;
         }
-        else if (game->GetModuleTileset()->GetLevelTile(tile.y, tile.x).id == ModuleTileset::TileType::WALL && game->GetModuleTileset()->GetLevelTile(tile.y + 1, tile.x + 1).id == ModuleTileset::TileType::WALL) {
+        else if ((game->GetModuleTileset()->GetLevelTile(tile.y, tile.x).id == ModuleTileset::TileType::WALL /*||
+            game->GetModuleTileset()->GetLevelTile(tile.y, tile.x).id == ModuleTileset::TileType::DESTRUCTIBLE1 ||
+            game->GetModuleTileset()->GetLevelTile(tile.y, tile.x).id == ModuleTileset::TileType::DESTRUCTIBLE2 ||
+            game->GetModuleTileset()->GetLevelTile(tile.y, tile.x).id == ModuleTileset::TileType::NOT_DESTRUCTIBLE*/)
+            &&
+            (game->GetModuleTileset()->GetLevelTile(tile.y + 1, tile.x + 1).id == ModuleTileset::TileType::WALL /*||
+            game->GetModuleTileset()->GetLevelTile(tile.y + 1, tile.x + 1).id == ModuleTileset::TileType::DESTRUCTIBLE1 ||
+            game->GetModuleTileset()->GetLevelTile(tile.y + 1, tile.x + 1).id == ModuleTileset::TileType::DESTRUCTIBLE2 ||
+            game->GetModuleTileset()->GetLevelTile(tile.y + 1, tile.x + 1).id == ModuleTileset::TileType::NOT_DESTRUCTIBLE*/)) {
             position.x = 2 * TILE_SIZE - position.x;
             speed.x = 119.5f;
             position.y = 2 * TILE_SIZE * 25 - currentAnim->GetHeight() * 2 - position.y;
@@ -149,17 +192,16 @@ void Enemy_Balloon::Update() {
         }
     }
 
-    //TOP FLOOR
+    //TOPS
+    //Abraham & Me uwu
 
-    //RIGHT WALL
-    //if (physics.CheckMovementCollision({ position.x, position.y,currentAnim->GetWidth(), currentAnim->GetHeight() }, { TILE_SIZE * 47,0, TILE_SIZE, TILE_SIZE * 26 })) {
-    //    position.x = 2 * TILE_SIZE * 47 - currentAnim->GetWidth() * 2 - position.x;
-    //    speed.x = -(speed.x / 2);
-    //}
-
+    //RIGHTS
     if (GetEnemyType() == CHUNGUS_BALLOON) {
         for (int i = 0; i < 5; i++) {
-            if (game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x + 6).id == ModuleTileset::TileType::WALL) {
+            if (game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x + 6).id == ModuleTileset::TileType::WALL /*||
+                game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x + 6).id == ModuleTileset::TileType::DESTRUCTIBLE1 ||
+                game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x + 6).id == ModuleTileset::TileType::DESTRUCTIBLE2 ||
+                game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x + 6).id == ModuleTileset::TileType::NOT_DESTRUCTIBLE*/) {
                 position.x = 2 * TILE_SIZE * 47 - currentAnim->GetWidth() * 2 - position.x;
                 speed.x = -59.25f;
                 break;
@@ -168,7 +210,10 @@ void Enemy_Balloon::Update() {
     }
     else if (GetEnemyType() == NOT_THAT_MEH_BALLOON) {
         for (int i = 0; i < 3; i++) {
-            if (game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x + 4).id == ModuleTileset::TileType::WALL) {
+            if (game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x + 4).id == ModuleTileset::TileType::WALL /*||
+                game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x + 4).id == ModuleTileset::TileType::DESTRUCTIBLE1 ||
+                game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x + 4).id == ModuleTileset::TileType::DESTRUCTIBLE2 ||
+                game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x + 4).id == ModuleTileset::TileType::NOT_DESTRUCTIBLE*/) {
                 position.x = 2 * TILE_SIZE * 47 - currentAnim->GetWidth() * 2 - position.x;
                 speed.x = -59.25f;
                 break;
@@ -177,7 +222,10 @@ void Enemy_Balloon::Update() {
     }
     else if (GetEnemyType() == MEH_BALLOON) {
         for (int i = 0; i < 2; i++) {
-            if (game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x + 2).id == ModuleTileset::TileType::WALL) {
+            if (game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x + 2).id == ModuleTileset::TileType::WALL /*||
+                game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x + 2).id == ModuleTileset::TileType::DESTRUCTIBLE1 ||
+                game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x + 2).id == ModuleTileset::TileType::DESTRUCTIBLE2 ||
+                game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x + 2).id == ModuleTileset::TileType::NOT_DESTRUCTIBLE*/) {
                 position.x = 2 * TILE_SIZE * 47 - currentAnim->GetWidth() * 2 - position.x;
                 speed.x = -59.25f;
                 break;
@@ -185,11 +233,23 @@ void Enemy_Balloon::Update() {
         }
     }
     else if (GetEnemyType() == SMOL_BALLOON) {
-        if (game->GetModuleTileset()->GetLevelTile(tile.y, tile.x + 1).id == ModuleTileset::TileType::WALL && game->GetModuleTileset()->GetLevelTile(tile.y + 1, tile.x).id == ModuleTileset::TileType::AIR) {
+        if ((game->GetModuleTileset()->GetLevelTile(tile.y, tile.x + 1).id == ModuleTileset::TileType::WALL /*||
+            game->GetModuleTileset()->GetLevelTile(tile.y, tile.x + 1).id == ModuleTileset::TileType::DESTRUCTIBLE1 ||
+            game->GetModuleTileset()->GetLevelTile(tile.y, tile.x + 1).id == ModuleTileset::TileType::DESTRUCTIBLE2 ||
+            game->GetModuleTileset()->GetLevelTile(tile.y, tile.x + 1).id == ModuleTileset::TileType::NOT_DESTRUCTIBLE*/)
+            && game->GetModuleTileset()->GetLevelTile(tile.y + 1, tile.x).id == ModuleTileset::TileType::AIR) {
             position.x = 2 * TILE_SIZE * 47 - currentAnim->GetWidth() * 2 - position.x;
             speed.x = -59.25f;
         }
-        else if (game->GetModuleTileset()->GetLevelTile(tile.y, tile.x + 1).id == ModuleTileset::TileType::WALL && game->GetModuleTileset()->GetLevelTile(tile.y + 1, tile.x).id == ModuleTileset::TileType::WALL) {
+        else if ((game->GetModuleTileset()->GetLevelTile(tile.y, tile.x + 1).id == ModuleTileset::TileType::WALL /*||
+            game->GetModuleTileset()->GetLevelTile(tile.y, tile.x + 1).id == ModuleTileset::TileType::DESTRUCTIBLE1 ||
+            game->GetModuleTileset()->GetLevelTile(tile.y, tile.x + 1).id == ModuleTileset::TileType::DESTRUCTIBLE2 ||
+            game->GetModuleTileset()->GetLevelTile(tile.y, tile.x + 1).id == ModuleTileset::TileType::NOT_DESTRUCTIBLE*/)
+            &&
+            (game->GetModuleTileset()->GetLevelTile(tile.y, tile.x + 1).id == ModuleTileset::TileType::WALL /*||
+            game->GetModuleTileset()->GetLevelTile(tile.y, tile.x + 1).id == ModuleTileset::TileType::DESTRUCTIBLE1 ||
+            game->GetModuleTileset()->GetLevelTile(tile.y, tile.x + 1).id == ModuleTileset::TileType::DESTRUCTIBLE2 ||
+            game->GetModuleTileset()->GetLevelTile(tile.y, tile.x + 1).id == ModuleTileset::TileType::NOT_DESTRUCTIBLE*/)) {
             position.x = 2 * TILE_SIZE * 47 - currentAnim->GetWidth() * 2 - position.x;
             speed.x = -59.25f;
             position.y = 2 * TILE_SIZE * 25 - currentAnim->GetHeight() * 2 - position.y;

@@ -9,6 +9,13 @@
 struct SDL_Texture;
 struct Collider;
 
+enum class SHOT_TYPES {
+    NORMAL,
+    DWIRE,
+    POWER,
+    VULCAN
+};
+
 class ModulePlayer : public Module {
 public:
     ModulePlayer(bool startEnabled);
@@ -21,13 +28,17 @@ public:
     SDL_Texture* GetTexture() const;
     SDL_Texture* GetBlueTextTexture() const;
     Animation* GetCurrentAnimation() const;
-    uint GetShotSoundIndex() const;
-    void SetShotSoundIndex(uint _shotSoundIndex);
+    SHOT_TYPES GetCurrentShotType() const;
+    uint GetNormalShotSoundIndex() const;
+    void SetNormalShotSoundIndex(uint _shotSoundIndex);
+    uint GetVulcanShotSoundIndex() const;
+    void SetVulcanShotSoundIndex(uint _shotSoundIndex);
     uint GetDedSoundIndex() const;
     void SetDedSoundIndex(uint _dedSoundIndex);
     int GetFontIndex()const;
 	int GetTimerFontIndex()const;
-    void SetIfShot(bool _shot);
+    void IncreaseShoot();
+    void DecreaseShoot();
     bool CheckIfGodMode() const;
     bool CheckIfDestroyed() const;
     void AddScore(int _score);
@@ -65,7 +76,8 @@ private:
     Animation* currentAnimation = &idle;
 
     //Player Sound
-    uint shotSoundIndex;
+    uint normalShotSoundIndex;
+    uint vulcanShotSoundIndex;
     uint dedSoundIndex;
 
     // The player's collider
@@ -85,12 +97,15 @@ private:
     bool onceHurry0 = true;
     bool onceHurry1 = true;
     bool onceHurry2 = true;
+    bool onceSetNumShots = true;
 
     //Counter on the number of jumps dead player has made
     int deathJumps = 0;
 
     // A flag to detect when the player has shot
-    bool shot = false;
+    int shot = 1;
+    int maxShots = 1;
+    SHOT_TYPES shotType = SHOT_TYPES::NORMAL;
 
     // Cheat Code Enabler: God Mode
     bool godMode = false;

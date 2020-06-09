@@ -2,6 +2,7 @@
 
 #include "Game.h"
 
+#include "ModulePlayer.h"
 #include "ModuleCollisions.h"
 #include "ModuleTextures.h"
 #include "ModuleRender.h"
@@ -54,24 +55,24 @@ bool ModuleTileset::Start() {
                 };
                 break;
             case 2:
-				levelTiled[i][j] = {
-					TileType::DESTRUCTIBLE1,
-					{i * TILE_SIZE,j * TILE_SIZE,TILE_SIZE,TILE_SIZE},
-					game->GetModuleCollisions()->AddCollider({ i* TILE_SIZE, j* TILE_SIZE, TILE_SIZE, TILE_SIZE }, Collider::TYPE::FLOOR)
+                levelTiled[i][j] = {
+                    TileType::DESTRUCTIBLE1,
+                    {i * TILE_SIZE,j * TILE_SIZE,TILE_SIZE,TILE_SIZE},
+                    game->GetModuleCollisions()->AddCollider({ j * TILE_SIZE, i * TILE_SIZE, TILE_SIZE, TILE_SIZE }, Collider::TYPE::FLOOR, (Module*)game->GetModuleTileset())
                 };
                 break;
             case 3:
                 levelTiled[i][j] = {
                     TileType::DESTRUCTIBLE2,
                     {i * TILE_SIZE,j * TILE_SIZE,TILE_SIZE,TILE_SIZE},
-					game->GetModuleCollisions()->AddCollider({ i * TILE_SIZE, j * TILE_SIZE, TILE_SIZE, TILE_SIZE }, Collider::TYPE::FLOOR)
+					game->GetModuleCollisions()->AddCollider({ j * TILE_SIZE, i * TILE_SIZE, TILE_SIZE, TILE_SIZE }, Collider::TYPE::FLOOR, (Module*)game->GetModuleTileset())
                 };
                 break;
             case 4:
                 levelTiled[i][j] = {
                     TileType::NOT_DESTRUCTIBLE,
                     {i * TILE_SIZE,j * TILE_SIZE,TILE_SIZE,TILE_SIZE},
-					game->GetModuleCollisions()->AddCollider({ i * TILE_SIZE, j * TILE_SIZE, TILE_SIZE, TILE_SIZE }, Collider::TYPE::FLOOR)
+					game->GetModuleCollisions()->AddCollider({ j * TILE_SIZE, i * TILE_SIZE, TILE_SIZE, TILE_SIZE }, Collider::TYPE::FLOOR, (Module*)game->GetModuleTileset())
                 };
                 break;
             case 5:
@@ -116,5 +117,10 @@ bool ModuleTileset::CleanUp() { return true; }
 ModuleTileset::Tile ModuleTileset::GetLevelTile(int y, int x) { return levelTiled[y][x]; }
 
 void ModuleTileset::OnCollision(Collider* c1, Collider* c2) {
-	//if(GetLevelTile().id== TileType::DESTRUCTIBLE1)
+    if (c2->GetType() == Collider::TYPE::PLAYER_SHOT && game->GetModulePlayer()->GetCurrentShotType() != SHOT_TYPES::VULCAN) {
+        LOG("Wire collision!");
+        if (GetLevelTile(c2->GetRect().y/TILE_SIZE, c2->GetRect().x/TILE_SIZE).id == TileType::DESTRUCTIBLE1 || GetLevelTile(c2->GetRect().y / TILE_SIZE, c2->GetRect().x / TILE_SIZE).id == TileType::DESTRUCTIBLE2) {
+            LOG("It was a destructible!");
+        }
+    }
 }
