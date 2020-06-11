@@ -9,6 +9,7 @@
 
 struct _SDL_GameController;
 struct _SDL_Haptic;
+struct SDL_Cursor;
 
 enum KEY_STATE {
     KEY_IDLE,
@@ -64,12 +65,21 @@ public:
     KEY_STATE GetKey(int i) const;
     GamePad GetGamePad();
     GamePad GetGamePad(int i) const;
+    int GetCursorState() const;
+    int GetMouseX() const;
+    int GetMouseY() const;
+    bool CheckIfClicked() const;
 
 private:
     KEY_STATE keys[MAX_KEYS] = { KEY_IDLE };
 
     // An array to fill in all detected gamepads
     GamePad pads[MAX_PADS];
+
+    SDL_Cursor* cursor;
+    int mouseX;
+    int mouseY;
+    bool hasClicked;
 };
 
 #endif // ! __MODULE_INPUT_H__

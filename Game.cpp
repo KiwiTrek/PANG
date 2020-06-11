@@ -13,6 +13,7 @@
 #include "ModuleLevelOne.h"
 #include "ModuleLevelTwo.h"
 #include "ModuleLevelThree.h"
+#include "ModuleLevelFour.h"
 
 #include "ModulePlayer.h"
 #include "ModuleEnemies.h"
@@ -42,17 +43,18 @@ Game::Game() {
     modules[6] = levelOne = new ModuleLevelOne(false);
     modules[7] = levelTwo = new ModuleLevelTwo(false);
     modules[8] = levelThree = new ModuleLevelThree(false);
+    modules[9] = levelFour = new ModuleLevelFour(false);
 
-    modules[9] = tileset = new ModuleTileset(false);
-    modules[10] = enemies = new ModuleEnemies(false);
-    modules[11] = player = new ModulePlayer(false);
-    modules[12] = particles = new ModuleParticles(false);
-    modules[13] = winScreen = new ModuleWinScreen(false);
+    modules[10] = tileset = new ModuleTileset(false);
+    modules[11] = enemies = new ModuleEnemies(false);
+    modules[12] = player = new ModulePlayer(false);
+    modules[13] = particles = new ModuleParticles(false);
+    modules[14] = winScreen = new ModuleWinScreen(false);
 
-    modules[14] = collisions = new ModuleCollisions(false);
-    modules[15] = transition = new ModuleTransition(true);
-    modules[16] = fonts = new ModuleFonts(true);
-    modules[17] = render = new ModuleRender(true);
+    modules[15] = collisions = new ModuleCollisions(false);
+    modules[16] = transition = new ModuleTransition(true);
+    modules[17] = fonts = new ModuleFonts(true);
+    modules[18] = render = new ModuleRender(true);
 }
 
 Game::~Game() {
@@ -116,6 +118,7 @@ ModuleTitleScreen* Game::GetModuleTitleScreen() const { return titleScreen; }
 ModuleLevelOne* Game::GetModuleLevelOne() const { return levelOne; }
 ModuleLevelTwo* Game::GetModuleLevelTwo() const { return levelTwo; }
 ModuleLevelThree* Game::GetModuleLevelThree() const { return levelThree; }
+ModuleLevelFour* Game::GetModuleLevelFour() const { return levelFour; }
 
 ModulePlayer* Game::GetModulePlayer() const { return player; }
 ModuleEnemies* Game::GetModuleEnemies() const { return enemies; }

@@ -10,6 +10,7 @@
 #include "ModuleLevelOne.h"
 #include "ModuleLevelTwo.h"
 #include "ModuleLevelThree.h"
+#include "ModuleLevelFour.h"
 
 #include "Globals.h"
 #include "Tilesets.h"
@@ -34,6 +35,10 @@ bool ModuleTileset::Start() {
     else if (game->GetModuleLevelThree()->IsEnabled()) {
         foreground = game->GetModuleTextures()->Load("Resources/Sprites/Foregrounds/Foreground3.png");
         level = level3;
+    }
+    else if (game->GetModuleLevelFour()->IsEnabled()) {
+        foreground = game->GetModuleTextures()->Load("Resources/Sprites/Foregrounds/Foreground4.png");
+        level = level4;
     }
     else { return false; }
 

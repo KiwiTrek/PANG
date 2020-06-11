@@ -46,6 +46,7 @@ public:
     int GetPlayerLives() const;
     void SetPlayerLives(int lives);
     void SetScore(int _score);
+    int GetBallTypeDebug() const;
 
     bool Start() override;
     UPDATE_STATUS Update() override;
@@ -138,6 +139,8 @@ private:
     int playerLifes = 2;
     SDL_Rect life;
 
+    char cursorDebugText[25] = { "\0" };
+    int ballTypeDebug = 0;
 };
 
 #endif //__MODULE_PLAYER_H__

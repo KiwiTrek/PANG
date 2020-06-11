@@ -27,6 +27,10 @@ ModuleWinScreen::ModuleWinScreen(bool startEnabled) : Module(startEnabled) {
     }
     planeTransition.SetSpeed(0.5f);
     planeTransition.SetLoop(false);
+
+    for (int i = 0; i != 4; ++i) { splashArt3.PushBack({ i * 600,0,600,450 }); }
+    splashArt3.SetSpeed(0.3f);
+    splashArt3.SetLoop(true);
 }
 
 ModuleWinScreen::~ModuleWinScreen() {}
@@ -55,6 +59,11 @@ bool ModuleWinScreen::Start() {
         game->GetModuleAudio()->PlayMusicOnce("Resources/BGM/plane.ogg");
         break;
     }
+    case 4: {
+        splashArtTexture = game->GetModuleTextures()->Load("Resources/Sprites/Splasharts/ThirdStageSplashArt.png");
+        game->GetModuleAudio()->PlayMusicOnce("Resources/BGM/levelComplete.ogg");
+        break;
+    }
     default: {
         break;
     }
@@ -68,6 +77,7 @@ bool ModuleWinScreen::Start() {
 UPDATE_STATUS ModuleWinScreen::Update() {
     splashArt1.Update();
     planeTransition.Update();
+    splashArt3.Update();
     switch (currentLevel) {
     case 1: {
         game->GetModuleAudio()->ChangeModuleAtEnd("Resources/BGM/noMusic.ogg", (Module*)game->GetModuleLevelTwo());
@@ -79,8 +89,12 @@ UPDATE_STATUS ModuleWinScreen::Update() {
     }
     case 3: {
         if (planeTransition.HasFinished()) {
-            game->GetModuleTransition()->Transition(this, (Module*)game->GetModuleTitleScreen(),4);
+            game->GetModuleTransition()->Transition(this, (Module*)game->GetModuleLevelFour(),4);
         }
+        break;
+    }
+    case 4: {
+        game->GetModuleAudio()->ChangeModuleAtEnd("Resources/BGM/noMusic.ogg", (Module*)game->GetModuleTitleScreen());
         break;
     }
     default: {
@@ -128,6 +142,22 @@ UPDATE_STATUS ModuleWinScreen::PostUpdate() {
     }
     case 3: {
         game->GetModuleRender()->Blit(splashArtTexture, 0, 0, false, &planeTransition.GetCurrentFrame(), &backgroundRect);
+        break;
+    }
+    case 4: {
+        SDL_Rect splashArtAdapter = { (game->GetModuleLevelOne()->GetBackgroundAdapter().w / 2) - 100,(game->GetModuleLevelOne()->GetBackgroundAdapter().y) + (TILE_SIZE * 4),200,95 };
+        game->GetModuleRender()->Blit(splashArtTexture, 0, 0, false, &splashArt3.GetCurrentFrame(), &splashArtAdapter);
+        if (counter >= 1) {
+            sprintf_s(stage, 10, "4stage");
+            game->GetModuleFonts()->BlitText(174, 142, normalFont2, stage);
+            sprintf_s(timeBonus, 25, "time bonus    %5d pts.", bonusScore);
+            game->GetModuleFonts()->BlitText(102, 166, normalFont2, timeBonus);
+        }
+        if (counter >= 51) {
+            sprintf_s(nextExtend, 25, "next extend   %5d pts.", nextExtendNumber);
+            game->GetModuleFonts()->BlitText(102, 182, normalFont2, nextExtend);
+        }
+        break;
     }
     default: {
         break;

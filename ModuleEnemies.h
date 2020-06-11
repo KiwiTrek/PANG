@@ -71,6 +71,8 @@ private:
 
     // The audio fx for destroying an enemy
     uint balloogiExplosioni;
+
+    bool onceSpawn = true;
 };
 
 #endif // __MODULE_ENEMIES_H__

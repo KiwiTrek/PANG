@@ -7,13 +7,17 @@
 #include "ModuleParticles.h"
 #include "ModulePlayer.h"
 #include "ModuleAudio.h"
+#include "ModuleInput.h"
 
 #include "ModuleLevelOne.h"
 #include "ModuleLevelTwo.h"
 #include "ModuleLevelThree.h"
+#include "ModuleLevelFour.h"
 
 #include "Enemy.h"
 #include "Enemy_Balloon.h"
+
+#include "SDL/include/SDL_scancode.h"
 
 #define SPAWN_MARGIN 50
 
@@ -24,15 +28,33 @@ ModuleEnemies::~ModuleEnemies() {}
 bool ModuleEnemies::Start() {
     enemyTexture = game->GetModuleTextures()->Load("Resources/Sprites/enemies.png");
     balloogiExplosioni = game->GetModuleAudio()->LoadFx("Resources/SFX/balloonPopped.wav");
-
+    onceSpawn = true;
     return true;
 }
 
 UPDATE_STATUS ModuleEnemies::Update() {
+    if (game->GetModuleInput()->GetCursorState() == 1 && game->GetModuleInput()->CheckIfClicked() && onceSpawn == true) {
+        onceSpawn = false;
+        if (game->GetModulePlayer()->GetBallTypeDebug() == 0) {
+            AddEnemy(ENEMY_TYPE::CHUNGUS_BALLOON, game->GetModuleInput()->GetMouseX(), game->GetModuleInput()->GetMouseY(), true);
+        }
+        if (game->GetModulePlayer()->GetBallTypeDebug() == 1) {
+            AddEnemy(ENEMY_TYPE::NOT_THAT_MEH_BALLOON, game->GetModuleInput()->GetMouseX(), game->GetModuleInput()->GetMouseY(), true);
+        }
+        if (game->GetModulePlayer()->GetBallTypeDebug() == 2) {
+            AddEnemy(ENEMY_TYPE::MEH_BALLOON, game->GetModuleInput()->GetMouseX(), game->GetModuleInput()->GetMouseY(), true);
+        }
+        if (game->GetModulePlayer()->GetBallTypeDebug() == 3) {
+            AddEnemy(ENEMY_TYPE::SMOL_BALLOON, game->GetModuleInput()->GetMouseX(), game->GetModuleInput()->GetMouseY(), true);
+        }
+    }
+    else if (game->GetModuleInput()->GetCursorState() == 1 && game->GetModuleInput()->CheckIfClicked() == false) { onceSpawn = true; }
+
     HandleEnemiesSpawn();
     if (game->GetModuleLevelOne()->CheckIfStarted() ||
         game->GetModuleLevelTwo()->CheckIfStarted() ||
-        game->GetModuleLevelThree()->CheckIfStarted()) {
+        game->GetModuleLevelThree()->CheckIfStarted() ||
+        game->GetModuleLevelFour()->CheckIfStarted()) {
         if (game->GetModulePlayer()->CheckIfDestroyed() == false) {
             for (uint i = 0; i < MAX_ENEMIES; ++i) {
                 if (enemies[i] != nullptr) { enemies[i]->Update(); }
@@ -132,7 +154,7 @@ void ModuleEnemies::OnCollision(Collider* c1, Collider* c2) {
 
                 switch (enemies[i]->GetEnemyType()) {
                 case ENEMY_TYPE::CHUNGUS_BALLOON: {
-                    if (game->GetModuleLevelOne()->IsEnabled()) { game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->rBigBalloonExplosion, enemies[i]->GetPositionX(), enemies[i]->GetPositionY()); }
+                    if (game->GetModuleLevelOne()->IsEnabled() || game->GetModuleLevelFour()->IsEnabled()) { game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->rBigBalloonExplosion, enemies[i]->GetPositionX(), enemies[i]->GetPositionY()); }
                     else if (game->GetModuleLevelTwo()->IsEnabled()) { game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->bBigBalloonExplosion, enemies[i]->GetPositionX(), enemies[i]->GetPositionY()); }
                     else if (game->GetModuleLevelThree()->IsEnabled()) { game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->gBigBalloonExplosion, enemies[i]->GetPositionX(), enemies[i]->GetPositionY()); }
 
@@ -142,7 +164,7 @@ void ModuleEnemies::OnCollision(Collider* c1, Collider* c2) {
                     break;
                 }
                 case ENEMY_TYPE::NOT_THAT_MEH_BALLOON: {
-                    if (game->GetModuleLevelOne()->IsEnabled()) { game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->rNotThatMehBalloonExplosion, enemies[i]->GetPositionX(), enemies[i]->GetPositionY()); }
+                    if (game->GetModuleLevelOne()->IsEnabled() || game->GetModuleLevelFour()->IsEnabled()) { game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->rNotThatMehBalloonExplosion, enemies[i]->GetPositionX(), enemies[i]->GetPositionY()); }
                     else if (game->GetModuleLevelTwo()->IsEnabled()) { game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->bNotThatMehBalloonExplosion, enemies[i]->GetPositionX(), enemies[i]->GetPositionY()); }
                     else if (game->GetModuleLevelThree()->IsEnabled()) { game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->gNotThatMehBalloonExplosion, enemies[i]->GetPositionX(), enemies[i]->GetPositionY()); }
 
@@ -153,7 +175,7 @@ void ModuleEnemies::OnCollision(Collider* c1, Collider* c2) {
                     break;
                 }
                 case ENEMY_TYPE::MEH_BALLOON: {
-                    if (game->GetModuleLevelOne()->IsEnabled()) { game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->rMehBalloonExplosion, enemies[i]->GetPositionX(), enemies[i]->GetPositionY()); }
+                    if (game->GetModuleLevelOne()->IsEnabled() || game->GetModuleLevelFour()->IsEnabled()) { game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->rMehBalloonExplosion, enemies[i]->GetPositionX(), enemies[i]->GetPositionY()); }
                     else if (game->GetModuleLevelTwo()->IsEnabled()) { game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->bMehBalloonExplosion, enemies[i]->GetPositionX(), enemies[i]->GetPositionY()); }
                     else if (game->GetModuleLevelThree()->IsEnabled()) { game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->gMehBalloonExplosion, enemies[i]->GetPositionX(), enemies[i]->GetPositionY()); }
 
@@ -163,7 +185,7 @@ void ModuleEnemies::OnCollision(Collider* c1, Collider* c2) {
                     break;
                 }
                 case ENEMY_TYPE::SMOL_BALLOON: {
-                    if (game->GetModuleLevelOne()->IsEnabled()) { game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->rSmolBalloonExplosion, enemies[i]->GetPositionX(), enemies[i]->GetPositionY()); }
+                    if (game->GetModuleLevelOne()->IsEnabled() || game->GetModuleLevelFour()->IsEnabled()) { game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->rSmolBalloonExplosion, enemies[i]->GetPositionX(), enemies[i]->GetPositionY()); }
                     else if (game->GetModuleLevelTwo()->IsEnabled()) { game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->bSmolBalloonExplosion, enemies[i]->GetPositionX(), enemies[i]->GetPositionY()); }
                     else if (game->GetModuleLevelThree()->IsEnabled()) { game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->gSmolBalloonExplosion, enemies[i]->GetPositionX(), enemies[i]->GetPositionY()); }
 

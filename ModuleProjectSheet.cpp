@@ -41,6 +41,7 @@ UPDATE_STATUS ModuleProjectSheet::Update() {
         if (game->GetModuleInput()->GetKey(SDL_SCANCODE_1)) { game->GetModuleTransition()->Transition(this, (Module*)game->GetModuleLevelOne(), 4); }
         else if (game->GetModuleInput()->GetKey(SDL_SCANCODE_2)) { game->GetModuleTransition()->Transition(this, (Module*)game->GetModuleLevelTwo(), 4); }
         else if (game->GetModuleInput()->GetKey(SDL_SCANCODE_3)) { game->GetModuleTransition()->Transition(this, (Module*)game->GetModuleLevelThree(), 4); }
+        else if (game->GetModuleInput()->GetKey(SDL_SCANCODE_4)) { game->GetModuleTransition()->Transition(this, (Module*)game->GetModuleLevelFour(), 4); }
     }
     return UPDATE_STATUS::UPDATE_CONTINUE;
 }
@@ -59,6 +60,8 @@ UPDATE_STATUS ModuleProjectSheet::PostUpdate() {
         game->GetModuleFonts()->BlitText(TILE_SIZE * 3, TILE_SIZE * 9, levelFont, stage2);
         sprintf_s(stage3, 20, "level 3: press 3");
         game->GetModuleFonts()->BlitText(TILE_SIZE * 3, TILE_SIZE * 11, levelFont, stage3);
+        sprintf_s(stage3, 20, "level 4: press 4");
+        game->GetModuleFonts()->BlitText(TILE_SIZE * 3, TILE_SIZE * 13, levelFont, stage3);
     }
     else { game->GetModuleRender()->Blit(projectSheet, 0, 0, false, nullptr, &backgroundRect); }
 

@@ -27,6 +27,14 @@ bool ModuleInput::Init() {
         return false;
     }
 
+    cursor = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_ARROW);
+    if (cursor == NULL) {
+        LOG("Cursor could not initialize! SDL_Error: %s\n", SDL_GetError());
+    }
+    else {
+        SDL_SetCursor(cursor);
+        SDL_ShowCursor(0);
+    }
     return true;
 }
 
@@ -54,14 +62,33 @@ UPDATE_STATUS ModuleInput::PreUpdate() {
             HandleDeviceRemoval(event.cdevice.which);
             break;
         }
+        case(SDL_MOUSEBUTTONDOWN): {
+            mouseX = event.motion.x;
+            mouseY = event.motion.y;
+            hasClicked = true;
+            break;
+        }
         case(SDL_QUIT): {
             return UPDATE_STATUS::UPDATE_STOP;
+            break;
+        }
+        default: {
+            hasClicked = false;
             break;
         }
         }
     }
 
     UpdateGamepadsInput();
+
+    if (keys[SDL_SCANCODE_F3] == KEY_DOWN) {
+        if (SDL_ShowCursor(-1)) {
+            SDL_ShowCursor(0);
+        }
+        else {
+            SDL_ShowCursor(1);
+        }
+    }
 
     return UPDATE_STATUS::UPDATE_CONTINUE;
 }
@@ -77,6 +104,8 @@ bool ModuleInput::CleanUp() {
         }
         if (pads[i].controller != nullptr) SDL_GameControllerClose(pads[i].controller);
     }
+
+    SDL_FreeCursor(cursor);
 
     SDL_QuitSubSystem(SDL_INIT_HAPTIC);
     SDL_QuitSubSystem(SDL_INIT_GAMECONTROLLER);
@@ -190,3 +219,7 @@ void ModuleInput::SetKey(const KEY_STATE _key, int i) { keys[i] = _key; }
 KEY_STATE ModuleInput::GetKey(int i) const { return keys[i]; }
 GamePad ModuleInput::GetGamePad() { return *pads; }
 GamePad ModuleInput::GetGamePad(int i) const { return pads[i]; }
+int ModuleInput::GetCursorState() const { return SDL_ShowCursor(-1); }
+int ModuleInput::GetMouseX() const { return mouseX; };
+int ModuleInput::GetMouseY() const { return mouseY; };
+bool ModuleInput::CheckIfClicked() const { return hasClicked; };
