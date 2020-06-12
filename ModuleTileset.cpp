@@ -126,6 +126,8 @@ void ModuleTileset::OnCollision(Collider* c1, Collider* c2) {
         LOG("Wire collision!");
         if (GetLevelTile(c2->GetRect().y/TILE_SIZE, c2->GetRect().x/TILE_SIZE).id == TileType::DESTRUCTIBLE1 || GetLevelTile(c2->GetRect().y / TILE_SIZE, c2->GetRect().x / TILE_SIZE).id == TileType::DESTRUCTIBLE2) {
             LOG("It was a destructible!");
+            //GetLevelTile(c2->GetRect().y/TILE_SIZE, c2->GetRect().x/TILE_SIZE) -> Bloque impactado por Gancho
+            //c2 -> Projectile collision
         }
     }
 }

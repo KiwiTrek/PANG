@@ -74,6 +74,7 @@ bool ModulePlayer::Start() {
 
     blueText = game->GetModuleTextures()->Load("Resources/Sprites/blueText.png");
     texture = game->GetModuleTextures()->Load("Resources/Sprites/player.png"); // arcade version
+    powerUpIcons = game->GetModuleTextures()->Load("Resources/Sprites/powerUpIcons.png");
     normalShotSoundIndex = game->GetModuleAudio()->LoadFx("Resources/SFX/shotClaw.wav");
     vulcanShotSoundIndex = game->GetModuleAudio()->LoadFx("Resources/SFX/shotgun.wav");
     dedSoundIndex = game->GetModuleAudio()->LoadFx("Resources/SFX/dead.wav");
@@ -497,6 +498,21 @@ UPDATE_STATUS ModulePlayer::PostUpdate() {
         game->GetModuleRender()->Blit(texture, 0, 0, false, &life, &lifeAdapter);
     }
 
+    switch (shotType) {
+    case SHOT_TYPES::DWIRE: {
+        game->GetModuleRender()->Blit(powerUpIcons, TILE_SIZE * 11, game->GetModuleLevelOne()->GetBackgroundAdapter().h + (TILE_SIZE * 2), false, &iconD);
+        break;
+    }
+    case SHOT_TYPES::POWER: {
+        game->GetModuleRender()->Blit(powerUpIcons, TILE_SIZE * 11, game->GetModuleLevelOne()->GetBackgroundAdapter().h + (TILE_SIZE * 2), false, &iconP);
+        break;
+    }
+    case SHOT_TYPES::VULCAN: {
+        game->GetModuleRender()->Blit(powerUpIcons, TILE_SIZE * 11, game->GetModuleLevelOne()->GetBackgroundAdapter().h + (TILE_SIZE * 2), false, &iconV);
+        break;
+    }
+    }
+
     game->GetModuleRender()->Blit(texture, position.x, position.y, GetInvertValue(), &currentAnimation->GetCurrentFrame());
 
     if (isTimeOver) {
@@ -568,6 +584,7 @@ int ModulePlayer::GetFontIndex() const { return normalFont; }
 int ModulePlayer::GetTimerFontIndex() const { return timerFont; }
 void ModulePlayer::IncreaseShoot() { if (shot != maxShots) { shot++; } }
 void ModulePlayer::DecreaseShoot() { shot -= (shot - 1); }
+int ModulePlayer::GetShotsValue() { return shot; }
 bool ModulePlayer::CheckIfGodMode() const { return godMode; };
 bool ModulePlayer::CheckIfDestroyed() const { return (destroyed || isTimeOver); };
 void ModulePlayer::AddScore(int _score) { score += _score; }

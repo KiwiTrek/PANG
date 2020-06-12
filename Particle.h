@@ -30,6 +30,7 @@ public:
     int GetPositionY() const;
     void SetFSpeedY(const float _speedY);
     void SetAnimPushBack(const SDL_Rect _rect);
+    Animation GetAnim() const;
     SDL_Rect GetCurrentAnim();
     void SetAnimLoop(bool _loop);
     void SetAnimSpeed(float _speed);
@@ -59,7 +60,7 @@ private:
     // Particles will be set to not alive until "spawnTime" is reached
     bool isAlive = false;
 
-    // Defines the amout of frames this particle has been active
+    // Defines the amount of frames this particle has been active
     // Negative values mean the particle is waiting to be activated
     int frameCount = 0;
 

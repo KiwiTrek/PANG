@@ -56,19 +56,23 @@ private:
     uint lastParticle = 0;
 
     uint vulcanCeilingSoundIndex;
+    uint powerWireSoundIndex;
 
     // The particle's collider
     Collider* collider = nullptr;
 
     // A flag to detect when the particle has been destroyed
     bool destroyed = false;
+    bool oncePowerWire = true;
+    SDL_Rect finalPowerWireSrc = {};
+    SDL_Rect finalPowerWireDst = {};
 
 public:
     //Shots (and others) go here
     Particle normalWire;
-	Particle powerWire;
-	Particle powerWireEnd;
-	Particle powerShot;
+    Particle powerWire;
+    Particle powerWireEnd;
+    Particle powerShot;
 
     Particle rBigBalloonExplosion;
     Particle rNotThatMehBalloonExplosion;
@@ -87,6 +91,7 @@ public:
 
     Particle muzzleFlash;
     Particle vulcanCeiling;
+    Particle hookPowerWire;
     Particle hitScreen;
     Particle ready;
 };

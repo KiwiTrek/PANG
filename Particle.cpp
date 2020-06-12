@@ -51,6 +51,7 @@ int Particle::GetPositionX() const { return position.x; }
 int Particle::GetPositionY() const { return position.y; }
 void Particle::SetFSpeedY(const float _speedY) { speed.y = _speedY; }
 void Particle::SetAnimPushBack(const SDL_Rect _rect) { anim.PushBack(_rect); }
+Animation Particle::GetAnim() const { return anim; }
 SDL_Rect Particle::GetCurrentAnim() { return anim.GetCurrentFrame(); }
 void Particle::SetAnimLoop(bool _loop) { anim.SetLoop(_loop); }
 void Particle::SetAnimSpeed(float _speed) { anim.SetSpeed(_speed); }

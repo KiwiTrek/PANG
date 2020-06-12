@@ -65,7 +65,7 @@ UPDATE_STATUS ModuleLevelOne::Update() {
             once = false;
             game->GetModuleAudio()->PlayMusicOnce("Resources/BGM/introFuji.ogg");
         }
-        if (game->GetModulePlayer()->GetPlayerLives() >= 0 && game->GetModulePlayer()->GetTimer() >= 50) { game->GetModuleAudio()->ChangeAtEnd("Resources/BGM/noMusic.ogg"); }
+        if (game->GetModulePlayer()->GetPlayerLives() >= 0 && game->GetModulePlayer()->GetTimer() >= 50) { game->GetModuleAudio()->ChangeAtEnd("Resources/BGM/fuji.ogg"); }
     }
     
     return UPDATE_STATUS::UPDATE_CONTINUE;

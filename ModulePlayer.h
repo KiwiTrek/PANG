@@ -39,6 +39,7 @@ public:
 	int GetTimerFontIndex()const;
     void IncreaseShoot();
     void DecreaseShoot();
+    int GetShotsValue();
     bool CheckIfGodMode() const;
     bool CheckIfDestroyed() const;
     void AddScore(int _score);
@@ -107,6 +108,10 @@ private:
     int shot = 1;
     int maxShots = 1;
     SHOT_TYPES shotType = SHOT_TYPES::NORMAL;
+    SDL_Texture* powerUpIcons;
+    SDL_Rect iconD = { 8,6,15,16 };
+    SDL_Rect iconP = { 47,6,15,16 };
+    SDL_Rect iconV = { 86,6,15,16 };
 
     // Cheat Code Enabler: God Mode
     bool godMode = false;

@@ -10,6 +10,8 @@
 
 #include "ModuleLevelOne.h"
 #include "ModuleLevelTwo.h"
+#include "ModuleLevelThree.h"
+#include "ModuleLevelFour.h"
 
 
 
@@ -71,10 +73,6 @@ ModuleParticles::ModuleParticles(bool startEnabled) : Module(startEnabled) {
 	powerWire.SetAnimLoop(false);
 	powerWire.SetAnimSpeed(0.888f); //0.888f
 	powerWire.SetFSpeedY(-1.5f); //-1.5f
-
-	//Power Wire End animation (TBA)
-	powerWireEnd.SetAnimPushBack({ 1260,0,9,195 }); //Needs testing
-	powerWireEnd.SetAnimLoop(true);
 
 	//Power Shot animation
 	powerShot.SetAnimPushBack({ 0,1,16,8 });
@@ -148,11 +146,21 @@ ModuleParticles::ModuleParticles(bool startEnabled) : Module(startEnabled) {
     muzzleFlash.SetAnimLoop(false);
     muzzleFlash.SetAnimSpeed(0.2f);
 
-    //Vulcan Screen
+    //Vulcan Hits Ceiling
     vulcanCeiling.SetAnimPushBack({ 212,16,14,5 });
     vulcanCeiling.SetAnimPushBack({ 232,16,14,5 });
     vulcanCeiling.SetAnimLoop(false);
     vulcanCeiling.SetAnimSpeed(0.2f);
+
+    //PowerWire attached
+    hookPowerWire.SetAnimPushBack({ 0,0,9,195 });
+    hookPowerWire.SetAnimPushBack({ 17,0,9,195 });
+    hookPowerWire.SetAnimPushBack({ 34,0,9,195 });
+    hookPowerWire.SetAnimLoop(false);
+    hookPowerWire.SetAnimSpeed(0.01f);
+
+    finalPowerWireSrc = {0,0,9,0};
+    finalPowerWireDst = {};
 
     //Hit Screen
     hitScreen.SetAnimPushBack({ 0,0,384,208 });
@@ -170,6 +178,7 @@ ModuleParticles::~ModuleParticles() {}
 
 bool ModuleParticles::Start() {
     LOG("Loading particles");
+    oncePowerWire = true;
 
     normalWire.SetParticleTexture(game->GetModuleTextures()->Load("Resources/Sprites/normalWire.png"));
 	powerWire.SetParticleTexture(game->GetModuleTextures()->Load("Resources/Sprites/PowerWire.png"));
@@ -190,9 +199,11 @@ bool ModuleParticles::Start() {
     muzzleFlash.SetParticleTexture(game->GetModuleTextures()->Load("Resources/Sprites/powerUps.png"));
     hitScreen.SetParticleTexture(game->GetModuleTextures()->Load("Resources/Sprites/hit.png"));
     ready.SetParticleTexture(game->GetModuleTextures()->Load("Resources/Sprites/blueText.png"));
-    vulcanCeiling.SetParticleTexture(game->GetModuleTextures()->Load("Resources/Sprites/powerUps.png"));
+    vulcanCeiling.SetParticleTexture(muzzleFlash.GetParticleTexture());
+    hookPowerWire.SetParticleTexture(game->GetModuleTextures()->Load("Resources/Sprites/hookPowerWire.png"));
 
     vulcanCeilingSoundIndex = game->GetModuleAudio()->LoadFx("Resources/SFX/shotgunCeiling.wav");
+    powerWireSoundIndex = game->GetModuleAudio()->LoadFx("Resources/SFX/hookshot.wav");
 
     return true;
 }
@@ -227,6 +238,11 @@ bool ModuleParticles::CleanUp() {
     game->GetModuleTextures()->Unload(muzzleFlash.GetParticleTexture());
     game->GetModuleTextures()->Unload(hitScreen.GetParticleTexture());
     game->GetModuleTextures()->Unload(ready.GetParticleTexture());
+    game->GetModuleTextures()->Unload(vulcanCeiling.GetParticleTexture());
+    game->GetModuleTextures()->Unload(hookPowerWire.GetParticleTexture());
+
+    game->GetModuleAudio()->UnloadFx(vulcanCeilingSoundIndex);
+    game->GetModuleAudio()->UnloadFx(powerWireSoundIndex);
 
     return true;
 }
@@ -238,6 +254,10 @@ UPDATE_STATUS ModuleParticles::Update() {
         if (particle == nullptr) { continue; }
         // Call particle Update. If it has reached its lifetime, destroy it
         if (particle->Update() == false) {
+            if (particle->GetParticleTexture() == hookPowerWire.GetParticleTexture()) {
+                oncePowerWire = true;
+                game->GetModulePlayer()->IncreaseShoot();
+            }
             delete particle;
             particles[i] = nullptr;
         }
@@ -255,9 +275,23 @@ UPDATE_STATUS ModuleParticles::PostUpdate() {
                 SDL_Rect gameOverAdapter = { (game->GetModuleLevelOne()->GetBackgroundAdapter().w / 2) - 30,(game->GetModuleLevelOne()->GetBackgroundAdapter().h / 2) - (TILE_SIZE),50,(TILE_SIZE*2) };
                 game->GetModuleRender()->Blit(particle->GetParticleTexture(), particle->GetPositionX(), particle->GetPositionY(), false, &(particle->GetCurrentAnim()), &gameOverAdapter);
             }
+            else if (particle->GetParticleTexture() == hookPowerWire.GetParticleTexture()) {
+                if (hookPowerWire.GetFrameCount() <= 1) {
+                    finalPowerWireSrc.x = 0;
+                }
+                else if (hookPowerWire.GetFrameCount() <= 2) {
+                    finalPowerWireSrc.x = 17;
+                }
+                else if (hookPowerWire.GetFrameCount() <= 3) {
+                    finalPowerWireSrc.x = 34;
+                }
+                game->GetModuleRender()->Blit(particle->GetParticleTexture(), finalPowerWireDst.x, finalPowerWireDst.y, false, &(finalPowerWireSrc));
+            }
             else { game->GetModuleRender()->Blit(particle->GetParticleTexture(), particle->GetPositionX(), particle->GetPositionY(), false, &(particle->GetCurrentAnim())); }
             
-            if (particle->GetParticleTexture() == normalWire.GetParticleTexture()) { game->GetModuleRender()->Blit(game->GetModulePlayer()->GetTexture(), game->GetModulePlayer()->GetPosition().x, game->GetModulePlayer()->GetPosition().y, game->GetModulePlayer()->GetInvertValue(), &(game->GetModulePlayer()->GetCurrentAnimation())->GetCurrentFrame()); }
+            if (particle->GetParticleTexture() == normalWire.GetParticleTexture()) { 
+                game->GetModuleRender()->Blit(game->GetModulePlayer()->GetTexture(), game->GetModulePlayer()->GetPosition().x, game->GetModulePlayer()->GetPosition().y, game->GetModulePlayer()->GetInvertValue(), &(game->GetModulePlayer()->GetCurrentAnimation())->GetCurrentFrame());
+            }
         }
     }
     return UPDATE_STATUS::UPDATE_CONTINUE;
@@ -270,7 +304,7 @@ Particle* ModuleParticles::AddParticle(const Particle& particle, int x, int y, C
             Particle* p = new Particle(particle);
 
             p->SetFrameCount(-(int)delay);            // We start the frameCount as the negative delay
-            p->SetPositionX(x);                        // so when frameCount reaches 0 the particle will be activated
+            p->SetPositionX(x);                       // so when frameCount reaches 0 the particle will be activated
             p->SetPositionY(y);
 
             //Adding the particle's collider
@@ -285,12 +319,27 @@ Particle* ModuleParticles::AddParticle(const Particle& particle, int x, int y, C
 void ModuleParticles::OnCollision(Collider* c1, Collider* c2) {
     for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i) {
         // Always destroy particles that collide
-        if (particles[i] != nullptr && particles[i]->GetCollider() == c1 && particles[i]->GetCollider()->GetType() == Collider::TYPE::PLAYER_SHOT) {
-            game->GetModulePlayer()->IncreaseShoot();
+        if (particles[i] != nullptr && particles[i]->GetCollider() == c1 && particles[i]->GetCollider()->GetType() == Collider::TYPE::PLAYER_SHOT && particles[i]->GetParticleTexture() != hookPowerWire.GetParticleTexture()) {
+            if (game->GetModulePlayer()->GetCurrentShotType() == SHOT_TYPES::POWER
+                && c2->GetType() != Collider::TYPE::BALLOON
+                && oncePowerWire) {
+                oncePowerWire = false;
+                finalPowerWireDst.x = particles[i]->GetPositionX();
+                finalPowerWireDst.y = particles[i]->GetPositionY();
+                finalPowerWireDst.h = finalPowerWireSrc.h = particles[i]->GetCurrentAnim().h;
+                game->GetModuleParticles()->AddParticle(hookPowerWire, finalPowerWireDst.x, finalPowerWireDst.y, Collider::TYPE::PLAYER_SHOT, 0U);
+                game->GetModuleAudio()->PlayFx(powerWireSoundIndex, 0);
+            }
+            if (game->GetModulePlayer()->GetCurrentShotType() != SHOT_TYPES::POWER) { game->GetModulePlayer()->IncreaseShoot(); }
             if (game->GetModulePlayer()->GetCurrentShotType() == SHOT_TYPES::VULCAN && c2->GetType() != Collider::TYPE::BALLOON) {
                 game->GetModuleParticles()->AddParticle(vulcanCeiling, particles[i]->GetPositionX(), particles[i]->GetPositionY(), Collider::TYPE::NONE);
                 game->GetModuleAudio()->PlayFx(vulcanCeilingSoundIndex, 0);
             }
+            delete particles[i];
+            particles[i] = nullptr;
+            break;
+        }
+        else if (particles[i] != nullptr && particles[i]->GetCollider() == c1 && particles[i]->GetCollider()->GetType() == Collider::TYPE::PLAYER_SHOT && particles[i]->GetParticleTexture() == hookPowerWire.GetParticleTexture() && c2->GetType() == Collider::TYPE::BALLOON) {
             delete particles[i];
             particles[i] = nullptr;
             break;
