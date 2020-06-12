@@ -35,9 +35,10 @@ private:
     // The scene sprite sheet loaded into an SDL_Texture
     SDL_Texture* splashArtTexture = nullptr;
     Animation splashArt1;
-    SDL_Rect staticSplashArt2 = { 0,0,1009,447 };
+    SDL_Rect staticSplashArt = { 0,0,1009,447 };
     Animation planeTransition;
     Animation splashArt3;
+    Animation planeTransition2;
 
     int currentLevel = 0;
 	int bonusScore = 0;

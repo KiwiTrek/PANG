@@ -38,9 +38,7 @@ private:
     int levelFont = -1;
 
     char levelTitle[15] = { "\0" };
-    char stage1[20] = { "\0" };
-    char stage2[20] = { "\0" };
-    char stage3[20] = { "\0" };
+    char stage[20] = { "\0" };
 };
 
 #endif

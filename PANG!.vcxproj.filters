@@ -109,6 +109,12 @@
     <ClCompile Include="ModuleLevelFour.cpp">
       <Filter>Archivos de origen\Modules\Gameplay</Filter>
     </ClCompile>
+    <ClCompile Include="ModuleLevelFive.cpp">
+      <Filter>Archivos de origen\Modules\Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleLevelSix.cpp">
+      <Filter>Archivos de origen\Modules\Gameplay</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -205,6 +211,12 @@
       <Filter>Archivos de origen\Modules\Gameplay</Filter>
     </ClInclude>
     <ClInclude Include="ModuleLevelFour.h">
+      <Filter>Archivos de origen\Modules\Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleLevelFive.h">
+      <Filter>Archivos de origen\Modules\Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleLevelSix.h">
       <Filter>Archivos de origen\Modules\Gameplay</Filter>
     </ClInclude>
   </ItemGroup>

@@ -14,6 +14,8 @@
 #include "ModuleLevelTwo.h"
 #include "ModuleLevelThree.h"
 #include "ModuleLevelFour.h"
+#include "ModuleLevelFive.h"
+#include "ModuleLevelSix.h"
 
 #include "ModulePlayer.h"
 #include "ModuleEnemies.h"
@@ -44,17 +46,19 @@ Game::Game() {
     modules[7] = levelTwo = new ModuleLevelTwo(false);
     modules[8] = levelThree = new ModuleLevelThree(false);
     modules[9] = levelFour = new ModuleLevelFour(false);
+    modules[10] = levelFive = new ModuleLevelFive(false);
+    modules[11] = levelSix = new ModuleLevelSix(false);
 
-    modules[10] = tileset = new ModuleTileset(false);
-    modules[11] = enemies = new ModuleEnemies(false);
-    modules[12] = player = new ModulePlayer(false);
-    modules[13] = particles = new ModuleParticles(false);
-    modules[14] = winScreen = new ModuleWinScreen(false);
+    modules[12] = tileset = new ModuleTileset(false);
+    modules[13] = enemies = new ModuleEnemies(false);
+    modules[14] = player = new ModulePlayer(false);
+    modules[15] = particles = new ModuleParticles(false);
+    modules[16] = winScreen = new ModuleWinScreen(false);
 
-    modules[15] = collisions = new ModuleCollisions(false);
-    modules[16] = transition = new ModuleTransition(true);
-    modules[17] = fonts = new ModuleFonts(true);
-    modules[18] = render = new ModuleRender(true);
+    modules[17] = collisions = new ModuleCollisions(false);
+    modules[18] = transition = new ModuleTransition(true);
+    modules[19] = fonts = new ModuleFonts(true);
+    modules[20] = render = new ModuleRender(true);
 }
 
 Game::~Game() {
@@ -119,6 +123,8 @@ ModuleLevelOne* Game::GetModuleLevelOne() const { return levelOne; }
 ModuleLevelTwo* Game::GetModuleLevelTwo() const { return levelTwo; }
 ModuleLevelThree* Game::GetModuleLevelThree() const { return levelThree; }
 ModuleLevelFour* Game::GetModuleLevelFour() const { return levelFour; }
+ModuleLevelFive* Game::GetModuleLevelFive() const { return levelFive; }
+ModuleLevelSix* Game::GetModuleLevelSix() const { return levelSix; }
 
 ModulePlayer* Game::GetModulePlayer() const { return player; }
 ModuleEnemies* Game::GetModuleEnemies() const { return enemies; }

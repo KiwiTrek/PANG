@@ -158,8 +158,10 @@
     <ClCompile Include="ModuleEnemies.cpp" />
     <ClCompile Include="ModuleFonts.cpp" />
     <ClCompile Include="ModuleInput.cpp" />
+    <ClCompile Include="ModuleLevelFive.cpp" />
     <ClCompile Include="ModuleLevelFour.cpp" />
     <ClCompile Include="ModuleLevelOne.cpp" />
+    <ClCompile Include="ModuleLevelSix.cpp" />
     <ClCompile Include="ModuleLevelThree.cpp" />
     <ClCompile Include="ModuleLevelTwo.cpp" />
     <ClCompile Include="ModuleParticles.cpp" />
@@ -188,8 +190,10 @@
     <ClInclude Include="ModuleEnemies.h" />
     <ClInclude Include="ModuleFonts.h" />
     <ClInclude Include="ModuleInput.h" />
+    <ClInclude Include="ModuleLevelFive.h" />
     <ClInclude Include="ModuleLevelFour.h" />
     <ClInclude Include="ModuleLevelOne.h" />
+    <ClInclude Include="ModuleLevelSix.h" />
     <ClInclude Include="ModuleLevelThree.h" />
     <ClInclude Include="ModuleLevelTwo.h" />
     <ClInclude Include="ModuleParticles.h" />

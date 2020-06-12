@@ -42,6 +42,8 @@ UPDATE_STATUS ModuleProjectSheet::Update() {
         else if (game->GetModuleInput()->GetKey(SDL_SCANCODE_2)) { game->GetModuleTransition()->Transition(this, (Module*)game->GetModuleLevelTwo(), 4); }
         else if (game->GetModuleInput()->GetKey(SDL_SCANCODE_3)) { game->GetModuleTransition()->Transition(this, (Module*)game->GetModuleLevelThree(), 4); }
         else if (game->GetModuleInput()->GetKey(SDL_SCANCODE_4)) { game->GetModuleTransition()->Transition(this, (Module*)game->GetModuleLevelFour(), 4); }
+        else if (game->GetModuleInput()->GetKey(SDL_SCANCODE_5)) { game->GetModuleTransition()->Transition(this, (Module*)game->GetModuleLevelFive(), 4); }
+        else if (game->GetModuleInput()->GetKey(SDL_SCANCODE_6)) { game->GetModuleTransition()->Transition(this, (Module*)game->GetModuleLevelSix(), 4); }
     }
     return UPDATE_STATUS::UPDATE_CONTINUE;
 }
@@ -54,14 +56,18 @@ UPDATE_STATUS ModuleProjectSheet::PostUpdate() {
         game->GetModuleRender()->Blit(levelBackground, 0, 0, false, NULL, &backgroundRect);
         sprintf_s(levelTitle, 15, "select level:");
         game->GetModuleFonts()->BlitText(TILE_SIZE * 3, TILE_SIZE * 5, levelFont, levelTitle);
-        sprintf_s(stage1, 20, "level 1: press 1");
-        game->GetModuleFonts()->BlitText(TILE_SIZE * 3, TILE_SIZE * 7, levelFont, stage1);
-        sprintf_s(stage2, 20, "level 2: press 2");
-        game->GetModuleFonts()->BlitText(TILE_SIZE * 3, TILE_SIZE * 9, levelFont, stage2);
-        sprintf_s(stage3, 20, "level 3: press 3");
-        game->GetModuleFonts()->BlitText(TILE_SIZE * 3, TILE_SIZE * 11, levelFont, stage3);
-        sprintf_s(stage3, 20, "level 4: press 4");
-        game->GetModuleFonts()->BlitText(TILE_SIZE * 3, TILE_SIZE * 13, levelFont, stage3);
+        sprintf_s(stage, 20, "level 1: press 1");
+        game->GetModuleFonts()->BlitText(TILE_SIZE * 3, TILE_SIZE * 7, levelFont, stage);
+        sprintf_s(stage, 20, "level 2: press 2");
+        game->GetModuleFonts()->BlitText(TILE_SIZE * 3, TILE_SIZE * 9, levelFont, stage);
+        sprintf_s(stage, 20, "level 3: press 3");
+        game->GetModuleFonts()->BlitText(TILE_SIZE * 3, TILE_SIZE * 11, levelFont, stage);
+        sprintf_s(stage, 20, "level 4: press 4");
+        game->GetModuleFonts()->BlitText(TILE_SIZE * 3, TILE_SIZE * 13, levelFont, stage);
+        sprintf_s(stage, 20, "level 5: press 5");
+        game->GetModuleFonts()->BlitText(TILE_SIZE * 3, TILE_SIZE * 15, levelFont, stage);
+        sprintf_s(stage, 20, "level 6: press 6");
+        game->GetModuleFonts()->BlitText(TILE_SIZE * 3, TILE_SIZE * 17, levelFont, stage);
     }
     else { game->GetModuleRender()->Blit(projectSheet, 0, 0, false, nullptr, &backgroundRect); }
 
