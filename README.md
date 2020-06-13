@@ -3,10 +3,10 @@
 ## Page Link: [Click here!](https://github.com/WillyTrek19/PANG)
 
 Recreation of the 1989 classic from arcades by Bruhmentium INC:
- - Guillem Álava (@WillyTrek19)
- - Sergi Colomer (@Lladruc37)
- - Abraham Díaz (@Theran1)
- - Arnau Lucena (@TitoLuce)
+ - Guillem Álava (@WillyTrek19) : Founding Code creator (oh, and the audio guy, i guess)
+ - Sergi Colomer (@Lladruc37) : Physics & Collisions Overlord
+ - Abraham Díaz (@Theran1) : QA & Debugging Menace
+ - Arnau Lucena (@TitoLuce) : Particle & Graphics Ripper
 
 ![The Bros](https://github.com/WillyTrek19/PANG/blob/master/Wiki/Header/Photos/The%20Smol%20Bois.jpg)
 
