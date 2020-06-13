@@ -8,7 +8,7 @@ Recreation of the 1989 classic from arcades by Bruhmentium INC:
  - Abraham Díaz (@Theran1) : QA & Debugging Menace
  - Arnau Lucena (@TitoLuce) : Particle & Graphics Master
  
-<iframe width="525" height="394" src="https://github.com/WillyTrek19/PANG/blob/master/Wiki/Header/Photos/The%20Smol%20Bois.jpg">
+<iframe width="525" height="394" src="https://github.com/WillyTrek19/PANG/blob/master/Wiki/Header/Photos/The%20Smol%20Bois.jpg?raw=true">
 </iframe>
 
 ### Gameplay Video
