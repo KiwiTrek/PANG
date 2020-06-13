@@ -1,6 +1,6 @@
 # Pang
 
-## Download [Here](https://github.com/WillyTrek19/PANG/releases/latest)
+## Download [Here]()
 
 ## Page Link: [Click here!](https://github.com/WillyTrek19/PANG)
 
