@@ -22,7 +22,6 @@ In this project, we extracted its assets to recreate this game using C++ and SDL
 
 ## How to play (Controls)
 ### Main controls
-#### Player movement
 - Keyboard:
   - WASD: Move
   - SPACEBAR: Interact (Start)/Shoot
@@ -33,7 +32,7 @@ In this project, we extracted its assets to recreate this game using C++ and SDL
   - START: Interact (Start)
   - BACK (SELECT): Leave game
   
-#### Debug Controls
+### Debug Controls
 - @Project Sheet Screen
   - F1: Level Selector
     - 1 - 6: Go to level
