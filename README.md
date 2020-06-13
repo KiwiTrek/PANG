@@ -13,7 +13,7 @@ Recreation of the 1989 classic from arcades by Bruhmentium INC:
 ## Description
 Pang (also known as Buster Bros. in the North American release and Pomping World in the Japanese) is a videogame created in 1989 by Mitchell Corporation that consists in two players cooperating in destroying various bubbles bouncing around the screen.
 
-In this project, we extracted its assets to recreate this game using C++ and the SDL library.
+In this project, we extracted its assets to recreate this game using C++ and SDL 2.0 libraries.
 
 ## How to play (Controls)
 ### Main controls
@@ -24,19 +24,23 @@ In this project, we extracted its assets to recreate this game using C++ and the
   - ESC: Leave game
 - Gamepad:
   - D-Pad/Left Stick: Move
-  - A/X/RT (X/□/R2) Button: Shoot
+  - A/X/RT (or X/□/R2) Button: Shoot
   - START: Interact (Start)
   - BACK (SELECT): Leave game
 #### Debug Controls
-- @Initial Screen
-  - F8: Jump to Lvl 1
-  - F9: Jump to win screen
+- @Project Sheet Screen
+  - F1: Level Selector
+    - 1 - 6: Go to level
 - Level 1
   - F1: Show hitboxes
-  - F5: GodMode (unables collisions & disables claw sound (for the sake of your ears))
-  - F7: Kills the player
-  - F8: Returns to initial screen slide
-  - F9: Automatically win
+  - F2: Cycle through your weapon arsenal
+  - F3: Toggle balloon creation mode
+    - Mouse Click: Create balloon
+    - 1 - 4: Change balloon type
+  - F5: GodMode (unables collisions & disables claw sound (because a God should be comfy))
+  - F7: Give the player the sweet release of death :)
+  - F8: Returns to project sheet screen
+  - F9: Win by cheating not only the game; but yourself.
   - F10: Reduces timer to 2 seconds
 
 ## Changelog
