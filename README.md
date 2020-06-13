@@ -10,6 +10,11 @@ Recreation of the 1989 classic from arcades by Bruhmentium INC:
 
 ![The Bros](https://github.com/WillyTrek19/PANG/blob/master/Wiki/Header/Photos/The%20Smol%20Bois.jpg)
 
+### Gameplay Video
+<iframe width="560" height="315" src="https://www.youtube.com/embed/vQGKAIaUlpk">
+</iframe>
+(If the video doesn't work, you can always click [here]())
+
 ## Description
 Pang (also known as Buster Bros. in the North American release and Pomping World in the Japanese) is a videogame created in 1989 by Mitchell Corporation that consists in two players cooperating in destroying various bubbles bouncing around the screen.
 
