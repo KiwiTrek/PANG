@@ -1,5 +1,7 @@
 # Pang
 
+## Download [Here](https://github.com/WillyTrek19/PANG/releases/latest)
+
 ## Page Link: [Click here!](https://github.com/WillyTrek19/PANG)
 
 Recreation of the 1989 classic from arcades by Bruhmentium INC:
