@@ -32,6 +32,7 @@ In this project, we extracted its assets to recreate this game using C++ and SDL
   - A/X/RT (or X/□/R2) Button: Shoot
   - START: Interact (Start)
   - BACK (SELECT): Leave game
+  
 #### Debug Controls
 - @Project Sheet Screen
   - F1: Level Selector
