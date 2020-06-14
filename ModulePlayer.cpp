@@ -595,11 +595,11 @@ UPDATE_STATUS ModulePlayer::PostUpdate() {
 
     switch (shotType) {
     case SHOT_TYPES::DWIRE: {
-        game->GetModuleRender()->Blit(powerUpIcons, TILE_SIZE * 11, game->GetModuleLevelOne()->GetBackgroundAdapter().h + (TILE_SIZE * 2), false, &iconD);
+        game->GetModuleRender()->Blit(powerUpIcons, TILE_SIZE * 11, game->GetModuleLevelOne()->GetBackgroundAdapter().h + (TILE_SIZE * 2), false, &iconP);
         break;
     }
     case SHOT_TYPES::POWER: {
-        game->GetModuleRender()->Blit(powerUpIcons, TILE_SIZE * 11, game->GetModuleLevelOne()->GetBackgroundAdapter().h + (TILE_SIZE * 2), false, &iconP);
+        game->GetModuleRender()->Blit(powerUpIcons, TILE_SIZE * 11, game->GetModuleLevelOne()->GetBackgroundAdapter().h + (TILE_SIZE * 2), false, &iconD);
         break;
     }
     case SHOT_TYPES::VULCAN: {

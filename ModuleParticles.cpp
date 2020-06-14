@@ -319,10 +319,17 @@ Particle* ModuleParticles::AddParticle(const Particle& particle, int x, int y, C
 void ModuleParticles::OnCollision(Collider* c1, Collider* c2) {
     for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i) {
         // Always destroy particles that collide
-        if (particles[i] != nullptr && particles[i]->GetCollider() == c1 && particles[i]->GetCollider()->GetType() == Collider::TYPE::PLAYER_SHOT && particles[i]->GetParticleTexture() != hookPowerWire.GetParticleTexture()) {
+        if (particles[i] != nullptr && particles[i]->GetCollider() == c1 && particles[i]->GetCollider()->GetType() == Collider::TYPE::PLAYER_SHOT && game->GetModulePlayer()->GetCurrentShotType() == SHOT_TYPES::POWER && c2->GetType() == Collider::TYPE::BALLOON) {
+            oncePowerWire = true;
+            game->GetModulePlayer()->IncreaseShoot();
+            delete particles[i];
+            particles[i] = nullptr;
+            break;
+        }
+        else if (particles[i] != nullptr && particles[i]->GetCollider() == c1 && particles[i]->GetCollider()->GetType() == Collider::TYPE::PLAYER_SHOT && particles[i]->GetParticleTexture() != hookPowerWire.GetParticleTexture()) {
             if (game->GetModulePlayer()->GetCurrentShotType() == SHOT_TYPES::POWER
                 && c2->GetType() != Collider::TYPE::BALLOON
-                && oncePowerWire) {
+                && oncePowerWire == true) {
                 oncePowerWire = false;
                 finalPowerWireDst.x = particles[i]->GetPositionX();
                 finalPowerWireDst.y = particles[i]->GetPositionY();
@@ -335,11 +342,6 @@ void ModuleParticles::OnCollision(Collider* c1, Collider* c2) {
                 game->GetModuleParticles()->AddParticle(vulcanCeiling, particles[i]->GetPositionX(), particles[i]->GetPositionY(), Collider::TYPE::NONE);
                 game->GetModuleAudio()->PlayFx(vulcanCeilingSoundIndex, 0);
             }
-            delete particles[i];
-            particles[i] = nullptr;
-            break;
-        }
-        else if (particles[i] != nullptr && particles[i]->GetCollider() == c1 && particles[i]->GetCollider()->GetType() == Collider::TYPE::PLAYER_SHOT && particles[i]->GetParticleTexture() == hookPowerWire.GetParticleTexture() && c2->GetType() == Collider::TYPE::BALLOON) {
             delete particles[i];
             particles[i] = nullptr;
             break;
