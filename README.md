@@ -51,8 +51,8 @@ In this project, we extracted its assets to recreate this game using C++ and SDL
   - F10: Reduces timer to 2 seconds
 
 ## Changelog
-### Current version: 0.9
-#### 0.9
+### Current version: Pre-Alpha
+#### Pre-Alpha
 - Added the rest of the levels
 - Player now has a weapon arsenal (only with debug commands)
 - Created all middle transitions
@@ -144,7 +144,7 @@ In this project, we extracted its assets to recreate this game using C++ and SDL
 - Created Player display (with no collisions nor animations)
 
 ## Bugs
-#### 0.9
+#### Pre-Alpha
 - Destructible blocks cannot be destroyed, and are instead treated like umbreakable blocks
 - The resulting hook of the power wire doesn't change animation
 
