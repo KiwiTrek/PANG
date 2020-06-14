@@ -222,7 +222,7 @@ bool ModuleParticles::CleanUp() {
 
     game->GetModuleTextures()->Unload(normalWire.GetParticleTexture());
     game->GetModuleTextures()->Unload(powerWire.GetParticleTexture());
-    game->GetModuleTextures()->Unload(normalWire.GetParticleTexture());
+    game->GetModuleTextures()->Unload(powerShot.GetParticleTexture());
     game->GetModuleTextures()->Unload(rBigBalloonExplosion.GetParticleTexture());
     game->GetModuleTextures()->Unload(rNotThatMehBalloonExplosion.GetParticleTexture());
     game->GetModuleTextures()->Unload(rMehBalloonExplosion.GetParticleTexture());
@@ -249,9 +249,11 @@ bool ModuleParticles::CleanUp() {
 
 
 UPDATE_STATUS ModuleParticles::Update() {
+    particleCounter = 0;
     for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i) {
         Particle* particle = particles[i];
         if (particle == nullptr) { continue; }
+        else if (particle->GetParticleTexture() == powerShot.GetParticleTexture()) { particleCounter++; }
         // Call particle Update. If it has reached its lifetime, destroy it
         if (particle->Update() == false) {
             if (particle->GetParticleTexture() == hookPowerWire.GetParticleTexture()) {
@@ -338,6 +340,7 @@ void ModuleParticles::OnCollision(Collider* c1, Collider* c2) {
                 game->GetModuleAudio()->PlayFx(powerWireSoundIndex, 0);
             }
             if (game->GetModulePlayer()->GetCurrentShotType() != SHOT_TYPES::POWER) { game->GetModulePlayer()->IncreaseShoot(); }
+            if (game->GetModulePlayer()->GetCurrentShotType() == SHOT_TYPES::NORMAL && particleCounter > 0) { game->GetModulePlayer()->DecreaseShoot(); }
             if (game->GetModulePlayer()->GetCurrentShotType() == SHOT_TYPES::VULCAN && c2->GetType() != Collider::TYPE::BALLOON) {
                 game->GetModuleParticles()->AddParticle(vulcanCeiling, particles[i]->GetPositionX(), particles[i]->GetPositionY(), Collider::TYPE::NONE);
                 game->GetModuleAudio()->PlayFx(vulcanCeilingSoundIndex, 0);
@@ -348,3 +351,5 @@ void ModuleParticles::OnCollision(Collider* c1, Collider* c2) {
         }
     }
 }
+
+int ModuleParticles::GetParticleCounter() const { return particleCounter; }

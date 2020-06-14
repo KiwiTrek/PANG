@@ -211,8 +211,11 @@ UPDATE_STATUS ModulePlayer::Update()
                 currentAnimation = &shoot;
                 switch (shotType) {
                 case SHOT_TYPES::NORMAL: {
-                    onceSetNumShots = true;
-                    maxShots = 1;
+                    if (onceSetNumShots) {
+                        onceSetNumShots = false;
+                        shot = 0;
+                        maxShots = 1;
+                    }
                     if (!godMode) { game->GetModuleAudio()->PlayFx(normalShotSoundIndex); }
                     if (GetInvertValue()) {
                         game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->normalWire, position.x + (shoot.GetWidth() / 3) - 2, position.y - 1, Collider::TYPE::PLAYER_SHOT);
@@ -679,8 +682,13 @@ uint ModulePlayer::GetDedSoundIndex() const { return dedSoundIndex; }
 void ModulePlayer::SetDedSoundIndex(uint _dedSoundIndex) { dedSoundIndex = _dedSoundIndex; }
 int ModulePlayer::GetFontIndex() const { return normalFont; }
 int ModulePlayer::GetTimerFontIndex() const { return timerFont; }
-void ModulePlayer::IncreaseShoot() { if (shot != maxShots) { shot++; } }
-void ModulePlayer::DecreaseShoot() { shot -= (shot - 1); }
+void ModulePlayer::IncreaseShoot() { 
+    if (shot < 0) { shot = 0; }
+    else if (shot < maxShots) { shot++; }
+    else { shot--; }
+}
+void ModulePlayer::DecreaseShoot() { shot -= 1; }
+void ModulePlayer::SetShotValue(int _shot) { shot = _shot; };
 int ModulePlayer::GetShotsValue() { return shot; }
 bool ModulePlayer::CheckIfGodMode() const { return godMode; };
 bool ModulePlayer::CheckIfDestroyed() const { return (destroyed || isTimeOver); };

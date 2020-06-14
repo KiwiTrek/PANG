@@ -39,6 +39,7 @@ public:
 	int GetTimerFontIndex()const;
     void IncreaseShoot();
     void DecreaseShoot();
+    void SetShotValue(int _shot);
     int GetShotsValue();
     bool CheckIfGodMode() const;
     bool CheckIfDestroyed() const;
@@ -106,7 +107,7 @@ private:
     //Counter on the number of jumps dead player has made
     int deathJumps = 0;
 
-    // A flag to detect when the player has shot
+    // PowerUp shots
     int shot = 1;
     int maxShots = 1;
     SHOT_TYPES shotType = SHOT_TYPES::NORMAL;

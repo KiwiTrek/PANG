@@ -47,6 +47,8 @@ public:
 
     // Collision callback, called when the player intersects with another collidernormalWire
     void OnCollision(Collider* c1, Collider* c2) override;
+
+    int GetParticleCounter() const;
     
 private:
     // An array to store and handle all the particles
@@ -54,6 +56,7 @@ private:
 
     // An index to the last added particle
     uint lastParticle = 0;
+    int particleCounter = 0;
 
     uint vulcanCeilingSoundIndex;
     uint powerWireSoundIndex;
