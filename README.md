@@ -2,8 +2,6 @@
 
 ## Download the [latest release](https://github.com/WillyTrek19/PANG/releases/download/pre-alpha/Bruhmentium.INC_Pang._v.Pre-Alpha.zip)
 
-## GitHub Link: [Click here!](https://github.com/WillyTrek19/PANG)
-
 Recreation of the 1989 classic from arcades by Bruhmentium INC:
  - Guillem Álava (@WillyTrek19) : Founding Code creator (oh, and the audio guy, i guess)
  - Sergi Colomer (@Lladruc37) : Physics & Collisions Overlord
@@ -12,9 +10,8 @@ Recreation of the 1989 classic from arcades by Bruhmentium INC:
  
 ![H](https://github.com/WillyTrek19/PANG/raw/master/Wiki/Header/Photos/The%20Smol%20Bois.jpg)
 
-### Gameplay Video
-<iframe width="560" height="315" src="https://www.youtube.com/watch?v=1H2wFkoIIFE">
-</iframe>
+### Features Video
+<iframe width="560" height="315" src="https://www.youtube.com/embed/1H2wFkoIIFE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 (If the video doesn't work, you can always click [here](https://www.youtube.com/watch?v=1H2wFkoIIFE))
 
 ## Description
