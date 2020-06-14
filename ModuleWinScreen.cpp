@@ -52,6 +52,7 @@ bool ModuleWinScreen::Start() {
 	bonusScore = game->GetModulePlayer()->GetTimer() * 100;
     splashArt1.Reset();
     planeTransition.Reset();
+    planeTransition2.Reset();
     switch (currentLevel) {
     case 1: {
         splashArtTexture = game->GetModuleTextures()->Load("Resources/Sprites/Splasharts/FirstStageSplashArt.png"); 
