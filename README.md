@@ -1,5 +1,5 @@
 ![Pang](https://github.com/WillyTrek19/PANG/raw/master/Wiki/Concept%20Art/PangTitleCard.png)
-a
+
 Recreation of the 1989 classic from arcades by Bruhmentium INC:
  - Guillem Álava (@WillyTrek19) : Founding Code creator (oh, and the audio guy, i guess)
  - Sergi Colomer (@Lladruc37) : Physics & Collisions Overlord
