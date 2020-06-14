@@ -1,6 +1,6 @@
 # Pang
 
-## Download the [latest release]()
+## Download the [latest release](https://github.com/WillyTrek19/PANG/releases/download/pre-alpha/Bruhmentium.INC_Pang._v.Pre-Alpha.zip)
 
 ## GitHub Link: [Click here!](https://github.com/WillyTrek19/PANG)
 
