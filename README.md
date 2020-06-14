@@ -1,4 +1,4 @@
-# Pang
+![Pang](https://github.com/WillyTrek19/PANG/blob/master/Wiki/Concept%20Art/PangTitleCard.png)
 
 ## Download the [latest release](https://github.com/WillyTrek19/PANG/releases/download/pre-alpha/Bruhmentium.INC_Pang._v.Pre-Alpha.zip)
 
