@@ -109,17 +109,18 @@ UPDATE_STATUS ModulePlayer::Update()
 {
     GamePad& pad = game->GetModuleInput()->GetGamePad(0);
     keyPressed = false;
-
-    if (returnToIdle == 0 && 
-        (game->GetModuleTileset()->GetLevelTile(position.y / TILE_SIZE + 4, position.x / TILE_SIZE + 1).id == ModuleTileset::TileType::WALL ||
-         game->GetModuleTileset()->GetLevelTile(position.y / TILE_SIZE + 1, position.x / TILE_SIZE + 1).id == ModuleTileset::TileType::AIR
-            )) {
-        LOG("Fucking Finally");
-        currentAnimation = &idle; 
-    }
-    else {
-        LOG("I want to die");
-        if (returnToIdle != 0) { --returnToIdle; }
+    if (!destroyed) {
+        if (returnToIdle == 0 &&
+            (game->GetModuleTileset()->GetLevelTile(position.y / TILE_SIZE + 4, position.x / TILE_SIZE + 1).id == ModuleTileset::TileType::WALL ||
+                game->GetModuleTileset()->GetLevelTile(position.y / TILE_SIZE + 1, position.x / TILE_SIZE + 1).id == ModuleTileset::TileType::AIR
+                )) {
+            LOG("Fucking Finally");
+            currentAnimation = &idle;
+        }
+        else {
+            LOG("I want to die");
+            if (returnToIdle != 0) { --returnToIdle; }
+        }
     }
 
     if (game->GetModuleLevelOne()->CheckIfStarted() ||
@@ -403,10 +404,12 @@ UPDATE_STATUS ModulePlayer::Update()
 //        LOG("Tile = %d, %d", tile.x, tile.y);
         if (tile.x < 0) { tile.x = 0; }
         if (tile.y < 0) { tile.y = 0; }
-        if (tile.y > 26) { tile.y = 26; }
             if (destroyed) {
                 for (int i = 1; i < 5; i++) { // BOTTOM FLOOR
-                    if (!godMode && game->GetModuleTileset()->GetLevelTile(tile.y + 4, tile.x + 2).id == ModuleTileset::TileType::WALL && (game->GetModuleTileset()->GetLevelTile(tile.y + 4, tile.x + 1).id == ModuleTileset::TileType::WALL || game->GetModuleTileset()->GetLevelTile(tile.y + 4, tile.x + 3).id == ModuleTileset::TileType::WALL) && game->GetModuleTileset()->GetLevelTile(tile.y, tile.x).id == ModuleTileset::TileType::AIR) {
+                    if (!godMode && game->GetModuleTileset()->GetLevelTile(tile.y + 4, tile.x + 2).id == ModuleTileset::TileType::WALL
+                        && (game->GetModuleTileset()->GetLevelTile(tile.y + 4, tile.x + 1).id == ModuleTileset::TileType::WALL
+                        || game->GetModuleTileset()->GetLevelTile(tile.y + 4, tile.x + 3).id == ModuleTileset::TileType::WALL)
+                        && game->GetModuleTileset()->GetLevelTile(tile.y, tile.x).id == ModuleTileset::TileType::AIR) {
                         if (deathJumps == 1) {
                             godMode = true;
                             mruaSpeed.y = -163.0f; // -145
@@ -421,7 +424,7 @@ UPDATE_STATUS ModulePlayer::Update()
 
                 for (int i = 0; i < 4; i++) { // LEFT WALL
                     if (!godMode && game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x).id == ModuleTileset::TileType::WALL) {
-                        position.x = 2 * TILE_SIZE - position.x;
+                        position.x = 2 * TILE_SIZE * tile.x - position.x;
                         mruaSpeed.x = 100.0f;
                         ChangeInvert();
                         godMode = true;
@@ -431,7 +434,7 @@ UPDATE_STATUS ModulePlayer::Update()
 
                 for (int i = 0; i < 4; i++) { // RIGHT WALL
                     if (!godMode && game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x + 5).id == ModuleTileset::TileType::WALL) {
-                        position.x = 2 * TILE_SIZE * 47 - currentAnimation->GetWidth() * 2 - position.x;
+                        position.x = 2 * TILE_SIZE * (tile.x + 5) - currentAnimation->GetWidth() * 2 - position.x;
                         mruaSpeed.x = -50.0f;
                         ChangeInvert();
                         godMode = true;
@@ -458,7 +461,7 @@ UPDATE_STATUS ModulePlayer::Update()
 
 
                 for (int i = 1; i < 4; i++) { // LEFT WALL
-                    if (mruaSpeed.x < 0 &&
+                    if (speed != 0 &&
                         (game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x).id == ModuleTileset::TileType::WALL ||
                             game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x).id == ModuleTileset::TileType::DESTRUCTIBLE1 ||
                             game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x).id == ModuleTileset::TileType::DESTRUCTIBLE2 ||
@@ -469,7 +472,7 @@ UPDATE_STATUS ModulePlayer::Update()
                 }
 
                 for (int i = 1; i < 4; i++) { // RIGHT WALL
-                    if (mruaSpeed.x > 0 &&
+                    if (speed != 0 &&
                         (game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x + 3).id == ModuleTileset::TileType::WALL ||
                             game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x + 3).id == ModuleTileset::TileType::DESTRUCTIBLE1 ||
                             game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x + 3).id == ModuleTileset::TileType::DESTRUCTIBLE2 ||
@@ -526,7 +529,6 @@ UPDATE_STATUS ModulePlayer::Update()
                 game->GetModuleAudio()->PlayFx(dedSoundIndex);
                 game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->hitScreen, 0, 0);
                 mruaSpeed.x = 100;
-                mruaSpeed.y = -197;
                 physics.SetAxis(true, true);
             }
 
