@@ -42,13 +42,18 @@ public:
         //If none of the sides from A are outside B
         return true;
     }
-    float CalculateSpeed(iPoint _position, fPoint _speed, int _height, int maxH) {
-        //float moduleSpeed = _speed.sqrtf(_speed.x * _speed.x + _speed.y * _speed.y);
-        //float sineAngle = _speed.y / moduleSpeed;
-        //return (moduleSpeed * moduleSpeed * sineAngle * sineAngle / (2 * gravity));
-        float maxSpeedY = _speed.sqrtf(2 * gravity * ((TILE_SIZE * 25) - _height - maxH));
-        float result = _speed.sqrtf(maxSpeedY * maxSpeedY - 2 * gravity * ((TILE_SIZE * 25) - _height - _position.y));
-        LOG("MaxSpeedY = %f, SpeedY = %f, PositionY = %d\n", maxSpeedY, result, _position.y);
+    float CalculateSpeed(int _enemyType, iPoint _position, fPoint _speed, int _height,int wallH , int maxH) {
+        float maxSpeedY = 0;
+        float result = 0;
+        if (_enemyType == 0) {
+            maxSpeedY = _speed.sqrtf(2 * gravity * ((TILE_SIZE * 25) - _height - maxH));
+            result = _speed.sqrtf(maxSpeedY * maxSpeedY - 2 * gravity * ((TILE_SIZE * 25) - _height - _position.y));
+        }
+        else {
+            maxSpeedY = _speed.sqrtf(2 * gravity * ((TILE_SIZE * 25) - _height - maxH));
+            result = _speed.sqrtf(maxSpeedY * maxSpeedY - 2 * gravity * ((TILE_SIZE * wallH) - _height - _position.y));
+        }
+        //LOG("MaxSpeedY = %f, SpeedY = %f, PositionY = %d, EnemyType = %d\n", maxSpeedY, result, _position.y, _enemyType);
         return result;
     }
 

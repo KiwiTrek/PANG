@@ -86,8 +86,7 @@ bool ModulePlayer::Start() {
 
     position.x = (TILE_SIZE * 20) + 2;
     position.y = game->GetModuleLevelOne()->GetBackgroundAdapter().h - TILE_SIZE - idle.GetHeight();
-    mruaSpeed.x = 100;
-    mruaSpeed.y = -197;
+    mruaSpeed = { 0,0 };
     physics.SetAxis(false, false); // physics
 
     collider = game->GetModuleCollisions()->AddCollider({ position.x, position.y, idle.GetWidth(), idle.GetHeight() }, Collider::TYPE::PLAYER, this); // adds a collider to the player
@@ -132,27 +131,54 @@ UPDATE_STATUS ModulePlayer::Update()
                 position.x -= speed;
             }
 
-            // we need to activate it only when the player is on the stairs (OnCollision)
-            /*if (game->GetModuleInput()->GetKey(SDL_SCANCODE_W) == KEY_REPEAT 
-                && game->GetModuleInput()->GetKey(SDL_SCANCODE_S) != KEY_REPEAT
-                && game->GetModuleInput()->GetGamePad().up
-                && game->GetModuleInput()->GetGamePad().down
-                && game->GetModuleInput()->GetGamePad().l_y < 0
-                (returnToIdle == 0)) {
-                currentAnimation = &idle;
-                if (!(GetInvertValue())) { ChangeInvert(); }
-                position.y -= speed;
+            if ((game->GetModuleInput()->GetKey(SDL_SCANCODE_W) == KEY_REPEAT 
+                && game->GetModuleInput()->GetKey(SDL_SCANCODE_S) != KEY_REPEAT)
+                || (pad.up && !pad.down)
+                && pad.l_y < 0
+                &&(returnToIdle == 0)) {
+                for (int i = 0; i < 4; i++) {
+                    if (game->GetModuleTileset()->GetLevelTile(position.y / TILE_SIZE + 3, position.x / TILE_SIZE).id == ModuleTileset::TileType::STAIRS
+                        && game->GetModuleTileset()->GetLevelTile(position.y / TILE_SIZE + 3, position.x / TILE_SIZE + 1).id == ModuleTileset::TileType::STAIRS
+                        && game->GetModuleTileset()->GetLevelTile(position.y / TILE_SIZE + 3, position.x / TILE_SIZE + 2).id == ModuleTileset::TileType::STAIRS
+                        && game->GetModuleTileset()->GetLevelTile(position.y / TILE_SIZE + 2, position.x / TILE_SIZE).id == ModuleTileset::TileType::STAIRS) {
+                        currentAnimation = &idle;
+                        if (!(GetInvertValue())) { ChangeInvert(); }
+                        position.y -= speed;
+                        position.x = (position.x/TILE_SIZE)* TILE_SIZE;
+                        break;
+                    }
+                    else if (game->GetModuleTileset()->GetLevelTile(position.y / TILE_SIZE + 3, position.x / TILE_SIZE + 1).id == ModuleTileset::TileType::STAIRS
+                        && game->GetModuleTileset()->GetLevelTile(position.y / TILE_SIZE + 3, position.x / TILE_SIZE + 2).id == ModuleTileset::TileType::STAIRS
+                        && game->GetModuleTileset()->GetLevelTile(position.y / TILE_SIZE + 3, position.x / TILE_SIZE + 3).id == ModuleTileset::TileType::STAIRS
+                        && game->GetModuleTileset()->GetLevelTile(position.y / TILE_SIZE + 2, position.x / TILE_SIZE + 1).id == ModuleTileset::TileType::STAIRS) {
+                        currentAnimation = &idle;
+                        if (!(GetInvertValue())) { ChangeInvert(); }
+                        position.y -= speed;
+                        if (game->GetModuleTileset()->GetLevelTile(position.y / TILE_SIZE + 3, position.x / TILE_SIZE).id == ModuleTileset::TileType::STAIRS) {
+                            position.x = (position.x / TILE_SIZE) * TILE_SIZE;
+                        }
+                        else {
+                            position.x = ((position.x / TILE_SIZE) + 1) * TILE_SIZE;
+                        }
+                        break;
+                    }
+                }
             }
-            if (game->GetModuleInput()->GetKey(SDL_SCANCODE_S) == KEY_REPEAT
-                && game->GetModuleInput()->GetKey(SDL_SCANCODE_W) != KEY_REPEAT
-                && game->GetModuleInput()->GetGamePad().down
-                && game->GetModuleInput()->GetGamePad().up
-                && game->GetModuleInput()->GetGamePad().l_y > 0
+            if ((game->GetModuleInput()->GetKey(SDL_SCANCODE_S) == KEY_REPEAT
+                && game->GetModuleInput()->GetKey(SDL_SCANCODE_W) != KEY_REPEAT)
+                || (pad.down && !pad.up)
+                && pad.l_y > 0
                 && (returnToIdle == 0)) {
-                currentAnimation = &idle;
-                if (!(GetInvertValue())) { ChangeInvert(); }
-                position.y += speed;
-            }*/
+                for (int i = 0; i < 4; i++) {
+                    if (game->GetModuleTileset()->GetLevelTile(position.y / TILE_SIZE + 3, position.x / TILE_SIZE + i).id == ModuleTileset::TileType::STAIRS
+                        && game->GetModuleTileset()->GetLevelTile(position.y / TILE_SIZE + 4, position.x / TILE_SIZE + i).id == ModuleTileset::TileType::STAIRS) {
+                        currentAnimation = &idle;
+                        if (!(GetInvertValue())) { ChangeInvert(); }
+                        position.y += speed;
+                        break;
+                    }
+                }
+            }
 
             if ((game->GetModuleInput()->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || pad.x || pad.b || pad.r2 > 0)
                 && shot >= 1) {
@@ -344,6 +370,11 @@ UPDATE_STATUS ModulePlayer::Update()
 
 
         // This is where the physics go
+        if (!destroyed) {
+
+        }
+
+
         physics.UpdatePhysics(position.x, position.y, mruaSpeed.x, mruaSpeed.y);
 
         // This is where the movement collisions go
@@ -390,26 +421,41 @@ UPDATE_STATUS ModulePlayer::Update()
                 }
             }
             else { // alive
-                for (int i = 1; i < 3; i++) { // BOTTOM FLOOR
-                    //if (onceDeath && game->GetModuleTileset()->GetLevelTile(tile.y + 4, tile.x).id == ModuleTileset::TileType::WALL && (game->GetModuleTileset()->GetLevelTile(tile.y + 4, tile.x + 1).id == ModuleTileset::TileType::WALL || game->GetModuleTileset()->GetLevelTile(tile.y + 4, tile.x - 1).id == ModuleTileset::TileType::WALL) && game->GetModuleTileset()->GetLevelTile(tile.y, tile.x).id == ModuleTileset::TileType::AIR) {
-                    if (game->GetModuleTileset()->GetLevelTile(tile.y + 4, tile.x + i).id == ModuleTileset::TileType::WALL) {
-                        position.y = 2 * TILE_SIZE * 25 - idle.GetHeight() * 2 - position.y;
+                // BOTTOM FLOOR
+                if (game->GetModuleTileset()->GetLevelTile((position.y + currentAnimation->GetHeight()) / TILE_SIZE, position.x / TILE_SIZE).id == ModuleTileset::TileType::AIR
+                    && game->GetModuleTileset()->GetLevelTile((position.y + currentAnimation->GetHeight()) / TILE_SIZE, position.x / TILE_SIZE + 1).id == ModuleTileset::TileType::AIR
+                    && game->GetModuleTileset()->GetLevelTile((position.y + currentAnimation->GetHeight()) / TILE_SIZE, position.x / TILE_SIZE + 2).id == ModuleTileset::TileType::AIR
+                    && game->GetModuleTileset()->GetLevelTile((position.y + currentAnimation->GetHeight()) / TILE_SIZE, position.x / TILE_SIZE + 3).id == ModuleTileset::TileType::AIR) {
+                    mruaSpeed.y = 4.0f;
+                    position.y += mruaSpeed.y;
+                }
+                else if (game->GetModuleTileset()->GetLevelTile((position.y + currentAnimation->GetHeight()) / TILE_SIZE - 1, position.x / TILE_SIZE).id != ModuleTileset::TileType::STAIRS
+                    && game->GetModuleTileset()->GetLevelTile((position.y + currentAnimation->GetHeight()) / TILE_SIZE - 1, position.x / TILE_SIZE + 1).id != ModuleTileset::TileType::STAIRS
+                    && game->GetModuleTileset()->GetLevelTile((position.y + currentAnimation->GetHeight()) / TILE_SIZE - 1, position.x / TILE_SIZE + 2).id != ModuleTileset::TileType::STAIRS
+                    && game->GetModuleTileset()->GetLevelTile((position.y + currentAnimation->GetHeight()) / TILE_SIZE - 1, position.x / TILE_SIZE + 3).id != ModuleTileset::TileType::STAIRS) {
+                    mruaSpeed.y = 0;
+                    position.y = 25 * TILE_SIZE - currentAnimation->GetHeight();
+                }
+
+
+                for (int i = 1; i < 4; i++) { // LEFT WALL
+                    if (mruaSpeed.x < 0 &&
+                        (game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x).id == ModuleTileset::TileType::WALL ||
+                            game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x).id == ModuleTileset::TileType::DESTRUCTIBLE1 ||
+                            game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x).id == ModuleTileset::TileType::DESTRUCTIBLE2 ||
+                            game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x).id == ModuleTileset::TileType::NOT_DESTRUCTIBLE)) {
+                        position.x = 2 * TILE_SIZE * (tile.x + 1) - position.x;
                         break;
                     }
                 }
 
-                for (int i = 0; i < 4; i++) { // LEFT WALL
-                    //if (game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x).id == ModuleTileset::TileType::WALL && game->GetModuleTileset()->GetLevelTile(tile.y + 4, tile.x + 1).id == ModuleTileset::TileType::AIR) {
-                    if (game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x).id == ModuleTileset::TileType::WALL) {
-                        position.x = 2 * TILE_SIZE - position.x;
-                        break;
-                    }
-                }
-
-                for (int i = 0; i < 4; i++) { // RIGHT WALL
-                    //if (game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x + 4).id == ModuleTileset::TileType::WALL && game->GetModuleTileset()->GetLevelTile(tile.y + 4, tile.x).id == ModuleTileset::TileType::AIR) {
-                    if (game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x + 3).id == ModuleTileset::TileType::WALL) {
-                        position.x = 2 * TILE_SIZE * 47 - idle.GetWidth() * 2 - position.x;
+                for (int i = 1; i < 4; i++) { // RIGHT WALL
+                    if (mruaSpeed.x > 0 &&
+                        (game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x + 3).id == ModuleTileset::TileType::WALL ||
+                            game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x + 3).id == ModuleTileset::TileType::DESTRUCTIBLE1 ||
+                            game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x + 3).id == ModuleTileset::TileType::DESTRUCTIBLE2 ||
+                            game->GetModuleTileset()->GetLevelTile(tile.y + i, tile.x + 3).id == ModuleTileset::TileType::NOT_DESTRUCTIBLE)) {
+                        position.x = 2 * TILE_SIZE * (tile.x + 3) - idle.GetWidth() * 2 - position.x;
                         break;
                     }
                 }
@@ -459,6 +505,8 @@ UPDATE_STATUS ModulePlayer::Update()
                 SDL_Delay(500); //THIS SHIT HAS TO LEAVE AS SOON AS WE CAN. IT IS NO LONGER ALLOWED TO EXIST. THIS IS A NO SDL_DELAY ZONE. EVEN A FUCKING SECOND GIVES ME INSANE ANXIETY. AND ALSO AIDS. NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE. Oh hi Marc, fancy seeing you here :^3 - Luce <3
                 game->GetModuleAudio()->PlayFx(dedSoundIndex);
                 game->GetModuleParticles()->AddParticle(game->GetModuleParticles()->hitScreen, 0, 0);
+                mruaSpeed.x = 100;
+                mruaSpeed.y = -197;
                 physics.SetAxis(true, true);
             }
 
