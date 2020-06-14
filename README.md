@@ -13,7 +13,7 @@ Recreation of the 1989 classic from arcades by Bruhmentium INC:
 ![H](https://github.com/WillyTrek19/PANG/raw/master/Wiki/Header/Photos/The%20Smol%20Bois.jpg)
 
 ### Gameplay Video
-<iframe width="560" height="315" src="https://youtu.be/1H2wFkoIIFE">
+<iframe width="560" height="315" src="https://www.youtube.com/watch?v=1H2wFkoIIFE">
 </iframe>
 (If the video doesn't work, you can always click [here]())
 
