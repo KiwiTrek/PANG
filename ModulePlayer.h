@@ -70,7 +70,9 @@ private:
     Animation shoot;
     Animation moving;
     Animation ded;
+    Animation climbing;
     bool playerInvert = false;
+    bool keyPressed = false;
     int returnToIdle = 0;
 
     // The pointer to the current player animation

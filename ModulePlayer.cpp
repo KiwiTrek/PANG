@@ -47,6 +47,12 @@ ModulePlayer::ModulePlayer(bool startEnabled) : Module(startEnabled) {
     ded.SetSpeed(0.2f);
     ded.SetLoop(false);
 
+    climbing.PushBack({ 13,36,26,32 });
+    climbing.PushBack({ 50,36,26,32 });
+    climbing.PushBack({ 81,36,26,32 });
+    climbing.PushBack({ 115,36,26,32 });
+    climbing.SetSpeed(0.1f);
+
     gameOver = { 5,5,532,58 };
     timeOver = { 5,69,532,58 };
     ready = { 5,132,203,67 };
@@ -102,9 +108,19 @@ bool ModulePlayer::Start() {
 UPDATE_STATUS ModulePlayer::Update()
 {
     GamePad& pad = game->GetModuleInput()->GetGamePad(0);
+    keyPressed = false;
 
-    if (returnToIdle == 0) { currentAnimation = &idle; }
-    else { --returnToIdle; }
+    if (returnToIdle == 0 && 
+        (game->GetModuleTileset()->GetLevelTile(position.y / TILE_SIZE + 4, position.x / TILE_SIZE + 1).id == ModuleTileset::TileType::WALL ||
+         game->GetModuleTileset()->GetLevelTile(position.y / TILE_SIZE + 1, position.x / TILE_SIZE + 1).id == ModuleTileset::TileType::AIR
+            )) {
+        LOG("Fucking Finally");
+        currentAnimation = &idle; 
+    }
+    else {
+        LOG("I want to die");
+        if (returnToIdle != 0) { --returnToIdle; }
+    }
 
     if (game->GetModuleLevelOne()->CheckIfStarted() ||
         game->GetModuleLevelTwo()->CheckIfStarted() ||
@@ -117,7 +133,10 @@ UPDATE_STATUS ModulePlayer::Update()
             if (((game->GetModuleInput()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && game->GetModuleInput()->GetKey(SDL_SCANCODE_A) != KEY_REPEAT)
                 || (pad.right && !pad.left)
                 || pad.l_x > 0)
-                && (returnToIdle == 0)) {
+                && (returnToIdle == 0)
+                && (game->GetModuleTileset()->GetLevelTile(position.y / TILE_SIZE + 4, position.x / TILE_SIZE + 1).id == ModuleTileset::TileType::WALL ||
+                    game->GetModuleTileset()->GetLevelTile(position.y / TILE_SIZE + 1, position.x / TILE_SIZE + 1).id == ModuleTileset::TileType::AIR)) {
+                keyPressed = true;
                 currentAnimation = &moving;
                 if (GetInvertValue()) { ChangeInvert(); }
                 position.x += speed;
@@ -125,7 +144,10 @@ UPDATE_STATUS ModulePlayer::Update()
             if (((game->GetModuleInput()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && game->GetModuleInput()->GetKey(SDL_SCANCODE_D) != KEY_REPEAT)
                 || (pad.left && !pad.right)
                 || pad.l_x < 0)
-                && (returnToIdle == 0)) {
+                && (returnToIdle == 0)
+                && (game->GetModuleTileset()->GetLevelTile(position.y / TILE_SIZE + 4, position.x / TILE_SIZE + 1).id == ModuleTileset::TileType::WALL ||
+                    game->GetModuleTileset()->GetLevelTile(position.y / TILE_SIZE + 1, position.x / TILE_SIZE + 1).id == ModuleTileset::TileType::AIR)) {
+                keyPressed = true;
                 currentAnimation = &moving;
                 if (!(GetInvertValue())) { ChangeInvert(); }
                 position.x -= speed;
@@ -137,11 +159,12 @@ UPDATE_STATUS ModulePlayer::Update()
                 && pad.l_y < 0
                 &&(returnToIdle == 0)) {
                 for (int i = 0; i < 4; i++) {
-                    if (game->GetModuleTileset()->GetLevelTile(position.y / TILE_SIZE + 3, position.x / TILE_SIZE).id == ModuleTileset::TileType::STAIRS
+                    keyPressed = true;
+                    if ((game->GetModuleTileset()->GetLevelTile(position.y / TILE_SIZE + 3, position.x / TILE_SIZE).id == ModuleTileset::TileType::STAIRS
                         && game->GetModuleTileset()->GetLevelTile(position.y / TILE_SIZE + 3, position.x / TILE_SIZE + 1).id == ModuleTileset::TileType::STAIRS
                         && game->GetModuleTileset()->GetLevelTile(position.y / TILE_SIZE + 3, position.x / TILE_SIZE + 2).id == ModuleTileset::TileType::STAIRS
-                        && game->GetModuleTileset()->GetLevelTile(position.y / TILE_SIZE + 2, position.x / TILE_SIZE).id == ModuleTileset::TileType::STAIRS) {
-                        currentAnimation = &idle;
+                        && game->GetModuleTileset()->GetLevelTile(position.y / TILE_SIZE + 2, position.x / TILE_SIZE).id == ModuleTileset::TileType::STAIRS)) {
+                        currentAnimation = &climbing;
                         if (!(GetInvertValue())) { ChangeInvert(); }
                         position.y -= speed;
                         position.x = (position.x/TILE_SIZE)* TILE_SIZE;
@@ -151,7 +174,7 @@ UPDATE_STATUS ModulePlayer::Update()
                         && game->GetModuleTileset()->GetLevelTile(position.y / TILE_SIZE + 3, position.x / TILE_SIZE + 2).id == ModuleTileset::TileType::STAIRS
                         && game->GetModuleTileset()->GetLevelTile(position.y / TILE_SIZE + 3, position.x / TILE_SIZE + 3).id == ModuleTileset::TileType::STAIRS
                         && game->GetModuleTileset()->GetLevelTile(position.y / TILE_SIZE + 2, position.x / TILE_SIZE + 1).id == ModuleTileset::TileType::STAIRS) {
-                        currentAnimation = &idle;
+                        currentAnimation = &climbing;
                         if (!(GetInvertValue())) { ChangeInvert(); }
                         position.y -= speed;
                         if (game->GetModuleTileset()->GetLevelTile(position.y / TILE_SIZE + 3, position.x / TILE_SIZE).id == ModuleTileset::TileType::STAIRS) {
@@ -169,10 +192,11 @@ UPDATE_STATUS ModulePlayer::Update()
                 || (pad.down && !pad.up)
                 && pad.l_y > 0
                 && (returnToIdle == 0)) {
+                keyPressed = true;
                 for (int i = 0; i < 4; i++) {
                     if (game->GetModuleTileset()->GetLevelTile(position.y / TILE_SIZE + 3, position.x / TILE_SIZE + i).id == ModuleTileset::TileType::STAIRS
                         && game->GetModuleTileset()->GetLevelTile(position.y / TILE_SIZE + 4, position.x / TILE_SIZE + i).id == ModuleTileset::TileType::STAIRS) {
-                        currentAnimation = &idle;
+                        currentAnimation = &climbing;
                         if (!(GetInvertValue())) { ChangeInvert(); }
                         position.y += speed;
                         break;
@@ -264,6 +288,9 @@ UPDATE_STATUS ModulePlayer::Update()
             else if (currentAnimation == &shoot) {
                 if(GetInvertValue()){ collider->SetPos(position.x + 8, position.y + 9, shoot.GetWidth() - 16, shoot.GetHeight() - 9); }
                 else{ collider->SetPos(position.x + 8, position.y + 9, shoot.GetWidth() - 16, shoot.GetHeight() - 9); }
+            }
+            else if (currentAnimation == &climbing) {
+                collider->SetPos(position.x + 8, position.y + 6, shoot.GetWidth() - 14, shoot.GetHeight() - 6);
             }
         }
 
@@ -366,14 +393,6 @@ UPDATE_STATUS ModulePlayer::Update()
             }
         }
         if (game->GetModuleInput()->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) { timer = 2; }
-
-
-
-        // This is where the physics go
-        if (!destroyed) {
-
-        }
-
 
         physics.UpdatePhysics(position.x, position.y, mruaSpeed.x, mruaSpeed.y);
 
@@ -499,6 +518,7 @@ UPDATE_STATUS ModulePlayer::Update()
         }
 
         if (destroyed) {
+            keyPressed = true;
             if (once) {
 				playerLifes--; //Life system seems to work well with these adjustments
                 once = false;
@@ -540,8 +560,7 @@ UPDATE_STATUS ModulePlayer::Update()
             }
         }
 
-
-        currentAnimation->Update();
+        if (keyPressed) { currentAnimation->Update(); }
 
         //Win condition
         if (game->GetModuleEnemies()->CheckForBalloons()) {
