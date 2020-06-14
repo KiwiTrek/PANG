@@ -27,6 +27,7 @@ public:
     void SetPosition(iPoint _position);
     SDL_Texture* GetTexture() const;
     SDL_Texture* GetBlueTextTexture() const;
+    SDL_Texture* GetPowerIconTexture() const;
     Animation* GetCurrentAnimation() const;
     SHOT_TYPES GetCurrentShotType() const;
     uint GetNormalShotSoundIndex() const;

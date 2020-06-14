@@ -182,7 +182,6 @@ bool ModuleParticles::Start() {
 
     normalWire.SetParticleTexture(game->GetModuleTextures()->Load("Resources/Sprites/normalWire.png"));
 	powerWire.SetParticleTexture(game->GetModuleTextures()->Load("Resources/Sprites/PowerWire.png"));
-	powerWireEnd.SetParticleTexture(game->GetModuleTextures()->Load("Resources/Sprites/PowerWire.png"));
 	powerShot.SetParticleTexture(game->GetModuleTextures()->Load("Resources/Sprites/PowerShot.png"));
     rBigBalloonExplosion.SetParticleTexture(game->GetModuleTextures()->Load("Resources/Sprites/boom.png"));
     rNotThatMehBalloonExplosion.SetParticleTexture(rBigBalloonExplosion.GetParticleTexture());

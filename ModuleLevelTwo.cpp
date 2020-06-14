@@ -88,6 +88,7 @@ bool ModuleLevelTwo::CleanUp() {
     game->GetModuleTextures()->Unload(backgroundTexture);
     game->GetModuleTextures()->Unload(game->GetModulePlayer()->GetTexture());
     game->GetModuleTextures()->Unload(game->GetModulePlayer()->GetBlueTextTexture());
+    game->GetModuleTextures()->Unload(game->GetModulePlayer()->GetPowerIconTexture());
 	game->GetModuleFonts()->Unload(game->GetModulePlayer()->GetFontIndex());
 	game->GetModuleFonts()->Unload(game->GetModulePlayer()->GetTimerFontIndex());
     game->GetModuleAudio()->UnloadFx(game->GetModulePlayer()->GetNormalShotSoundIndex());

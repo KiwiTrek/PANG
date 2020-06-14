@@ -127,7 +127,10 @@ UPDATE_STATUS ModuleTileset::PostUpdate() {
     return UPDATE_STATUS::UPDATE_CONTINUE; 
 }
 // Called on application exit.
-bool ModuleTileset::CleanUp() { return true; }
+bool ModuleTileset::CleanUp() { 
+    game->GetModuleTextures()->Unload(foreground);
+    return true;
+}
 
 ModuleTileset::Tile ModuleTileset::GetLevelTile(int y, int x) { return levelTiled[y][x]; }
 

@@ -74,7 +74,7 @@ public:
     //Shots (and others) go here
     Particle normalWire;
     Particle powerWire;
-    Particle powerWireEnd;
+    Particle hookPowerWire;
     Particle powerShot;
 
     Particle rBigBalloonExplosion;
@@ -94,7 +94,6 @@ public:
 
     Particle muzzleFlash;
     Particle vulcanCeiling;
-    Particle hookPowerWire;
     Particle hitScreen;
     Particle ready;
 };

@@ -672,6 +672,7 @@ iPoint ModulePlayer::GetPosition() const { return position; }
 void ModulePlayer::SetPosition(iPoint _position) { position = _position; }
 SDL_Texture* ModulePlayer::GetTexture() const { return texture; }
 SDL_Texture* ModulePlayer::GetBlueTextTexture() const { return blueText; }
+SDL_Texture* ModulePlayer::GetPowerIconTexture() const { return powerUpIcons; }
 Animation* ModulePlayer::GetCurrentAnimation() const { return currentAnimation; }
 SHOT_TYPES ModulePlayer::GetCurrentShotType() const { return shotType; }
 uint ModulePlayer::GetNormalShotSoundIndex() const { return normalShotSoundIndex; }
