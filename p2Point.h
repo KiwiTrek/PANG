@@ -85,6 +85,7 @@ public:
         float sqrt;
         sqrt = _x / 2;
         number = 0;
+        if (_x <= 0) { return number; }
         while (sqrt != number) {
             number = sqrt;
             sqrt = (_x / number + number) / 2;
