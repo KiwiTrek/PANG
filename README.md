@@ -2,7 +2,7 @@
 
 ## Download the [latest release]()
 
-## Page Link: [Click here!](https://github.com/WillyTrek19/PANG)
+## GitHub Link: [Click here!](https://github.com/WillyTrek19/PANG)
 
 Recreation of the 1989 classic from arcades by Bruhmentium INC:
  - Guillem Álava (@WillyTrek19) : Founding Code creator (oh, and the audio guy, i guess)
@@ -51,7 +51,19 @@ In this project, we extracted its assets to recreate this game using C++ and SDL
   - F10: Reduces timer to 2 seconds
 
 ## Changelog
-### Current version: 0.6
+### Current version: 0.9
+#### 0.9
+- Added the rest of the levels
+- Player now has a weapon arsenal (only with debug commands)
+- Created all middle transitions
+- Module Tileset prepared to support:
+  - Non-Destructible tiles
+  - Staircases
+- Debug functionalities
+  - Level selector
+  - PowerUp selector
+  - Balloon creator when clicked
+
 #### 0.6
 - Module Tileset prepared to support wall tiles
 - Game is now adapted to the tileset module, including:
@@ -132,6 +144,10 @@ In this project, we extracted its assets to recreate this game using C++ and SDL
 - Created Player display (with no collisions nor animations)
 
 ## Bugs
+#### 0.9
+- Destructible blocks cannot be destroyed, and are instead treated like umbreakable blocks
+- The resulting hook of the power wire doesn't change animation
+
 #### 0.6
 - Small pixel offset when colliding against a wall
 - Sometimes the hook goes through a balloon without destroying the balloon or the hook itself
